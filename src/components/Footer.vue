@@ -2,7 +2,7 @@
     <footer>
         <div id="weather">weather</div>
         <div id="copyrights">SSAFY Team Six ©2019</div>
-        <div id="top-btn" @click="totop"></div>
+        <div id="top-btn" @click="totop"><span><i class="material-icons">keyboard_arrow_up</i></span></div>
     </footer>    
 </template>
 
@@ -48,6 +48,10 @@ footer {
     left: 50%;
     transform: translate(-50%);
 }
+@keyframes bobup {
+    0% {transform: translateY(0);}
+    100% {transform: translateY(-4px);}
+}
 $top-btn-size: 40px;
 #top-btn {
     width: $top-btn-size * 2;
@@ -59,6 +63,23 @@ $top-btn-size: 40px;
     left: 50%;
     transform: translate(-50%);
     background: #181818;
+    cursor: pointer;
+    span {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0; left: 0;
+        i {
+            font-size: 2em;
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%);
+        }
+    }
+    &:hover span {
+        animation: bobup 0.7s ease-in-out infinite alternate;
+    } 
 }
 </style>
 
