@@ -1,0 +1,15 @@
+@mixin mobile {
+    @media (max-width: 600px) {
+        @content;
+    }
+}
+@mixin viewportMax($screen) {
+    @media (max-width: $screen + 'px') {
+        @content;
+    }
+}
+@mixin viewportMin($screen) {
+    @media (min-width: $screen + 'px') {
+        @content;
+    }
+}
