@@ -1,14 +1,11 @@
-const gcTranslate = async () => {
+import { type } from "os";
+
+const gcTranslate = async (text, target = "en") => {
   // Imports the Google Cloud client library
   const { Translate } = require("@google-cloud/translate");
 
   // Creates a client
   const translate = new Translate();
-
-  const text = [
-    "안녕하세요. 저는 Python 과 Node.js 를 주로 사용하는 서지욱이라고 합니다."
-  ];
-  const target = "en";
 
   // Translates the text into the target language. "text" can be a string for
   // translating a single piece of text, or an array of strings for translating
@@ -19,5 +16,6 @@ const gcTranslate = async () => {
   translations.forEach((translation, i) => {
     console.log(`${text[i]} => (${target}) ${translation}`);
   });
+  return translations;
 };
-gcTranslate();
+export default gcTranslate;

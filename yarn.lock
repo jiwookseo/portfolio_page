@@ -2284,9 +2284,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000975, caniuse-lite@^1.0.30000980:
-  version "1.0.30000980"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000980.tgz#0df53e4354b3111f83ac15b0bd4c71fe92994231"
-  integrity sha512-as0PRtWHaX3gl2gpC7qA7bX88lr+qLacMMXm1QKLLQtBCwT/Ljbgrv5EXKMNBoeEX6yFZ4vIsBb4Nh+PEwW2Rw==
+  version "1.0.30000981"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000981.tgz#5b6828803362363e5a1deba2eb550185cf6cec8f"
+  integrity sha512-JTByHj4DQgL2crHNMK6PibqAMrqqb/Vvh0JrsTJVSWG4VSUrT16EklkuRZofurlMjgA9e+zlCM4Y39F3kootMQ==
 
 case-sensitive-paths-webpack-plugin@^2.2.0:
   version "2.2.0"
@@ -4733,6 +4733,11 @@ http-signature@~1.2.0:
     assert-plus "^1.0.0"
     jsprim "^1.2.2"
     sshpk "^1.7.0"
+
+http2@^3.3.7:
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/http2/-/http2-3.3.7.tgz#78396eb1e0bcd1db1f4b138d997c682e23414fbc"
+  integrity sha512-puSi8M8WNlFJm9Pk4c/Mbz9Gwparuj3gO9/RRO5zv6piQ0FY+9Qywp0PdWshYgsMJSalixFY7eC6oPu0zRxLAQ==
 
 https-browserify@^1.0.0:
   version "1.0.0"
