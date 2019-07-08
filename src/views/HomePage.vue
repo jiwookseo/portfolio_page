@@ -39,6 +39,7 @@ import HeaderHome from '../components/HeaderHome';
 </script>
 
 <style lang="scss" scoped>
+@import '../css/mixin.scss';
 #wrap {
   width: 100%;
 }
@@ -55,6 +56,36 @@ section {
   }
   &:nth-of-type(even) {
     background: #EEEEEE;
+  }
+}
+
+$slant_h: 30px;
+$slant_m: 20px;
+@mixin slanted {
+  width: 100%;
+  content: "";
+  position: absolute;
+  left: 0;
+  border-style: solid;
+  z-index: 9;
+  bottom: $slant_h * -1;
+}
+#aboutme::after, #post::after {
+  @include slanted;
+  border-width: 0 100vw $slant_h 0;
+  border-color: transparent white transparent transparent;
+  @include mobile {
+    bottom: $slant_m * -1;
+    border-width: 0 100vw $slant_m 0;
+  }
+}
+#portfolio::after {
+  @include slanted;
+  border-width: 0 0 $slant_h 100vw;
+  border-color: transparent transparent transparent #EEEEEE;
+  @include mobile {
+    bottom: $slant_m * -1;
+    border-width: 0 0 $slant_m 100vw;
   }
 }
 </style>
