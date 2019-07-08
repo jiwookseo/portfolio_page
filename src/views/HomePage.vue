@@ -1,6 +1,6 @@
 <template>
   <div id="wrap">
-    <HeaderHome />
+    <HeaderHome :websiteTitle="'HOME'" />
     <div class="homeContent">
       <section id="aboutme">
 
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-
+import '../js/navbar.js';
 import HeaderHome from '../components/HeaderHome';
 
   export default {
@@ -31,7 +31,7 @@ import HeaderHome from '../components/HeaderHome';
       scrollTo(target) {
         let targetscrolltop = $(target).offset().top;
         $('html, body').animate({
-          scrollTop: targetscrolltop
+          scrollTop: targetscrolltop + 10
         }, 500);
       }
     }
@@ -48,6 +48,7 @@ import HeaderHome from '../components/HeaderHome';
 section {
   width: 100%;
   height: 500px;
+  padding-top: 60px;
   position: relative;
   &:nth-of-type(odd) {
     background: white;
