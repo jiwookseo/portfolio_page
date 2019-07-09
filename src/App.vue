@@ -1,6 +1,7 @@
 <template>
   <v-app id="app">
     <v-content>
+      <v-btn @click="translate">translate</v-btn>
       <router-view />
       <Footer />
     </v-content>
@@ -8,25 +9,40 @@
 </template>
 
 <script>
-import Footer from './components/Footer';
+import Footer from "./components/Footer";
+import axios from "axios";
+
+const translateURL =
+  "https://us-central1-test-68bfc.cloudfunctions.net/translate?query=";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Footer
   },
-  data () {
+  data() {
     return {
       //
+    };
+  },
+  methods: {
+    translate: () => {
+      document.querySelectorAll(".translateText").forEach(dom => {
+        axios
+          .get(translateURL + dom.innerText)
+          .then(
+            res => (dom.innerText = res.data.message.result.translatedText)
+          );
+      });
     }
   }
-}
+};
 </script>
 
 
 <style lang="scss" scoped>
-@import './css/reset.css';
-@import './css/style.css';
+@import "./css/reset.css";
+@import "./css/style.css";
 </style>
 
 <style lang="scss">
@@ -40,7 +56,6 @@ body::-webkit-scrollbar {
   -webkit-border-radius: 50px;
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
-    
   }
 }
 body::-webkit-scrollbar-thumb:vertical {
