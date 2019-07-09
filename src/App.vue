@@ -3,13 +3,17 @@
     <v-content class="content">
       <router-view />
       <Footer />
-      <div class="tr-box" v-if="askToTranslate">
-        Would you like to translate this page?
-        <div class="btn-box">
-          <span class="yes" @click="translate">Translate</span>
-          <span class="no" @click="askToTranslate = false">No</span>
+      <div class="chat-btn"><i class="material-icons">chat</i></div>
+      <div class="tr-btn" @click="askToTranslate = !askToTranslate"><i class="material-icons">g_translate</i></div>
+      <transition name="slide-fade">
+        <div class="tr-box" v-if="askToTranslate">
+          Would you like to translate this page?
+          <div class="btn-box">
+            <span class="yes" @click="translate">Translate</span>
+            <span class="no" @click="askToTranslate = false">No</span>
+          </div>
         </div>
-      </div>
+      </transition>
     </v-content>
   </v-app>
 </template>
@@ -28,7 +32,7 @@ export default {
   },
   data() {
     return {
-      askToTranslate: true
+      askToTranslate: false
     };
   },
   methods: {
@@ -48,22 +52,59 @@ export default {
 
 <style lang="scss" scoped>
 @import "./css/reset.css";
-@import "./css/style.css";
+@import "./css/style.scss";
 
 .content {
   position: relative;
 }
+
+@keyframes bobup {
+  0% {transform: translateY(0px);}
+  100% {transform: translateY(-3px);}
+}
+.chat-btn, .tr-btn {
+  position: fixed;
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  right: 20px;
+  background: #DDDDDD;
+  z-index: 15;
+  cursor: pointer;
+  i {
+    @include centerItem;
+  }
+  &:hover {
+    animation: bobup 0.5s ease-in-out infinite alternate;
+  }
+}
+.chat-btn {
+  bottom: 20px; 
+}
+.tr-btn {
+  bottom: 80px;
+}
 .tr-box {
   position: fixed;
-  z-index: 20;
+  z-index: 15;
   width: 250px;
-  top: 10px;
-  right: 10px;
+  bottom: 65px;
+  right: 85px;
   border-radius: 10px;
-  background: beige;
-  border: 2px solid bisque;
+  background: #DDDDDD;
+  // border: 2px solid gray;
   font-size: 0.9em;
   padding: 10px;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 100%;
+    top: 40%;
+    width: 0; height: 0;
+    border-top: 7px solid transparent;
+    border-left: 10px solid #DDDDDD;
+    border-bottom: 7px solid transparent;
+
+  }
   .btn-box {
     height: 30px;
     margin-top: 10px;
@@ -77,6 +118,16 @@ export default {
       }
     }
   }
+}
+.slide-fade-enter-active {
+    transition: all 0.5s ease;
+}
+.slide-fade-leave-active {
+    transition: all 0.5s ease;
+}
+.slide-fade-enter, .slide-fade-leave-to {
+    transform: translateX(50px);
+    opacity: 0;
 }
 </style>
 

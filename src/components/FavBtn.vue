@@ -46,6 +46,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../css/mixin.scss';
 div {
     width: 50px;
     height: 50px;
@@ -53,9 +54,7 @@ div {
     position: relative;
     z-index: 10;
     i {
-        position: absolute;
-        top: 50%; left: 50%;
-        transform: translate(-50%, -50%);
+        @include centerItem;
     }
 }
 </style>

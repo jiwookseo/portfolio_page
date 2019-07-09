@@ -1,0 +1,90 @@
+.navbar {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  background: #CCCCCC;
+  z-index: 10;
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    display: none;
+  }
+}
+
+.slide-fade-enter-active {
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.slide-fade-leave-active {
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.slide-fade-enter, .slide-fade-leave-to {
+  -webkit-transform: translateX(-180px);
+          transform: translateX(-180px);
+  opacity: 0;
+}
+
+.sidebar {
+  width: 180px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #EEEEEE;
+  -webkit-box-shadow: 2px 0 10px gray;
+          box-shadow: 2px 0 10px gray;
+  z-index: 10;
+}
+
+@media (min-width: 601px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+.sb-nav-logo, .sb-nav-menu {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 20px;
+  cursor: pointer;
+}
+
+.sb-nav-logo {
+  text-align: right;
+}
+
+.sb-nav-menu:hover {
+  background: #BBBBBB;
+}
+
+.menu-btn {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  z-index: 15;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.5);
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .menu-btn {
+    display: initial;
+  }
+}
+
+.menu-btn span i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+/*# sourceMappingURL=navbar.css.map */
