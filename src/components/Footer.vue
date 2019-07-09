@@ -1,6 +1,7 @@
 <template>
 <footer>
   <div id="weather">
+
     <div title="Weather in your city" width="400" height="150" margined v-on:close="exit" >
       <div padded>
         <!-- <div horizontal padded>
@@ -9,17 +10,14 @@
         <div horizontal />
         <div margined>
           <div padded>
-            <div v-if="error">There is no such city in the database</div>
             <div v-if="!!city">
               <div padded horizontal>
-                <div stretchy>{{city}}</div>
+                <div><img :src='image'> {{city}}</div>
               </div>
               <div horizontal />
               <div padded horizontal>
-                <div>최소기온 : {{tempMin}}&deg;C</div>
-                <div stretchy>최대기온: {{tempMax}}&deg;C</div>
+                <div>기온 : {{tempMin}}&deg;C / {{tempMax}}&deg;C</div>
                 <div stretchy>습도 : {{humidity}}%</div>
-                <div stretchy><img :src=image></div>
               </div>
             </div>
           </div>
@@ -27,7 +25,6 @@
       </div>
     </div>
   </div>
-
   <div id="copyrights">SSAFY Team Six ©2019</div>
   <div id="top-btn" @click="totop"><span><i class="material-icons">keyboard_arrow_up</i></span></div>
 </footer>
@@ -149,7 +146,7 @@ $top-btn-size: 40px;
     }
     &:hover span {
         animation: bobup 0.7s ease-in-out infinite alternate;
-    } 
+    }
 }
 
 </style>
