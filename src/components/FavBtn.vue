@@ -51,7 +51,7 @@ div {
     height: 50px;
     cursor: pointer;
     position: relative;
-    z-index: 1000;
+    z-index: 10;
     i {
         position: absolute;
         top: 50%; left: 50%;

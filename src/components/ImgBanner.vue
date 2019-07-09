@@ -1,0 +1,71 @@
+<template>
+    <div class="imgBannerOuter">
+        <v-img :src="imgSrc" class="imgBanner" alt="ImgBanner"></v-img>
+        <div class="imgBannerContent">
+            <div class="bannerTitle">Team Six !!!!!</div>
+            <div class="scrollPrompt" @click="scrollTo()">
+                SCROLL DOWN&nbsp;&nbsp;<i class="material-icons">arrow_drop_down</i>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+<script>
+export default {
+    name: "ImgBanner",
+    props: {
+        imgSrc: {type: String}
+    },
+    methods: {
+        scrollTo() {
+            this.$parent.scrollTo('#aboutme');
+        }
+    }
+
+}
+</script>
+
+<style lang="scss" scoped>
+.imgBannerOuter {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0; left: 0;
+    .imgBanner, .imgBannerContent {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0; left: 0;
+    }
+    .imgBannerContent {
+        background-color: rgba(0, 0, 0, 0.5);
+        .bannerTitle {
+            text-align: center;
+            font-size: 5em;
+            color: white;
+            text-shadow: 1px 1px 0px #181818, 2px 2px 5px white, -2px -2px 5px white;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .scrollPrompt {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translate(-50%);
+            width: 200px;
+            height: 45px;
+            line-height: 40px;
+            text-align: center;
+            color: white;
+            border: 1.5px solid white;
+            cursor: pointer;
+            i {
+                transform: translateY(7px);
+            }
+        }
+    }
+}
+</style>
+

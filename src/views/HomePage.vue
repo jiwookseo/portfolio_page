@@ -3,16 +3,16 @@
     <HeaderHome :websiteTitle="'HOME'" />
     <div class="homeContent">
       <section id="aboutme">
-
+        <h2 class="section-title">About Me</h2>
       </section>
       <section id="portfolio">
-
+        <h2 class="section-title">Portfolio</h2>
       </section>
       <section id="post">
-
+        <h2 class="section-title">Post</h2>
       </section>
       <section id="project">
-
+        <h2 class="section-title">Project</h2>
       </section>
     </div>
   </div>
@@ -57,6 +57,11 @@ section {
   &:nth-of-type(even) {
     background: #EEEEEE;
   }
+  .section-title {
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 2em;
+  }
 }
 
 $slant_h: 30px;
@@ -67,7 +72,7 @@ $slant_m: 20px;
   position: absolute;
   left: 0;
   border-style: solid;
-  z-index: 9;
+  z-index: 8;
   bottom: $slant_h * -1;
 }
 #aboutme::after, #post::after {
@@ -88,4 +93,10 @@ $slant_m: 20px;
     border-width: 0 0 $slant_m 100vw;
   }
 }
+
+
+
+
+
+
 </style>
