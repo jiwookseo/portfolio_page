@@ -1,9 +1,15 @@
 <template>
   <v-app id="app">
-    <v-content>
-      <v-btn @click="translate">translate</v-btn>
+    <v-content class="content">
       <router-view />
       <Footer />
+      <div class="tr-box" v-if="askToTranslate">
+        Would you like to translate this page?
+        <div class="btn-box">
+          <span class="yes" @click="translate">Translate</span>
+          <span class="no" @click="askToTranslate = false">No</span>
+        </div>
+      </div>
     </v-content>
   </v-app>
 </template>
@@ -22,7 +28,7 @@ export default {
   },
   data() {
     return {
-      //
+      askToTranslate: true
     };
   },
   methods: {
@@ -43,6 +49,35 @@ export default {
 <style lang="scss" scoped>
 @import "./css/reset.css";
 @import "./css/style.css";
+
+.content {
+  position: relative;
+}
+.tr-box {
+  position: fixed;
+  z-index: 20;
+  width: 250px;
+  top: 10px;
+  right: 10px;
+  border-radius: 10px;
+  background: beige;
+  border: 2px solid bisque;
+  font-size: 0.9em;
+  padding: 10px;
+  .btn-box {
+    height: 30px;
+    margin-top: 10px;
+    span {
+      padding: 5px 10px;
+      border: 1.5px solid gray;
+      border-radius: 5px;
+      cursor: pointer;
+      &:first-child {
+        margin-right: 10px;
+      }
+    }
+  }
+}
 </style>
 
 <style lang="scss">
