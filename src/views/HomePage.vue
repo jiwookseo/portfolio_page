@@ -7,6 +7,7 @@
       </section>
       <section id="portfolio">
         <h2 class="section-title">Portfolio</h2>
+        <Portfolio></Portfolio>
       </section>
       <section id="post">
         <h2 class="section-title">Post</h2>
@@ -21,11 +22,13 @@
 <script>
 import '../js/navbar.js';
 import HeaderHome from '../components/HeaderHome';
+import Portfolio from '../components/PortfolioWriteModal';
 
   export default {
     name: "HomePage",
     components: {
-      HeaderHome
+      HeaderHome,
+      Portfolio
     },
     methods: {
       scrollTo(target) {

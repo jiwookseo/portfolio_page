@@ -1,6 +1,6 @@
 https://shlee0882.tistory.com/220  -- image upload api  설명 블로그
 
-
+https://hsol.tistory.com/938 --image upload api 설명 블로그 이게 더 좋음
 
 ![1562574066708](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\1562574066708.png)
 
