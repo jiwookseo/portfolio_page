@@ -1,13 +1,27 @@
 <template>
     <header>
-        <nav>
-            <div class="nav-logo">{{websiteTitle}}</div>
-            <div>
-                <div class="nav-item"><router-link to="/portfolio">Portfolio</router-link></div>
-                <div class="nav-item"><router-link to="/post">Post</router-link></div>
+        <nav class="navbar">
+            <div class="nav-item"><router-link to="/">HOME</router-link></div>
+            <div class="btn-right">
+                <router-link to="/portfolio"><div class="nav-item">Portfolio</div></router-link>
+                <router-link to="/post"><div class="nav-item">Post</div></router-link>
                 <div class="nav-item login-btn" @click.stop="dialog = true">Login</div>
             </div>
         </nav>
+        <transition name="slide-fade">
+            <nav class="sidebar" v-if="showSidebar">
+                <router-link to="/"><div class="sb-nav-logo">HOME</div></router-link>
+                <ul>
+                    <router-link to="/portfolio"><li class="sb-nav-menu">Portfolio</li></router-link>
+                    <router-link to="/post"><li class="sb-nav-menu">Post</li></router-link>
+                    <li class="sb-nav-menu" @click.stop="sb_login">Login</li>
+                </ul>
+            </nav>
+        </transition>
+        <div class="menu-btn" @click="showSidebar = !showSidebar">
+            <span v-if="showSidebar"><i class="material-icons">clear</i></span>
+            <span v-if="!showSidebar"><i class="material-icons">dehaze</i></span>
+        </div>
         <FavBtn class="nav-fav" />
         <v-dialog v-model="dialog" class="login-dialog" width="400">
             <LoginDialog />
@@ -26,19 +40,55 @@ export default {
         LoginDialog
     },
     props: {
-        websiteTitle: {type: String}
     },
     data() {
         return {
             dialog: false,
             showSidebar: false,
         }
+    },
+    methods: {
+        sb_login() {
+            this.showSidebar = false;
+            this.dialog = true;
+        }
     }
 }
 </script>
 
 <style lang="scss" scoped>
-nav {
-    width: 100%;
+@import '../css/mixin.scss';
+@import '../css/navbar.scss';
+header {
+    position: relative;
 }
+a, a:hover {
+    color: initial;
+}
+.navbar {
+    position: fixed;
+    top: 0; left: 0;
+    .btn-right {
+        float: right;
+        margin-right: 50px;
+    }
+}
+.nav-item {
+    float: left;
+    padding: 0 20px;
+    text-decoration: none;
+    cursor: pointer;
+    &:hover {
+        background: #BBBBBB;
+    }
+}
+.nav-fav {
+    position: fixed;
+    top: 0; right: 0;
+    @include mobile {
+        background: rgba(255, 255, 255, 0.3);
+    }
+}
+
+
 </style>

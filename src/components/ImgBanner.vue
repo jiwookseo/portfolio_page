@@ -4,7 +4,7 @@
         <div class="imgBannerContent">
             <div class="bannerTitle">Team Six !!!!!</div>
             <div class="scrollPrompt" @click="scrollTo()">
-                SCROLL DOWN&nbsp;&nbsp;<i class="material-icons">arrow_drop_down</i>
+                &nbsp;&nbsp;&nbsp;SCROLL DOWN&nbsp;&nbsp;<i class="material-icons">arrow_drop_down</i>
             </div>
         </div>
     </div>

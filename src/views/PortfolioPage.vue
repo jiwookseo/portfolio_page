@@ -1,6 +1,9 @@
 <template>
     <div>
         <HeaderSub />
+        <div class="content">
+            <h2>Portfolio</h2>
+        </div>
     </div>
 </template>
 
@@ -18,5 +21,13 @@ export default {
 
 
 <style lang="scss" scoped>
-
+.content {
+    margin-top: 50px;
+    padding-top: 10px;
+    height: 1000px;
+    h2 {
+        text-align: center;
+        font-size: 2em;
+    }
+}
 </style>

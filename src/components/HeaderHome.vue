@@ -75,6 +75,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '../css/mixin.scss';
+@import '../css/navbar.scss';
 .homeHeader {
     width: 100%;
     height: calc(100vh + 50px);
@@ -85,17 +86,9 @@ export default {
     }
 }
 .navbar {
-    width: 100%;
-    height: 50px;
-    line-height: 50px;
     position: absolute;
     bottom: 0;
     left: 0;
-    background: #CCCCCC;
-    z-index: 9;
-    @include mobile {
-        display: none;
-    }
 }
 .nav-logo {
     float: left;
@@ -122,60 +115,6 @@ export default {
     cursor: pointer;
     &:hover {
         background: #BBBBBB;
-    }
-}
-
-.slide-fade-enter-active {
-    transition: all 0.5s ease;
-}
-.slide-fade-leave-active {
-    transition: all 0.5s ease;
-}
-.slide-fade-enter, .slide-fade-leave-to {
-    transform: translateX(-180px);
-    opacity: 0;
-}
-
-
-.sidebar {
-    width: 180px;
-    height: 100vh;
-    position: fixed;
-    top: 0; left: 0;
-    background: #EEEEEE;
-    box-shadow: 2px 0 10px gray;
-    z-index: 9;
-    @include viewportMin(601) {
-        display: none;
-    }
-}
-.sb-nav-logo, .sb-nav-menu {
-    width: 100%;
-    height: 50px;
-    line-height: 50px;
-    padding: 0 20px;
-}
-.sb-nav-logo {
-    text-align: right;
-}
-.sb-nav-menu:hover {
-    background: #BBBBBB;
-}
-.menu-btn {
-    position: fixed;
-    top: 0; left: 0;
-    width: 50px; height: 50px;
-    z-index: 10;
-    cursor: pointer;
-    background: rgba(255, 255, 255, 0.5);
-    display: none;
-    @include mobile {
-        display: initial;
-    }
-    span i {
-        position: absolute;
-        top: 50%; left: 50%;
-        transform: translate(-50%, -50%);
     }
 }
 
