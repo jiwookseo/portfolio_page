@@ -28,7 +28,7 @@ footer {
     color: white;
     text-transform: uppercase;
     position: relative;
-    z-index: 99;
+    z-index: 9;
 }
 #weather {
     position: absolute;

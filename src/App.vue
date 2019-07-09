@@ -31,21 +31,28 @@ export default {
 
 <style lang="scss">
 body {
-  overflow-y: overlay;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 body::-webkit-scrollbar {
-  width: 8px;
-}
-body::-webkit-scrollbar-track {
-  background-color: transparent;
-  border: 0;
-}
-body::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-  background-color: rgba(0, 0, 0, 0.2);
+  width: 7px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 50px;
   &:hover {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.1);
+    
+  }
+}
+body::-webkit-scrollbar-thumb:vertical {
+  -webkit-border-radius: 50px;
+  background-color: rgba(0, 0, 0, 0.4);
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0);
+  min-height: 10px;
+  &:active {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50px;
+    -webkit-border-radius: 50px;
   }
 }
 </style>

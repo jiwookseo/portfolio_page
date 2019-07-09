@@ -1,9 +1,10 @@
 <template>
     <header class="homeHeader">
-        
+        <ImgBanner :imgSrc="imgSrc" />
         <nav class="navbar">
             <div class="nav-logo">{{websiteTitle}}</div>
             <FavBtn class="nav-fav" />
+            <div class="login-btn" @click.stop="dialog = true">Login</div>
             <ul class="nav-menus">
                 <li v-for="menu in menus" :key="menu.name" @click="scrollTo(menu.target)">{{ menu.name }}</li>
             </ul>
@@ -13,6 +14,7 @@
                 <div class="sb-nav-logo">{{websiteTitle}}</div>
                 <ul>
                     <li v-for="menu in menus" class="sb-nav-menu" :key="menu.name" @click="sb_scrollTo(menu.target)">{{ menu.name }}</li>
+                    <li class="sb-nav-menu" @click.stop="sb_login">Login</li>
                 </ul>
             </nav>
         </transition>
@@ -21,22 +23,31 @@
             <span v-if="!showSidebar"><i class="material-icons">dehaze</i></span>
         </div>
         <FavBtn class="sb-fav"/>
+        <v-dialog v-model="dialog" class="login-dialog" width="400">
+            <LoginDialog />
+        </v-dialog>
     </header>
 </template>
 
 <script>
+import ImgBanner from './ImgBanner';
 import FavBtn from './FavBtn';
+import LoginDialog from './LoginDialog';
 
 export default {
     name: "HeaderHome",
     components: {
-        FavBtn
+        ImgBanner,
+        FavBtn,
+        LoginDialog
     },
     props: {
         websiteTitle: {type: String}
     },
     data() {
         return {
+            imgSrc: "https://source.unsplash.com/random/1600x900/",
+            dialog: false,
             showSidebar: false,
             menus: [
                 {name: 'About Me', target: '#aboutme'},
@@ -53,6 +64,10 @@ export default {
         sb_scrollTo(target) {
             this.$parent.scrollTo(target);
             this.showSidebar = false;
+        },
+        sb_login() {
+            this.showSidebar = false;
+            this.dialog = true;
         }
     }
 }
@@ -77,7 +92,7 @@ export default {
     bottom: 0;
     left: 0;
     background: #CCCCCC;
-    z-index: 999;
+    z-index: 9;
     @include mobile {
         display: none;
     }
@@ -101,6 +116,14 @@ export default {
         }
     }
 }
+.login-btn {
+    float: right;
+    padding: 0 20px;
+    cursor: pointer;
+    &:hover {
+        background: #BBBBBB;
+    }
+}
 
 .slide-fade-enter-active {
     transition: all 0.5s ease;
@@ -121,7 +144,7 @@ export default {
     top: 0; left: 0;
     background: #EEEEEE;
     box-shadow: 2px 0 10px gray;
-    z-index: 999;
+    z-index: 9;
     @include viewportMin(601) {
         display: none;
     }
@@ -142,7 +165,7 @@ export default {
     position: fixed;
     top: 0; left: 0;
     width: 50px; height: 50px;
-    z-index: 1000;
+    z-index: 10;
     cursor: pointer;
     background: rgba(255, 255, 255, 0.5);
     display: none;
@@ -169,4 +192,5 @@ export default {
         display: initial;
     }
 }
+
 </style>
