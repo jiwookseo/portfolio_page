@@ -3,47 +3,50 @@
     <HeaderHome :websiteTitle="'HOME'" />
     <div class="homeContent">
       <section id="aboutme">
-        <h2 class="section-title">About Me</h2>
+        <h2 class="section-title text">About me</h2>
       </section>
       <section id="portfolio">
-        <h2 class="section-title">Portfolio</h2>
+        <h2 class="section-title text">Portfolio</h2>
         <Portfolio></Portfolio>
       </section>
       <section id="post">
-        <h2 class="section-title">Post</h2>
+        <h2 class="section-title text">Post</h2>
       </section>
       <section id="project">
-        <h2 class="section-title">Project</h2>
+        <h2 class="section-title text">Project</h2>
       </section>
     </div>
   </div>
 </template>
 
 <script>
-import '../js/navbar.js';
-import HeaderHome from '../components/HeaderHome';
-import Portfolio from '../components/PortfolioWriteModal';
+import "../js/navbar.js";
+import HeaderHome from "../components/HeaderHome";
+import Portfolio from "../components/PortfolioWriteModal";
 
-  export default {
-    name: "HomePage",
-    components: {
-      HeaderHome,
-      Portfolio
-    },
-    methods: {
-      scrollTo(target) {
-        let targetscrolltop = $(target).offset().top;
-        $('html, body').animate({
+export default {
+  name: "HomePage",
+  components: {
+    HeaderHome,
+    Portfolio
+  },
+  methods: {
+    scrollTo(target) {
+      let targetscrolltop = $(target).offset().top;
+      $("html, body").animate(
+        {
           scrollTop: targetscrolltop + 10
-        }, 500);
-      }
+        },
+        500
+      );
     }
   }
+};
 </script>
 
 <style lang="scss" scoped>
-@import '../css/mixin.scss';
-@import '../css/style.scss';
+@import "../css/mixin.scss";
+@import "../css/style.scss";
 #wrap {
   width: 100%;
 }
@@ -81,7 +84,8 @@ $slant_m: 20px;
   z-index: 8;
   bottom: $slant_h * -1;
 }
-#aboutme::after, #post::after {
+#aboutme::after,
+#post::after {
   @include slanted;
   border-width: 0 100vw $slant_h 0;
   border-color: transparent white transparent transparent;
@@ -99,10 +103,4 @@ $slant_m: 20px;
     border-width: 0 0 $slant_m 100vw;
   }
 }
-
-
-
-
-
-
 </style>
