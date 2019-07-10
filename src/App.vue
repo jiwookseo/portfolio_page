@@ -67,11 +67,12 @@ export default {
   width: 50px; height: 50px;
   border-radius: 50%;
   right: 20px;
-  background: #DDDDDD;
+  background: $blue-accent;
   z-index: 15;
   cursor: pointer;
   i {
     @include centerItem;
+    color: white;
   }
   &:hover {
     animation: bobup 0.5s ease-in-out infinite alternate;
@@ -90,8 +91,8 @@ export default {
   bottom: 65px;
   right: 85px;
   border-radius: 10px;
-  background: #DDDDDD;
-  // border: 2px solid gray;
+  background: $nav-highlight;
+  border: 2px solid $nav-bg;
   font-size: 0.9em;
   padding: 10px;
   &::after {
@@ -101,7 +102,7 @@ export default {
     top: 40%;
     width: 0; height: 0;
     border-top: 7px solid transparent;
-    border-left: 10px solid #DDDDDD;
+    border-left: 10px solid $nav-bg;
     border-bottom: 7px solid transparent;
 
   }
@@ -110,7 +111,8 @@ export default {
     margin-top: 10px;
     span {
       padding: 5px 10px;
-      border: 1.5px solid gray;
+      background: linear-gradient(to bottom, $nav-highlight, $nav-bg);
+      border: 1.5px solid $nav-bg;
       border-radius: 5px;
       cursor: pointer;
       &:first-child {
@@ -132,11 +134,12 @@ export default {
 </style>
 
 <style lang="scss">
+@import "./css/style.scss";
 body {
   overflow-y: auto;
   overflow-x: hidden;
 }
-body::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 7px;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   -webkit-border-radius: 50px;
@@ -144,7 +147,7 @@ body::-webkit-scrollbar {
     background-color: rgba(0, 0, 0, 0.1);
   }
 }
-body::-webkit-scrollbar-thumb:vertical {
+::-webkit-scrollbar-thumb:vertical {
   -webkit-border-radius: 50px;
   background-color: rgba(0, 0, 0, 0.4);
   background-clip: padding-box;
@@ -155,6 +158,9 @@ body::-webkit-scrollbar-thumb:vertical {
     border-radius: 50px;
     -webkit-border-radius: 50px;
   }
+}
+div, span {
+  font-family: $font-content;
 }
 </style>
 

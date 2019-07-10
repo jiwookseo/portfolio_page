@@ -76,10 +76,10 @@ export default {
 <style lang="scss" scoped>
 @import '../css/mixin.scss';
 @import '../css/navbar.scss';
+@import '../css/style.scss';
 .homeHeader {
     width: 100%;
     height: calc(100vh + 50px);
-    background: #EEEEEE;
     position: relative;
     @include mobile {
         height: 100vh;
@@ -95,7 +95,7 @@ export default {
     padding: 0 20px;
     cursor: pointer;
         &:hover {
-            background: #BBBBBB;
+            background: $nav-highlight;
         }
 }
 .nav-menus {
@@ -105,7 +105,7 @@ export default {
         padding: 0 20px;
         cursor: pointer;
         &:hover {
-            background: #BBBBBB;
+            background: $nav-highlight;
         }
     }
 }
@@ -114,7 +114,7 @@ export default {
     padding: 0 20px;
     cursor: pointer;
     &:hover {
-        background: #BBBBBB;
+        background: $nav-highlight;
     }
 }
 
@@ -122,7 +122,7 @@ export default {
     float: right;
 }
 .sb-fav {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(240, 248, 255, 0.5);
     display: none;
     position: fixed;
     top: 0;
