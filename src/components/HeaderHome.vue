@@ -4,7 +4,8 @@
         <nav class="navbar">
             <div class="nav-logo">{{websiteTitle}}</div>
             <FavBtn class="nav-fav" />
-            <div class="login-btn" @click.stop="dialog = true">Login</div>
+            <div v-if="!getUser" class="login-btn" @click.stop="dialog = true">Login</div>
+            <div v-if="getUser" @click="signOut" class="login-btn" >Logout</div>
             <ul class="nav-menus">
                 <li v-for="menu in menus" :key="menu.name" @click="scrollTo(menu.target)">{{ menu.name }}</li>
             </ul>
@@ -14,7 +15,8 @@
                 <div class="sb-nav-logo">{{websiteTitle}}</div>
                 <ul>
                     <li v-for="menu in menus" class="sb-nav-menu" :key="menu.name" @click="sb_scrollTo(menu.target)">{{ menu.name }}</li>
-                    <li class="sb-nav-menu" @click.stop="sb_login">Login</li>
+                    <li v-if="!getUser" class="sb-nav-menu" @click.stop="sb_login">Login</li>
+                    <li v-if="getUser" class="sb-nav-menu" @click="signOut">Logout</li>
                 </ul>
             </nav>
         </transition>
@@ -24,7 +26,7 @@
         </div>
         <FavBtn class="sb-fav"/>
         <v-dialog v-model="dialog" class="login-dialog" width="400">
-            <LoginDialog />
+            <LoginDialog @child="parents"/>
         </v-dialog>
     </header>
 </template>
@@ -33,6 +35,7 @@
 import ImgBanner from './ImgBanner';
 import FavBtn from './FavBtn';
 import LoginDialog from './LoginDialog';
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
     name: "HeaderHome",
@@ -43,6 +46,9 @@ export default {
     },
     props: {
         websiteTitle: {type: String}
+    },
+    computed: {
+      ...mapGetters(['getUser'])
     },
     data() {
         return {
@@ -58,6 +64,12 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['logout']),
+        signOut () {
+          alert("로그아웃 되었습니다!")
+          this.logout()
+          this.$router.replace('/')
+        },
         scrollTo(target) {
             this.$parent.scrollTo(target);
         },
@@ -68,6 +80,9 @@ export default {
         sb_login() {
             this.showSidebar = false;
             this.dialog = true;
+        },
+        parents(dialog) {
+          this.dialog = dialog
         }
     }
 }

@@ -39,13 +39,13 @@
                 ></v-text-field>
                 <v-text-field
                     v-model="passwordConfirm"
+                    :rules="passwordConfirmRules"
                     label="Password Confirm"
                     :type="'password'"
                     required
                 ></v-text-field>
-                <v-btn color="success">Sign up</v-btn>
+                <v-btn color="success" v-on:click="signUp">Sign up</v-btn>
                 <v-spacer />
-                <v-btn color="primary">Sign up with Facebook</v-btn>
             </v-form>
         </div>
     </div>
@@ -54,6 +54,7 @@
 
 <script>
 import firebase from 'firebase'
+import { mapActions, mapGetters } from 'vuex'
 
 var provider = new firebase.auth.FacebookAuthProvider()
 provider.addScope('public_profile')
@@ -65,6 +66,7 @@ export default {
     name: "LoginDialog",
     data() {
         return {
+            dialog: false,
             valid: true,
             showLogin: true,
             email: '',
@@ -73,18 +75,53 @@ export default {
                 v => /.+@.+/.test(v) || 'E-mail must be valid'
             ],
             password: '',
-            passwordConfirm: '',
+            passwordConfirm: ''
         }
+    },
+    computed: {
+      ...mapActions(['logout']),
+      ...mapGetters({user: 'getUser'}),
+      passwordConfirmRules() {
+        return [
+          () => (this.password === this.passwordConfirm) || 'password must match',
+          v => !!v || 'Confirmation password is required'
+        ];
+      }
+    },
+    watch: {
+      user (user) {
+        if (user) this.$router.replace('/')
+      }
     },
     methods: {
         reset() {
             this.$refs.form.reset();
         },
+        signUp() {
+          firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
+            (user) => {
+              alert("회원가입 완료")
+              this.showLogin = true
+              this.$emit("child", this.dialog)
+              this.email= ''
+              this.password= ''
+              this.passwordConfirm= ''
+              this.logout()
+              this.$router.replace('/')
+            },
+            function(err) {
+              alert('에러 : ' + err.message)
+            }
+          );
+        },
         login() {
           firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
             (user) => {
               alert(this.email + "님 환영합니다")
-              this.$router.replace('home')
+              this.$emit("child", this.dialog)
+              this.email= ''
+              this.password= ''
+              this.$router.replace('/')
             },
             (err) => {
               alert('에러 : ' + err.message)
@@ -100,7 +137,10 @@ export default {
             console.log("user : " + user)
 
             alert(user + "님 환영합니다")
-            this.$router.replace('home')
+            this.$emit("child", this.dialog)
+            this.email= ''
+            this.password= ''
+            this.$router.replace('/')
 
           }).catch((err) => {
             alert('에러 : ' + err.message)
