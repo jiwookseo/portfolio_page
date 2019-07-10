@@ -1,6 +1,5 @@
 <template>
-    <div class="imgBannerOuter">
-        <v-img :src="imgSrc" class="imgBanner" alt="ImgBanner"></v-img>
+    <div class="imgBannerOuter" :style="{ 'background-image': 'url(' + imgSrc + ')'}">
         <div class="imgBannerContent">
             <div class="bannerTitle">Team Six !!!!!</div>
             <div class="scrollPrompt" @click="scrollTo()">
@@ -27,18 +26,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .imgBannerOuter {
     width: 100%;
     height: 100vh;
     position: absolute;
     top: 0; left: 0;
-    .imgBanner, .imgBannerContent {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0; left: 0;
-    }
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
     .imgBannerContent {
+        width: 100%; height: 100%;
+        position: relative;
         background-color: rgba(0, 0, 0, 0.5);
         .bannerTitle {
             text-align: center;
