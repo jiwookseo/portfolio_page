@@ -3,8 +3,12 @@
     <v-content class="content">
       <router-view />
       <Footer />
-      <div class="chat-btn"><i class="material-icons">chat</i></div>
-      <div class="tr-btn" @click="askToTranslate = !askToTranslate"><i class="material-icons">g_translate</i></div>
+      <div class="chat-btn">
+        <i class="material-icons">chat</i>
+      </div>
+      <div class="tr-btn" @click="askToTranslate = !askToTranslate">
+        <i class="material-icons">g_translate</i>
+      </div>
       <transition name="slide-fade">
         <div class="tr-box" v-if="askToTranslate">
           Would you like to translate this page?
@@ -23,7 +27,7 @@ import Footer from "./components/Footer";
 import axios from "axios";
 
 const translateURL =
-  "https://us-central1-test-68bfc.cloudfunctions.net/translate?query=";
+  "https://us-central1-test-68bfc.cloudfunctions.net/translate";
 
 export default {
   name: "App",
@@ -37,12 +41,16 @@ export default {
   },
   methods: {
     translate: () => {
-      document.querySelectorAll(".translateText").forEach(dom => {
+      document.querySelectorAll(".text").forEach(dom => {
         axios
-          .get(translateURL + dom.innerText)
-          .then(
-            res => (dom.innerText = res.data.message.result.translatedText)
-          );
+          .get(`${translateURL}?text=${dom.innerText}&target=ja&source=en`)
+          .then(res => {
+            const data = res.data.message.result;
+            dom.innerText = data.translatedText;
+            console.log("source languge : " + data.srcLangType);
+            console.log("target languge : " + data.tarLangType);
+            console.log("translated text : " + data.translatedText);
+          });
       });
     }
   }
@@ -59,12 +67,18 @@ export default {
 }
 
 @keyframes bobup {
-  0% {transform: translateY(0px);}
-  100% {transform: translateY(-3px);}
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(-3px);
+  }
 }
-.chat-btn, .tr-btn {
+.chat-btn,
+.tr-btn {
   position: fixed;
-  width: 50px; height: 50px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   right: 20px;
   background: $blue-accent;
@@ -79,7 +93,7 @@ export default {
   }
 }
 .chat-btn {
-  bottom: 20px; 
+  bottom: 20px;
 }
 .tr-btn {
   bottom: 80px;
@@ -100,11 +114,11 @@ export default {
     position: absolute;
     left: 100%;
     top: 40%;
-    width: 0; height: 0;
+    width: 0;
+    height: 0;
     border-top: 7px solid transparent;
     border-left: 10px solid $nav-bg;
     border-bottom: 7px solid transparent;
-
   }
   .btn-box {
     height: 30px;
@@ -122,14 +136,15 @@ export default {
   }
 }
 .slide-fade-enter-active {
-    transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 .slide-fade-leave-active {
-    transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
-.slide-fade-enter, .slide-fade-leave-to {
-    transform: translateX(50px);
-    opacity: 0;
+.slide-fade-enter,
+.slide-fade-leave-to {
+  transform: translateX(50px);
+  opacity: 0;
 }
 </style>
 
@@ -159,7 +174,8 @@ body {
     -webkit-border-radius: 50px;
   }
 }
-div, span {
+div,
+span {
   font-family: $font-content;
 }
 </style>
