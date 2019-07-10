@@ -16,9 +16,9 @@
                     :type="'password'"
                     required
                 ></v-text-field>
-                <v-btn color="primary">Login</v-btn>
+                <v-btn color="primary" v-on:click="login">Login</v-btn>
                 <v-spacer />
-                <v-btn color="primary">Login with Facebook</v-btn>
+                <v-btn color="primary" v-on:click="facebookLogin">Login with Facebook</v-btn>
             </v-form>
         </div>
         <div class="dialog-outer" v-if="!showLogin">
@@ -53,6 +53,14 @@
 
 
 <script>
+import firebase from 'firebase'
+
+var provider = new firebase.auth.FacebookAuthProvider()
+provider.addScope('public_profile')
+provider.setCustomParameters({
+  'display': 'popup'
+})
+
 export default {
     name: "LoginDialog",
     data() {
@@ -71,6 +79,32 @@ export default {
     methods: {
         reset() {
             this.$refs.form.reset();
+        },
+        login() {
+          firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
+            (user) => {
+              alert(this.email + "님 환영합니다")
+              this.$router.replace('home')
+            },
+            (err) => {
+              alert('에러 : ' + err.message)
+            }
+          );
+        },
+        facebookLogin() {
+          firebase.auth().signInWithPopup(provider).then((result) => {
+            var token = result.credential.accessToken
+            var user = result.user.displayName
+
+            console.log("token : " + token)
+            console.log("user : " + user)
+
+            alert(user + "님 환영합니다")
+            this.$router.replace('home')
+
+          }).catch((err) => {
+            alert('에러 : ' + err.message)
+          })
         }
     }
 }

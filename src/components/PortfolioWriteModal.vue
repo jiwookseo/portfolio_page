@@ -38,8 +38,6 @@
 </v-layout>
 </template>
 
-</html>
-
 <script>
 export default {
   data: () => ({
