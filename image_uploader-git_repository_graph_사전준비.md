@@ -40,9 +40,21 @@ https://allroundplaying.tistory.com/58  --gitlab api 사용방법 블로그
 
 
 
+git api를 이용하여 access token을 제공받는다.
+
+ssafy git lab  maintainer token : mSzGEe1Ba9KXsNynKz-A
 
 
 
+개인
+
+ssafy git lab access token : NEtfy1EdyQb73LxZRJnP
 
 
+
+![1562734535481](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\1562734535481.png)
+
+https://lab.ssafy.com/api/v4/projects/6043/repository/commits?private_token=mSzGEe1Ba9KXsNynKz-A&
+
+--git api 를 이용하여 commit에 대한 data불러오기
 
