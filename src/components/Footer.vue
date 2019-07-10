@@ -115,10 +115,15 @@ footer {
 }
 #weather {
     position: absolute;
-    width: 120px;
-    height: auto;
-    bottom: 90px;
+    width: 160px;
+    height: 110px;
+    bottom: 30%;
     left: 5%;
+    padding-left: 25px;
+    opacity: 0.8;
+    // border : 1px solid white;
+    border-radius: 20px;
+    background: linear-gradient(#6190E8,  #A7BFE8);
     .weather-city {
       height: 50px;
       .city-name {
@@ -129,6 +134,9 @@ footer {
         float: left;
       }
     }
+}
+#weather:hover{
+  opacity: 1.0;
 }
 #copyrights {
     position: absolute;
