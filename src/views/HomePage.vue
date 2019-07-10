@@ -43,6 +43,7 @@ import Portfolio from '../components/PortfolioWriteModal';
 
 <style lang="scss" scoped>
 @import '../css/mixin.scss';
+@import '../css/style.scss';
 #wrap {
   width: 100%;
 }
@@ -58,12 +59,14 @@ section {
     background: white;
   }
   &:nth-of-type(even) {
-    background: #EEEEEE;
+    background: $bg-light;
   }
   .section-title {
     text-transform: uppercase;
     text-align: center;
     font-size: 2em;
+    font-family: $font-title;
+    letter-spacing: 2px;
   }
 }
 
@@ -90,7 +93,7 @@ $slant_m: 20px;
 #portfolio::after {
   @include slanted;
   border-width: 0 0 $slant_h 100vw;
-  border-color: transparent transparent transparent #EEEEEE;
+  border-color: transparent transparent transparent $bg-light;
   @include mobile {
     bottom: $slant_m * -1;
     border-width: 0 0 $slant_m 100vw;

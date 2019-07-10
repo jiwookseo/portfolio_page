@@ -1,10 +1,12 @@
 @import './mixin.scss';
+@import './style.scss';
 
 .navbar {
     width: 100%;
     height: 50px;
-    line-height: 50px;
-    background: #CCCCCC;
+    line-height: 48px;
+    border-bottom: 2px solid $blue-accent;
+    background: $nav-bg;
     z-index: 10;
     @include mobile {
         display: none;
@@ -27,7 +29,7 @@
     height: 100vh;
     position: fixed;
     top: 0; left: 0;
-    background: #EEEEEE;
+    background: $nav-bg;
     box-shadow: 2px 0 10px gray;
     z-index: 10;
     @include viewportMin(601) {
@@ -46,7 +48,7 @@
     text-align: right;
 }
 .sb-nav-menu:hover {
-    background: #BBBBBB;
+    background: $nav-highlight;
 }
 
 .menu-btn {
@@ -55,7 +57,7 @@
     width: 50px; height: 50px;
     z-index: 15;
     cursor: pointer;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(240, 248, 255, 0.5);
     display: none;
     @include mobile {
         display: initial;

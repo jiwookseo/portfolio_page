@@ -1,12 +1,23 @@
 <template>
 <footer>
   <div id="weather">
+    <div title="오늘의 날씨" v-on:close="exit">
+      <div v-if="!!city">
+        <div class="weather-city">
+          <div class="city-name">{{ city }}</div><img :src='image'>
+        </div>
+        <div>기온 : {{tempMin}}&deg;C / {{tempMax}}&deg;C</div>
+        <div>습도 : {{humidity}}%</div>
+      </div>
+    </div>
 
-    <div title="Weather in your city" width="400" height="150" margined v-on:close="exit" >
+
+
+    <!-- <div title="Weather in your city" width="400" height="150" margined v-on:close="exit" >
       <div padded>
-        <!-- <div horizontal padded>
+        <div horizontal padded>
           <Button :enabled="!!query" @onload ="showWeather">Search</Button>
-        </div> -->
+        </div>
         <div horizontal />
         <div margined>
           <div padded>
@@ -23,7 +34,9 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
+
+
   </div>
   <div id="copyrights">SSAFY Team Six ©2019</div>
   <div id="top-btn" @click="totop"><span><i class="material-icons">keyboard_arrow_up</i></span></div>
@@ -89,10 +102,12 @@ const apiKey = process.env.API_KEY;
 </script>
 
 <style lang="scss" scoped>
+@import '../css/style.scss';
+
 footer {
     width: 100%;
-    height: 250px;
-    background: #181818;
+    height: 200px;
+    background: $footer-bg;
     color: white;
     text-transform: uppercase;
     position: relative;
@@ -101,9 +116,19 @@ footer {
 #weather {
     position: absolute;
     width: 120px;
-    height: 120px;
-    bottom: 100px;
-    right: 5%;
+    height: auto;
+    bottom: 90px;
+    left: 5%;
+    .weather-city {
+      height: 50px;
+      .city-name {
+        font-size: 1.5em;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        float: left;
+      }
+    }
 }
 #copyrights {
     position: absolute;
@@ -111,15 +136,18 @@ footer {
     height: 20px;
     line-height: 20px;
     text-align: center;
-    bottom: 50px;
+    bottom: 40px;
     left: 50%;
     transform: translate(-50%);
+    font-family: $font-content;
+    font-weight: 100;
+    letter-spacing: 2px;
 }
 @keyframes bobup {
     0% {transform: translateY(0);}
     100% {transform: translateY(-4px);}
 }
-$top-btn-size: 40px;
+$top-btn-size: 35px;
 #top-btn {
     width: $top-btn-size * 2;
     height: $top-btn-size;
@@ -129,7 +157,7 @@ $top-btn-size: 40px;
     top: $top-btn-size * -1;
     left: 50%;
     transform: translate(-50%);
-    background: #181818;
+    background: $footer-bg;
     cursor: pointer;
     span {
         width: 100%;

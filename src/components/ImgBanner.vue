@@ -26,7 +26,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+@import '../css/style.scss';
 .imgBannerOuter {
     width: 100%;
     height: 100vh;
@@ -38,9 +38,10 @@ export default {
     .imgBannerContent {
         width: 100%; height: 100%;
         position: relative;
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(0, 0, 0, 0.2);
         .bannerTitle {
             text-align: center;
+            font-family: $font-title;
             font-size: 5em;
             color: white;
             text-shadow: 1px 1px 0px #181818, 2px 2px 5px white, -2px -2px 5px white;
