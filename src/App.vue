@@ -11,10 +11,13 @@
       </div>
       <transition name="slide-fade">
         <div class="tr-box" v-if="askToTranslate">
-          Would you like to translate this page?
+          <div
+            v-text="translated ? 'This page has been translated.' : 'Would you like to translate this page?'"
+          ></div>
           <div class="btn-box">
-            <span class="yes" @click="translate">Translate</span>
-            <span class="no" @click="askToTranslate = false">No</span>
+            <span v-if="translated" class="yes" @click="showOrigin">Show Original</span>
+            <span v-else class="yes" @click="translate('en', 'ja')">Translate</span>
+            <span class="no" @click="askToTranslate = false">Close</span>
           </div>
         </div>
       </transition>
@@ -36,22 +39,56 @@ export default {
   },
   data() {
     return {
-      askToTranslate: false
+      askToTranslate: false,
+      translatedText: {},
+      originalText: [],
+      textDOMs: [],
+      translated: false
     };
   },
+  mounted() {
+    this.textDOMs = document.querySelectorAll(".text");
+    this.textDOMs.forEach(dom => this.originalText.push(dom.innerText));
+  },
   methods: {
-    translate: () => {
-      document.querySelectorAll(".text").forEach(dom => {
-        axios
-          .get(`${translateURL}?text=${dom.innerText}&target=ja&source=en`)
-          .then(res => {
-            const data = res.data.message.result;
-            dom.innerText = data.translatedText;
-            console.log("source languge : " + data.srcLangType);
-            console.log("target languge : " + data.tarLangType);
-            console.log("translated text : " + data.translatedText);
-          });
-      });
+    translate: function(source, target) {
+      if (this.translated) {
+        // console.log("Already translated");
+        return;
+      } else this.translated = true;
+      // console.log("Source languge : " + source);
+      // console.log("Target languge : " + target);
+      if (!this.translatedText[target]) {
+        // console.log("Required translate");
+        this.translatedText[target] = Array(this.textDOMs.length);
+        this.textDOMs.forEach((dom, i) => {
+          axios
+            .get(
+              `${translateURL}?text=${this.originalText[i]}&source=${source}&target=${target}`
+            )
+            .then(res => {
+              this.translatedText[target][i] =
+                res.data.message.result.translatedText;
+            })
+            .then(() => {
+              dom.innerText = this.translatedText[target][i];
+            });
+        });
+        // console.log("original text : ", this.originalText);
+        // console.log("translated text : ", this.translatedText[target]);
+      } else {
+        // console.log("Already exist translated text");
+        this.textDOMs.forEach(
+          (dom, i) => (dom.innerText = this.translatedText[target][i])
+        );
+      }
+    },
+    showOrigin: function() {
+      if (!this.translated) {
+        // console.log("Already loaded origin");
+        return;
+      } else this.translated = false;
+      this.textDOMs.forEach((dom, i) => (dom.innerText = this.originalText[i]));
     }
   }
 };
