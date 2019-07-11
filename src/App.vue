@@ -14,9 +14,19 @@
           <div
             v-text="translated ? 'This page has been translated.' : 'Would you like to translate this page?'"
           ></div>
+          <v-select
+            class="mt-4 mb-4 pt-0"
+            v-if="!translated"
+            light
+            hide-selected
+            hide-details
+            :items="langauge"
+            label="Select language"
+            v-model="selectedLanguage"
+          ></v-select>
           <div class="btn-box">
             <span v-if="translated" class="yes" @click="showOrigin">Show Original</span>
-            <span v-else class="yes" @click="translate('en', 'ja')">Translate</span>
+            <span v-else class="yes" @click="translate('en', selectedLanguage)">Translate</span>
             <span class="no" @click="askToTranslate = false">Close</span>
           </div>
         </div>
@@ -43,7 +53,26 @@ export default {
       translatedText: {},
       originalText: [],
       textDOMs: [],
-      translated: false
+      translated: false,
+      selectedLanguage: "",
+      langauge: [
+        {
+          text: "Korean",
+          value: "ko"
+        },
+        {
+          text: "Japanese",
+          value: "ja"
+        },
+        {
+          text: "French",
+          value: "fr"
+        },
+        {
+          text: "Chinese",
+          value: "zh-CN"
+        }
+      ]
     };
   },
   mounted() {
