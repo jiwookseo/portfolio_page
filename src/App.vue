@@ -75,6 +75,21 @@ export default {
   mounted() {
     this.textDOMs = document.querySelectorAll(".text");
     this.textDOMs.forEach(dom => this.originalText.push(dom.innerText));
+    this.langauge.forEach(e => {
+      const target = e.value;
+      this.translatedText[target] = Array(this.textDOMs.length);
+
+      for (let index = 0; index < this.textDOMs.length; index++) {
+        axios
+          .get(
+            `${translateURL}?text=${this.originalText[index]}&source=${source}&target=${target}`
+          )
+          .then(res => {
+            this.translatedText[target][index] =
+              res.data.message.result.translatedText;
+          });
+      }
+    });
   },
   methods: {
     translate: function(source, target) {
@@ -84,7 +99,10 @@ export default {
       } else this.translated = true;
       // console.log("Source languge : " + source);
       // console.log("Target languge : " + target);
-      if (!this.translatedText[target]) {
+      if (
+        !this.translatedText[target] ||
+        this.translatedText[target] !== this.textDOMs.length
+      ) {
         // console.log("Required translate");
         this.translatedText[target] = Array(this.textDOMs.length);
         this.textDOMs.forEach((dom, i) => {
