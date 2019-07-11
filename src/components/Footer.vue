@@ -8,6 +8,7 @@
         </div>
         <div>기온 : {{tempMin}}&deg;C / {{tempMax}}&deg;C</div>
         <div>습도 : {{humidity}}%</div>
+        <div></div>
       </div>
     </div>
 
