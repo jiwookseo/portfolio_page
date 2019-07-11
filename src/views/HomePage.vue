@@ -7,10 +7,15 @@
       </section>
       <section id="portfolio">
         <h2 class="section-title text">Portfolio</h2>
-        <Portfolio></Portfolio>
+        <PortfolioList :limit=4></PortfolioList>
+        <div>
+          <PortfolioWriteModal />
+        </div>
+        
       </section>
       <section id="post">
         <h2 class="section-title text">Post</h2>
+        <PostList />
       </section>
       <section id="project">
         <h2 class="section-title text">Project</h2>
@@ -21,14 +26,24 @@
 
 <script>
 import "../js/navbar.js";
+// import firestore from "../firebase/firestore";
 import HeaderHome from "../components/HeaderHome";
-import Portfolio from "../components/PortfolioWriteModal";
+import PortfolioList from "../components/PortfolioList";
+import PortfolioWriteModal from "../components/PortfolioWriteModal";
+import PostList from "../components/PostList";
 
 export default {
   name: "HomePage",
   components: {
     HeaderHome,
-    Portfolio
+    PortfolioList,
+    PortfolioWriteModal,
+    PostList
+  },
+  data() {
+    return {
+
+    }
   },
   methods: {
     scrollTo(target) {
@@ -102,5 +117,9 @@ $slant_m: 20px;
     bottom: $slant_m * -1;
     border-width: 0 0 $slant_m 100vw;
   }
+}
+
+#portfolio {
+  height: auto;
 }
 </style>
