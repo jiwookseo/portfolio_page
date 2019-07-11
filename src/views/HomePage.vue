@@ -7,11 +7,11 @@
       </section>
       <section id="portfolio">
         <h2 class="section-title text">Portfolio</h2>
-        <PortfolioList :limit=4></PortfolioList>
+        <PortfolioList :limit="4"></PortfolioList>
         <div>
           <PortfolioWriteModal />
         </div>
-        
+
       </section>
       <section id="post">
         <h2 class="section-title text">Post</h2>

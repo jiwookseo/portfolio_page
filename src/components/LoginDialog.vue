@@ -106,6 +106,8 @@ export default {
         .then(
           user => {
             alert(this.email + "님 환영합니다");
+            console.log(user)
+            console.log(this.email)
             this.$emit("child", this.dialog);
             this.email = "";
             this.password = "";

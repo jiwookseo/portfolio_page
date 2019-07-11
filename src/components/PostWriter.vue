@@ -17,7 +17,7 @@
       <v-form v-model="valid">
         <v-container>
           <v-text-field label="Title" v-model="title" :rules="titleRules" required name="title"></v-text-field>
-          <v-text-field label="Body" v-model="body" required name="body"></v-text-field>
+          <v-text-field label="Body" v-model="content" required name="content"></v-text-field>
           <div style="text-align: center;">
             <v-btn @click="submit" :disabled="!valid">submit</v-btn>
             <v-btn @click="clear">clear</v-btn>
@@ -44,24 +44,23 @@ export default {
       titleRules: [
         (v) => !!v || 'Title is required',
       ],
-      body: ''
+      content: ''
     }
   },
   methods: {
     submit() {
       let title = this.title
-      let body = this.body
-      firestore.postPost(title, body)
+      let content = this.content
+      firestore.postPost(title, content)
       this.dialog = false;
     },
     clear() {
       this.title = '',
-      this.body = ''
+      this.content = ''
     },
     close() {
       this.title = '',
-      this.body = '',
-      this.imgSrc = '',
+      this.content = '',
       this.dialog = false;
     }
   }

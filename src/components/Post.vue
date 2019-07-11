@@ -3,7 +3,7 @@
     <v-flex row>
       <div class="caption">{{formatedDate}}</div>
       <h2 class="color-333 headline font-weight-light headoverflow">{{title}}</h2>
-      <p class="mb-1 color-666 font-weight-light subheading overflow">{{body}}</p>
+      <p class="mb-1 color-666 font-weight-light subheading overflow">{{content}}</p>
     </v-flex>
   </v-layout>
 </template>
@@ -14,7 +14,7 @@ export default {
 	props: {
 		date: {type: Date},
 		title: {type: String},
-		body: {type: String}
+		content: {type: String}
 	},
   computed: {
 		formatedDate() {
