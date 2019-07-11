@@ -1,6 +1,7 @@
 $(document).ready(function(){
-    if ($('.homeContent').length) {
-        $(window).scroll(function(){
+
+    $(window).scroll(function(){
+        if ($('.homeContent').length) {
             if ($(window).scrollTop() >= $('.homeContent').offset().top) {
                 $('.navbar').css({
                     position: 'fixed',
@@ -15,6 +16,8 @@ $(document).ready(function(){
                     bottom: 0,
                 });
             }
-        });
-    }
+        }
+        
+    });
+
 });
