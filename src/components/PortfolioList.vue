@@ -15,6 +15,9 @@
             </v-flex>
         </v-layout>
         <v-layout>
+            
+        </v-layout>
+        <v-layout>
             <div class="tmptmp">
             Title: <input type="text" v-model="title"><br>
             Content: <input type="text" v-model="content"><br>

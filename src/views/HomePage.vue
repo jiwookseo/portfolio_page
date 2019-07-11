@@ -9,7 +9,7 @@
         <h2 class="section-title text">Portfolio</h2>
         <PortfolioList :limit=4 />
         <div>
-          <div class="more"><router-link to="/portfolio">More Portfolios</router-link></div>
+          <div class="more"><router-link to="/portfolio"><div>More Portfolios</div></router-link></div>
         </div>
         <div>
           <PortfolioWriteModal />
@@ -20,7 +20,7 @@
         <h2 class="section-title text">Post</h2>
         <PostList :limit=4 />
         <div>
-          <div class="more"><router-link to="/post">More Posts</router-link></div>
+          <div class="more"><router-link to="/post"><div>More Posts</div></router-link></div>
         </div>
       </section>
       <section id="project">
@@ -132,12 +132,21 @@ $slant_m: 20px;
   height: auto;
 }
 .more {
-    margin: 30px auto 0;
-    width: 140px;
-    height: 40px;
-    line-height: 37px;
-    border-radius: 5px;
-    border: 1.5px solid $blue-accent;
-    text-align: center;
+  margin: 30px auto 0;
+  width: 140px;
+  height: 40px;
+  line-height: 37px;
+  border-radius: 5px;
+  border: 1.5px solid $nav-bg;
+  text-align: center;
+  transition: all 0.3s;
+  background: linear-gradient(to bottom, $nav-bg, $footer-bg);
+  div {
+    width: 100%; height: 100%;
+    color: #181818;
+  }
+  &:hover {
+    background: linear-gradient(to bottom, $nav-bg, $nav-bg);
+  }
 }
 </style>
