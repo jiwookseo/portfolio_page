@@ -1,7 +1,10 @@
 <template>
-    <div class="posts-container">
-
-    </div>
+    <v-container>
+        <v-layout row wrap>
+            <v-flex v-for="i in posts.length > limit ? limit : posts.length" :key="posts[i-1].id" xs12 sm6>
+            </v-flex>
+        </v-layout>
+    </v-container>
 </template>
 
 
