@@ -9,6 +9,7 @@ Vue.use(Vuex)
 firebaseAuth.onAuthStateChanged((user) => {
   if (user) {
     state.user = user
+    console.log("user : " + user)
   } else {
     state.user = null
   }

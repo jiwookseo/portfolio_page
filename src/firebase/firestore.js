@@ -2,6 +2,7 @@ import { firebase } from './firebase'
 import Firebase from 'firebase/app'
 
 const firestore = Firebase.firestore()
+const db = Firebase.database()
 
 const POSTS = 'posts'
 const PORTFOLIOS = 'portfolios'
@@ -48,14 +49,11 @@ export default {
 			created_at: Firebase.firestore.FieldValue.serverTimestamp()
 		})
 	},
-	loginWithGoogle() {
-		let provider = new firebase.auth.GoogleAuthProvider()
-		return firebase.auth().signInWithPopup(provider).then(function(result) {
-			let accessToken = result.credential.accessToken
-			let user = result.user
-			return result
-		}).catch(function(error) {
-			console.error('[Google Login Error]', error)
-		})
-	}
+	logView(user, id, path, time) {
+    db.ref('LOG/' + user).set({
+      userId: id,
+      path: path,
+      time: time
+    })
+  }
 }
