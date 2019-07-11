@@ -20,6 +20,7 @@
             light
             hide-selected
             hide-details
+            append-outer-icon="g_translate"
             :items="langauge"
             label="Select language"
             v-model="selectedLanguage"
@@ -67,10 +68,6 @@ export default {
         {
           text: "French",
           value: "fr"
-        },
-        {
-          text: "Chinese",
-          value: "zh-CN"
         }
       ]
     };
