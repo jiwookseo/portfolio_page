@@ -11,13 +11,15 @@
 
 
 <script>
-import HeaderSub from '../components/HeaderSub';
 import firestore from '../firebase/firestore';
+import HeaderSub from '../components/HeaderSub';
+import PortfolioList from '../components/PortfolioList';
 
 export default {
     name: "PortfolioPage",
     components: {
-        HeaderSub
+        HeaderSub,
+        PortfolioList
     },
     data() {
       return {
