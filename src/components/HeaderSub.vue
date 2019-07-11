@@ -74,6 +74,7 @@ export default {
 <style lang="scss" scoped>
 @import "../css/mixin.scss";
 @import "../css/navbar.scss";
+@import "../css/style.scss";
 header {
   position: relative;
 }
@@ -96,7 +97,7 @@ a:hover {
   text-decoration: none;
   cursor: pointer;
   &:hover {
-    background: #bbbbbb;
+    background: $nav-highlight;;
   }
 }
 .nav-fav {
@@ -104,7 +105,7 @@ a:hover {
   top: 0;
   right: 0;
   @include mobile {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(240, 248, 255, 0.5);
   }
 }
 </style>
