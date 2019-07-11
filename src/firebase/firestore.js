@@ -1,49 +1,49 @@
-import { firebase } from './firebase'
-import Firebase from 'firebase/app'
+import { firebase } from './firebase';
+import Firebase from 'firebase/app';
 
-const firestore = Firebase.firestore()
-
-const POSTS = 'posts'
-const PORTFOLIOS = 'portfolios'
+const firestore = Firebase.firestore();
+const POSTS = 'posts';
+const PORTFOLIOS = 'portfolios';
 
 export default {
-	getPosts() {
-		const postsCollection = firestore.collection(POSTS)
-		return postsCollection
-				.orderBy('created_at', 'desc')
-				.get()
-				.then((docSnapshots) => {
-					return docSnapshots.docs.map((doc) => {
-						let data = doc.data()
-						data.created_at = new Date(data.created_at.toDate())
-						return data
-					})
-				})
+	async getPosts() {
+		let posts = [];
+		let snapshot = await firestore.collection(POSTS).orderBy('created_at', 'desc').get();
+		snapshot.docs.forEach(doc => {
+			posts.push({
+				id: doc.id,
+				title: doc.data().title,
+				content: doc.data().content,
+				created_at: doc.data().created_at
+			});
+		});
+		return posts
 	},
-	postPost(title, body) {
+	postPost(title, content) {
 		return firestore.collection(POSTS).add({
 			title,
-			body,
+			content,
 			created_at: firebase.firestore.FieldValue.serverTimestamp()
 		})
 	},
-	getPortfolios() {
-		const postsCollection = firestore.collection(PORTFOLIOS)
-		return postsCollection
-				.orderBy('created_at', 'desc')
-				.get()
-				.then((docSnapshots) => {
-					return docSnapshots.docs.map((doc) => {
-						let data = doc.data()
-						data.created_at = new Date(data.created_at.toDate())
-						return data
-					})
-				})
+	async getPortfolios() {
+		let portfolios = [];
+		let snapshot = await firestore.collection(PORTFOLIOS).orderBy('created_at', 'desc').get();
+		snapshot.docs.forEach(doc => {
+			portfolios.push({
+				id: doc.id,
+				title: doc.data().title,
+				content: doc.data().content,
+				img: doc.data().img,
+				created_at: doc.data().created_at
+			});
+		});
+		return portfolios
 	},
-	postPortfolio(title, body, img) {
+	postPortfolio(title, content, img) {
 		return firestore.collection(PORTFOLIOS).add({
 			title,
-			body,
+			content,
 			img,
 			created_at: Firebase.firestore.FieldValue.serverTimestamp()
 		})
