@@ -39,7 +39,7 @@
 
 
 <script>
-import firebase from "firebase";
+//import firebase from "firebase";
 
 /*
 var provider = new firebase.auth.FacebookAuthProvider();
@@ -92,10 +92,16 @@ export default {
     },
     signUp() {
       this.$store.dispatch('signUserUp', {email: this.email, password: this.password})
+      this.email= ''
+      this.password= ''
+      this.passwordConfirm= ''
+      this.showLogin= true
       this.closePopup()
     },
     login() {
       this.$store.dispatch('signUserIn', {email: this.email, password: this.password})
+      this.email= ''
+      this.password= ''
       this.closePopup()
     },
     facebookLogin() {
