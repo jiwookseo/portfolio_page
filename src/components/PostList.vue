@@ -9,33 +9,45 @@
 
 
 <script>
+import Post from '@/components/Post'
 import firestore from '../firebase/firestore';
 
 export default {
-    name: "PostList",
-    props: {
-        limit: {type: Number, default: 4}
+  name: "PostList",
+  props: {
+    limit: {
+      type: Number,
+      default: 4
     },
-    data() {
-        return {
-            title: '',
-            content: '',
-            posts: []
-        }
-    },
-    mounted() {
-        this.getPosts();
-    },
-    methods: {
-        async getPosts() {
-            this.posts = await firestore.getPosts();
-        },
-        postPost() {
-            firestore.postPost(this.title, this.content);
-            this.title = '';
-            this.content = '';
-        }
+    loadMore: {type: Boolean, default: true}
+  },
+  data() {
+    return {
+      title: '',
+      content: '',
+      posts: []
     }
+  },
+  mounted() {
+    this.getPosts();
+  },
+  components: {
+		Post
+	},
+  methods: {
+    async getPosts() {
+      this.posts = await firestore.getPosts();
+    },
+    loadMorePosts() {
+      this.loadMore = false
+      this.limits = this.posts.length;
+    },
+    postPost() {
+      firestore.postPost(this.title, this.content);
+      this.title = '';
+      this.content = '';
+    }
+  }
 }
 </script>
 
@@ -43,5 +55,4 @@ export default {
 <style lang="scss" scoped>
 @import "../css/mixin.scss";
 @import "../css/style.scss";
-
 </style>
