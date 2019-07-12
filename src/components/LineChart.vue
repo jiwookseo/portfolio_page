@@ -121,7 +121,7 @@
 
           var gtcount = 1;
           var jiwoncount = 1;
-          var jiwookcount = 1;
+          var jiwookcount = 12;
           var gyuseokcount = 1;
           var gibeomcount =1;
           var dateString = this.date[0];
