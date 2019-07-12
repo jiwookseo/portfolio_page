@@ -3,8 +3,10 @@
         <HeaderSub />
         <div class="content">
             <h2>Portfolio</h2>
-            <p>{{portfolios}}</p>
-            <div @click="postPortfolio">Create</div>
+            <PortfolioList :limit=8 :allowCreate=true />
+            <div>
+              <div>Load More</div>
+            </div>
         </div>
     </div>
 </template>
@@ -37,10 +39,10 @@ export default {
         this.portfolios = await firestore.getPortfolios();
       },
       postPortfolio() {
-        let title = 'test'
-        let content = 'test'
-        let img = 'test'
-        firestore.postPortfolio(title, content, img)
+        firestore.postPortfolio(this.title, this.content, this.img);
+        this.title = '',
+        this.content = '',
+        this.img = ''
       }
     }
 }
@@ -51,7 +53,7 @@ export default {
 .content {
     margin-top: 50px;
     padding-top: 10px;
-    height: 1000px;
+    height: 2000px;
     h2 {
         text-align: center;
         font-size: 2em;

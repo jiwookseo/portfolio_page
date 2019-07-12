@@ -5,7 +5,7 @@
         <router-link to="/">HOME</router-link>
       </div>
       <div class="btn-right">
-        <router-link to="/portfolio">
+        <router-link to="/portfolio" @click="log">
           <div class="nav-item text">Portfolio</div>
         </router-link>
         <router-link to="/post">
@@ -66,6 +66,9 @@ export default {
     sb_login() {
       this.showSidebar = false;
       this.dialog = true;
+    },
+    log() {
+
     }
   }
 };
@@ -74,7 +77,6 @@ export default {
 <style lang="scss" scoped>
 @import "../css/mixin.scss";
 @import "../css/navbar.scss";
-@import "../css/style.scss";
 header {
   position: relative;
 }
@@ -97,7 +99,7 @@ a:hover {
   text-decoration: none;
   cursor: pointer;
   &:hover {
-    background: $nav-highlight;;
+    background: #bbbbbb;
   }
 }
 .nav-fav {
@@ -105,7 +107,7 @@ a:hover {
   top: 0;
   right: 0;
   @include mobile {
-    background: rgba(240, 248, 255, 0.5);
+    background: rgba(255, 255, 255, 0.3);
   }
 }
 </style>

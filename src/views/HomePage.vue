@@ -7,15 +7,21 @@
       </section>
       <section id="portfolio">
         <h2 class="section-title text">Portfolio</h2>
-        <PortfolioList :limit=4></PortfolioList>
+        <PortfolioList :limit=4 />
+        <div>
+          <div class="more"><router-link to="/portfolio">More Portfolios</router-link></div>
+        </div>
         <div>
           <PortfolioWriteModal />
         </div>
-        
+
       </section>
       <section id="post">
         <h2 class="section-title text">Post</h2>
-        <PostList />
+        <PostList :limit=4 />
+        <div>
+          <div class="more"><router-link to="/post">More Posts</router-link></div>
+        </div>
       </section>
       <section id="project">
         <h2 class="section-title text">Project</h2>
@@ -62,6 +68,9 @@ export default {
 <style lang="scss" scoped>
 @import "../css/mixin.scss";
 @import "../css/style.scss";
+a, a:hover {
+    color: initial;
+}
 #wrap {
   width: 100%;
 }
@@ -121,5 +130,14 @@ $slant_m: 20px;
 
 #portfolio {
   height: auto;
+}
+.more {
+    margin: 30px auto 0;
+    width: 140px;
+    height: 40px;
+    line-height: 37px;
+    border-radius: 5px;
+    border: 1.5px solid $blue-accent;
+    text-align: center;
 }
 </style>
