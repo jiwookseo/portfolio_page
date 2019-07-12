@@ -101,7 +101,7 @@ export default {
   logout({commit}) {
     firebaseAuth
       .signOut()
-      .then((user) => {
+      .then(() => {
         commit('setUser', null)
       })
       .catch((error) => console.error(`SingOut Error: ${error}`))
