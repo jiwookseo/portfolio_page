@@ -6,7 +6,7 @@
                     <div class="img" :style="{'background-image': 'url(' + portfolios[i-1].img + ')'}"></div>
                     <div class="content">
                         <h3 class="title text">{{ portfolios[i-1].title }}</h3>
-                        <div class="more text" @click="viewDetail(portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img)">View More</div>
+                        <div class="more text" @click="viewDetail(portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img, portfolios[i-1].created_at.seconds)">View More</div>
                         <div class="btn-box">
                             <div class="update" @click="openPortfolioWriterUpdate(portfolios[i-1].id, portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img)"><i class="material-icons">edit</i></div>
                             <div class="delete" @click="deleteConfirm(portfolios[i-1].id)"><i class="material-icons">delete</i></div>
@@ -21,7 +21,7 @@
                 <PortfolioWriteDialog @child="parents" :createMode=createMode :id=id :title=title :content=content :img=img />
             </v-dialog>
             <v-dialog v-model="dialogDetail" width="500">
-                <PortfolioDetailDialog :id=id :title=title :content=content :img=img />
+                <PortfolioDetailDialog :id=id :title=title :content=content :img=img :created_at=created_at />
             </v-dialog>
             <v-snackbar v-model="snackbar" :timeout=0>
                 Delete this portfolio?
@@ -66,6 +66,7 @@ export default {
             title: '',
             content: '',
             img: '',
+            created_at: 0,
             portfolios: [],
             dialogWrite: false,
             createMode: true,
@@ -116,10 +117,11 @@ export default {
           alert('Portfolio deleted');
           this.snackbar = false;
       },
-      viewDetail(title, content, img) {
+      viewDetail(title, content, img, created_at) {
         this.title = title;
         this.content = content;
         this.img = img;
+        this.created_at = created_at;
         this.dialogDetail = true;
       },
       parents(dialogWrite) {

@@ -1,7 +1,8 @@
 <template>
     <div class="dialog-outer">
-        <h3>{{currTitle}}</h3>
-        <p>{{currContent}}</p>
+        <h3>{{title}}</h3>
+        <p>{{date_created}}</p>
+        <p>{{content}}</p>
     </div>
 </template>
 
@@ -14,8 +15,15 @@ export default {
         }
     },
     props: {
-        currTitle: {type: String},
-        currContent: {type: String}
+        title: {type: String},
+        content: {type: String},
+        created_at: {type: Number}
+    },
+    computed: {
+        date_created() {
+            const date = new Date(this.created_at * 1000);
+            return date
+        }
     }
 }
 </script>
