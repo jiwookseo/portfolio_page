@@ -261,12 +261,7 @@ export default {
           }
 
 
-          console.log(geuntae);
-          console.log(jiwon);
-          console.log(jiwook);
-          console.log(gyuseok);
-          console.log(gibeom);
-          console.log("reach here");
+          
         })
         .catch(() => {});
     },
