@@ -25,7 +25,7 @@ export default {
 		return firestore.collection(POSTS).add({
 			title,
 			content,
-			created_at: firebase.firestore.FieldValue.serverTimestamp()
+			created_at: Firebase.firestore.FieldValue.serverTimestamp()
 		})
 	},
 	async getPortfolios() {
