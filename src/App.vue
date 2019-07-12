@@ -1,5 +1,6 @@
 <template>
   <v-app id="app">
+    <LoadingSpinner v-show="loading" :message="'translating...'" />
     <v-content class="content">
       <router-view />
       <Footer />
@@ -38,6 +39,7 @@
 
 <script>
 import Footer from "./components/Footer";
+import LoadingSpinner from "./components/LoadingSpinner";
 import axios from "axios";
 
 const translateURL =
@@ -46,11 +48,13 @@ const translateURL =
 export default {
   name: "App",
   components: {
-    Footer
+    Footer,
+    LoadingSpinner
   },
   data() {
     return {
       askToTranslate: false,
+      loading: false,
       translatedText: {},
       originalText: [],
       textDOMs: [],
@@ -106,7 +110,9 @@ export default {
         this.translatedText[target] !== this.textDOMs.length
       ) {
         // console.log("Required translate");
+        this.loading = true;
         this.translatedText[target] = Array(this.textDOMs.length);
+        let counter = 0;
         this.textDOMs.forEach((dom, i) => {
           axios
             .get(
@@ -118,6 +124,10 @@ export default {
             })
             .then(() => {
               dom.innerText = this.translatedText[target][i];
+              counter++;
+              if (counter === this.textDOMs.length) {
+                this.loading = false;
+              }
             });
         });
         // console.log("original text : ", this.originalText);
