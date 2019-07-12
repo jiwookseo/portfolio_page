@@ -48,5 +48,22 @@ export default {
 			img,
 			created_at: Firebase.firestore.FieldValue.serverTimestamp()
 		})
-	}
+	},
+	deletePortfolio(docID) {
+		firestore.collection(PORTFOLIOS).doc(docID).delete();
+	},
+	updatePortfolio(docID, title, content, img) {
+		firestore.collection(PORTFOLIOS).doc(docID).update({
+			title: title,
+			content: content,
+			img: img
+		});
+	},
+	logView(user, id, path, time) {
+    db.ref('LOG/' + user).set({
+      userId: id,
+      path: path,
+      time: time
+    })
+  }
 }
