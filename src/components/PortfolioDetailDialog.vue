@@ -1,6 +1,7 @@
 <template>
     <div class="dialog-outer">
         <h3>{{title}}</h3>
+        <p>{{date_created}}</p>
         <p>{{content}}</p>
         <p>{{img}}</p>
     </div>
@@ -11,13 +12,20 @@ export default {
     name: "PortfolioDetailDialog",
     data() {
         return {
-
+            date: ''
         }
     },
     props: {
         title: {type: String},
         content: {type: String},
         img: {type: String},
+        created_at: {type: Number}
+    },
+    computed: {
+        date_created() {
+            const date = new Date(this.created_at * 1000);
+            return date
+        }
     }
 }
 </script>

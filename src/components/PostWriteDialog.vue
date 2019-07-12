@@ -5,6 +5,7 @@
             <v-text-field v-model="title" label="Title" required :rules="titleRules"></v-text-field>
             <v-text-field v-model="content" label="Content" required :rules="contentRules"></v-text-field>
             <div>
+                <v-btn @click="closeDialog" class="text">Cancel</v-btn>
                 <v-btn color="warning" @click="clear" class="text">Clear</v-btn>
                 <v-btn color="primary" @click="create" class="text" :disabled="!valid">Create</v-btn>
             </div>
