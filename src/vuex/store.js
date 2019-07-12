@@ -8,7 +8,8 @@ Vue.use(Vuex)
 
 firebaseAuth.onAuthStateChanged((user) => {
   if (user) {
-    state.user = user
+    state.user = user.email
+    console.log("userName : " + user.email)
   } else {
     state.user = null
   }

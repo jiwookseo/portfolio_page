@@ -74,11 +74,6 @@ export default {
       ];
     }
   },
-  watch: {
-    user(user) {
-      if (user) this.$router.replace("/");
-    }
-  },
   methods: {
     reset() {
       this.$refs.form.reset();
@@ -90,6 +85,7 @@ export default {
         .then(
           user => {
             alert("회원가입 완료");
+            console.log("signup email : " + this.email);
             this.showLogin = true;
             this.$emit("child", this.dialog);
             this.email = "";
@@ -110,6 +106,8 @@ export default {
         .then(
           user => {
             alert(this.email + "님 환영합니다");
+            console.log(user)
+            console.log(this.email)
             this.$emit("child", this.dialog);
             this.email = "";
             this.password = "";
