@@ -49,12 +49,5 @@ export default {
 			img,
 			created_at: Firebase.firestore.FieldValue.serverTimestamp()
 		})
-	},
-	logView(user, id, path, time) {
-    db.ref('LOG/' + user).set({
-      userId: id,
-      path: path,
-      time: time
-    })
-  }
+	}
 }

@@ -4,6 +4,7 @@
     <div class="homeContent">
       <section id="aboutme">
         <h2 class="section-title text">About me</h2>
+        <div class="section-title text" v-if="user">[테스트문장] {{user.email}}님 반갑습니다</div>
       </section>
       <section id="portfolio">
         <h2 class="section-title text">Portfolio</h2>
@@ -24,7 +25,7 @@
         </div>
       </section>
       <section id="project">
-        <h2 class="section-title text">Project</h2>
+        <h2 class="section-title text">Portfolio</h2>
       </section>
     </div>
   </div>
@@ -48,7 +49,11 @@ export default {
   },
   data() {
     return {
-
+    }
+  },
+  computed: {
+    user () {
+      return this.$store.getters.user
     }
   },
   methods: {
