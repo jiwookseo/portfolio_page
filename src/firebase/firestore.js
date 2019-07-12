@@ -2,7 +2,6 @@ import { firebase } from './firebase';
 import Firebase from 'firebase/app';
 
 const firestore = Firebase.firestore()
-const db = Firebase.database()
 
 const POSTS = 'posts'
 const PORTFOLIOS = 'portfolios'
@@ -25,7 +24,7 @@ export default {
 		return firestore.collection(POSTS).add({
 			title,
 			content,
-			created_at: firebase.firestore.FieldValue.serverTimestamp()
+			created_at: Firebase.firestore.FieldValue.serverTimestamp()
 		})
 	},
 	async getPortfolios() {
@@ -49,12 +48,5 @@ export default {
 			img,
 			created_at: Firebase.firestore.FieldValue.serverTimestamp()
 		})
-	},
-	logView(user, id, path, time) {
-    db.ref('LOG/' + user).set({
-      userId: id,
-      path: path,
-      time: time
-    })
-  }
+	}
 }

@@ -4,8 +4,9 @@
     <nav class="navbar">
       <div class="nav-logo text">{{websiteTitle}}</div>
       <FavBtn class="nav-fav" />
-      <div v-if="!getUser" class="login-btn text" @click.stop="dialog = true">Login</div>
-      <div v-if="getUser" @click="signOut" class="login-btn text">Logout</div>
+      <div></div>
+      <div v-if="!user" class="login-btn text" @click.stop="dialog = true">Login</div>
+      <div v-if="user" @click="signOut" class="login-btn text">Logout</div>
       <ul class="nav-menus">
         <li
           v-for="menu in menus"
@@ -25,8 +26,8 @@
             :key="menu.name"
             @click="sb_scrollTo(menu.target)"
           >{{ menu.name }}</li>
-          <li v-if="!getUser" class="sb-nav-menu text" @click.stop="sb_login">Login</li>
-          <li v-if="getUser" class="sb-nav-menu text" @click="signOut">Logout</li>
+          <li v-if="!user" class="sb-nav-menu text" @click.stop="sb_login">Login</li>
+          <li v-if="user" class="sb-nav-menu text" @click="signOut">Logout</li>
         </ul>
       </nav>
     </transition>
@@ -49,7 +50,7 @@
 import ImgBanner from "./ImgBanner";
 import FavBtn from "./FavBtn";
 import LoginDialog from "./LoginDialog";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "HeaderHome",
@@ -62,7 +63,9 @@ export default {
     websiteTitle: { type: String }
   },
   computed: {
-    ...mapGetters(["getUser"])
+    user () {
+      return this.$store.getters.user
+    }
   },
   data() {
     return {
@@ -80,9 +83,9 @@ export default {
   methods: {
     ...mapActions(["logout"]),
     signOut() {
-      alert("로그아웃 되었습니다!");
-      this.logout();
-      this.$router.replace("/");
+      this.logout()
+      alert("로그아웃 되었습니다!")
+      this.$router.replace("/")
     },
     scrollTo(target) {
       this.$parent.scrollTo(target);
