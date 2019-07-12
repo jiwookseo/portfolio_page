@@ -7,27 +7,39 @@
                     <div class="content">
                         <h3 class="title text">{{ portfolios[i-1].title }}</h3>
                         <div class="more text" @click="viewDetail(portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img)">View More</div>
+                        <div class="btn-box">
+                            <div class="update" @click="openPortfolioWriterUpdate(portfolios[i-1].id, portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img)"><i class="material-icons">edit</i></div>
+                            <div class="delete" @click="deleteConfirm(portfolios[i-1].id)"><i class="material-icons">delete</i></div>
+                        </div>
                     </div>
                 </div>
             </v-flex>
-            <v-flex v-if="allowCreate" class="portfolio" xs12 sm6 md4 lg3>
+            <v-flex v-if="allowCreate" @click="openPortfolioWriterCreate" class="portfolio" xs12 sm6 md4 lg3>
                 <div class="portfolio-content new"><span>+ New Portfolio</span></div>
             </v-flex>
-            <v-dialog v-model="dialogDetail" width="500">
-                <PortfolioDetailDialog :currTitle=currTitle :currContent=currContent :currImg=currImg />
+            <v-dialog v-model="dialogWrite" width="500" persistent="">
+                <PortfolioWriteDialog @child="parents" :createMode=createMode :id=id :title=title :content=content :img=img />
             </v-dialog>
+            <v-dialog v-model="dialogDetail" width="500">
+                <PortfolioDetailDialog :id=id :title=title :content=content :img=img />
+            </v-dialog>
+            <v-snackbar v-model="snackbar" :timeout=0>
+                Delete this portfolio?
+                <v-btn @click="deletePortfolio(deleteID)">Delete</v-btn>
+                <v-btn @click="snackbar = false">Cancel</v-btn>
+            </v-snackbar>
         </v-layout>
         <v-layout>
             
         </v-layout>
-        <v-layout>
+        <!-- <v-layout>
             <div class="tmptmp">
             Title: <input type="text" v-model="title"><br>
             Content: <input type="text" v-model="content"><br>
             ImgURL: <input type="text" v-model="img"><br>
             <span @click="postPortfolio">Create</span>
             </div>
-        </v-layout>
+        </v-layout> -->
     </v-container>
 </template>
 
@@ -36,6 +48,7 @@
 import firestore from '../firebase/firestore';
 
 import PortfolioDetailDialog from './PortfolioDetailDialog';
+import PortfolioWriteDialog from './PortfolioWriteDialog';
 
 export default {
     name: "PortfolioList",
@@ -44,18 +57,25 @@ export default {
         allowCreate: {type: Boolean, default: false}
     },
     components: {
-        PortfolioDetailDialog
+        PortfolioDetailDialog,
+        PortfolioWriteDialog
     },
     data() {
         return {
+            id: '',
             title: '',
             content: '',
             img: '',
             portfolios: [],
+            dialogWrite: false,
+            createMode: true,
             dialogDetail: false,
-            currTitle: '',
-            currContent: '',
-            currImg: ''
+            // currID: '',
+            // currTitle: '',
+            // currContent: '',
+            // currImg: '',
+            snackbar: false,
+            deleteID: ''
         }
     },
     mounted() {
@@ -65,20 +85,46 @@ export default {
       async getPortfolios() {
         this.portfolios = await firestore.getPortfolios();
       },
-      postPortfolio() {
-        if (this.title && this.content && this.img) {
-            firestore.postPortfolio(this.title, this.content, this.img);
-            this.title = '',
-            this.content = '',
-            this.img = ''
-        }
+      openPortfolioWriterCreate() {
+        this.createMode = true;
+        this.title = '';
+        this.content = '';
+        this.img = '';
+        this.dialogWrite = true;
+        
+        // if (this.title && this.content && this.img) {
+        //     firestore.postPortfolio(this.title, this.content, this.img);
+        //     this.title = '',
+        //     this.content = '',
+        //     this.img = ''
+        // }
+      },
+      openPortfolioWriterUpdate(id, title, content, img) {
+        this.createMode = false;
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.img = img;
+        this.dialogWrite = true;
+      },
+      deleteConfirm(id) {
+          this.snackbar = true;
+          this.deleteID = id;
+      },
+      deletePortfolio(id) {
+          firestore.deletePortfolio(id);
+          alert('Portfolio deleted');
+          this.snackbar = false;
       },
       viewDetail(title, content, img) {
-        this.currTitle = title;
-        this.currContent = content;
-        this.currImg = img;
+        this.title = title;
+        this.content = content;
+        this.img = img;
         this.dialogDetail = true;
-      }
+      },
+      parents(dialogWrite) {
+        this.dialogWrite = dialogWrite;
+      },
     }
 }
 </script>
@@ -120,8 +166,9 @@ a, a:hover {
         width: 100%; height: 100%;
         position: absolute;
         top: 0; left: 0;
-        background: rgba(4, 5, 31, 0);
+        background: rgba(4, 5, 31, 1);
         transition: all 0.3s;
+        opacity: 0;
         .title {
             position: absolute;
             top: 10%;
@@ -130,8 +177,6 @@ a, a:hover {
             padding: 20px 20px;
             color: white;
             @include textTruncate;
-            opacity: 0;
-            transition: all 0.3s;
         }
         .more {
             width: 120px;
@@ -145,15 +190,23 @@ a, a:hover {
             color: white;
             border: 1.5px solid white;
             margin: 20px auto 0;
-            opacity: 0;
-            transition: all 0.3s;
             cursor: pointer;
+        }
+        .btn-box {
+            position: absolute;
+            top: 5px; right: 0;
+        }
+        .delete, .update {
+            display: inline-block;
+            margin-right: 5px;
+            color: white;
+            cursor: pointer;
+            i {font-size: 1.5em;}
         }
     }
     &:hover{
         .content {
-            background: rgba(4, 5, 31, 1);
-            .title, .more {opacity: 1}
+            opacity: 1;
         }
         .img {
             transform: scale(1.1);

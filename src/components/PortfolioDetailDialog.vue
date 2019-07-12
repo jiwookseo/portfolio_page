@@ -1,8 +1,8 @@
 <template>
     <div class="dialog-outer">
-        <h3>{{currTitle}}</h3>
-        <p>{{currContent}}</p>
-        <p>{{currImg}}</p>
+        <h3>{{title}}</h3>
+        <p>{{content}}</p>
+        <p>{{img}}</p>
     </div>
 </template>
 
@@ -15,9 +15,9 @@ export default {
         }
     },
     props: {
-        currTitle: {type: String},
-        currContent: {type: String},
-        currImg: {type: String},
+        title: {type: String},
+        content: {type: String},
+        img: {type: String},
     }
 }
 </script>

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import getters from './getters'
 import actions from './actions'
-import { firebaseAuth } from '@/firebase/firebaseAuth'
+//import { firebaseAuth } from '@/firebase/firebaseAuth'
 
 Vue.use(Vuex)
 
