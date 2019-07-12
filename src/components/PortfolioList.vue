@@ -15,6 +15,9 @@
             </v-flex>
         </v-layout>
         <v-layout>
+            
+        </v-layout>
+        <v-layout>
             <div class="tmptmp">
             Title: <input type="text" v-model="title"><br>
             Content: <input type="text" v-model="content"><br>
@@ -86,7 +89,7 @@ a, a:hover {
     position: relative;
     // border: 1px solid blue;
     overflow: hidden;
-    border-radius: 10px;
+    border-radius: 5px;
     .img {
         width: 100%; height: 100%;
         position: absolute;
@@ -140,10 +143,49 @@ a, a:hover {
     }
 }
 .portfolio-content.new {
-    border: 2px solid $nav-bg;
+    box-shadow: inset 0 0 0 3px $nav-bg;
+    color: $nav-bg;
+    transition: color 0.25s 0.09s;
+    position: relative;
     cursor: pointer;
     span {
+        font-size: 1.3em;
         @include centerItem;
+    }
+    &::before, &::after {
+        border: 0 solid transparent;
+        content: '';
+        box-sizing: border-box;
+        pointer-events: none;
+        position: absolute;
+        width: 0;
+        height: 0;
+        bottom: 0;
+        right: 0;
+        border-radius: 5px;
+    }
+    &::before {
+        border-bottom-width: 3px;
+        border-left-width: 3px;
+    }
+    &::after {
+        border-top-width: 3px;
+        border-right-width: 3px;
+    }
+    &:hover {
+        color: $blue-accent;
+    }
+    &:hover::before, &:hover::after {
+        border-color: $blue-accent;
+        transition: border-color 0s, width 0.25s, height 0.25s;
+        width: 100%;
+        height: 100%;
+    }
+    &:hover::before {
+        transition-delay: 0s, 0s, 0.25s;
+    }
+    &:hover::after {
+        transition-delay: 0s, 0.25s, 0s;
     }
 }
 .tmptmp {

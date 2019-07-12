@@ -75,21 +75,23 @@ export default {
   mounted() {
     this.textDOMs = document.querySelectorAll(".text");
     this.textDOMs.forEach(dom => this.originalText.push(dom.innerText));
-    this.langauge.forEach(e => {
-      const target = e.value;
-      this.translatedText[target] = Array(this.textDOMs.length);
+    // 마운트 시에 모든 언어를 번역해 저장해 놓는 방식. 파파고 API 사용량의 문제(일 1만자)로 제한적 사용.
+    // const source = "en";
+    // this.langauge.forEach(e => {
+    //   const target = e.value;
+    //   this.translatedText[target] = Array(this.textDOMs.length);
 
-      for (let index = 0; index < this.textDOMs.length; index++) {
-        axios
-          .get(
-            `${translateURL}?text=${this.originalText[index]}&source=${source}&target=${target}`
-          )
-          .then(res => {
-            this.translatedText[target][index] =
-              res.data.message.result.translatedText;
-          });
-      }
-    });
+    //   for (let index = 0; index < this.textDOMs.length; index++) {
+    //     axios
+    //       .get(
+    //         `${translateURL}?text=${this.originalText[index]}&source=${source}&target=${target}`
+    //       )
+    //       .then(res => {
+    //         this.translatedText[target][index] =
+    //           res.data.message.result.translatedText;
+    //       });
+    //   }
+    // });
   },
   methods: {
     translate: function(source, target) {
@@ -183,7 +185,7 @@ export default {
   position: fixed;
   z-index: 15;
   width: 250px;
-  bottom: 65px;
+  bottom: 20px;
   right: 85px;
   border-radius: 10px;
   background: $nav-highlight;
@@ -260,4 +262,3 @@ span {
   font-family: $font-content;
 }
 </style>
-

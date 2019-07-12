@@ -5,7 +5,7 @@
         <router-link to="/">HOME</router-link>
       </div>
       <div class="btn-right">
-        <router-link to="/portfolio">
+        <router-link to="/portfolio" @click="log">
           <div class="nav-item text">Portfolio</div>
         </router-link>
         <router-link to="/post">
@@ -66,6 +66,9 @@ export default {
     sb_login() {
       this.showSidebar = false;
       this.dialog = true;
+    },
+    log() {
+
     }
   }
 };
@@ -97,7 +100,7 @@ a:hover {
   text-decoration: none;
   cursor: pointer;
   &:hover {
-    background: $nav-highlight;;
+    background: $nav-highlight;
   }
 }
 .nav-fav {
