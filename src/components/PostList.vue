@@ -1,15 +1,18 @@
 <template>
     <v-container>
         <v-layout row wrap>
-            <v-flex class="post" v-for="i in posts.length > limit ? limit : posts.length" :key="posts[i-1].id" xs12 sm6>
-                <h3>{{ posts[i-1].title }}</h3>
-                <p>{{ posts[i-1].content }}</p>
+            <v-flex class="post" @click="viewDetail(posts[i-1].title, posts[i-1].content)" v-for="i in posts.length > limit ? limit : posts.length" :key="posts[i-1].id" xs12 sm6>
+                <h3 class="text">{{ posts[i-1].title }}</h3>
+                <p class="text">{{ posts[i-1].content }}</p>
             </v-flex>
             <v-flex v-if="allowCreate" @click="dialogWrite = true" class="post" xs12 sm6>
-                <span>+ New Post</span>
+                <span class="text">+ New Post</span>
             </v-flex>
             <v-dialog v-model="dialogWrite" width="600">
                 <PostWriteDialog @child="parents" />
+            </v-dialog>
+            <v-dialog v-model="dialogDetail" width="500">
+                <PostDetailDialog :currTitle=currTitle :currContent=currContent />
             </v-dialog>
         </v-layout>
     </v-container>
@@ -18,7 +21,7 @@
 
 <script>
 import PostWriteDialog from './PostWriteDialog';
-import Post from '@/components/Post'
+import PostDetailDialog from './PostDetailDialog';
 import firestore from '../firebase/firestore';
 
 export default {
@@ -32,15 +35,18 @@ export default {
       title: '',
       content: '',
       posts: [],
-      dialogWrite: false
+      dialogWrite: false,
+      dialogDetail: false,
+      currTitle: '',
+      currContent: ''
     }
   },
   mounted() {
     this.getPosts();
   },
   components: {
-        Post,
-        PostWriteDialog
+        PostWriteDialog,
+        PostDetailDialog
 	},
   methods: {
     async getPosts() {
@@ -57,6 +63,11 @@ export default {
     },
     parents(dialogWrite) {
       this.dialogWrite = dialogWrite;
+    },
+    viewDetail(title, content) {
+        this.currTitle = title;
+        this.currContent = content;
+        this.dialogDetail = true;
     }
   }
 }
@@ -71,5 +82,11 @@ export default {
     border: 1px solid;
     padding: 10px;
     cursor: pointer;
+    h3 {
+        @include textTruncate;
+    }
+    p {
+        @include line-clamp-4;
+    }
 }
 </style>

@@ -5,14 +5,17 @@
                 <div class="portfolio-content">
                     <div class="img" :style="{'background-image': 'url(' + portfolios[i-1].img + ')'}"></div>
                     <div class="content">
-                        <h5 class="title text">{{ portfolios[i-1].title }}</h5>
-                        <div class="more text">View More</div>
+                        <h3 class="title text">{{ portfolios[i-1].title }}</h3>
+                        <div class="more text" @click="viewDetail(portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img)">View More</div>
                     </div>
                 </div>
             </v-flex>
             <v-flex v-if="allowCreate" class="portfolio" xs12 sm6 md4 lg3>
                 <div class="portfolio-content new"><span>+ New Portfolio</span></div>
             </v-flex>
+            <v-dialog v-model="dialogDetail" width="500">
+                <PortfolioDetailDialog :currTitle=currTitle :currContent=currContent :currImg=currImg />
+            </v-dialog>
         </v-layout>
         <v-layout>
             
@@ -32,18 +35,27 @@
 <script>
 import firestore from '../firebase/firestore';
 
+import PortfolioDetailDialog from './PortfolioDetailDialog';
+
 export default {
     name: "PortfolioList",
     props: {
         limit: {type: Number, default: 4},
         allowCreate: {type: Boolean, default: false}
     },
+    components: {
+        PortfolioDetailDialog
+    },
     data() {
         return {
             title: '',
             content: '',
             img: '',
-            portfolios: []
+            portfolios: [],
+            dialogDetail: false,
+            currTitle: '',
+            currContent: '',
+            currImg: ''
         }
     },
     mounted() {
@@ -60,6 +72,12 @@ export default {
             this.content = '',
             this.img = ''
         }
+      },
+      viewDetail(title, content, img) {
+        this.currTitle = title;
+        this.currContent = content;
+        this.currImg = img;
+        this.dialogDetail = true;
       }
     }
 }
