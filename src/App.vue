@@ -154,6 +154,7 @@ export default {
 <style lang="scss" scoped>
 @import "./css/reset.css";
 @import "./css/style.scss";
+@import "./css/mixin.scss";
 
 .content {
   position: relative;
