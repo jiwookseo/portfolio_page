@@ -39,5 +39,10 @@ export default {
 .content {
     margin-top: 50px;
     padding-top: 10px;
+    height: 2000px;
+    h2 {
+        text-align: center;
+        font-size: 2em;
+    }
 }
 </style>
