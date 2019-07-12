@@ -85,7 +85,7 @@ a, a:hover {
 section {
   width: 100%;
   height: 500px;
-  padding-top: 80px;
+  padding: 80px 0 50px;
   position: relative;
   &:nth-of-type(odd) {
     background: white;

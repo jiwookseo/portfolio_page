@@ -92,7 +92,7 @@ export default {
     }
     hr {
         width: 70%;
-        border: 1px solid $nav-bg;
+        border: 1.2px solid $nav-bg;
         border-radius: 3px;
     }
     .date {
