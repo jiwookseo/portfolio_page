@@ -1,268 +1,302 @@
 <template>
-    <v-container>
-        <v-layout row wrap>
-            <v-flex class="portfolio" v-for="i in portfolios.length > limit ? limit : portfolios.length" :key="portfolios[i-1].id" xs12 sm6 md4 lg3>
-                <div class="portfolio-content">
-                    <div class="img" :style="{'background-image': 'url(' + portfolios[i-1].img + ')'}"></div>
-                    <div class="content">
-                        <h3 class="title text">{{ portfolios[i-1].title }}</h3>
-                        <div class="more text" @click="viewDetail(portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img, portfolios[i-1].created_at.seconds)">View More</div>
-                        <div class="btn-box">
-                            <div class="update" @click="openPortfolioWriterUpdate(portfolios[i-1].id, portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img)"><i class="material-icons">edit</i></div>
-                            <div class="delete" @click="deleteConfirm(portfolios[i-1].id)"><i class="material-icons">delete</i></div>
-                        </div>
-                    </div>
-                </div>
-            </v-flex>
-            <v-flex v-if="allowCreate" @click="openPortfolioWriterCreate" class="portfolio" xs12 sm6 md4 lg3>
-                <div class="portfolio-content new"><span>+ New Portfolio</span></div>
-            </v-flex>
-            <v-dialog v-model="dialogWrite" width="500" persistent="">
-                <PortfolioWriteDialog @child="parents" :createMode=createMode :id=id :title=title :content=content :img=img />
-            </v-dialog>
-            <v-dialog v-model="dialogDetail" width="500">
-                <PortfolioDetailDialog :id=id :title=title :content=content :img=img :created_at=created_at />
-            </v-dialog>
-            <v-snackbar v-model="snackbar" :timeout=0>
-                Delete this portfolio?
-                <v-btn @click="deletePortfolio(deleteID)">Delete</v-btn>
-                <v-btn @click="snackbar = false">Cancel</v-btn>
-            </v-snackbar>
-        </v-layout>
-        <v-layout>
-            
-        </v-layout>
-        <!-- <v-layout>
+  <v-container>
+    <v-layout row wrap>
+      <v-flex
+        class="portfolio"
+        v-for="i in portfolios.length > limit ? limit : portfolios.length"
+        :key="portfolios[i-1].id"
+        xs12
+        sm6
+        md4
+        lg3
+      >
+        <div class="portfolio-content">
+          <div class="img" :style="{'background-image': 'url(' + portfolios[i-1].img + ')'}"></div>
+          <div class="content">
+            <h3 class="title text">{{ portfolios[i-1].title }}</h3>
+            <div
+              class="more text"
+              @click="viewDetail(portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img, portfolios[i-1].created_at.seconds)"
+            >View More</div>
+            <div class="btn-box">
+              <div
+                class="update"
+                @click="openPortfolioWriter(true, portfolios[i-1].id, portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img)"
+              >
+                <i class="material-icons">edit</i>
+              </div>
+              <div class="delete" @click="deleteConfirm(portfolios[i-1].id)">
+                <i class="material-icons">delete</i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </v-flex>
+      <v-flex v-if="allowCreate" @click="openPortfolioWriter" class="portfolio" xs12 sm6 md4 lg3>
+        <div class="portfolio-content new">
+          <span>+ New Portfolio</span>
+        </div>
+      </v-flex>
+      <v-dialog v-model="dialogWrite" width="500" persistent>
+        <PortfolioWriteDialog
+          @child="parents"
+          :createMode="createMode"
+          :id="id"
+          :title="title"
+          :content="content"
+          :img="img"
+        />
+      </v-dialog>
+      <v-dialog v-model="dialogDetail" width="500">
+        <PortfolioDetailDialog
+          :id="id"
+          :title="title"
+          :content="content"
+          :img="img"
+          :created_at="created_at"
+        />
+      </v-dialog>
+      <v-snackbar v-model="snackbar" :timeout="0">
+        Delete this portfolio?
+        <v-btn @click="deletePortfolio(deleteID)">Delete</v-btn>
+        <v-btn @click="snackbar = false">Cancel</v-btn>
+      </v-snackbar>
+    </v-layout>
+    <v-layout></v-layout>
+    <!-- <v-layout>
             <div class="tmptmp">
             Title: <input type="text" v-model="title"><br>
             Content: <input type="text" v-model="content"><br>
             ImgURL: <input type="text" v-model="img"><br>
             <span @click="postPortfolio">Create</span>
             </div>
-        </v-layout> -->
-    </v-container>
+    </v-layout>-->
+  </v-container>
 </template>
 
 
 <script>
-import firestore from '../firebase/firestore';
+import firestore from "../firebase/firestore";
 
-import PortfolioDetailDialog from './PortfolioDetailDialog';
-import PortfolioWriteDialog from './PortfolioWriteDialog';
+import PortfolioDetailDialog from "./PortfolioDetailDialog";
+import PortfolioWriteDialog from "./PortfolioWriteDialog";
 
 export default {
-    name: "PortfolioList",
-    props: {
-        limit: {type: Number, default: 4},
-        allowCreate: {type: Boolean, default: false}
+  name: "PortfolioList",
+  props: {
+    limit: { type: Number, default: 4 },
+    allowCreate: { type: Boolean, default: false }
+  },
+  components: {
+    PortfolioDetailDialog,
+    PortfolioWriteDialog
+  },
+  data() {
+    return {
+      id: "",
+      title: "",
+      content: "",
+      img: "",
+      created_at: 0,
+      portfolios: [],
+      dialogWrite: false,
+      createMode: true,
+      dialogDetail: false,
+      // currID: '',
+      // currTitle: '',
+      // currContent: '',
+      // currImg: '',
+      snackbar: false,
+      deleteID: ""
+    };
+  },
+  mounted() {
+    this.getPortfolios();
+  },
+  methods: {
+    async getPortfolios() {
+      this.portfolios = await firestore.getPortfolios();
     },
-    components: {
-        PortfolioDetailDialog,
-        PortfolioWriteDialog
+    openPortfolioWriter(
+      create = false,
+      id = "",
+      title = "",
+      content = "",
+      img = ""
+    ) {
+      this.createMode = create;
+      this.id = id;
+      this.title = title;
+      this.content = content;
+      this.img = img;
+      this.dialogWrite = true;
     },
-    data() {
-        return {
-            id: '',
-            title: '',
-            content: '',
-            img: '',
-            created_at: 0,
-            portfolios: [],
-            dialogWrite: false,
-            createMode: true,
-            dialogDetail: false,
-            // currID: '',
-            // currTitle: '',
-            // currContent: '',
-            // currImg: '',
-            snackbar: false,
-            deleteID: ''
-        }
+    deleteConfirm(id) {
+      this.snackbar = true;
+      this.deleteID = id;
     },
-    mounted() {
-      this.getPortfolios();
+    deletePortfolio(id) {
+      firestore.deletePortfolio(id);
+      alert("Portfolio deleted");
+      this.snackbar = false;
     },
-    methods: {
-      async getPortfolios() {
-        this.portfolios = await firestore.getPortfolios();
-      },
-      openPortfolioWriterCreate() {
-        this.createMode = true;
-        this.title = '';
-        this.content = '';
-        this.img = '';
-        this.dialogWrite = true;
-        
-        // if (this.title && this.content && this.img) {
-        //     firestore.postPortfolio(this.title, this.content, this.img);
-        //     this.title = '',
-        //     this.content = '',
-        //     this.img = ''
-        // }
-      },
-      openPortfolioWriterUpdate(id, title, content, img) {
-        this.createMode = false;
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.img = img;
-        this.dialogWrite = true;
-      },
-      deleteConfirm(id) {
-          this.snackbar = true;
-          this.deleteID = id;
-      },
-      deletePortfolio(id) {
-          firestore.deletePortfolio(id);
-          alert('Portfolio deleted');
-          this.snackbar = false;
-      },
-      viewDetail(title, content, img, created_at) {
-        this.title = title;
-        this.content = content;
-        this.img = img;
-        this.created_at = created_at;
-        this.dialogDetail = true;
-      },
-      parents(dialogWrite) {
-        this.dialogWrite = dialogWrite;
-      },
+    viewDetail(title, content, img, created_at) {
+      this.title = title;
+      this.content = content;
+      this.img = img;
+      this.created_at = created_at;
+      this.dialogDetail = true;
+    },
+    parents(dialogWrite) {
+      this.dialogWrite = dialogWrite;
     }
-}
+  }
+};
 </script>
 
 
 <style lang="scss" scoped>
 @import "../css/mixin.scss";
 @import "../css/style.scss";
-a, a:hover {
-    color: initial;
+a,
+a:hover {
+  color: initial;
 }
 .portfolio {
-    // width: 250px;
-    height: 200px;
-    // border: 1px solid red;
-    padding: 10px 5px;
-    @include viewportMax(960) {
-        padding: 10px 5%;
-    }
-    @include mobile {
-        padding: 10px 10%;
-    }
+  // width: 250px;
+  height: 200px;
+  // border: 1px solid red;
+  padding: 10px 5px;
+  @include viewportMax(960) {
+    padding: 10px 5%;
+  }
+  @include mobile {
+    padding: 10px 10%;
+  }
 }
 .portfolio-content {
-    width: 100%; height: 100%;
-    position: relative;
-    // border: 1px solid blue;
-    overflow: hidden;
-    border-radius: 5px;
-    .img {
-        width: 100%; height: 100%;
-        position: absolute;
-        top: 0; left: 0;
-        background-size: cover;
-        background-position: center;
-        transition: all 0.3s;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  // border: 1px solid blue;
+  overflow: hidden;
+  border-radius: 5px;
+  .img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-position: center;
+    transition: all 0.3s;
+  }
+  .content {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(4, 5, 31, 1);
+    transition: all 0.3s;
+    opacity: 0;
+    .title {
+      position: absolute;
+      top: 10%;
+      width: 100%;
+      text-align: center;
+      padding: 20px 20px;
+      color: white;
+      @include textTruncate;
     }
+    .more {
+      width: 120px;
+      height: 40px;
+      line-height: 37px;
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%);
+      bottom: 20%;
+      text-align: center;
+      color: white;
+      border: 1.5px solid white;
+      margin: 20px auto 0;
+      cursor: pointer;
+    }
+    .btn-box {
+      position: absolute;
+      top: 5px;
+      right: 0;
+    }
+    .delete,
+    .update {
+      display: inline-block;
+      margin-right: 5px;
+      color: white;
+      cursor: pointer;
+      i {
+        font-size: 1.5em;
+      }
+    }
+  }
+  &:hover {
     .content {
-        width: 100%; height: 100%;
-        position: absolute;
-        top: 0; left: 0;
-        background: rgba(4, 5, 31, 1);
-        transition: all 0.3s;
-        opacity: 0;
-        .title {
-            position: absolute;
-            top: 10%;
-            width: 100%;
-            text-align: center;
-            padding: 20px 20px;
-            color: white;
-            @include textTruncate;
-        }
-        .more {
-            width: 120px;
-            height: 40px;
-            line-height: 37px;
-            position: absolute;
-            left: 50%;
-            transform: translate(-50%);
-            bottom: 20%;
-            text-align: center;
-            color: white;
-            border: 1.5px solid white;
-            margin: 20px auto 0;
-            cursor: pointer;
-        }
-        .btn-box {
-            position: absolute;
-            top: 5px; right: 0;
-        }
-        .delete, .update {
-            display: inline-block;
-            margin-right: 5px;
-            color: white;
-            cursor: pointer;
-            i {font-size: 1.5em;}
-        }
+      opacity: 1;
     }
-    &:hover{
-        .content {
-            opacity: 1;
-        }
-        .img {
-            transform: scale(1.1);
-        }
+    .img {
+      transform: scale(1.1);
     }
+  }
 }
 .portfolio-content.new {
-    box-shadow: inset 0 0 0 3px $nav-bg;
-    color: $nav-bg;
-    transition: color 0.25s 0.09s;
-    position: relative;
-    cursor: pointer;
-    span {
-        font-size: 1.3em;
-        @include centerItem;
-    }
-    &::before, &::after {
-        border: 0 solid transparent;
-        content: '';
-        box-sizing: border-box;
-        pointer-events: none;
-        position: absolute;
-        width: 0;
-        height: 0;
-        bottom: 0;
-        right: 0;
-        border-radius: 5px;
-    }
-    &::before {
-        border-bottom-width: 3px;
-        border-left-width: 3px;
-    }
-    &::after {
-        border-top-width: 3px;
-        border-right-width: 3px;
-    }
-    &:hover {
-        color: $blue-accent;
-    }
-    &:hover::before, &:hover::after {
-        border-color: $blue-accent;
-        transition: border-color 0s, width 0.25s, height 0.25s;
-        width: 100%;
-        height: 100%;
-    }
-    &:hover::before {
-        transition-delay: 0s, 0s, 0.25s;
-    }
-    &:hover::after {
-        transition-delay: 0s, 0.25s, 0s;
-    }
+  box-shadow: inset 0 0 0 3px $nav-bg;
+  color: $nav-bg;
+  transition: color 0.25s 0.09s;
+  position: relative;
+  cursor: pointer;
+  span {
+    font-size: 1.3em;
+    @include centerItem;
+  }
+  &::before,
+  &::after {
+    border: 0 solid transparent;
+    content: "";
+    box-sizing: border-box;
+    pointer-events: none;
+    position: absolute;
+    width: 0;
+    height: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 5px;
+  }
+  &::before {
+    border-bottom-width: 3px;
+    border-left-width: 3px;
+  }
+  &::after {
+    border-top-width: 3px;
+    border-right-width: 3px;
+  }
+  &:hover {
+    color: $blue-accent;
+  }
+  &:hover::before,
+  &:hover::after {
+    border-color: $blue-accent;
+    transition: border-color 0s, width 0.25s, height 0.25s;
+    width: 100%;
+    height: 100%;
+  }
+  &:hover::before {
+    transition-delay: 0s, 0s, 0.25s;
+  }
+  &:hover::after {
+    transition-delay: 0s, 0.25s, 0s;
+  }
 }
 .tmptmp {
-    border: 1px solid gold;
+  border: 1px solid gold;
 }
-
 </style>
