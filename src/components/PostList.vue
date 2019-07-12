@@ -1,14 +1,10 @@
 <template>
-<div class="posts-container">
-  <v-layout row wrap mw-700>
-    <v-flex v-for="i in posts.length > limits ? limits : posts.length" :class="'xs' + 12 / column" px-3>
-      <Post :date="posts[i - 1].created_at" :title="posts[i - 1].title" :content="posts[i - 1].content"></Post>
-      <v-divider></v-divider>
-    </v-flex>
-    <v-flex xs12 text-xs-center round my-5 v-if="loadMore">
-    </v-flex>
-  </v-layout>
-</div>
+    <v-container>
+        <v-layout row wrap>
+            <v-flex v-for="i in posts.length > limit ? limit : posts.length" :key="posts[i-1].id" xs12 sm6>
+            </v-flex>
+        </v-layout>
+    </v-container>
 </template>
 
 

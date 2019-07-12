@@ -5,14 +5,18 @@
                 <div class="portfolio-content">
                     <div class="img" :style="{'background-image': 'url(' + portfolios[i-1].img + ')'}"></div>
                     <div class="content">
-                        <h5 class="title">{{ portfolios[i-1].title }}</h5>
-                        <div class="more">View More</div>
+                        <h5 class="title text">{{ portfolios[i-1].title }}</h5>
+                        <div class="more text">View More</div>
                     </div>
                 </div>
             </v-flex>
+            <v-flex v-if="allowCreate" class="portfolio" xs12 sm6 md4 lg3>
+                <div class="portfolio-content new"><span>+ New Portfolio</span></div>
+            </v-flex>
         </v-layout>
         <v-layout>
-            <div>Title: <input type="text" v-model="title"><br>
+            <div class="tmptmp">
+            Title: <input type="text" v-model="title"><br>
             Content: <input type="text" v-model="content"><br>
             ImgURL: <input type="text" v-model="img"><br>
             <span @click="postPortfolio">Create</span>
@@ -28,7 +32,8 @@ import firestore from '../firebase/firestore';
 export default {
     name: "PortfolioList",
     props: {
-        limit: {type: Number, default: 4}
+        limit: {type: Number, default: 4},
+        allowCreate: {type: Boolean, default: false}
     },
     data() {
         return {
@@ -46,10 +51,12 @@ export default {
         this.portfolios = await firestore.getPortfolios();
       },
       postPortfolio() {
-        firestore.postPortfolio(this.title, this.content, this.img);
-        this.title = '',
-        this.content = '',
-        this.img = ''
+        if (this.title && this.content && this.img) {
+            firestore.postPortfolio(this.title, this.content, this.img);
+            this.title = '',
+            this.content = '',
+            this.img = ''
+        }
       }
     }
 }
@@ -59,7 +66,9 @@ export default {
 <style lang="scss" scoped>
 @import "../css/mixin.scss";
 @import "../css/style.scss";
-
+a, a:hover {
+    color: initial;
+}
 .portfolio {
     // width: 250px;
     height: 200px;
@@ -77,6 +86,7 @@ export default {
     position: relative;
     // border: 1px solid blue;
     overflow: hidden;
+    border-radius: 10px;
     .img {
         width: 100%; height: 100%;
         position: absolute;
@@ -129,6 +139,15 @@ export default {
         }
     }
 }
-
+.portfolio-content.new {
+    border: 2px solid $nav-bg;
+    cursor: pointer;
+    span {
+        @include centerItem;
+    }
+}
+.tmptmp {
+    border: 1px solid gold;
+}
 
 </style>
