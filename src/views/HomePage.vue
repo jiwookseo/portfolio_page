@@ -25,7 +25,7 @@
         </div>
       </section>
       <section id="project">
-        <h2 class="section-title text">Portfolio</h2>
+        <h2 class="section-title text">Project</h2>
       </section>
     </div>
   </div>
