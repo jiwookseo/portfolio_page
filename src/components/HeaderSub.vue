@@ -11,7 +11,8 @@
         <router-link to="/post">
           <div class="nav-item text">Post</div>
         </router-link>
-        <div class="nav-item login-btn text" @click.stop="dialog = true">Login</div>
+        <div v-if="!user"class="nav-item login-btn text" @click.stop="dialog = true">Login</div>
+        <div v-if="user" @click="signOut" class="nav-item login-btn text">Logout</div>
       </div>
     </nav>
     <transition name="slide-fade">
@@ -26,7 +27,8 @@
           <router-link to="/post">
             <li class="sb-nav-menu text">Post</li>
           </router-link>
-          <li class="sb-nav-menu text" @click.stop="sb_login">Login</li>
+          <li v-if="!user" class="sb-nav-menu text" @click.stop="dialog = true">Login</li>
+          <li v-if="user" class="sb-nav-menu text" @click="signOut">Logout</li>
         </ul>
       </nav>
     </transition>
@@ -40,7 +42,7 @@
     </div>
     <FavBtn class="nav-fav" />
     <v-dialog v-model="dialog" class="login-dialog" width="400">
-      <LoginDialog />
+      <LoginDialog @child="parents" />
     </v-dialog>
   </header>
 </template>
@@ -48,12 +50,18 @@
 <script>
 import FavBtn from "./FavBtn";
 import LoginDialog from "./LoginDialog";
+import { mapActions } from "vuex";
 
 export default {
   name: "HeaderSub",
   components: {
     FavBtn,
     LoginDialog
+  },
+  computed: {
+    user () {
+      return this.$store.getters.user
+    }
   },
   props: {},
   data() {
@@ -63,12 +71,25 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["logout"]),
+    signOut() {
+      this.logout()
+      alert("로그아웃 되었습니다!")
+      this.$router.replace("/")
+    },
+    scrollTo(target) {
+      this.$parent.scrollTo(target);
+    },
+    sb_scrollTo(target) {
+      this.$parent.scrollTo(target);
+      this.showSidebar = false;
+    },
     sb_login() {
       this.showSidebar = false;
       this.dialog = true;
     },
-    log() {
-
+    parents(dialog) {
+      this.dialog = dialog;
     }
   }
 };

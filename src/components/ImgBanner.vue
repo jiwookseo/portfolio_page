@@ -27,6 +27,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "../css/style.scss";
+@import "../css/mixin.scss";
 .imgBannerOuter {
   width: 100%;
   height: 100vh;
@@ -57,15 +58,43 @@ export default {
       bottom: 50px;
       left: 50%;
       transform: translate(-50%);
-      width: 200px;
-      height: 45px;
-      line-height: 40px;
-      text-align: center;
+      padding: 5px 20px 12px;
       color: white;
       border: 1.5px solid white;
       cursor: pointer;
+      transition: all 0.3s;
+      background-color: rgba(0, 0, 0, 0.3);
       i {
         transform: translateY(7px);
+      }
+      &::before, &::after {
+        content: '';
+        width: 95%;
+        height: 135%;
+        border: 0px solid white;
+        transition: all 0.3s;
+        @include centerItem;
+      }
+      &::before {
+        border-top-width: 1.5px;
+        border-bottom-width: 1.5px;
+        transform: translate(-50%, -50%) scaleX(0);
+        transform-origin: left;
+      }
+      &::after {
+        border-left-width: 1.5px;
+        border-right-width: 1.5px;
+        transform: translate(-50%, -50%) scaleY(0);
+        transform-origin: top;
+      }
+      &:hover::before {
+        transform: translate(-50%, -50%) scaleX(1);
+      }
+      &:hover::after {
+        transform: translate(-50%, -50%) scaleY(1);
+      }
+      &:hover {
+        background-color: rgba(0, 0, 0, 0);
       }
     }
   }

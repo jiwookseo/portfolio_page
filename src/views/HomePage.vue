@@ -4,6 +4,7 @@
     <div class="homeContent">
       <section id="aboutme">
         <h2 class="section-title text">About me</h2>
+        <div class="text" style="text-align: center" v-if="user">[테스트문장] {{user.email}}님 반갑습니다</div>
       </section>
       <section id="portfolio">
         <h2 class="section-title text">Portfolio</h2>
@@ -25,6 +26,7 @@
       </section>
       <section id="project">
         <h2 class="section-title text">Project</h2>
+        <line-chart></line-chart>
       </section>
     </div>
   </div>
@@ -37,6 +39,7 @@ import HeaderHome from "../components/HeaderHome";
 import PortfolioList from "../components/PortfolioList";
 import PortfolioWriteModal from "../components/PortfolioWriteModal";
 import PostList from "../components/PostList";
+import LineChart from "../components/LineChart";
 
 export default {
   name: "HomePage",
@@ -44,11 +47,16 @@ export default {
     HeaderHome,
     PortfolioList,
     PortfolioWriteModal,
-    PostList
+    PostList,
+    LineChart
   },
   data() {
     return {
-
+    }
+  },
+  computed: {
+    user () {
+      return this.$store.getters.user
     }
   },
   methods: {
@@ -80,7 +88,7 @@ a, a:hover {
 section {
   width: 100%;
   height: 500px;
-  padding-top: 60px;
+  padding: 80px 0 50px;
   position: relative;
   &:nth-of-type(odd) {
     background: white;
@@ -91,9 +99,9 @@ section {
   .section-title {
     text-transform: uppercase;
     text-align: center;
-    font-size: 2em;
+    font-size: 3em;
     font-family: $font-title;
-    letter-spacing: 2px;
+    letter-spacing: 4px;
   }
 }
 
@@ -128,7 +136,7 @@ $slant_m: 20px;
   }
 }
 
-#portfolio {
+#portfolio, #post {
   height: auto;
 }
 .more {

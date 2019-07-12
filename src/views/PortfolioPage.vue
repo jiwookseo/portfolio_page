@@ -51,6 +51,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "../css/style.scss";
+@import "../css/mixin.scss";
 .content {
     margin-top: 50px;
     padding-top: 10px;
@@ -61,11 +62,6 @@ export default {
     }
 }
 .more {
-  width: 120px; height: 40px;
-  line-height: 37px;
-  border: 1.5px solid $nav-bg;
-  text-align: center;
-  margin: 0 auto 100px;
-  cursor: pointer;
+  @include loadMoreBtn;
 }
 </style>
