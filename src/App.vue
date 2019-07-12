@@ -183,7 +183,7 @@ export default {
   position: fixed;
   z-index: 15;
   width: 250px;
-  bottom: 65px;
+  bottom: 20px;
   right: 85px;
   border-radius: 10px;
   background: $nav-highlight;

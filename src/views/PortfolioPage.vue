@@ -5,7 +5,7 @@
             <h2>Portfolio</h2>
             <PortfolioList :limit=8 :allowCreate=true />
             <div>
-              <div>Load More</div>
+              <div class="more">Load More</div>
             </div>
         </div>
     </div>
@@ -50,13 +50,22 @@ export default {
 
 
 <style lang="scss" scoped>
+@import "../css/style.scss";
 .content {
     margin-top: 50px;
     padding-top: 10px;
-    height: 2000px;
+    height: auto;
     h2 {
         text-align: center;
         font-size: 2em;
     }
+}
+.more {
+  width: 120px; height: 40px;
+  line-height: 37px;
+  border: 1.5px solid $nav-bg;
+  text-align: center;
+  margin: 0 auto 100px;
+  cursor: pointer;
 }
 </style>
