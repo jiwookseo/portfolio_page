@@ -43,14 +43,12 @@ export default {
     LoadingSpinner
   },
   mounted() {
-    this.textDOMs = document.querySelectorAll(".text");
-    this.textDOMs.forEach(dom => this.originalText.push(dom.innerText));
+    // console.log(this.textDOMs);
     // 마운트 시에 모든 언어를 번역해 저장해 놓는 방식. 파파고 API 사용량의 문제(일 1만자)로 제한적 사용.
     // const source = "en";
     // this.langauge.forEach(e => {
     //   const target = e.value;
     //   this.translatedText[target] = Array(this.textDOMs.length);
-
     //   for (let index = 0; index < this.textDOMs.length; index++) {
     //     axios
     //       .get(
@@ -88,16 +86,28 @@ export default {
       ]
     };
   },
+  watch: {
+    $route(to, from) {
+      if (this.translated) {
+        this.translated = false;
+        this.translate("en", this.selectedLanguage, true);
+      }
+    }
+  },
   methods: {
-    translate: function(source, target) {
+    translate: function(source, target, force = false) {
       if (this.translated) return;
       else this.translated = true;
       if (
         !this.translatedText[target] ||
-        this.translatedText[target].length !== this.textDOMs.length
+        this.translatedText[target].length !== this.textDOMs.length ||
+        force
       ) {
-        this.loading = true;
+        this.textDOMs = document.querySelectorAll(".text");
+        this.originalText = [];
         this.translatedText[target] = Array(this.textDOMs.length);
+        this.textDOMs.forEach(dom => this.originalText.push(dom.innerText));
+        this.loading = true;
         let counter = 0;
         this.textDOMs.forEach((dom, i) => {
           axios
@@ -110,6 +120,13 @@ export default {
             })
             .then(() => {
               dom.innerText = this.translatedText[target][i];
+              counter++;
+              if (counter === this.textDOMs.length) {
+                this.loading = false;
+              }
+            })
+            .catch(error => {
+              console.log(error);
               counter++;
               if (counter === this.textDOMs.length) {
                 this.loading = false;
