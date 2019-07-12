@@ -11,7 +11,7 @@ window.$ = window.jQuery = require("jquery");
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-
+import * as firebase from 'firebase'
 Vue.config.productionTip = false;
 
 Vue.use(VueSimplemde);
@@ -19,6 +19,12 @@ Vue.use(VueSimplemde);
 
 new Vue({
   created() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.$store.dispatch('autoSignIn', user)
+        console.log(user.email)
+      }
+    })
     AOS.init({
       once: false,
     });

@@ -2,7 +2,6 @@ import { firebase } from './firebase';
 import Firebase from 'firebase/app';
 
 const firestore = Firebase.firestore()
-const db = Firebase.database()
 
 const POSTS = 'posts'
 const PORTFOLIOS = 'portfolios'
