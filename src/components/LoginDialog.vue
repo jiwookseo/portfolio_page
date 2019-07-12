@@ -39,7 +39,7 @@
 
 
 <script>
-//import firebase from "firebase";
+import firebase from "firebase";
 
 /*
 var provider = new firebase.auth.FacebookAuthProvider();
