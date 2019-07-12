@@ -26,6 +26,7 @@
       </section>
       <section id="project">
         <h2 class="section-title text">Project</h2>
+        <line-chart></line-chart>
       </section>
     </div>
   </div>
@@ -38,6 +39,7 @@ import HeaderHome from "../components/HeaderHome";
 import PortfolioList from "../components/PortfolioList";
 import PortfolioWriteModal from "../components/PortfolioWriteModal";
 import PostList from "../components/PostList";
+import LineChart from "../components/LineChart";
 
 export default {
   name: "HomePage",
@@ -45,7 +47,8 @@ export default {
     HeaderHome,
     PortfolioList,
     PortfolioWriteModal,
-    PostList
+    PostList,
+    LineChart
   },
   data() {
     return {
