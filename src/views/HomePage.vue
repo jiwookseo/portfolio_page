@@ -128,7 +128,7 @@ $slant_m: 20px;
   }
 }
 
-#portfolio {
+#portfolio, #post {
   height: auto;
 }
 .more {
