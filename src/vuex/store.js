@@ -6,23 +6,38 @@ import { firebaseAuth } from '@/firebase/firebaseAuth'
 
 Vue.use(Vuex)
 
+/*
 firebaseAuth.onAuthStateChanged((user) => {
   if (user) {
-    state.user = user.email
+    this.$store.dispatch('autoSignIn', user)
     console.log("userName : " + user.email)
   } else {
     state.user = null
   }
 })
+*/
 
 const state = {
-  user: null
+  user: null,
+  loading: false,
+  error: null
 }
 export default new Vuex.Store({
   state,
   getters,
   actions,
   mutations: {
-
+    setUser (state, payload) {
+      state.user = payload
+    },
+    setLoading (state, payload) {
+      state.loading = payload
+    },
+    setError (state, payload) {
+      state.error = payload
+    },
+    clearError (state) {
+      state.error = null
+    }
   }
 })
