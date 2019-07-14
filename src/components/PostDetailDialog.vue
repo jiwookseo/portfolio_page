@@ -8,23 +8,23 @@
 
 <script>
 export default {
-    name: "PostDetailDialog",
-    data() {
-        return {
-
-        }
-    },
-    props: {
-        title: {type: String},
-        content: {type: String},
-        created_at: {type: Number}
-    },
-    computed: {
-        date_created() {
-            const date = new Date(this.created_at * 1000);
-            return date
-        }
-    }
+	name: "PostDetailDialog",
+	data() {
+		return {
+			date: ''
+		}
+	},
+	props: {
+		title: {type: String},
+		content: {type: String},
+		created_at: {type: Number}
+	},
+	computed: {
+		date_created() {
+			const date = new Date(this.created_at * 1000);
+      return String(date).split('(')[0]
+		}
+	}
 }
 </script>
 

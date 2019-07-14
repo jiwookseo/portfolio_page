@@ -17,11 +17,11 @@
             <div
               class="more text"
               @click="viewDetail(portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img, portfolios[i-1].created_at.seconds)"
-            >View More</div>
+            >Read More</div>
             <div class="btn-box">
               <div
                 class="update"
-                @click="openPortfolioWriter(true, portfolios[i-1].id, portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img)"
+                @click="openPortfolioWriter(false, portfolios[i-1].id, portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img)"
               >
                 <i class="material-icons">edit</i>
               </div>
@@ -37,10 +37,13 @@
           <span>+ New Portfolio</span>
         </div>
       </v-flex>
+
+      <!-- Dialogs -->
       <v-dialog v-model="dialogWrite" width="500" persistent>
         <PortfolioWriteDialog
           @child="parents"
-          :createMode="createMode"
+          @child_snackbar="parent_snackbar"
+          :createMode=createMode
           :id="id"
           :title="title"
           :content="content"
@@ -56,21 +59,32 @@
           :created_at="created_at"
         />
       </v-dialog>
-      <v-snackbar v-model="snackbar" :timeout="0">
-        Delete this portfolio?
-        <v-btn @click="deletePortfolio(deleteID)">Delete</v-btn>
-        <v-btn @click="snackbar = false">Cancel</v-btn>
+
+      <!-- Snackbars -->
+      <v-snackbar 
+        v-model="snackbar_del" 
+        top auto-height :timeout="0"
+        color="#FF5E61"
+        class="snackbar-del"
+      >
+        <div class="snackbar-content">
+          Delete this portfolio?
+          <button @click="deletePortfolio(deleteID)" class="del-btn">Delete</button>
+          <button @click="snackbar_del = false" class="cancel-btn">Cancel</button>
+        </div>
+      </v-snackbar>
+      <v-snackbar 
+        v-model="snackbar_alert" 
+        top auto-height :timeout="4000"
+        color="#FF5E61"
+        class="snackbar-alert"
+      >
+        <div class="snackbar-content">
+          {{ snackbar_msg }}
+          <button @click="snackbar_alert = false" class="ok-btn">OK</button>
+        </div>
       </v-snackbar>
     </v-layout>
-    <v-layout></v-layout>
-    <!-- <v-layout>
-            <div class="tmptmp">
-            Title: <input type="text" v-model="title"><br>
-            Content: <input type="text" v-model="content"><br>
-            ImgURL: <input type="text" v-model="img"><br>
-            <span @click="postPortfolio">Create</span>
-            </div>
-    </v-layout>-->
   </v-container>
 </template>
 
@@ -102,12 +116,10 @@ export default {
       dialogWrite: false,
       createMode: true,
       dialogDetail: false,
-      // currID: '',
-      // currTitle: '',
-      // currContent: '',
-      // currImg: '',
-      snackbar: false,
-      deleteID: ""
+      snackbar_del: false,
+      deleteID: "",
+      snackbar_alert: false, // Replaces window alert box
+      snackbar_msg: ''  // For snackbar_alert
     };
   },
   mounted() {
@@ -118,7 +130,7 @@ export default {
       this.portfolios = await firestore.getPortfolios();
     },
     openPortfolioWriter(
-      create = false,
+      create = true,
       id = "",
       title = "",
       content = "",
@@ -132,13 +144,20 @@ export default {
       this.dialogWrite = true;
     },
     deleteConfirm(id) {
-      this.snackbar = true;
+      this.snackbar_del = true;
       this.deleteID = id;
+    },
+    triggerSnackbarAlert(msg) {
+      this.snackbar_msg = msg;
+      this.snackbar_alert = true;
     },
     deletePortfolio(id) {
       firestore.deletePortfolio(id);
-      alert("Portfolio deleted");
-      this.snackbar = false;
+      this.snackbar_del = false;
+      this.triggerSnackbarAlert("Portfolio deleted");
+    },
+    parent_snackbar(msg) {
+      this.triggerSnackbarAlert(msg);
     },
     viewDetail(title, content, img, created_at) {
       this.title = title;
@@ -149,7 +168,8 @@ export default {
     },
     parents(dialogWrite) {
       this.dialogWrite = dialogWrite;
-    }
+    },
+    
   }
 };
 </script>
@@ -163,9 +183,7 @@ a:hover {
   color: initial;
 }
 .portfolio {
-  // width: 250px;
   height: 200px;
-  // border: 1px solid red;
   padding: 10px 5px;
   @include viewportMax(960) {
     padding: 10px 5%;
@@ -178,7 +196,6 @@ a:hover {
   width: 100%;
   height: 100%;
   position: relative;
-  // border: 1px solid blue;
   overflow: hidden;
   border-radius: 5px;
   .img {
@@ -197,31 +214,36 @@ a:hover {
     position: absolute;
     top: 0;
     left: 0;
-    background: rgba(4, 5, 31, 1);
-    transition: all 0.3s;
+    background: #3D4756;
+    transition: all 0.5s;
     opacity: 0;
+    color: white;
     .title {
       position: absolute;
-      top: 10%;
+      top: 15%;
       width: 100%;
       text-align: center;
       padding: 20px 20px;
-      color: white;
       @include textTruncate;
     }
     .more {
-      width: 120px;
-      height: 40px;
-      line-height: 37px;
+      padding: 5px 15px;
       position: absolute;
       left: 50%;
       transform: translate(-50%);
       bottom: 20%;
-      text-align: center;
-      color: white;
       border: 1.5px solid white;
-      margin: 20px auto 0;
       cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+      white-space: nowrap;
+      background-image: linear-gradient(to right, white 50%, transparent 50%);
+      background-size: 200% 100%;
+      background-position: right;
+      &:hover {
+        background-position: left;
+        color: #3D4756;
+      }
     }
     .btn-box {
       position: absolute;
@@ -232,10 +254,13 @@ a:hover {
     .update {
       display: inline-block;
       margin-right: 5px;
-      color: white;
       cursor: pointer;
+      transform-origin: bottom;
       i {
         font-size: 1.5em;
+      }
+      &:hover {
+        animation: jiggle 0.15s linear 0.2s 4 forwards;
       }
     }
   }
@@ -248,15 +273,22 @@ a:hover {
     }
   }
 }
+@keyframes jiggle {
+  0% {transform: rotate(0);}
+  25% {transform: rotate(5deg);}
+  75% {transform: rotate(-5deg);}
+  100% {transform: rotate(0);}
+}
 .portfolio-content.new {
-  box-shadow: inset 0 0 0 3px $nav-bg;
+  box-shadow: inset 0 0 0 4px $nav-bg;
   color: $nav-bg;
   transition: color 0.25s 0.09s;
   position: relative;
   cursor: pointer;
   span {
-    font-size: 1.3em;
+    font-size: 1.5em;
     @include centerItem;
+    white-space: nowrap;
   }
   &::before,
   &::after {
@@ -272,12 +304,12 @@ a:hover {
     border-radius: 5px;
   }
   &::before {
-    border-bottom-width: 3px;
-    border-left-width: 3px;
+    border-bottom-width: 4px;
+    border-left-width: 4px;
   }
   &::after {
-    border-top-width: 3px;
-    border-right-width: 3px;
+    border-top-width: 4px;
+    border-right-width: 4px;
   }
   &:hover {
     color: $blue-accent;
@@ -296,7 +328,8 @@ a:hover {
     transition-delay: 0s, 0.25s, 0s;
   }
 }
-.tmptmp {
-  border: 1px solid gold;
-}
+
+// Snackbar: mixin.scss
+
+
 </style>
