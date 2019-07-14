@@ -191,32 +191,45 @@ export default {
   bottom: 20px;
   right: 85px;
   border-radius: 10px;
-  background: $nav-highlight;
-  border: 2px solid $nav-bg;
+  background: white;
+  border: 2px solid $blue-accent;
   font-size: 0.9em;
   padding: 10px;
   &::after {
     content: "";
     position: absolute;
     left: 100%;
-    top: 40%;
+    top: 37%;
     width: 0;
     height: 0;
-    border-top: 7px solid transparent;
-    border-left: 10px solid $nav-bg;
-    border-bottom: 7px solid transparent;
+    border-top: 9px solid transparent;
+    border-left: 10px solid $blue-accent;
+    border-bottom: 9px solid transparent;
   }
   .btn-box {
     height: 30px;
     margin-top: 10px;
     span {
       padding: 5px 10px;
-      background: linear-gradient(to bottom, $nav-highlight, $nav-bg);
-      border: 1.5px solid $nav-bg;
-      border-radius: 5px;
+      border-radius: 2px;
+      text-transform: uppercase;
       cursor: pointer;
+      color: white;
+      box-shadow: 0px 0px 3px 0px #9AAEBB;
       &:first-child {
         margin-right: 10px;
+        background: #19ABFF;
+        &:hover {
+          background: $blue-accent;
+          box-shadow: none;
+        }
+      }
+      &:last-child {
+        background: #9AAEBB;
+        &:hover {
+          background: #8D9CB2;
+          box-shadow: none;
+        }
       }
     }
   }

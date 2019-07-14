@@ -1,7 +1,7 @@
 <template>
-    <div @click="bookmark" @mouseover="favHover = true" @mouseleave="favHover = false">
-        <i class="material-icons" v-if="!favHover">star_border</i>
-        <i class="material-icons" v-if="favHover">star</i>
+    <div @click="bookmark" @mouseover="favHover = true" @mouseleave="favHover = false" title="Bookmark this page">
+        <i class="material-icons" v-if="!favHover">bookmark_border</i>
+        <i class="material-icons" v-if="favHover">bookmark</i>
     </div>
 </template>
 

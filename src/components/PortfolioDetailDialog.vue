@@ -24,7 +24,7 @@ export default {
     computed: {
         date_created() {
             const date = new Date(this.created_at * 1000);
-            return date
+            return String(date).split('(')[0]
         }
     }
 }

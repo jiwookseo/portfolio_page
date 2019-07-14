@@ -32,53 +32,78 @@ export default {
 
         datasets: [{
 
-            label: 'geuntae',
+            label: 'Gibeom',
 
-            pointBackgroundColor: 'white',
-            borderWidth: 1,
-            pointBorderColor: '#129EBF',
+            pointBackgroundColor: 'rgb(172, 248, 139)',
+            pointBorderColor: 'white',
+            pointRadius: 4,
+            pointHoverRadius: 5,
+            borderWidth: 1.5,
+            borderColor: 'rgb(172, 248, 139)',
+            backgroundColor: 'rgba(172, 248, 139, 0.1)',
+            
+            //Data to be represented on y-axis
+            data: gibeom
+          },
+          {
+
+            label: 'Geuntae',
+
+            pointBackgroundColor: 'rgb(0, 234, 185)',
+            pointBorderColor: 'white',
+            pointRadius: 4,
+            pointHoverRadius: 5,
+            borderWidth: 1.5,
+            borderColor: 'rgb(0, 234, 185)',
+            backgroundColor: 'rgba(0, 234, 185, 0.1)',
+            
             //Data to be represented on y-axis
             data: geuntae
           },
           {
 
-            label: 'jiwon',
+            label: 'Jiwook',
 
-            pointBackgroundColor: 'white',
-            borderWidth: 1,
-            pointBorderColor: '#229EBF',
-            //Data to be represented on y-axis
-            data: jiwon
-          },
-          {
+            pointBackgroundColor: 'rgb(0, 192, 255)',
+            pointBorderColor: 'white',
+            pointRadius: 4,
+            pointHoverRadius: 5,
+            borderWidth: 1.5,
+            borderColor: 'rgb(0, 192, 255)',
+            backgroundColor: 'rgba(0, 192, 255, 0.1)',
 
-            label: 'jiwook',
-
-            pointBackgroundColor: 'white',
-            borderWidth: 1,
-            pointBorderColor: '#239EBF',
             //Data to be represented on y-axis
             data: jiwook
           },
           {
 
-            label: 'gyuseok',
+            label: 'Gyuseok',
 
-            pointBackgroundColor: 'white',
-            borderWidth: 1,
-            pointBorderColor: '#249EBF',
+            pointBackgroundColor: 'rgb(147, 108, 201)',
+            pointBorderColor: 'white',
+            pointRadius: 4,
+            pointHoverRadius: 5,
+            borderWidth: 1.5,
+            borderColor: 'rgb(147, 108, 201)',
+            backgroundColor: 'rgba(147, 108, 201, 0.1)',
+
             //Data to be represented on y-axis
             data: gyuseok
           },
           {
 
-            label: 'gibeom',
+            label: 'Jiwon',
 
-            pointBackgroundColor: 'white',
-            borderWidth: 1,
-            pointBorderColor: '#259EBF',
+            pointBackgroundColor: 'rgb(255, 123, 153)',
+            pointBorderColor: 'white',
+            pointRadius: 4,
+            pointHoverRadius: 5,
+            borderWidth: 1.5,
+            borderColor: 'rgb(255, 123, 153)',
+            backgroundColor: 'rgba(255, 123, 153, 0.1)',
+
             //Data to be represented on y-axis
-            data: gibeom
+            data: jiwon
           }
 
         ]
