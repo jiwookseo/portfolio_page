@@ -41,7 +41,7 @@ export default {
             borderWidth: 1.5,
             borderColor: 'rgb(172, 248, 139)',
             backgroundColor: 'rgba(172, 248, 139, 0.1)',
-            
+
             //Data to be represented on y-axis
             data: gibeom
           },
@@ -56,7 +56,7 @@ export default {
             borderWidth: 1.5,
             borderColor: 'rgb(0, 234, 185)',
             backgroundColor: 'rgba(0, 234, 185, 0.1)',
-            
+
             //Data to be represented on y-axis
             data: geuntae
           },
@@ -286,7 +286,7 @@ export default {
           }
 
 
-          
+
         })
         .catch(() => {});
     },
