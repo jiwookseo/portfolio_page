@@ -5,7 +5,7 @@
         <router-link to="/">HOME</router-link>
       </div>
       <div class="btn-right">
-        <router-link to="/portfolio" @click="log">
+        <router-link to="/portfolio">
           <div class="nav-item text">Portfolio</div>
         </router-link>
         <router-link to="/post">
@@ -28,7 +28,7 @@
             <li class="sb-nav-menu text">Post</li>
           </router-link>
           <li v-if="!user" class="sb-nav-menu text" @click.stop="dialog = true">Login</li>
-          <li v-if="user" class="sb-nav-menu text" @click="signOut">Logout</li>
+          <li v-if="user" class="sb-nav-menu text" v-on:click="signOut">Logout</li>
         </ul>
       </nav>
     </transition>
@@ -74,7 +74,7 @@ export default {
     ...mapActions(["logout"]),
     signOut() {
       this.logout()
-      alert("로그아웃 되었습니다!")
+      this.$swal("Goodbye!", "로그아웃 되었습니다", "success")
       this.$router.replace("/")
     },
     scrollTo(target) {

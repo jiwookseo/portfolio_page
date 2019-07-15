@@ -12,9 +12,13 @@ window.$ = window.jQuery = require("jquery");
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import * as firebase from 'firebase'
+import VueSweetalert2 from 'vue-sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css';
+
 Vue.config.productionTip = false;
 
 Vue.use(VueSimplemde);
+Vue.use(VueSweetalert2);
 
 
 new Vue({

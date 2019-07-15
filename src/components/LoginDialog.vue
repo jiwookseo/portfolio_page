@@ -56,14 +56,6 @@
 <script>
 import firebase from "firebase";
 
-/*
-var provider = new firebase.auth.FacebookAuthProvider();
-provider.addScope("public_profile");
-provider.setCustomParameters({
-  display: "popup"
-});
-*/
-
 export default {
   name: "LoginDialog",
   data() {
