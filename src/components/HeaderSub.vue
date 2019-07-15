@@ -41,7 +41,7 @@
       </span>
     </div>
     <FavBtn class="nav-fav" />
-    <v-dialog v-model="dialog" class="login-dialog" width="300">
+    <v-dialog v-model="dialog" class="login-dialog" width="300" persistent>
       <LoginDialog @child="parents" />
     </v-dialog>
   </header>
