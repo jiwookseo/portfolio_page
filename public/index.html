@@ -1,48 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <title>webmobile2</title>
-    <link href="https://fonts.googleapis.com/css?family=Do+Hyeon|Noto+Sans+KR:100,400,700,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons">
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-    <script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Do+Hyeon|Noto+Sans+KR:100,400,700,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Material+Icons"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.js"
+      integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <noscript>
-      <strong>We're sorry but webmobile2 doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong
+        >We're sorry but webmobile2 doesn't work properly without JavaScript
+        enabled. Please enable it to continue.</strong
+      >
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
     <script type="text/javascript">
-    $(document).ready(function() {
-      var file = document.getElementById('file');
-      var image = document.getElementById('image');
-      file.onchange = function(event) {
-        var target = event.currentTarget;
-        var xmlHttpRequest = new XMLHttpRequest();
-        xmlHttpRequest.open('POST', 'https://api.imgur.com/3/image/', true);
-        xmlHttpRequest.setRequestHeader("Authorization", "Client-ID 5d0f43f26473d77");
-        xmlHttpRequest.onreadystatechange = function() {
-          if (xmlHttpRequest.readyState == 4) {
-            if (xmlHttpRequest.status == 200) {
-              var result = JSON.parse(xmlHttpRequest.responseText);
-              image.src = result.data.link;
-              console.log(result);
-            } else {
-              alert("업로드 실패");
-              image.src = "http://dy.gnch.or.kr/img/no-image.jpg";
+      $(document).ready(function() {
+        var file = document.getElementById("file");
+        var image = document.getElementById("image");
+        file.onchange = function(event) {
+          var target = event.currentTarget;
+          var xmlHttpRequest = new XMLHttpRequest();
+          xmlHttpRequest.open("POST", "https://api.imgur.com/3/image/", true);
+          xmlHttpRequest.setRequestHeader(
+            "Authorization",
+            "Client-ID 5d0f43f26473d77"
+          );
+          xmlHttpRequest.onreadystatechange = function() {
+            if (xmlHttpRequest.readyState == 4) {
+              if (xmlHttpRequest.status == 200) {
+                var result = JSON.parse(xmlHttpRequest.responseText);
+                image.src = result.data.link;
+                console.log(result);
+              } else {
+                alert("업로드 실패");
+                image.src = "http://dy.gnch.or.kr/img/no-image.jpg";
+              }
             }
-          }
+          };
+          xmlHttpRequest.send(target.files[0]);
+          image.src = "https://nrm.dfg.ca.gov/images/image-loader.gif";
         };
-        xmlHttpRequest.send(target.files[0]);
-        image.src = "https://nrm.dfg.ca.gov/images/image-loader.gif";
-      };
-    });
-  </script>
+      });
+    </script>
   </body>
 </html>

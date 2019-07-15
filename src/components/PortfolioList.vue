@@ -44,7 +44,7 @@
           @child="parents"
           @child_snackbar="parent_snackbar"
           @child_updatePortfolio="parent_updatePortfolio"
-          :createMode=createMode
+          :createMode="createMode"
           :id="id"
           :title="title"
           :content="content"
@@ -62,9 +62,11 @@
       </v-dialog>
 
       <!-- Snackbars -->
-      <v-snackbar 
-        v-model="snackbar_del" 
-        top auto-height :timeout="0"
+      <v-snackbar
+        v-model="snackbar_del"
+        top
+        auto-height
+        :timeout="0"
         color="#FF5E61"
         class="snackbar-del"
       >
@@ -74,9 +76,11 @@
           <button @click="snackbar_del = false" class="cancel-btn">Cancel</button>
         </div>
       </v-snackbar>
-      <v-snackbar 
-        v-model="snackbar_alert" 
-        top auto-height :timeout="4000"
+      <v-snackbar
+        v-model="snackbar_alert"
+        top
+        auto-height
+        :timeout="4000"
         color="#FF5E61"
         class="snackbar-alert"
       >
@@ -120,7 +124,7 @@ export default {
       snackbar_del: false,
       deleteID: "",
       snackbar_alert: false, // Replaces window alert box
-      snackbar_msg: ''  // For snackbar_alert
+      snackbar_msg: "" // For snackbar_alert
     };
   },
   mounted() {
@@ -173,8 +177,7 @@ export default {
     },
     parents(dialogWrite) {
       this.dialogWrite = dialogWrite;
-    },
-    
+    }
   }
 };
 </script>
@@ -219,7 +222,7 @@ a:hover {
     position: absolute;
     top: 0;
     left: 0;
-    background: #3D4756;
+    background: #3d4756;
     transition: all 0.5s;
     opacity: 0;
     color: white;
@@ -247,7 +250,7 @@ a:hover {
       background-position: right;
       &:hover {
         background-position: left;
-        color: #3D4756;
+        color: #3d4756;
       }
     }
     .btn-box {
@@ -279,10 +282,18 @@ a:hover {
   }
 }
 @keyframes jiggle {
-  0% {transform: rotate(0);}
-  25% {transform: rotate(5deg);}
-  75% {transform: rotate(-5deg);}
-  100% {transform: rotate(0);}
+  0% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
 }
 .portfolio-content.new {
   box-shadow: inset 0 0 0 4px $nav-bg;
@@ -335,6 +346,4 @@ a:hover {
 }
 
 // Snackbar: mixin.scss
-
-
 </style>
