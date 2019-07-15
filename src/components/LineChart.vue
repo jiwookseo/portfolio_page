@@ -14,6 +14,11 @@ var jiwon = [];
 var jiwook = [];
 var gyuseok = [];
 var gibeom = [];
+var gtcount = 0;
+var jiwoncount = 0;
+var jiwookcount = 0;
+var gyuseokcount = 0;
+var gibeomcount = 0;
 // var label1 = ['1','2'];
 // var label2 = [1,2];
 export default {
@@ -143,42 +148,43 @@ export default {
             // console.log(this.pname[i]);
           }
           // console.log(this.pname.length);
-          var gtcount = 0;
-          var jiwoncount = 0;
-          var jiwookcount = 0;
-          var gyuseokcount = 0;
-          var gibeomcount = 0;
-          var dateString = this.date[0];
-          // console.log(this.date);
-          // ydate.push(dateString);
 
-          for (var i = this.date.length-1; i >=1; i--) {
+
+
+
+          var dateString = this.date[99];
+          // console.log(this.date);
+          ydate.push(dateString);
+
+          for (var i = this.date.length-1; i >=0; i--) {
+
             // console.log(dateString + " " + this.date[0]);
             // console.log(1111111111);
             // console.log(this.pname[i]);
             if (this.pname[i] == "gtkim4617@naver.com") {
               if (dateString == this.date[i]) {
                 gtcount++;
-                // console.log(gtcount);
-                if (i == 1) {
+
+                if (i == 0) {
                   geuntae.push(gtcount);
                 }
               } else {
+                // console.log(gtcount);
                 geuntae.push(gtcount);
                 gtcount = 1;
                 dateString = this.date[i];
-                if (i == 1) {
+                if (i == 0) {
                   geuntae.push(gtcount);
                 }
               }
             }else {
-              if (i == 1) {
+              if (i == 0) {
                 geuntae.push(gtcount);
               }
             }
           }
-          dateString = this.date[0];
-          for (var i = this.date.length-1; i >=1; i--) {
+          dateString = this.date[99];
+          for (var i = this.date.length-1; i >=0; i--) {
 
             if (this.pname[i] == 'jiwonjulietyoon@gmail.com') {
               // console.log(this.date[i]);
@@ -186,7 +192,7 @@ export default {
               if (dateString == this.date[i]) {
                 jiwoncount++;
                 // console.log(jiwoncount);
-                if(i == 1){
+                if(i == 0){
                   jiwon.push(jiwoncount);
                 }
               } else {
@@ -197,7 +203,7 @@ export default {
                 ydate.push(dateString);
                 // console.log(ydate[0]);
 
-                if(i == 1){
+                if(i == 0){
                   jiwon.push(jiwoncount);
                 }
                 // console.log(ydate);
@@ -207,61 +213,61 @@ export default {
               }
             }
             else{
-              if(i == 1){
+              if(i == 0){
                 jiwon.push(jiwoncount);
               }
             }
           }
-          dateString = this.date[0];
-          for (var i = this.date.length-1; i >=1; i--) {
+          dateString = this.date[99];
+          for (var i = this.date.length-1; i >=0; i--) {
             if (this.pname[i] == 'jiwookseo.dev@gmail.com') {
               if (dateString == this.date[i]) {
                 jiwookcount++;
 
-                if (i == 1) {
+                if (i == 0) {
                   jiwook.push(jiwookcount);
                 }
               } else {
                 jiwook.push(jiwookcount);
                 jiwookcount = 1;
                 dateString = this.date[i];
-                if (i == 1) {
+                if (i == 0) {
                   jiwook.push(jiwookcount);
                 }
               }
             }else {
-              if (i == 1) {
+              if (i == 0) {
                 jiwook.push(jiwookcount);
               }
             }
           }
-          dateString = this.date[0];
-          for (var i = this.date.length-1; i >=1; i--) {
+          dateString = this.date[99];
+          for (var i = this.date.length-1; i >=0; i--) {
             if (this.pname[i] == 'kim6394@hanmail.net') {
               if (dateString == this.date[i]) {
                 gyuseokcount++;
                 // console.log(gyuseokcount);
-                if (i == 1) {
+                if (i == 0) {
                   gyuseok.push(gyuseokcount);
                 }
               } else {
                 gyuseok.push(gyuseokcount);
                 gyuseokcount = 1;
                 dateString = this.date[i];
-                if (i == 1) {
+                if (i == 0) {
                   gyuseok.push(gyuseokcount);
                 }
               }
             }else {
-              if (i == 1) {
+              if (i == 0) {
                 gyuseok.push(gyuseokcount);
               }
             }
           }
-          dateString = this.date[0];
-          for (var i = this.date.length-1; i >=1; i--) {
+          dateString = this.date[99];
+          for (var i = this.date.length-1; i >=0; i--) {
             if (this.pname[i] == 'gaivn0928@naver.com') {
-              if (i == 1) {
+              if (i == 0) {
                 gibeom.push(gibeomcount);
               }
               if (dateString == this.date[i]) {
@@ -272,12 +278,12 @@ export default {
                 gibeom.push(gibeomcount);
                 gibeomcount = 1;
                 dateString = this.date[i];
-                if (i == 1) {
+                if (i == 0) {
                   gibeom.push(gibeomcount);
                 }
               }
             }else {
-              if (i ==  1) {
+              if (i ==  0) {
                 gibeom.push(gibeomcount);
               }
             }
