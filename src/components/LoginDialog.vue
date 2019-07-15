@@ -54,7 +54,6 @@
 
 
 <script>
-import firebase from "firebase";
 import Vue from 'vue';
 
 export default {
@@ -105,23 +104,24 @@ export default {
       }
       else{
       this.$store.dispatch('signUserUp', {email: this.email, password: this.password})
-      this.email= ''
-      this.password= ''
-      this.passwordConfirm= ''
+      this.$refs.form.reset();
       this.showLogin= true
       this.closePopup()
       }
     },
     login() {
-      this.$store.dispatch('signUserIn', {email: this.email, password: this.password})
-      this.email= ''
-      this.password= ''
-      this.closePopup()
+      if(typeof this.email === "undefined" || typeof this.password === "undefined") {
+        Vue.swal("에러", "email and password is required", "error")
+      }
+      else{
+        this.$store.dispatch('signUserIn', {email: this.email, password: this.password})
+        this.$refs.form.reset();
+        this.closePopup()
+      }
     },
     facebookLogin() {
       this.$store.dispatch('signUserInFacebook')
-      this.email= ''
-      this.password= ''
+      this.$refs.form.reset();
       this.closePopup()
     },
     closePopup() {
