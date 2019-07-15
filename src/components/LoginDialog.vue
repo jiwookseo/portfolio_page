@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div class="dialog-outer" v-if="showLogin">
       <div class="d-title text">Login</div>
       <div class="d-sub text">
@@ -9,18 +8,39 @@
       </div>
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-text-field v-model="email" :rules="emailRules" label="Email" required></v-text-field>
-        <v-text-field v-model="password" :rules="passwordRules" label="Password" :type="'password'" required></v-text-field>
+        <v-text-field
+          v-model="password"
+          :rules="passwordRules"
+          label="Password"
+          :type="'password'"
+          required
+        ></v-text-field>
         <div class="btn-box">
           <div>
-            <button class="btn reset-btn text" :disabled="loading" :loading="loading" @click.prevent="reset">Reset</button>
-            <button class="btn login-btn text" :disabled="loading" :loading="loading" @click.prevent="login">Login</button>
+            <button
+              class="btn reset-btn text"
+              :disabled="loading"
+              :loading="loading"
+              @click.prevent="reset"
+            >Reset</button>
+            <button
+              class="btn login-btn text"
+              :disabled="loading"
+              :loading="loading"
+              @click.prevent="login"
+            >Login</button>
           </div>
-          <button class="btn login-btn text" :disabled="loading" :loading="loading" @click.prevent="facebookLogin">Login with Facebook</button>
+          <button
+            class="btn login-btn text"
+            :disabled="loading"
+            :loading="loading"
+            @click.prevent="facebookLogin"
+          >Login with Facebook</button>
         </div>
 
         <!-- <v-btn color="primary" :disabled="loading" :loading="loading" @click.prevent="login" class="text">Login</v-btn>
         <v-spacer />
-        <v-btn color="primary" :disabled="loading" :loading="loading" @click.prevent="facebookLogin" class="text">Login with Facebook</v-btn> -->
+        <v-btn color="primary" :disabled="loading" :loading="loading" @click.prevent="facebookLogin" class="text">Login with Facebook</v-btn>-->
       </v-form>
     </div>
 
@@ -32,7 +52,13 @@
       </div>
       <v-form ref="form" @submit.prevent="signUp" v-model="valid" lazy-validation>
         <v-text-field v-model="email" :rules="emailRules" label="Email" required></v-text-field>
-        <v-text-field v-model="password" :rules="passwordRules" label="Password" :type="'password'" required></v-text-field>
+        <v-text-field
+          v-model="password"
+          :rules="passwordRules"
+          label="Password"
+          :type="'password'"
+          required
+        ></v-text-field>
         <v-text-field
           v-model="passwordConfirm"
           :rules="passwordConfirmRules"
@@ -41,26 +67,37 @@
           required
         ></v-text-field>
         <div class="btn-box">
-          <button class="btn reset-btn text" :disabled="loading" :loading="loading" @click.prevent="reset">Reset</button>
-          <button class="btn login-btn text" :disabled="loading" :loading="loading" type="submit">Sign up</button>
+          <button
+            class="btn reset-btn text"
+            :disabled="loading"
+            :loading="loading"
+            @click.prevent="reset"
+          >Reset</button>
+          <button
+            class="btn login-btn text"
+            :disabled="loading"
+            :loading="loading"
+            type="submit"
+          >Sign up</button>
         </div>
         <!-- <v-btn type="submit" color="success" :disabled="loading" :loading="loading" class="text">Sign up</v-btn>
-        <v-spacer /> -->
+        <v-spacer />-->
       </v-form>
     </div>
-
   </div>
 </template>
 
 
 <script>
-import Vue from 'vue';
+import Vue from "vue";
 
 export default {
   name: "LoginDialog",
+  props: {
+    dialog: { type: Boolean, default: false }
+  },
   data() {
     return {
-      dialog: false,
       valid: false,
       showLogin: true,
       email: "",
@@ -69,12 +106,17 @@ export default {
         v => /.+@.+/.test(v) || "E-mail must be valid"
       ],
       passwordRules: [
-        v => !!v || 'Password is required',
-        v => !v || v.length >= 6 ||'Password must be greater than 6 characters'
+        v => !!v || "Password is required",
+        v => !v || v.length >= 6 || "Password must be greater than 6 characters"
       ],
       password: "",
       passwordConfirm: ""
     };
+  },
+  watch: {
+    dialog: function() {
+      this.reset();
+    }
   },
   computed: {
     passwordConfirmRules() {
@@ -83,14 +125,14 @@ export default {
         v => !!v || "Confirmation password is required"
       ];
     },
-    user () {
-      return this.$store.getters.user
+    user() {
+      return this.$store.getters.user;
     },
-    error () {
-      return this.$store.getters.error
+    error() {
+      return this.$store.getters.error;
     },
-    loading () {
-      return this.$store.getters.loading
+    loading() {
+      return this.$store.getters.loading;
     }
   },
   methods: {
@@ -98,34 +140,39 @@ export default {
       this.$refs.form.reset();
     },
     signUp() {
-      if(this.password !== this.passwordConfirm ){
-        Vue.swal("에러", "password must match", "error")
-        this.passwordConfirm= ''
-      }
-      else{
-      this.$store.dispatch('signUserUp', {email: this.email, password: this.password})
-      this.$refs.form.reset();
-      this.showLogin= true
-      this.closePopup()
+      if (this.password !== this.passwordConfirm) {
+        Vue.swal("에러", "password must match", "error");
+        this.passwordConfirm = "";
+      } else {
+        this.$store.dispatch("signUserUp", {
+          email: this.email,
+          password: this.password
+        });
+        this.showLogin = true;
+        this.closePopup();
       }
     },
     login() {
-      if(typeof this.email === "undefined" || typeof this.password === "undefined") {
-        Vue.swal("에러", "email and password is required", "error")
-      }
-      else{
-        this.$store.dispatch('signUserIn', {email: this.email, password: this.password})
-        this.$refs.form.reset();
-        this.closePopup()
+      if (
+        typeof this.email === "undefined" ||
+        typeof this.password === "undefined"
+      ) {
+        Vue.swal("에러", "email and password is required", "error");
+      } else {
+        this.$store.dispatch("signUserIn", {
+          email: this.email,
+          password: this.password
+        });
+        this.reset();
       }
     },
     facebookLogin() {
-      this.$store.dispatch('signUserInFacebook')
-      this.$refs.form.reset();
-      this.closePopup()
+      this.$store.dispatch("signUserInFacebook");
+      this.closePopup();
     },
     closePopup() {
-      return this.$emit("child", this.dialog)
+      this.reset();
+      return this.$emit("child", false);
     }
   }
 };
@@ -177,5 +224,4 @@ export default {
     @include nudge-btn-primary;
   }
 }
-
 </style>

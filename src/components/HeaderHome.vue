@@ -41,7 +41,7 @@
     </div>
     <FavBtn class="sb-fav" />
     <v-dialog v-model="dialog" class="login-dialog" width="300">
-      <LoginDialog @child="parents" />
+      <LoginDialog @child="parents" :dialog="dialog" />
     </v-dialog>
   </header>
 </template>
@@ -63,8 +63,8 @@ export default {
     websiteTitle: { type: String }
   },
   computed: {
-    user () {
-      return this.$store.getters.user
+    user() {
+      return this.$store.getters.user;
     }
   },
   data() {
@@ -83,9 +83,9 @@ export default {
   methods: {
     ...mapActions(["logout"]),
     signOut() {
-      this.logout()
-      this.$swal("Goodbye!", "로그아웃 되었습니다", "success")
-      this.$router.replace("/")
+      this.logout();
+      this.$swal("Goodbye!", "로그아웃 되었습니다", "success");
+      this.$router.replace("/");
     },
     scrollTo(target) {
       this.$parent.scrollTo(target);
