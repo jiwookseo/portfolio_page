@@ -7,6 +7,7 @@
         :key="posts[i-1].id"
         xs12
         sm6
+        data-aos="fade-up" 
       >
         <h3 class="title text">{{ posts[i-1].title }}</h3>
         <hr />
@@ -28,7 +29,7 @@
           </div>
         </div>
       </v-flex>
-      <v-flex v-if="allowCreate" @click="openPostWriter()" class="post" xs12 sm6>
+      <v-flex v-if="allowCreate" @click="openPostWriter()" class="post" xs12 sm6 data-aos="fade-up">
         <span class="text">+ New Post</span>
       </v-flex>
 
@@ -45,7 +46,9 @@
         />
       </v-dialog>
       <v-dialog v-model="dialogDetail" width="500">
-        <PostDetailDialog :id="id" :title="title" :content="content" :created_at="created_at" />
+        <PostDetailDialog 
+          @child_detail="parent_detail"
+          :id="id" :title="title" :content="content" :created_at="created_at" />
       </v-dialog>
 
       <!-- Snackbars -->
@@ -147,8 +150,11 @@ export default {
     parent_snackbar(msg) {
       this.triggerSnackbarAlert(msg);
     },
-    parents(dialogWrite) {
-      this.dialogWrite = dialogWrite;
+    parents() {
+      this.dialogWrite = false;
+    },
+    parent_detail() {
+      this.dialogDetail = false;
     },
     viewDetail(title, content, created_at) {
       this.title = title;
@@ -158,7 +164,7 @@ export default {
     },
     date_created(created_at) {
       const date = new Date(created_at * 1000);
-      return String(date).split("(")[0];
+      return String(date).split("GMT")[0];
     }
   }
 };
@@ -191,6 +197,7 @@ export default {
   .content {
     @include line-clamp-4;
     margin: 5px 0 10px;
+    // min-height: 83.2px;
   }
 }
 

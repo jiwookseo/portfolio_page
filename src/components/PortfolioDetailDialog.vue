@@ -1,9 +1,12 @@
 <template>
     <div class="dialog-outer">
-        <h3>{{title}}</h3>
-        <p>{{date_created}}</p>
-        <p>{{content}}</p>
-        <p>{{img}}</p>
+        <h3 class="Title">{{title}}</h3>
+        <p class="Date">{{date_created}}</p>
+        <div class="Img" :style="{'background-image': 'url(' + img + ')'}"></div>
+        <p class="Content">{{content}}</p>
+        <div class="cancel-btn" @click="closeDialog">
+          <i class="material-icons">close</i>
+        </div>
     </div>
 </template>
 
@@ -24,8 +27,13 @@ export default {
     computed: {
         date_created() {
             const date = new Date(this.created_at * 1000);
-            return String(date).split('(')[0]
+            return String(date).split('GMT')[0]
         }
+    },
+    methods: {
+      closeDialog() {
+        this.$emit("child_detail");
+      }
     }
 }
 </script>
@@ -38,10 +46,34 @@ export default {
 
 .dialog-outer {
   width: 100%;
-  height: 70vh;
+  height: 80vh;
   background: white;
-  padding: 20px;
+  padding: 30px;
   overflow: auto;
+  position: relative;
+}
+.Title {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+.Date {
+  color: gray;
+  margin-bottom: 10px;
+}
+.Img {
+  width: 100%;
+  height: 250px;
+  @include mobile {
+    height: 200px;
+  }
+  border-radius: 3px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.Content {
+  margin-top: 10px;
+  line-height: 1.7em;
 }
 
 </style>

@@ -10,7 +10,7 @@
         md4
         lg3
       >
-        <div class="portfolio-content">
+        <div class="portfolio-content" data-aos="fade-up">
           <div class="img" :style="{'background-image': 'url(' + portfolios[i-1].img + ')'}"></div>
           <div class="content">
             <h3 class="title text">{{ portfolios[i-1].title }}</h3>
@@ -32,8 +32,8 @@
           </div>
         </div>
       </v-flex>
-      <v-flex v-if="allowCreate" @click="openPortfolioWriter" class="portfolio" xs12 sm6 md4 lg3>
-        <div class="portfolio-content new">
+      <v-flex v-if="allowCreate" class="portfolio" xs12 sm6 md4 lg3>
+        <div class="portfolio-content new" @click="openPortfolioWriter" data-aos="fade-up">
           <span>+ New Portfolio</span>
         </div>
       </v-flex>
@@ -53,6 +53,7 @@
       </v-dialog>
       <v-dialog v-model="dialogDetail" width="500">
         <PortfolioDetailDialog
+          @child_detail="parent_detail"
           :id="id"
           :title="title"
           :content="content"
@@ -168,6 +169,9 @@ export default {
     parent_snackbar(msg) {
       this.triggerSnackbarAlert(msg);
     },
+    parent_detail() {
+      this.dialogDetail = false;
+    },
     viewDetail(title, content, img, created_at) {
       this.title = title;
       this.content = content;
@@ -175,8 +179,8 @@ export default {
       this.created_at = created_at;
       this.dialogDetail = true;
     },
-    parents(dialogWrite) {
-      this.dialogWrite = dialogWrite;
+    parents() {
+      this.dialogWrite = false;
     }
   }
 };
