@@ -75,7 +75,8 @@ export default {
     signOut() {
       this.logout()
       this.$swal("Goodbye!", "로그아웃 되었습니다", "success")
-      this.$router.replace("/")
+      console.log(this.$route.path)
+      this.$router.replace(this.$route.path);
     },
     scrollTo(target) {
       this.$parent.scrollTo(target);

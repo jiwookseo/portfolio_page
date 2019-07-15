@@ -47,7 +47,7 @@
 
 <script>
 import "../js/navbar.js";
-// import firestore from "../firebase/firestore";
+import firestore from "../firebase/firestore";
 import HeaderHome from "../components/HeaderHome";
 import PortfolioList from "../components/PortfolioList";
 import PortfolioWriteModal from "../components/PortfolioWriteModal";
@@ -82,12 +82,26 @@ export default {
       }
     }
   },
+  mounted() {
+    this.addLog();
+  },
   methods: {
     scrollTo(target) {
       let targetscrolltop = $(target).offset().top;
       setTimeout(function() {
         $("html, body").animate({scrollTop: targetscrolltop + 10}, 700);
       }, 200);
+    },
+    addLog() {
+      let username = '';
+      if (!this.$store.getters.user) {
+        username = "Anonymous User";
+      }
+      else {
+        username = this.$store.getters.user.email;
+      }
+      let time = new Date();
+      firestore.addLog("/", username, time.getTime());
     }
   }
 }

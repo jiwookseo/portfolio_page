@@ -74,5 +74,16 @@ export default {
       path: path,
       time: time
     })
+  },
+  addLog(path, username, time) {
+    let db = firebaseApp.database();
+    let log = db.ref('LOG');
+    log.push(
+      {
+        'path': path,
+        'username': username,
+        'time': time
+      }
+    );
   }
 }
