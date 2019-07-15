@@ -14,6 +14,11 @@ var jiwon = [];
 var jiwook = [];
 var gyuseok = [];
 var gibeom = [];
+var gtcount = 0;
+var jiwoncount = 0;
+var jiwookcount = 0;
+var gyuseokcount = 0;
+var gibeomcount = 0;
 // var label1 = ['1','2'];
 // var label2 = [1,2];
 export default {
@@ -143,145 +148,181 @@ export default {
             // console.log(this.pname[i]);
           }
           // console.log(this.pname.length);
-          var gtcount = 0;
-          var jiwoncount = 0;
-          var jiwookcount = 0;
-          var gyuseokcount = 0;
-          var gibeomcount = 0;
-          var dateString = this.date[0];
-          // console.log(this.date);
-          // ydate.push(dateString);
 
-          for (var i = this.date.length-1; i >=1; i--) {
-            // console.log(dateString + " " + this.date[0]);
-            // console.log(1111111111);
-            // console.log(this.pname[i]);
+          var dateString = this.date[99];
+          // console.log(this.date);
+          ydate.push(dateString);
+          var a = 0;
+
+          for (var i = this.date.length -1 ; i >= 0; i--) {
+            if (ydate[a] != this.date[i]) {
+              a++;
+              ydate.push(this.date[i]);
+            }
+          }
+
+
+          var datenum = 0;
+          for (var i = this.date.length -1 ; i >= 0; i--) {
             if (this.pname[i] == "gtkim4617@naver.com") {
-              if (dateString == this.date[i]) {
+              if (ydate[datenum] == this.date[i]) {
                 gtcount++;
-                // console.log(gtcount);
-                if (i == 1) {
+                if(i == 0){
                   geuntae.push(gtcount);
                 }
-              } else {
+              }else if (ydate[datenum+1] == this.date[i]) {
+                datenum++;
                 geuntae.push(gtcount);
                 gtcount = 1;
-                dateString = this.date[i];
-                if (i == 1) {
+
+                if (i == 0) {
+                  geuntae.push(gtcount);
+                }
+              }else if (ydate[datenum+2] == this.date[i]) {
+                datenum = datenum + 2;
+                geuntae.push(gtcount);
+                gtcount = 0;
+                geuntae.push(gtcount);
+                gtcount = 1;
+                if (i == 0) {
                   geuntae.push(gtcount);
                 }
               }
             }else {
-              if (i == 1) {
+              if (i == 0) {
                 geuntae.push(gtcount);
               }
             }
           }
-          dateString = this.date[0];
-          for (var i = this.date.length-1; i >=1; i--) {
-
-            if (this.pname[i] == 'jiwonjulietyoon@gmail.com') {
-              // console.log(this.date[i]);
-              // console.log(this.date[i]);
-              if (dateString == this.date[i]) {
+          var datenum = 0;
+          for (var i = this.date.length -1 ; i >= 0; i--) {
+            if (this.pname[i] == "jiwonjulietyoon@gmail.com") {
+              if (ydate[datenum] == this.date[i]) {
                 jiwoncount++;
-                // console.log(jiwoncount);
-                if(i == 1){
+                if(i == 0){
                   jiwon.push(jiwoncount);
                 }
-              } else {
+              }else if (ydate[datenum+1] == this.date[i]) {
+                datenum++;
                 jiwon.push(jiwoncount);
                 jiwoncount = 1;
-                // console.log(jiwoncount);
-                dateString = this.date[i];
-                ydate.push(dateString);
-                // console.log(ydate[0]);
 
-                if(i == 1){
+                if (i == 0) {
                   jiwon.push(jiwoncount);
                 }
-                // console.log(ydate);
-
-                // console.log(dateString);
-
+              }else if (ydate[datenum+2] == this.date[i]) {
+                datenum = datenum + 2;
+                jiwon.push(jiwoncount);
+                jiwoncount = 0;
+                jiwon.push(jiwoncount);
+                jiwoncount = 1;
+                if (i == 0) {
+                  jiwon.push(jiwoncount);
+                }
               }
-            }
-            else{
-              if(i == 1){
+            }else {
+              if (i == 0) {
                 jiwon.push(jiwoncount);
               }
             }
           }
-          dateString = this.date[0];
-          for (var i = this.date.length-1; i >=1; i--) {
-            if (this.pname[i] == 'jiwookseo.dev@gmail.com') {
-              if (dateString == this.date[i]) {
+          var datenum = 0;
+          for (var i = this.date.length -1 ; i >= 0; i--) {
+            if (this.pname[i] == "jiwookseo.dev@gmail.com") {
+              if (ydate[datenum] == this.date[i]) {
                 jiwookcount++;
-
-                if (i == 1) {
+                if(i == 0){
                   jiwook.push(jiwookcount);
                 }
-              } else {
+              }else if (ydate[datenum+1] == this.date[i]) {
+                datenum++;
                 jiwook.push(jiwookcount);
                 jiwookcount = 1;
-                dateString = this.date[i];
-                if (i == 1) {
+
+                if (i == 0) {
+                  jiwook.push(jiwookcount);
+                }
+              }else if (ydate[datenum+2] == this.date[i]) {
+                datenum = datenum + 2;
+                jiwook.push(jiwookcount);
+                jiwookcount = 0;
+                jiwook.push(jiwookcount);
+                jiwoncount = 1;
+                if (i == 0) {
                   jiwook.push(jiwookcount);
                 }
               }
             }else {
-              if (i == 1) {
+              if (i == 0) {
                 jiwook.push(jiwookcount);
               }
             }
           }
-          dateString = this.date[0];
-          for (var i = this.date.length-1; i >=1; i--) {
-            if (this.pname[i] == 'kim6394@hanmail.net') {
-              if (dateString == this.date[i]) {
+          var datenum = 0;
+          for (var i = this.date.length -1 ; i >= 0; i--) {
+            if (this.pname[i] == "kim6394@hanmail.net") {
+              if (ydate[datenum] == this.date[i]) {
                 gyuseokcount++;
-                // console.log(gyuseokcount);
-                if (i == 1) {
+                if(i == 0){
                   gyuseok.push(gyuseokcount);
                 }
-              } else {
+              }else if (ydate[datenum+1] == this.date[i]) {
+                datenum++;
                 gyuseok.push(gyuseokcount);
                 gyuseokcount = 1;
-                dateString = this.date[i];
-                if (i == 1) {
+
+                if (i == 0) {
+                  gyuseok.push(gyuseokcount);
+                }
+              }else if (ydate[datenum+2] == this.date[i]) {
+                datenum = datenum + 2;
+                gyuseok.push(gyuseokcount);
+                gyuseokcount = 0;
+                gyuseok.push(gyuseokcount);
+                gyuseokcount = 1;
+                if (i == 0) {
                   gyuseok.push(gyuseokcount);
                 }
               }
             }else {
-              if (i == 1) {
+              if (i == 0) {
                 gyuseok.push(gyuseokcount);
               }
             }
           }
-          dateString = this.date[0];
-          for (var i = this.date.length-1; i >=1; i--) {
-            if (this.pname[i] == 'gaivn0928@naver.com') {
-              if (i == 1) {
-                gibeom.push(gibeomcount);
-              }
-              if (dateString == this.date[i]) {
+          var datenum = 0;
+          for (var i = this.date.length -1 ; i >= 0; i--) {
+            if (this.pname[i] == "gaivn0928@naver.com") {
+              if (ydate[datenum] == this.date[i]) {
                 gibeomcount++;
-
-
-              } else {
+                if(i == 0){
+                  gibeom.push(gibeomcount);
+                }
+              }else if (ydate[datenum+1] == this.date[i]) {
+                datenum++;
                 gibeom.push(gibeomcount);
                 gibeomcount = 1;
-                dateString = this.date[i];
-                if (i == 1) {
+
+                if (i == 0) {
+                  gibeom.push(gibeomcount);
+                }
+              }else if (ydate[datenum+2] == this.date[i]) {
+                datenum = datenum + 2;
+                gibeom.push(gibeomcount);
+                gibeomcount = 0;
+                gibeom.push(gibeomcount);
+                gibeomcount = 1;
+                if (i == 0) {
                   gibeom.push(gibeomcount);
                 }
               }
             }else {
-              if (i ==  1) {
+              if (i == 0) {
                 gibeom.push(gibeomcount);
               }
             }
           }
+
 
 
 
