@@ -3,7 +3,20 @@
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-text-field v-model="title" label="Title" required :rules="titleRules"></v-text-field>
       <v-textarea v-model="content" label="Content" required :rules="contentRules" rows=10 auto-grow></v-textarea>
-      <v-text-field v-model="img" label="Image URL" required></v-text-field>
+      
+      <!-- <v-text-field v-model="img" label="Image URL" required></v-text-field> -->
+      <div>
+        <img id="img-preview" :src="img" width="100px" height="120px">
+        <v-text-field label="Select Image" @click='pickFile' v-model='img' prepend-icon='attach_file'></v-text-field>
+        <input
+          type="file"
+          style="display: none"
+          ref="image"
+          accept="image/*"
+          @change="onFilePicked"
+        >
+      </div>
+      
       <div class="btn-box">
         <button @click.prevent="reset" class="btn reset-btn">Reset</button>
         <button v-if="createMode" @click.prevent="create" class="btn create-btn" :disabled="!valid">Create</button>
@@ -71,6 +84,12 @@ export default {
         this.closeDialog();
         this.reset();
         this.triggerParentSnackbar("Portfolio updated");
+      },
+      pickFile() {
+        this.$refs.image.click();
+      },
+      onFilePicked() {
+
       }
     }
     

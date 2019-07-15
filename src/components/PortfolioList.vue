@@ -135,7 +135,7 @@ export default {
       id = "",
       title = "",
       content = "",
-      img = ""
+      img = "http://dy.gnch.or.kr/img/no-image.jpg"
     ) {
       this.createMode = create;
       this.id = id;
