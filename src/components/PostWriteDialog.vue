@@ -5,8 +5,8 @@
 			<v-textarea v-model="content" label="Content" required :rules="contentRules" rows=10 auto-grow></v-textarea>
 			<div class="btn-box">
 				<button @click.prevent="reset" class="btn reset-btn">Reset</button>
-        <button v-if="createMode" @click="create" class="btn create-btn" :disabled="!valid">Create</button>
-        <button v-if="!createMode" @click="update" class="btn create-btn" :disabled="!valid">Update</button>
+        <button v-if="createMode" @click.prevent="create" class="btn create-btn" :disabled="!valid">Create</button>
+        <button v-if="!createMode" @click.prevent="update" class="btn create-btn" :disabled="!valid">Update</button>
       </div>
 		</v-form>
 		<div class="cancel-btn" @click="closeDialog">
@@ -26,10 +26,10 @@ export default {
 		title: {type: String},
 		content: {type: String},
 		createMode: {type: Boolean, default: true}
-	},
+  },
 	data() {
 		return {
-			dialogWrite: false,
+      dialogWrite: false,
 			valid: true,
 			titleRules: [
 				(v) => !!v || 'Title is required',
@@ -49,18 +49,20 @@ export default {
 		},
 		triggerParentSnackbar(msg) {
 			this.$emit("child_snackbar", msg);
-		},
-		create() {
-			firestore.postPost(this.title, this.content);
+    },
+		async create() {
+      await firestore.postPost(this.title, this.content);
+      await this.$emit("child_updatePost");
 			this.reset();
 			this.closeDialog();
-			this.triggerParentSnackbar("Post created");
+      this.triggerParentSnackbar("Post created");
 		},
-		update() {
-			firestore.updatePost(this.id, this.title, this.content);
+		async update() {
+      await firestore.updatePost(this.id, this.title, this.content);
+      await this.$emit("child_updatePost");
 			this.closeDialog();
 			this.reset();
-			this.triggerParentSnackbar("Post updated");
+      this.triggerParentSnackbar("Post updated");
 		}
 	}
 }

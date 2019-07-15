@@ -28,6 +28,7 @@
         <PostWriteDialog 
           @child="parents"
           @child_snackbar="parent_snackbar"
+          @child_updatePost="parent_updatePost"
           :createMode=createMode
           :id="id"
           :title="title"
@@ -75,6 +76,7 @@
 import PostWriteDialog from './PostWriteDialog';
 import PostDetailDialog from './PostDetailDialog';
 import firestore from '../firebase/firestore';
+import { setTimeout } from 'timers';
 
 export default {
   name: "PostList",
@@ -102,8 +104,8 @@ export default {
     this.getPosts();
   },
   components: {
-        PostWriteDialog,
-        PostDetailDialog
+    PostWriteDialog,
+    PostDetailDialog
 	},
   methods: {
     async getPosts() {
@@ -129,10 +131,14 @@ export default {
       this.snackbar_msg = msg;
       this.snackbar_alert = true;
     },
-    deletePost(id) {
-      firestore.deletePost(id);
+    async deletePost(id) {
+      await firestore.deletePost(id);
+      await this.getPosts();
       this.snackbar_del = false;
       this.triggerSnackbarAlert("Post deleted");
+    },
+    async parent_updatePost() {
+      await this.getPosts();
     },
     parent_snackbar(msg) {
       this.triggerSnackbarAlert(msg);
@@ -141,14 +147,14 @@ export default {
       this.dialogWrite = dialogWrite;
     },
     viewDetail(title, content, created_at) {
-        this.title = title;
-        this.content = content;
-        this.created_at = created_at;
-        this.dialogDetail = true;
+      this.title = title;
+      this.content = content;
+      this.created_at = created_at;
+      this.dialogDetail = true;
     },
     date_created(created_at) {
-        const date = new Date(created_at * 1000);
-        return String(date).split('(')[0]
+      const date = new Date(created_at * 1000);
+      return String(date).split('(')[0]
     }
   },
 

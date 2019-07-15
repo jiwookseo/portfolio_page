@@ -77,6 +77,7 @@ export default {
   },
   methods: {
     getData() {
+      axios.defaults.baseURL = `https://lab.ssafy.com/api/v4/projects/6043/repository/commits/?private_token=mSzGEe1Ba9KXsNynKz-A&per_page=100`
       axios
         .get(labURL)
         .then(response => {
