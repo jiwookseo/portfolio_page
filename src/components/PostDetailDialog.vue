@@ -1,9 +1,12 @@
 <template>
-    <div class="dialog-outer">
-        <h3>{{title}}</h3>
-        <p>{{date_created}}</p>
-        <p>{{content}}</p>
+  <div class="dialog-outer">
+    <h3 class="Title">{{title}}</h3>
+    <p class="Date">{{date_created}}</p>
+    <p class="Content">{{content}}</p>
+    <div class="cancel-btn" @click="closeDialog">
+      <i class="material-icons">close</i>
     </div>
+  </div>
 </template>
 
 <script>
@@ -22,9 +25,14 @@ export default {
 	computed: {
 		date_created() {
 			const date = new Date(this.created_at * 1000);
-      return String(date).split('(')[0]
+      return String(date).split('GMT')[0]
 		}
-	}
+  },
+  methods: {
+    closeDialog() {
+      this.$emit("child_detail");
+    }
+  }
 }
 </script>
 
@@ -38,8 +46,20 @@ export default {
   width: 100%;
   height: 70vh;
   background: white;
-  padding: 20px;
+  padding: 30px;
   overflow: auto;
+  position: relative;
+}
+.Title {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+.Date {
+  color: gray;
+  margin-bottom: 10px;
+}
+.Content {
+  line-height: 1.7em;
 }
 
 </style>

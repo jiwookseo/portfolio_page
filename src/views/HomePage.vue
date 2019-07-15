@@ -3,12 +3,13 @@
     <HeaderHome :websiteTitle="'HOME'" />
     <div class="homeContent">
       <section id="aboutme">
-        <h2 class="section-title text">About me</h2>
+        <h2 class="section-title text" data-aos="fade-right">About me</h2>
         <div class="text" style="text-align: center" v-if="user">[테스트문장] {{user.email}}님 반갑습니다</div>
         <div class="text" style="text-align: center" v-if="adminUser">[테스트문장] 관계자님 반갑습니다</div>
+
       </section>
       <section id="portfolio">
-        <h2 class="section-title text">Portfolio</h2>
+        <h2 class="section-title text" data-aos="fade-left">Portfolio</h2>
         <PortfolioList :limit=4 />
         <div class="section-btn-box">
           <router-link to="/portfolio">
@@ -20,7 +21,7 @@
         <!-- <div><PortfolioWriteModal /></div> -->
       </section>
       <section id="post">
-        <h2 class="section-title text">Post</h2>
+        <h2 class="section-title text" data-aos="fade-right">Post</h2>
         <PostList :limit=4 />
         <div class="section-btn-box">
           <router-link to="/post">
@@ -31,8 +32,8 @@
         </div>
       </section>
       <section id="project">
-        <h2 class="section-title text">Project</h2>
-        <LineChart class="linechart"/>
+        <h2 class="section-title text" data-aos="fade-left">Project</h2>
+        <LineChart class="linechart" data-aos="fade-up" />
         <div class="section-btn-box">
             <a target="_blank" href="https://lab.ssafy.com/jiwonjulietyoon/webmobile-sub2">
             <div class="section-more-btn">
@@ -131,6 +132,11 @@ section {
     background: white;
   }
 }
+
+
+
+
+
 #project {
   padding: 80px 30px 80px;
   .linechart {
@@ -139,24 +145,7 @@ section {
     }
   }
 }
-.more {
-  margin: 30px auto 0;
-  width: 140px;
-  height: 40px;
-  line-height: 37px;
-  border-radius: 5px;
-  border: 1.5px solid $nav-bg;
-  text-align: center;
-  transition: all 0.3s;
-  background: linear-gradient(to bottom, $nav-bg, $footer-bg);
-  div {
-    width: 100%; height: 100%;
-    color: #181818;
-  }
-  &:hover {
-    background: linear-gradient(to bottom, $nav-bg, $nav-bg);
-  }
-}
+
 
 
 .section-more-btn {

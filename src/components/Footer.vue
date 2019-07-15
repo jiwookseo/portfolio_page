@@ -92,14 +92,13 @@ footer {
 }
 #weather {
     position: absolute;
-    width: 160px;
-    height: 110px;
-    bottom: 30%;
+    width: 150px;
+    height: 100px;
+    bottom: 40%;
     left: 5%;
-    padding-left: 25px;
+    padding-left: 20px;
     opacity: 0.8;
-    // border : 1px solid white;
-    border-radius: 20px;
+    border-radius: 5px;
     background: linear-gradient(#6190E8,  #A7BFE8);
     .weather-city {
       height: 50px;
