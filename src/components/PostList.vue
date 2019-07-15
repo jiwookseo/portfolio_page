@@ -25,7 +25,7 @@
 
       <!-- Dialogs -->
       <v-dialog v-model="dialogWrite" width="500" persistent>
-        <PostWriteDialog 
+        <PostWriteDialog
           @child="parents"
           @child_snackbar="parent_snackbar"
           @child_updatePost="parent_updatePost"
@@ -36,16 +36,16 @@
         />
       </v-dialog>
       <v-dialog v-model="dialogDetail" width="500">
-        <PostDetailDialog 
+        <PostDetailDialog
           :id="id"
           :title=title 
-          :content=content 
+          :content=content
           :created_at=created_at />
       </v-dialog>
 
       <!-- Snackbars -->
-      <v-snackbar 
-        v-model="snackbar_del" 
+      <v-snackbar
+        v-model="snackbar_del"
         top auto-height :timeout="0"
         color="#FF5E61"
         class="snackbar-del"
@@ -56,8 +56,8 @@
           <button @click="snackbar_del = false" class="cancel-btn">Cancel</button>
         </div>
       </v-snackbar>
-      <v-snackbar 
-        v-model="snackbar_alert" 
+      <v-snackbar
+        v-model="snackbar_alert"
         top auto-height :timeout="4000"
         color="#FF5E61"
         class="snackbar-alert"

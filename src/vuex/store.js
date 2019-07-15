@@ -6,6 +6,7 @@ import actions from './actions'
 Vue.use(Vuex)
 
 const state = {
+  admin: 'admin@admin.com',
   user: null,
   loading: false,
   error: null,

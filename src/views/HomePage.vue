@@ -5,6 +5,7 @@
       <section id="aboutme">
         <h2 class="section-title text">About me</h2>
         <div class="text" style="text-align: center" v-if="user">[테스트문장] {{user.email}}님 반갑습니다</div>
+        <div class="text" style="text-align: center" v-if="adminUser">[테스트문장] 관계자님 반갑습니다</div>
       </section>
       <section id="portfolio">
         <h2 class="section-title text">Portfolio</h2>
@@ -69,6 +70,16 @@ export default {
   computed: {
     user () {
       return this.$store.getters.user
+    },
+    adminUser () {
+      if(this.$store.getters.user != null){
+        if(this.$store.getters.user.email === this.$store.getters.admin){
+          return true
+        }
+        else {
+          return false
+        }
+      }
     }
   },
   methods: {
