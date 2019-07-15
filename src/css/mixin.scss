@@ -62,7 +62,6 @@
 @mixin nudge-btn-gray { // gray; nudge left
   background: #9AAEBB;
   box-shadow: -5px 0 #8D9CB2;
-  float: left;
   &:hover {
     box-shadow: -3px 0 #8D9CB2;
     right: 2px;
@@ -75,6 +74,14 @@
 @mixin nudge-btn-primary { // blue; nudge right
   background: #00C0FF;
   box-shadow: 5px 0 $blue-accent;
+  &:disabled {
+    background: #d6dee3;
+    box-shadow: 5px 0 #ccd6dd;
+    &:hover:disabled {
+      box-shadow: 3px 0 #ccd6dd;
+      left: 2px;
+    }
+  }
   &:hover {
     box-shadow: 3px 0 $blue-accent;
     left: 2px;
@@ -82,6 +89,21 @@
   &:active {
     box-shadow: none;
     left: 5px;
+  }
+}
+
+
+.cancel-btn {  // Dialog Close Button (gray X)
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  i {
+    color: gray;
+    @include centerItem;
+    font-size: 2.5em;
   }
 }
 

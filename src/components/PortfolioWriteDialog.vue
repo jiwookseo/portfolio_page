@@ -44,12 +44,6 @@
           :disabled="!valid"
         >Update</button>
       </div>
-
-      <!-- <div>
-        <v-btn color="warning"  class="text">Reset</v-btn>
-        <v-btn color="primary" @click="create" class="text" :disabled="!valid">Create</v-btn>
-        <v-btn v-if="!createMode" color="primary" @click="update" class="text" :disabled="!valid">Update</v-btn>
-      </div>-->
     </v-form>
     <div class="cancel-btn" @click="closeDialog">
       <i class="material-icons">close</i>
@@ -154,17 +148,5 @@ export default {
   }
 }
 
-.cancel-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  i {
-    color: gray;
-    @include centerItem;
-    font-size: 2.5em;
-  }
-}
+
 </style>

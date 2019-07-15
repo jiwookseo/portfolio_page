@@ -25,23 +25,21 @@
             >Reset</button>
             <button
               class="btn login-btn text"
-              :disabled="loading"
+              :disabled="!valid"
               :loading="loading"
               @click.prevent="login"
             >Login</button>
           </div>
           <button
             class="btn login-btn text"
-            :disabled="loading"
             :loading="loading"
             @click.prevent="facebookLogin"
           >Login with Facebook</button>
         </div>
-
-        <!-- <v-btn color="primary" :disabled="loading" :loading="loading" @click.prevent="login" class="text">Login</v-btn>
-        <v-spacer />
-        <v-btn color="primary" :disabled="loading" :loading="loading" @click.prevent="facebookLogin" class="text">Login with Facebook</v-btn>-->
       </v-form>
+      <div class="cancel-btn" @click="closePopup">
+        <i class="material-icons">close</i>
+      </div>
     </div>
 
     <div class="dialog-outer" v-if="!showLogin">
@@ -69,20 +67,20 @@
         <div class="btn-box">
           <button
             class="btn reset-btn text"
-            :disabled="loading"
             :loading="loading"
             @click.prevent="reset"
           >Reset</button>
           <button
             class="btn login-btn text"
-            :disabled="loading"
+            :disabled="!valid"
             :loading="loading"
             type="submit"
           >Sign up</button>
         </div>
-        <!-- <v-btn type="submit" color="success" :disabled="loading" :loading="loading" class="text">Sign up</v-btn>
-        <v-spacer />-->
       </v-form>
+      <div class="cancel-btn" @click="closePopup">
+        <i class="material-icons">close</i>
+      </div>
     </div>
   </div>
 </template>
@@ -121,7 +119,7 @@ export default {
   computed: {
     passwordConfirmRules() {
       return [
-        () => this.password === this.passwordConfirm || "password must match",
+        () => this.password === this.passwordConfirm || "Password must match",
         v => !!v || "Confirmation password is required"
       ];
     },
@@ -178,6 +176,7 @@ export default {
     },
     closePopup() {
       this.reset();
+      this.showLogin = true;
       return this.$emit("child", false);
     }
   }
