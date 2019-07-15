@@ -14,6 +14,7 @@
 
 
 <script>
+import firestore from "../firebase/firestore";
 import HeaderSub from '../components/HeaderSub';
 import PostList from '../components/PostList'
 
@@ -27,7 +28,23 @@ export default {
 		return {
 			
 		}
-	}
+  },
+  mounted() {
+    this.addLog();
+  },
+  methods: {
+    addLog() {
+      let username = '';
+      if (!this.$store.getters.user) {
+        username = "Anonymous User";
+      }
+      else {
+        username = this.$store.getters.user.email;
+      }
+      let time = new Date();
+      firestore.addLog("/post", username, time.getTime());
+    }
+  }
 }
 </script>
 

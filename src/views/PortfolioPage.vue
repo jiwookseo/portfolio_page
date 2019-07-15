@@ -25,24 +25,23 @@ export default {
     },
     data() {
       return {
-        title: '',
-        content: '',
-        img: '',
-        portfolios: []
+        
       }
     },
     mounted() {
-      this.getPortfolios();
+      this.addLog();
     },
     methods: {
-      async getPortfolios() {
-        this.portfolios = await firestore.getPortfolios();
-      },
-      postPortfolio() {
-        firestore.postPortfolio(this.title, this.content, this.img);
-        this.title = '',
-        this.content = '',
-        this.img = ''
+      addLog() {
+        let username = '';
+        if (!this.$store.getters.user) {
+          username = "Anonymous User";
+        }
+        else {
+          username = this.$store.getters.user.email;
+        }
+        let time = new Date();
+        firestore.addLog("/portfolio", username, time.getTime());
       }
     }
 }
