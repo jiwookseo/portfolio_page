@@ -6,7 +6,7 @@
       <FavBtn class="nav-fav" />
       <div></div>
       <div v-if="!user" class="login-btn text" @click.stop="dialog = true">Login</div>
-      <div v-if="user" @click="signOut" class="login-btn text">Logout</div>
+      <div v-if="user" v-on:click="signOut" class="login-btn text">Logout</div>
       <ul class="nav-menus">
         <li
           v-for="menu in menus"
@@ -26,7 +26,7 @@
             :key="menu.name"
             @click="sb_scrollTo(menu.target)"
           >{{ menu.name }}</li>
-          <li v-if="!user" class="sb-nav-menu text" @click.stop="sb_login">Login</li>
+          <li v-if="!user" class="sb-nav-menu text" @click.stop="dialog = true">Login</li>
           <li v-if="user" class="sb-nav-menu text" @click="signOut">Logout</li>
         </ul>
       </nav>
@@ -84,7 +84,7 @@ export default {
     ...mapActions(["logout"]),
     signOut() {
       this.logout()
-      alert("로그아웃 되었습니다!")
+      this.$swal("Goodbye!", "로그아웃 되었습니다", "success")
       this.$router.replace("/")
     },
     scrollTo(target) {
