@@ -2,10 +2,10 @@
 <div>
   <HeaderSub />
   <div class="content">
-    <h2>Post</h2>
+    <h2 class="section-title text">Post</h2>
 		<PostList :limit=4 :allowCreate=true />
-		<div>
-			<div class="more">Load More</div>
+		<div class="section-btn-box">
+			<div class="load-more-btn">Load More</div>
 		</div>
 		
   </div>
@@ -37,15 +37,7 @@ export default {
 @import "../css/mixin.scss";
 
 .content {
-	margin-top: 50px;
-	padding-top: 10px;
+	margin: 80px 0 50px;
 	height: auto;
-	h2 {
-			text-align: center;
-			font-size: 2em;
-	}
-}
-.more {
-	@include loadMoreBtn;
 }
 </style>

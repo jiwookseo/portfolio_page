@@ -40,7 +40,7 @@
       </span>
     </div>
     <FavBtn class="sb-fav" />
-    <v-dialog v-model="dialog" class="login-dialog" width="400">
+    <v-dialog v-model="dialog" class="login-dialog" width="300">
       <LoginDialog @child="parents" />
     </v-dialog>
   </header>

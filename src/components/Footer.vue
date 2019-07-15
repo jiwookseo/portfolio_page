@@ -13,41 +13,16 @@
 
 
 
-    <!-- <div title="Weather in your city" width="400" height="150" margined v-on:close="exit" >
-      <div padded>
-        <div horizontal padded>
-          <Button :enabled="!!query" @onload ="showWeather">Search</Button>
-        </div>
-        <div horizontal />
-        <div margined>
-          <div padded>
-            <div v-if="!!city">
-              <div padded horizontal>
-                <div><img :src='image'> {{city}}</div>
-              </div>
-              <div horizontal />
-              <div padded horizontal>
-                <div>기온 : {{tempMin}}&deg;C / {{tempMax}}&deg;C</div>
-                <div stretchy>습도 : {{humidity}}%</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-
   </div>
   <div id="copyrights">SSAFY Team Six ©2019</div>
   <div id="top-btn" @click="totop"><span><i class="material-icons">keyboard_arrow_up</i></span></div>
 </footer>
 </template>
 
-
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
 import axios from 'axios';
-axios.defaults.baseURL = 'http://api.openweathermap.org/data/2.5'
+import { setTimeout } from 'timers';
 const apiKey = process.env.API_KEY;
 
   export default {
@@ -67,14 +42,17 @@ const apiKey = process.env.API_KEY;
     },
     methods: {
       totop() {
-        $('html, body').animate({
-          scrollTop: 0,
-        }, 700);
+        setTimeout(function() {
+          $('html, body').animate({
+            scrollTop: 0,
+          }, 1000);
+        }, 200);
       },
       exit() {
       this.$exit();
       },
       showWeather() {
+        axios.defaults.baseURL = 'http://api.openweathermap.org/data/2.5'
         axios
           .get(
             `/weather?q=${this.query}&units=metric&&appid=${"122032a774c9f3b73131bfdf9e95c2b4"}`,
