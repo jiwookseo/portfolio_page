@@ -43,6 +43,7 @@
         <PortfolioWriteDialog
           @child="parents"
           @child_snackbar="parent_snackbar"
+          @child_updatePortfolio="parent_updatePortfolio"
           :createMode=createMode
           :id="id"
           :title="title"
@@ -151,10 +152,14 @@ export default {
       this.snackbar_msg = msg;
       this.snackbar_alert = true;
     },
-    deletePortfolio(id) {
-      firestore.deletePortfolio(id);
+    async deletePortfolio(id) {
+      await firestore.deletePortfolio(id);
+      await this.getPortfolios();
       this.snackbar_del = false;
       this.triggerSnackbarAlert("Portfolio deleted");
+    },
+    async parent_updatePortfolio() {
+      await this.getPortfolios();
     },
     parent_snackbar(msg) {
       this.triggerSnackbarAlert(msg);

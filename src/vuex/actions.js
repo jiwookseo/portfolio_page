@@ -116,5 +116,5 @@ export default {
     commit
   }, payload) {
     commit('setError', payload)
-  }
+  },
 }
