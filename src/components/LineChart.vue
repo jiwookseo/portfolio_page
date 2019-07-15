@@ -35,7 +35,7 @@ const email = [
 const data = {};
 email.forEach(e => (data[e] = {}));
 
-const count = email.map(e => []);
+let count = email.map(e => []);
 
 export default {
   extends: Line,
@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     getData() {
-      axios.defaults.baseURL = `https://lab.ssafy.com/api/v4/projects/6043/repository/commits/?private_token=mSzGEe1Ba9KXsNynKz-A&per_page=100`
+      axios.defaults.baseURL = `https://lab.ssafy.com/api/v4/projects/6043/repository/commits/?private_token=mSzGEe1Ba9KXsNynKz-A&per_page=100`;
       axios
         .get(labURL)
         .then(response => {
@@ -104,8 +104,15 @@ export default {
         .catch();
     }
   },
-  beforeMount() {
-    this.getData();
+  mounted() {
+    if (count[0].length === 0) {
+      this.getData();
+    } else {
+      this.datacollection.datasets.forEach((dataset, i) => {
+        dataset.data = count[i];
+      });
+      this.renderChart(this.datacollection, this.options);
+    }
   }
 };
 </script>
