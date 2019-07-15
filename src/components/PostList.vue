@@ -1,13 +1,22 @@
 <template>
   <v-container>
     <v-layout row wrap>
-      <v-flex class="post" v-for="i in posts.length > limit ? limit : posts.length" :key="posts[i-1].id" xs12 sm6>
+      <v-flex
+        class="post"
+        v-for="i in posts.length > limit ? limit : posts.length"
+        :key="posts[i-1].id"
+        xs12
+        sm6
+      >
         <h3 class="title text">{{ posts[i-1].title }}</h3>
         <hr />
         <p class="date">{{ date_created(posts[i-1].created_at.seconds) }}</p>
         <p class="content text">{{ posts[i-1].content }}</p>
         <div class="btn-box">
-          <div class="read-more" @click="viewDetail(posts[i-1].title, posts[i-1].content, posts[i-1].created_at.seconds)">Read More</div>
+          <div
+            class="read-more"
+            @click="viewDetail(posts[i-1].title, posts[i-1].content, posts[i-1].created_at.seconds)"
+          >Read More</div>
           <div
             class="update"
             @click="openPostWriter(false, posts[i-1].id, posts[i-1].title, posts[i-1].content)"
@@ -19,7 +28,7 @@
           </div>
         </div>
       </v-flex>
-      <v-flex v-if="allowCreate" @click="openPostWriter" class="post" xs12 sm6>
+      <v-flex v-if="allowCreate" @click="openPostWriter()" class="post" xs12 sm6>
         <span class="text">+ New Post</span>
       </v-flex>
 
@@ -29,24 +38,22 @@
           @child="parents"
           @child_snackbar="parent_snackbar"
           @child_updatePost="parent_updatePost"
-          :createMode=createMode
+          :createMode="createMode"
           :id="id"
           :title="title"
           :content="content"
         />
       </v-dialog>
       <v-dialog v-model="dialogDetail" width="500">
-        <PostDetailDialog
-          :id="id"
-          :title=title 
-          :content=content
-          :created_at=created_at />
+        <PostDetailDialog :id="id" :title="title" :content="content" :created_at="created_at" />
       </v-dialog>
 
       <!-- Snackbars -->
       <v-snackbar
         v-model="snackbar_del"
-        top auto-height :timeout="0"
+        top
+        auto-height
+        :timeout="0"
         color="#FF5E61"
         class="snackbar-del"
       >
@@ -58,7 +65,9 @@
       </v-snackbar>
       <v-snackbar
         v-model="snackbar_alert"
-        top auto-height :timeout="4000"
+        top
+        auto-height
+        :timeout="4000"
         color="#FF5E61"
         class="snackbar-alert"
       >
@@ -73,32 +82,32 @@
 
 
 <script>
-import PostWriteDialog from './PostWriteDialog';
-import PostDetailDialog from './PostDetailDialog';
-import firestore from '../firebase/firestore';
-import { setTimeout } from 'timers';
+import PostWriteDialog from "./PostWriteDialog";
+import PostDetailDialog from "./PostDetailDialog";
+import firestore from "../firebase/firestore";
+import { setTimeout } from "timers";
 
 export default {
   name: "PostList",
   props: {
-    limit: {type: Number, default: 4},
-    allowCreate: {type: Boolean, default: false}
+    limit: { type: Number, default: 4 },
+    allowCreate: { type: Boolean, default: false }
   },
   data() {
     return {
-      id: '',
-      title: '',
-      content: '',
+      id: "",
+      title: "",
+      content: "",
       created_at: 0,
       posts: [],
       dialogWrite: false,
       createMode: true,
       dialogDetail: false,
       snackbar_del: false,
-      deleteID: '',
+      deleteID: "",
       snackbar_alert: false,
-      snackbar_msg: ''
-    }
+      snackbar_msg: ""
+    };
   },
   mounted() {
     this.getPosts();
@@ -106,17 +115,12 @@ export default {
   components: {
     PostWriteDialog,
     PostDetailDialog
-	},
+  },
   methods: {
     async getPosts() {
       this.posts = await firestore.getPosts();
     },
-    openPostWriter(
-      create = true,
-      id = "",
-      title = "",
-      content = ""
-    ) {
+    openPostWriter(create = true, id = "", title = "", content = "") {
       this.createMode = create;
       this.id = id;
       this.title = title;
@@ -154,11 +158,10 @@ export default {
     },
     date_created(created_at) {
       const date = new Date(created_at * 1000);
-      return String(date).split('(')[0]
+      return String(date).split("(")[0];
     }
-  },
-
-}
+  }
+};
 </script>
 
 
@@ -215,11 +218,14 @@ export default {
       top: 5px;
     }
   }
-  .update, .delete {
+  .update,
+  .delete {
     cursor: pointer;
     margin: 5px 0px 0;
     transform-origin: bottom;
-    &:hover {animation: jiggle 0.15s linear 0.2s 4 forwards;}
+    &:hover {
+      animation: jiggle 0.15s linear 0.2s 4 forwards;
+    }
     i {
       font-size: 1.5em;
       color: #181818;
@@ -227,9 +233,17 @@ export default {
   }
 }
 @keyframes jiggle {
-  0% {transform: rotate(0);}
-  25% {transform: rotate(5deg);}
-  75% {transform: rotate(-5deg);}
-  100% {transform: rotate(0);}
+  0% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
 }
 </style>
