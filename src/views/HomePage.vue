@@ -9,23 +9,36 @@
       <section id="portfolio">
         <h2 class="section-title text">Portfolio</h2>
         <PortfolioList :limit=4 />
-        <div>
-          <div class="more"><router-link to="/portfolio"><div>More Portfolios</div></router-link></div>
+        <div class="section-btn-box">
+          <router-link to="/portfolio">
+            <div class="section-more-btn">
+              More Portfolios <i class="material-icons">arrow_forward</i>
+            </div>
+          </router-link>
         </div>
-        <div>
-          <PortfolioWriteModal />
-        </div>
-
+        <!-- <div><PortfolioWriteModal /></div> -->
       </section>
       <section id="post">
         <h2 class="section-title text">Post</h2>
         <PostList :limit=4 />
-        <div>
-          <div class="more"><router-link to="/post"><div>More Posts</div></router-link></div>
+        <div class="section-btn-box">
+          <router-link to="/post">
+            <div class="section-more-btn">
+              More Posts <i class="material-icons">arrow_forward</i>
+            </div>
+          </router-link>
         </div>
       </section>
       <section id="project">
         <h2 class="section-title text">Project</h2>
+        <LineChart />
+        <div class="section-btn-box">
+            <a target="_blank" href="https://lab.ssafy.com/jiwonjulietyoon/webmobile-sub2">
+            <div class="section-more-btn">
+              View GitLab <i class="material-icons">arrow_forward</i>
+            </div>
+            </a>
+        </div>
       </section>
     </div>
   </div>
@@ -38,6 +51,7 @@ import HeaderHome from "../components/HeaderHome";
 import PortfolioList from "../components/PortfolioList";
 import PortfolioWriteModal from "../components/PortfolioWriteModal";
 import PostList from "../components/PostList";
+import LineChart from "../components/LineChart";
 
 export default {
   name: "HomePage",
@@ -45,7 +59,8 @@ export default {
     HeaderHome,
     PortfolioList,
     PortfolioWriteModal,
-    PostList
+    PostList,
+    LineChart
   },
   data() {
     return {
@@ -59,15 +74,12 @@ export default {
   methods: {
     scrollTo(target) {
       let targetscrolltop = $(target).offset().top;
-      $("html, body").animate(
-        {
-          scrollTop: targetscrolltop + 10
-        },
-        500
-      );
+      setTimeout(function() {
+        $("html, body").animate({scrollTop: targetscrolltop + 10}, 700);
+      }, 200);
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -84,57 +96,18 @@ a, a:hover {
 }
 section {
   width: 100%;
-  height: 500px;
-  padding-top: 80px;
+  height: auto;
+  padding: 80px 0 50px;
   position: relative;
   &:nth-of-type(odd) {
-    background: white;
-  }
-  &:nth-of-type(even) {
     background: $bg-light;
   }
-  .section-title {
-    text-transform: uppercase;
-    text-align: center;
-    font-size: 3em;
-    font-family: $font-title;
-    letter-spacing: 4px;
+  &:nth-of-type(even) {
+    background: white;
   }
 }
-
-$slant_h: 30px;
-$slant_m: 20px;
-@mixin slanted {
-  width: 100%;
-  content: "";
-  position: absolute;
-  left: 0;
-  border-style: solid;
-  z-index: 8;
-  bottom: $slant_h * -1;
-}
-#aboutme::after,
-#post::after {
-  @include slanted;
-  border-width: 0 100vw $slant_h 0;
-  border-color: transparent white transparent transparent;
-  @include mobile {
-    bottom: $slant_m * -1;
-    border-width: 0 100vw $slant_m 0;
-  }
-}
-#portfolio::after {
-  @include slanted;
-  border-width: 0 0 $slant_h 100vw;
-  border-color: transparent transparent transparent $bg-light;
-  @include mobile {
-    bottom: $slant_m * -1;
-    border-width: 0 0 $slant_m 100vw;
-  }
-}
-
-#portfolio, #post {
-  height: auto;
+#project {
+  padding: 80px 30px 80px;
 }
 .more {
   margin: 30px auto 0;
@@ -154,4 +127,78 @@ $slant_m: 20px;
     background: linear-gradient(to bottom, $nav-bg, $nav-bg);
   }
 }
+
+
+.section-more-btn {
+  display: inline-block;
+  padding: 10px 15px 17px 25px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  color: white;
+  background: $blue-accent;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  overflow: hidden;
+  white-space: nowrap;
+  i {
+    transform: translateY(7px);
+    margin-left: 50px;
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    right: -20px;
+    top: -45%;
+    width: 70px;
+    height: 100px;
+    background: #00CCFF;
+    transform: rotate(-20deg);
+    transition: all 0.3s;
+  }
+  &:hover::before {
+    width: 90px;
+  }
+  &:active {
+    transform: translate(-50%, 2px);
+  }
+}
+
+
+
+
+
+$slant_h: 30px;
+$slant_m: 20px;
+@mixin slanted {
+  width: 100%;
+  content: "";
+  position: absolute;
+  left: 0;
+  border-style: solid;
+  z-index: 8;
+  bottom: $slant_h * -1;
+}
+#aboutme::after,
+#post::after {
+  @include slanted;
+  border-width: 0 100vw $slant_h 0;
+  border-color: transparent $bg-light transparent transparent;
+  @include mobile {
+    bottom: $slant_m * -1;
+    border-width: 0 100vw $slant_m 0;
+  }
+}
+#portfolio::after {
+  @include slanted;
+  border-width: 0 0 $slant_h 100vw;
+  border-color: transparent transparent transparent white;
+  @include mobile {
+    bottom: $slant_m * -1;
+    border-width: 0 0 $slant_m 100vw;
+  }
+}
+
+
 </style>
