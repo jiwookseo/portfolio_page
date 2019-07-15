@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import firebase from "firebase";
 import {
   firebaseAuth
@@ -13,7 +14,7 @@ export default {
       .then(
         user => {
           commit('setLoading', false)
-          alert("회원가입 완료")
+          Vue.swal("Welcome!", "회원가입을 축하드립니다", "success")
           const newUser = {
             id: user.uid,
             name: user.displayName,
@@ -28,7 +29,7 @@ export default {
           commit('setLoading', false)
           commit('setError', error)
           console.log(error)
-          alert("에러 : " + error)
+          Vue.swal("에러", ""+error, "error")
         }
       )
   },
@@ -41,7 +42,7 @@ export default {
       .then(
         user => {
           commit('setLoading', false)
-          alert("로그인 완료")
+          Vue.swal("Welcome!", "로그인 되었습니다", "success")
           console.log(payload.email)
           const newUser = {
             id: user.uid,
@@ -57,7 +58,7 @@ export default {
           commit('setLoading', false)
           commit('setError', error)
           console.log(error)
-          alert("에러 : " + error)
+          Vue.swal("에러", ""+error, "error")
         }
       )
   },
@@ -70,7 +71,7 @@ export default {
       .then(
         user => {
           commit('setLoading', false)
-          alert("로그인 완료")
+          Vue.swal("Welcome!", "로그인 되었습니다", "success")
           const newUser = {
             id: user.uid,
             name: user.displayName,
@@ -84,7 +85,7 @@ export default {
         error => {
           commit('setLoading', false)
           commit('setError', error)
-          console.log(error)
+          Vue.swal("에러", ""+error, "error")
         }
       )
   },

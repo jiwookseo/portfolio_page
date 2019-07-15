@@ -9,9 +9,9 @@
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-text-field v-model="email" :rules="emailRules" label="Email" required></v-text-field>
         <v-text-field v-model="password" :rules="passwordRules" label="Password" :type="'password'" required></v-text-field>
-        <v-btn color="primary" :disabled="loading" :loading="loading" @click.prevent="login" class="text">Login</v-btn>
+        <v-btn color="primary" :disabled="loading" :loading="loading" v-on:click="login" class="text">Login</v-btn>
         <v-spacer />
-        <v-btn color="primary" :disabled="loading" :loading="loading" @click.prevent="facebookLogin" class="text">Login with Facebook</v-btn>
+        <v-btn color="primary" :disabled="loading" :loading="loading" v-on:click="facebookLogin" class="text">Login with Facebook</v-btn>
       </v-form>
     </div>
     <div class="dialog-outer" v-if="!showLogin">
@@ -40,14 +40,6 @@
 
 <script>
 import firebase from "firebase";
-
-/*
-var provider = new firebase.auth.FacebookAuthProvider();
-provider.addScope("public_profile");
-provider.setCustomParameters({
-  display: "popup"
-});
-*/
 
 export default {
   name: "LoginDialog",
