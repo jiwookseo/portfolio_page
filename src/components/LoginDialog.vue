@@ -140,7 +140,13 @@ export default {
       this.$refs.form.reset();
     },
     signUp() {
-      if (this.password !== this.passwordConfirm) {
+      if(
+        typeof this.email === "undefined" ||
+        typeof this.password === "undefined" ||
+        typeof this.passwordConfirm === "undefined" ){
+        Vue.swal("에러", "email and password is required", "error");
+      }
+      else if (this.password !== this.passwordConfirm) {
         Vue.swal("에러", "password must match", "error");
         this.passwordConfirm = "";
       } else {
