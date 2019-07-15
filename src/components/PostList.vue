@@ -6,7 +6,18 @@
         <hr />
         <p class="date">{{ date_created(posts[i-1].created_at.seconds) }}</p>
         <p class="content text">{{ posts[i-1].content }}</p>
-        <div class="read-more" @click="viewDetail(posts[i-1].title, posts[i-1].content, posts[i-1].created_at.seconds)">Read More</div>
+        <div class="btn-box">
+          <div class="read-more" @click="viewDetail(posts[i-1].title, posts[i-1].content, posts[i-1].created_at.seconds)">Read More</div>
+          <div
+            class="update"
+            @click="openPostWriter(false, posts[i-1].id, posts[i-1].title, posts[i-1].content)"
+          >
+            <i class="material-icons">edit</i>
+          </div>
+          <div class="delete" @click="deleteConfirm(posts[i-1].id)">
+            <i class="material-icons">delete</i>
+          </div>
+        </div>
       </v-flex>
       <v-flex v-if="allowCreate" @click="openPostWriter" class="post" xs12 sm6>
         <span class="text">+ New Post</span>
@@ -171,9 +182,15 @@ export default {
   .content {
     @include line-clamp-4;
     margin: 5px 0 10px;
+  }
+}
 
+.btn-box {
+  & > div {
+    float: left;
   }
   .read-more {
+    margin-right: 10px;
     display: inline-block;
     padding: 5px 10px;
     font-size: 0.9em;
@@ -192,5 +209,21 @@ export default {
       top: 5px;
     }
   }
+  .update, .delete {
+    cursor: pointer;
+    margin: 5px 0px 0;
+    transform-origin: bottom;
+    &:hover {animation: jiggle 0.15s linear 0.2s 4 forwards;}
+    i {
+      font-size: 1.5em;
+      color: #181818;
+    }
+  }
+}
+@keyframes jiggle {
+  0% {transform: rotate(0);}
+  25% {transform: rotate(5deg);}
+  75% {transform: rotate(-5deg);}
+  100% {transform: rotate(0);}
 }
 </style>

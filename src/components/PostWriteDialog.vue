@@ -5,8 +5,9 @@
 			<v-textarea v-model="content" label="Content" required :rules="contentRules" rows=10 auto-grow></v-textarea>
 			<div class="btn-box">
 				<button @click.prevent="reset" class="btn reset-btn">Reset</button>
-        <button @click="create" class="btn create-btn" :disabled="!valid">Create</button>
-			</div>
+        <button v-if="createMode" @click="create" class="btn create-btn" :disabled="!valid">Create</button>
+        <button v-if="!createMode" @click="update" class="btn create-btn" :disabled="!valid">Update</button>
+      </div>
 		</v-form>
 		<div class="cancel-btn" @click="closeDialog">
 			<i class="material-icons">close</i>
