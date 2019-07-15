@@ -19,11 +19,11 @@ const borderColor = [
   "rgb(255, 123, 153)"
 ];
 const backgroundColor = [
-  "rgba(172, 248, 139, 0.1)",
-  "rgba(0, 234, 185, 0.1)",
-  "rgba(0, 192, 255, 0.1)",
-  "rgba(147, 108, 201, 0.1)",
-  "rgba(255, 123, 153, 0.1)"
+  "rgba(172, 248, 139, 0.033)",
+  "rgba(0, 234, 185, 0.033)",
+  "rgba(0, 192, 255, 0.033)",
+  "rgba(147, 108, 201, 0.033)",
+  "rgba(255, 123, 153, 0.033)"
 ];
 const email = [
   "gtkim4617@naver.com",
@@ -51,7 +51,7 @@ export default {
             pointBorderColor: "white",
             pointRadius: 4,
             pointHoverRadius: 5,
-            borderWidth: 1.5,
+            borderWidth: 2,
             pointBackgroundColor: pointBackgroundColor[i],
             borderColor: borderColor[i],
             backgroundColor: backgroundColor[i],
@@ -81,7 +81,8 @@ export default {
       axios
         .get(labURL)
         .then(response => {
-          response.data.forEach(e => {
+          response.data.some(e => {
+            if (e.title.slice(0, 13) === "Merge branch ") return false;
             const email = e.author_email;
             const committed = e.committed_date.substring(0, 10);
             data[email][committed] = data[email][committed]
