@@ -8,7 +8,7 @@ Vue.use(Vuex)
 const state = {
   user: null,
   loading: false,
-  error: null
+  error: null,
 }
 export default new Vuex.Store({
   state,
@@ -26,6 +26,6 @@ export default new Vuex.Store({
     },
     clearError (state) {
       state.error = null
-    }
+    },
   }
 })

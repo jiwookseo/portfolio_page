@@ -6,8 +6,8 @@
       <v-text-field v-model="img" label="Image URL" required></v-text-field>
       <div class="btn-box">
         <button @click.prevent="reset" class="btn reset-btn">Reset</button>
-        <button v-if="createMode" @click="create" class="btn create-btn" :disabled="!valid">Create</button>
-        <button v-if="!createMode" @click="update" class="btn create-btn" :disabled="!valid">Update</button>
+        <button v-if="createMode" @click.prevent="create" class="btn create-btn" :disabled="!valid">Create</button>
+        <button v-if="!createMode" @click.prevent="update" class="btn create-btn" :disabled="!valid">Update</button>
       </div>
       
       <!-- <div>
@@ -58,14 +58,16 @@ export default {
       triggerParentSnackbar(msg) {
         this.$emit("child_snackbar", msg);
       },
-      create() {
-        firestore.postPortfolio(this.title, this.content, this.img);
+      async create() {
+        await firestore.postPortfolio(this.title, this.content, this.img);
+        await this.$emit("child_updatePortfolio");
         this.reset();
         this.closeDialog();
         this.triggerParentSnackbar("Portfolio created");
       },
-      update() {
-        firestore.updatePortfolio(this.id, this.title, this.content, this.img);
+      async update() {
+        await firestore.updatePortfolio(this.id, this.title, this.content, this.img);
+        await this.$emit("child_updatePortfolio");
         this.closeDialog();
         this.reset();
         this.triggerParentSnackbar("Portfolio updated");
