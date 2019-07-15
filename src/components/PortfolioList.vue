@@ -1,268 +1,335 @@
 <template>
-    <v-container>
-        <v-layout row wrap>
-            <v-flex class="portfolio" v-for="i in portfolios.length > limit ? limit : portfolios.length" :key="portfolios[i-1].id" xs12 sm6 md4 lg3>
-                <div class="portfolio-content">
-                    <div class="img" :style="{'background-image': 'url(' + portfolios[i-1].img + ')'}"></div>
-                    <div class="content">
-                        <h3 class="title text">{{ portfolios[i-1].title }}</h3>
-                        <div class="more text" @click="viewDetail(portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img, portfolios[i-1].created_at.seconds)">View More</div>
-                        <div class="btn-box">
-                            <div class="update" @click="openPortfolioWriterUpdate(portfolios[i-1].id, portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img)"><i class="material-icons">edit</i></div>
-                            <div class="delete" @click="deleteConfirm(portfolios[i-1].id)"><i class="material-icons">delete</i></div>
-                        </div>
-                    </div>
-                </div>
-            </v-flex>
-            <v-flex v-if="allowCreate" @click="openPortfolioWriterCreate" class="portfolio" xs12 sm6 md4 lg3>
-                <div class="portfolio-content new"><span>+ New Portfolio</span></div>
-            </v-flex>
-            <v-dialog v-model="dialogWrite" width="500" persistent="">
-                <PortfolioWriteDialog @child="parents" :createMode=createMode :id=id :title=title :content=content :img=img />
-            </v-dialog>
-            <v-dialog v-model="dialogDetail" width="500">
-                <PortfolioDetailDialog :id=id :title=title :content=content :img=img :created_at=created_at />
-            </v-dialog>
-            <v-snackbar v-model="snackbar" :timeout=0>
-                Delete this portfolio?
-                <v-btn @click="deletePortfolio(deleteID)">Delete</v-btn>
-                <v-btn @click="snackbar = false">Cancel</v-btn>
-            </v-snackbar>
-        </v-layout>
-        <v-layout>
-            
-        </v-layout>
-        <!-- <v-layout>
-            <div class="tmptmp">
-            Title: <input type="text" v-model="title"><br>
-            Content: <input type="text" v-model="content"><br>
-            ImgURL: <input type="text" v-model="img"><br>
-            <span @click="postPortfolio">Create</span>
+  <v-container>
+    <v-layout row wrap>
+      <v-flex
+        class="portfolio"
+        v-for="i in portfolios.length > limit ? limit : portfolios.length"
+        :key="portfolios[i-1].id"
+        xs12
+        sm6
+        md4
+        lg3
+      >
+        <div class="portfolio-content">
+          <div class="img" :style="{'background-image': 'url(' + portfolios[i-1].img + ')'}"></div>
+          <div class="content">
+            <h3 class="title text">{{ portfolios[i-1].title }}</h3>
+            <div
+              class="more text"
+              @click="viewDetail(portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img, portfolios[i-1].created_at.seconds)"
+            >Read More</div>
+            <div class="btn-box">
+              <div
+                class="update"
+                @click="openPortfolioWriter(false, portfolios[i-1].id, portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img)"
+              >
+                <i class="material-icons">edit</i>
+              </div>
+              <div class="delete" @click="deleteConfirm(portfolios[i-1].id)">
+                <i class="material-icons">delete</i>
+              </div>
             </div>
-        </v-layout> -->
-    </v-container>
+          </div>
+        </div>
+      </v-flex>
+      <v-flex v-if="allowCreate" @click="openPortfolioWriter" class="portfolio" xs12 sm6 md4 lg3>
+        <div class="portfolio-content new">
+          <span>+ New Portfolio</span>
+        </div>
+      </v-flex>
+
+      <!-- Dialogs -->
+      <v-dialog v-model="dialogWrite" width="500" persistent>
+        <PortfolioWriteDialog
+          @child="parents"
+          @child_snackbar="parent_snackbar"
+          :createMode=createMode
+          :id="id"
+          :title="title"
+          :content="content"
+          :img="img"
+        />
+      </v-dialog>
+      <v-dialog v-model="dialogDetail" width="500">
+        <PortfolioDetailDialog
+          :id="id"
+          :title="title"
+          :content="content"
+          :img="img"
+          :created_at="created_at"
+        />
+      </v-dialog>
+
+      <!-- Snackbars -->
+      <v-snackbar 
+        v-model="snackbar_del" 
+        top auto-height :timeout="0"
+        color="#FF5E61"
+        class="snackbar-del"
+      >
+        <div class="snackbar-content">
+          Delete this portfolio?
+          <button @click="deletePortfolio(deleteID)" class="del-btn">Delete</button>
+          <button @click="snackbar_del = false" class="cancel-btn">Cancel</button>
+        </div>
+      </v-snackbar>
+      <v-snackbar 
+        v-model="snackbar_alert" 
+        top auto-height :timeout="4000"
+        color="#FF5E61"
+        class="snackbar-alert"
+      >
+        <div class="snackbar-content">
+          {{ snackbar_msg }}
+          <button @click="snackbar_alert = false" class="ok-btn">OK</button>
+        </div>
+      </v-snackbar>
+    </v-layout>
+  </v-container>
 </template>
 
 
 <script>
-import firestore from '../firebase/firestore';
+import firestore from "../firebase/firestore";
 
-import PortfolioDetailDialog from './PortfolioDetailDialog';
-import PortfolioWriteDialog from './PortfolioWriteDialog';
+import PortfolioDetailDialog from "./PortfolioDetailDialog";
+import PortfolioWriteDialog from "./PortfolioWriteDialog";
 
 export default {
-    name: "PortfolioList",
-    props: {
-        limit: {type: Number, default: 4},
-        allowCreate: {type: Boolean, default: false}
+  name: "PortfolioList",
+  props: {
+    limit: { type: Number, default: 4 },
+    allowCreate: { type: Boolean, default: false }
+  },
+  components: {
+    PortfolioDetailDialog,
+    PortfolioWriteDialog
+  },
+  data() {
+    return {
+      id: "",
+      title: "",
+      content: "",
+      img: "",
+      created_at: 0,
+      portfolios: [],
+      dialogWrite: false,
+      createMode: true,
+      dialogDetail: false,
+      snackbar_del: false,
+      deleteID: "",
+      snackbar_alert: false, // Replaces window alert box
+      snackbar_msg: ''  // For snackbar_alert
+    };
+  },
+  mounted() {
+    this.getPortfolios();
+  },
+  methods: {
+    async getPortfolios() {
+      this.portfolios = await firestore.getPortfolios();
     },
-    components: {
-        PortfolioDetailDialog,
-        PortfolioWriteDialog
+    openPortfolioWriter(
+      create = true,
+      id = "",
+      title = "",
+      content = "",
+      img = ""
+    ) {
+      this.createMode = create;
+      this.id = id;
+      this.title = title;
+      this.content = content;
+      this.img = img;
+      this.dialogWrite = true;
     },
-    data() {
-        return {
-            id: '',
-            title: '',
-            content: '',
-            img: '',
-            created_at: 0,
-            portfolios: [],
-            dialogWrite: false,
-            createMode: true,
-            dialogDetail: false,
-            // currID: '',
-            // currTitle: '',
-            // currContent: '',
-            // currImg: '',
-            snackbar: false,
-            deleteID: ''
-        }
+    deleteConfirm(id) {
+      this.snackbar_del = true;
+      this.deleteID = id;
     },
-    mounted() {
-      this.getPortfolios();
+    triggerSnackbarAlert(msg) {
+      this.snackbar_msg = msg;
+      this.snackbar_alert = true;
     },
-    methods: {
-      async getPortfolios() {
-        this.portfolios = await firestore.getPortfolios();
-      },
-      openPortfolioWriterCreate() {
-        this.createMode = true;
-        this.title = '';
-        this.content = '';
-        this.img = '';
-        this.dialogWrite = true;
-        
-        // if (this.title && this.content && this.img) {
-        //     firestore.postPortfolio(this.title, this.content, this.img);
-        //     this.title = '',
-        //     this.content = '',
-        //     this.img = ''
-        // }
-      },
-      openPortfolioWriterUpdate(id, title, content, img) {
-        this.createMode = false;
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.img = img;
-        this.dialogWrite = true;
-      },
-      deleteConfirm(id) {
-          this.snackbar = true;
-          this.deleteID = id;
-      },
-      deletePortfolio(id) {
-          firestore.deletePortfolio(id);
-          alert('Portfolio deleted');
-          this.snackbar = false;
-      },
-      viewDetail(title, content, img, created_at) {
-        this.title = title;
-        this.content = content;
-        this.img = img;
-        this.created_at = created_at;
-        this.dialogDetail = true;
-      },
-      parents(dialogWrite) {
-        this.dialogWrite = dialogWrite;
-      },
-    }
-}
+    deletePortfolio(id) {
+      firestore.deletePortfolio(id);
+      this.snackbar_del = false;
+      this.triggerSnackbarAlert("Portfolio deleted");
+    },
+    parent_snackbar(msg) {
+      this.triggerSnackbarAlert(msg);
+    },
+    viewDetail(title, content, img, created_at) {
+      this.title = title;
+      this.content = content;
+      this.img = img;
+      this.created_at = created_at;
+      this.dialogDetail = true;
+    },
+    parents(dialogWrite) {
+      this.dialogWrite = dialogWrite;
+    },
+    
+  }
+};
 </script>
 
 
 <style lang="scss" scoped>
 @import "../css/mixin.scss";
 @import "../css/style.scss";
-a, a:hover {
-    color: initial;
+a,
+a:hover {
+  color: initial;
 }
 .portfolio {
-    // width: 250px;
-    height: 200px;
-    // border: 1px solid red;
-    padding: 10px 5px;
-    @include viewportMax(960) {
-        padding: 10px 5%;
-    }
-    @include mobile {
-        padding: 10px 10%;
-    }
+  height: 200px;
+  padding: 10px 5px;
+  @include viewportMax(960) {
+    padding: 10px 5%;
+  }
+  @include mobile {
+    padding: 10px 10%;
+  }
 }
 .portfolio-content {
-    width: 100%; height: 100%;
-    position: relative;
-    // border: 1px solid blue;
-    overflow: hidden;
-    border-radius: 5px;
-    .img {
-        width: 100%; height: 100%;
-        position: absolute;
-        top: 0; left: 0;
-        background-size: cover;
-        background-position: center;
-        transition: all 0.3s;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 5px;
+  .img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-position: center;
+    transition: all 0.3s;
+  }
+  .content {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #3D4756;
+    transition: all 0.5s;
+    opacity: 0;
+    color: white;
+    .title {
+      position: absolute;
+      top: 15%;
+      width: 100%;
+      text-align: center;
+      padding: 20px 20px;
+      @include textTruncate;
     }
+    .more {
+      padding: 5px 15px;
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%);
+      bottom: 20%;
+      border: 1.5px solid white;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+      white-space: nowrap;
+      background-image: linear-gradient(to right, white 50%, transparent 50%);
+      background-size: 200% 100%;
+      background-position: right;
+      &:hover {
+        background-position: left;
+        color: #3D4756;
+      }
+    }
+    .btn-box {
+      position: absolute;
+      top: 5px;
+      right: 0;
+    }
+    .delete,
+    .update {
+      display: inline-block;
+      margin-right: 5px;
+      cursor: pointer;
+      transform-origin: bottom;
+      i {
+        font-size: 1.5em;
+      }
+      &:hover {
+        animation: jiggle 0.15s linear 0.2s 4 forwards;
+      }
+    }
+  }
+  &:hover {
     .content {
-        width: 100%; height: 100%;
-        position: absolute;
-        top: 0; left: 0;
-        background: rgba(4, 5, 31, 1);
-        transition: all 0.3s;
-        opacity: 0;
-        .title {
-            position: absolute;
-            top: 10%;
-            width: 100%;
-            text-align: center;
-            padding: 20px 20px;
-            color: white;
-            @include textTruncate;
-        }
-        .more {
-            width: 120px;
-            height: 40px;
-            line-height: 37px;
-            position: absolute;
-            left: 50%;
-            transform: translate(-50%);
-            bottom: 20%;
-            text-align: center;
-            color: white;
-            border: 1.5px solid white;
-            margin: 20px auto 0;
-            cursor: pointer;
-        }
-        .btn-box {
-            position: absolute;
-            top: 5px; right: 0;
-        }
-        .delete, .update {
-            display: inline-block;
-            margin-right: 5px;
-            color: white;
-            cursor: pointer;
-            i {font-size: 1.5em;}
-        }
+      opacity: 1;
     }
-    &:hover{
-        .content {
-            opacity: 1;
-        }
-        .img {
-            transform: scale(1.1);
-        }
+    .img {
+      transform: scale(1.1);
     }
+  }
+}
+@keyframes jiggle {
+  0% {transform: rotate(0);}
+  25% {transform: rotate(5deg);}
+  75% {transform: rotate(-5deg);}
+  100% {transform: rotate(0);}
 }
 .portfolio-content.new {
-    box-shadow: inset 0 0 0 3px $nav-bg;
-    color: $nav-bg;
-    transition: color 0.25s 0.09s;
-    position: relative;
-    cursor: pointer;
-    span {
-        font-size: 1.3em;
-        @include centerItem;
-    }
-    &::before, &::after {
-        border: 0 solid transparent;
-        content: '';
-        box-sizing: border-box;
-        pointer-events: none;
-        position: absolute;
-        width: 0;
-        height: 0;
-        bottom: 0;
-        right: 0;
-        border-radius: 5px;
-    }
-    &::before {
-        border-bottom-width: 3px;
-        border-left-width: 3px;
-    }
-    &::after {
-        border-top-width: 3px;
-        border-right-width: 3px;
-    }
-    &:hover {
-        color: $blue-accent;
-    }
-    &:hover::before, &:hover::after {
-        border-color: $blue-accent;
-        transition: border-color 0s, width 0.25s, height 0.25s;
-        width: 100%;
-        height: 100%;
-    }
-    &:hover::before {
-        transition-delay: 0s, 0s, 0.25s;
-    }
-    &:hover::after {
-        transition-delay: 0s, 0.25s, 0s;
-    }
+  box-shadow: inset 0 0 0 4px $nav-bg;
+  color: $nav-bg;
+  transition: color 0.25s 0.09s;
+  position: relative;
+  cursor: pointer;
+  span {
+    font-size: 1.5em;
+    @include centerItem;
+    white-space: nowrap;
+  }
+  &::before,
+  &::after {
+    border: 0 solid transparent;
+    content: "";
+    box-sizing: border-box;
+    pointer-events: none;
+    position: absolute;
+    width: 0;
+    height: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 5px;
+  }
+  &::before {
+    border-bottom-width: 4px;
+    border-left-width: 4px;
+  }
+  &::after {
+    border-top-width: 4px;
+    border-right-width: 4px;
+  }
+  &:hover {
+    color: $blue-accent;
+  }
+  &:hover::before,
+  &:hover::after {
+    border-color: $blue-accent;
+    transition: border-color 0s, width 0.25s, height 0.25s;
+    width: 100%;
+    height: 100%;
+  }
+  &:hover::before {
+    transition-delay: 0s, 0s, 0.25s;
+  }
+  &:hover::after {
+    transition-delay: 0s, 0.25s, 0s;
+  }
 }
-.tmptmp {
-    border: 1px solid gold;
-}
+
+// Snackbar: mixin.scss
+
 
 </style>

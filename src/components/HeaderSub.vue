@@ -11,7 +11,7 @@
         <router-link to="/post">
           <div class="nav-item text">Post</div>
         </router-link>
-        <div v-if="!user"class="nav-item login-btn text" @click.stop="dialog = true">Login</div>
+        <div v-if="!user" class="nav-item login-btn text" @click.stop="dialog = true">Login</div>
         <div v-if="user" @click="signOut" class="nav-item login-btn text">Logout</div>
       </div>
     </nav>
@@ -41,7 +41,7 @@
       </span>
     </div>
     <FavBtn class="nav-fav" />
-    <v-dialog v-model="dialog" class="login-dialog" width="400">
+    <v-dialog v-model="dialog" class="login-dialog" width="300">
       <LoginDialog @child="parents" />
     </v-dialog>
   </header>
