@@ -55,6 +55,7 @@
 
 <script>
 import firebase from "firebase";
+import Vue from 'vue';
 
 export default {
   name: "LoginDialog",
@@ -70,7 +71,7 @@ export default {
       ],
       passwordRules: [
         v => !!v || 'Password is required',
-        v => v.length >= 6 ||'Password must be greater than 6 characters'
+        v => !v || v.length >= 6 ||'Password must be greater than 6 characters'
       ],
       password: "",
       passwordConfirm: ""
@@ -98,12 +99,18 @@ export default {
       this.$refs.form.reset();
     },
     signUp() {
+      if(this.password !== this.passwordConfirm ){
+        Vue.swal("에러", "password must match", "error")
+        this.passwordConfirm= ''
+      }
+      else{
       this.$store.dispatch('signUserUp', {email: this.email, password: this.password})
       this.email= ''
       this.password= ''
       this.passwordConfirm= ''
       this.showLogin= true
       this.closePopup()
+      }
     },
     login() {
       this.$store.dispatch('signUserIn', {email: this.email, password: this.password})
@@ -113,6 +120,8 @@ export default {
     },
     facebookLogin() {
       this.$store.dispatch('signUserInFacebook')
+      this.email= ''
+      this.password= ''
       this.closePopup()
     },
     closePopup() {
