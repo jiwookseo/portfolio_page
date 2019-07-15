@@ -1,6 +1,6 @@
 <script >
 import axios from 'axios';
-axios.defaults.baseURL = `https://lab.ssafy.com/api/v4/projects/6043/repository/commits/?private_token=mSzGEe1Ba9KXsNynKz-A&per_page=100`
+
 const apiKey = process.env.API_KEY;
 //Importing Line class from the vue-chartjs wrapper
 import {
@@ -137,6 +137,7 @@ export default {
   },
   methods: {
     getData() {
+      axios.defaults.baseURL = `https://lab.ssafy.com/api/v4/projects/6043/repository/commits/?private_token=mSzGEe1Ba9KXsNynKz-A&per_page=100`
       axios
         .get(
 
@@ -337,8 +338,8 @@ export default {
   },
   mounted() {
     //renderChart function renders the chart with the datacollection and options object.
-
     this.renderChart(this.datacollection, this.options);
+
   }
 }
 </script>

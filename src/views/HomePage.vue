@@ -31,7 +31,7 @@
       </section>
       <section id="project">
         <h2 class="section-title text">Project</h2>
-        <LineChart />
+        <LineChart class="hidden-sm-and-down"/>
         <div class="section-btn-box">
             <a target="_blank" href="https://lab.ssafy.com/jiwonjulietyoon/webmobile-sub2">
             <div class="section-more-btn">
