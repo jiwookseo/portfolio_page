@@ -23,7 +23,6 @@
 <script>
 import axios from 'axios';
 import { setTimeout } from 'timers';
-axios.defaults.baseURL = 'http://api.openweathermap.org/data/2.5'
 const apiKey = process.env.API_KEY;
 
   export default {
@@ -53,6 +52,7 @@ const apiKey = process.env.API_KEY;
       this.$exit();
       },
       showWeather() {
+        axios.defaults.baseURL = 'http://api.openweathermap.org/data/2.5'
         axios
           .get(
             `/weather?q=${this.query}&units=metric&&appid=${"122032a774c9f3b73131bfdf9e95c2b4"}`,
