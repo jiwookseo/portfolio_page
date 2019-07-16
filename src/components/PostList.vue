@@ -35,6 +35,10 @@
         <hr />
       </v-flex>
 
+      <div class="section-btn-box" v-if="allowCreate && limit < posts.length">
+        <div class="load-more-btn" @click="loadMore">Load More</div>
+      </div>
+
       <!-- Dialogs -->
       <v-dialog v-model="dialogWrite" width="500" persistent>
         <PostWriteDialog
@@ -179,6 +183,9 @@ export default {
     date_created(created_at) {
       const date = new Date(created_at * 1000);
       return String(date).split("GMT")[0];
+    },
+    loadMore() {
+      this.limit += 4;
     }
   }
 };

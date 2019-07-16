@@ -3,10 +3,7 @@
         <HeaderSub />
         <div class="content">
             <h2 class="section-title text">Portfolio</h2>
-            <PortfolioList :limit=8 :allowCreate=true />
-            <div class="section-btn-box">
-              <div class="load-more-btn">Load More</div>
-            </div>
+            <PortfolioList :limit=6 :allowCreate=true />
         </div>
     </div>
 </template>
