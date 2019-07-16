@@ -68,6 +68,7 @@ export default {
   methods: {
     reset() {
       this.$refs.form.reset();
+      this.img ="https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg";
     },
     resetValidation() {
       this.$refs.form.resetValidation();
