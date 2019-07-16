@@ -44,12 +44,6 @@
           :disabled="!valid"
         >Update</button>
       </div>
-
-      <!-- <div>
-        <v-btn color="warning"  class="text">Reset</v-btn>
-        <v-btn color="primary" @click="create" class="text" :disabled="!valid">Create</v-btn>
-        <v-btn v-if="!createMode" color="primary" @click="update" class="text" :disabled="!valid">Update</v-btn>
-      </div>-->
     </v-form>
     <div class="cancel-btn" @click="closeDialog">
       <i class="material-icons">close</i>
@@ -72,7 +66,6 @@ export default {
   },
   data() {
     return {
-      dialogWrite: false,
       valid: true,
       titleRules: [v => !!v || "Title is required"],
       contentRules: [v => !!v || "Content is required"]
@@ -91,7 +84,7 @@ export default {
       this.$refs.form.resetValidation();
     },
     closeDialog() {
-      this.$emit("child", this.dialogWrite);
+      this.$emit("child");
     },
     triggerParentSnackbar(msg) {
       this.$emit("child_snackbar", msg);
@@ -130,7 +123,7 @@ export default {
 
 .dialog-outer {
   width: 100%;
-  height: 70vh;
+  height: 80vh;
   background: white;
   padding: 30px;
   overflow: auto;
@@ -154,17 +147,5 @@ export default {
   }
 }
 
-.cancel-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  i {
-    color: gray;
-    @include centerItem;
-    font-size: 2.5em;
-  }
-}
+
 </style>

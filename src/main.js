@@ -30,7 +30,7 @@ new Vue({
       }
     })
     AOS.init({
-      once: false,
+      once: true,
     });
   },
   router,

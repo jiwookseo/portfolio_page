@@ -51,7 +51,6 @@ export default {
   },
   data() {
     return {
-      dialogWrite: false,
       valid: true,
       titleRules: [v => !!v || "Title is required"],
       contentRules: [v => !!v || "Content is required"]
@@ -65,7 +64,7 @@ export default {
       this.$refs.form.resetValidation();
     },
     closeDialog() {
-      this.$emit("child", this.dialogWrite);
+      this.$emit("child");
     },
     triggerParentSnackbar(msg) {
       this.$emit("child_snackbar", msg);
@@ -95,7 +94,7 @@ export default {
 
 .dialog-outer {
   width: 100%;
-  height: 70vh;
+  height: 80vh;
   background: white;
   padding: 30px;
   overflow: auto;

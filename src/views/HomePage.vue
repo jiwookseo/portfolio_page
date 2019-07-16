@@ -3,15 +3,28 @@
     <HeaderHome :websiteTitle="'HOME'" />
     <div class="homeContent">
       <section id="aboutme">
-        <h2 class="section-title text">About me</h2>
+        <h2 class="section-title text" data-aos="fade-right">About me</h2>
         <div class="text" style="text-align: center" v-if="user">[테스트문장] {{user.email}}님 반갑습니다</div>
         <div class="text" style="text-align: center" v-if="adminUser">[테스트문장] 관계자님 반갑습니다</div>
-        <div class="text" style="text-align: center" v-if="checking">{{checking}}</div>
+        <v-container>
+          <v-layout row wrap>
+            <v-flex xs8 offset-xs2 sm4 offset-sm0 class="content-container" data-aos="fade-right">
+              <div class="inner">
+                <img src="../assets/teamsix.png" alt="Team Six">
+              </div>
+            </v-flex>
+            <v-flex xs12 sm8 class="content-container" data-aos="fade-left">
+              <div class="inner">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, odit delectus magni impedit quos eveniet iusto officia mollitia aliquid, est, amet explicabo deleniti! Itaque accusantium id corporis delectus sint sunt quam expedita nisi porro animi. Totam cumque delectus voluptatibus, natus eveniet dolore ipsam sapiente minima quibusdam eum nemo itaque quam. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit, similique? Praesentium voluptatum harum quod provident labore magni perferendis quidem ducimus?
+              </div>
+            </v-flex>
+          </v-layout>
+        </v-container>
       </section>
       <section id="portfolio">
-        <h2 class="section-title text">Portfolio</h2>
+        <h2 class="section-title text" data-aos="fade-left">Portfolio</h2>
         <PortfolioList :limit=4 />
-        <div class="section-btn-box">
+        <div class="section-btn-box" data-aos="fade-up">
           <router-link to="/portfolio">
             <div class="section-more-btn">
               More Portfolios <i class="material-icons">arrow_forward</i>
@@ -21,9 +34,9 @@
         <!-- <div><PortfolioWriteModal /></div> -->
       </section>
       <section id="post">
-        <h2 class="section-title text">Post</h2>
+        <h2 class="section-title text" data-aos="fade-right">Post</h2>
         <PostList :limit=4 />
-        <div class="section-btn-box">
+        <div class="section-btn-box" data-aos="fade-up">
           <router-link to="/post">
             <div class="section-more-btn">
               More Posts <i class="material-icons">arrow_forward</i>
@@ -32,9 +45,9 @@
         </div>
       </section>
       <section id="project">
-        <h2 class="section-title text">Project</h2>
-        <LineChart class="linechart"/>
-        <div class="section-btn-box">
+        <h2 class="section-title text" data-aos="fade-left">Project</h2>
+        <LineChart class="linechart" data-aos="fade-up" />
+        <div class="section-btn-box" data-aos="fade-up">
             <a target="_blank" href="https://lab.ssafy.com/jiwonjulietyoon/webmobile-sub2">
             <div class="section-more-btn">
               View GitLab <i class="material-icons">arrow_forward</i>
@@ -135,6 +148,34 @@ section {
     background: white;
   }
 }
+
+#aboutme {
+  .content-container {
+    height: auto;
+    padding: 10px;
+    &:first-child {
+      @include viewportMin(1264) {
+        padding-right: 10px;
+        padding-left: 10%;
+      }
+    }
+    &:last-child {
+      @include viewportMin(1264) {
+        padding-left: 10px;
+        padding-right: 10%;
+      }
+    }
+  }
+  .inner {
+    height: auto;
+    img {
+      width: 100%;
+    }
+  }
+}
+
+
+
 #project {
   padding: 80px 30px 80px;
   .linechart {
@@ -143,24 +184,7 @@ section {
     }
   }
 }
-.more {
-  margin: 30px auto 0;
-  width: 140px;
-  height: 40px;
-  line-height: 37px;
-  border-radius: 5px;
-  border: 1.5px solid $nav-bg;
-  text-align: center;
-  transition: all 0.3s;
-  background: linear-gradient(to bottom, $nav-bg, $footer-bg);
-  div {
-    width: 100%; height: 100%;
-    color: #181818;
-  }
-  &:hover {
-    background: linear-gradient(to bottom, $nav-bg, $nav-bg);
-  }
-}
+
 
 
 .section-more-btn {

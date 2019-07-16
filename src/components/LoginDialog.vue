@@ -7,10 +7,12 @@
         <span @click="showLogin = false">create an account</span>
       </div>
       <v-form ref="form" v-model="valid" lazy-validation>
-        <v-text-field v-model="email" :rules="emailRules" label="Email" required></v-text-field>
+        <v-text-field v-model="email" :rules="emailRules" :disabled="loading" :loading="loading" label="Email" required></v-text-field>
         <v-text-field
           v-model="password"
           :rules="passwordRules"
+          :disabled="loading"
+          :loading="loading"
           label="Password"
           :type="'password'"
           required
@@ -25,23 +27,22 @@
             >Reset</button>
             <button
               class="btn login-btn text"
-              :disabled="loading"
+              :disabled="!valid"
               :loading="loading"
+              :checkDialog="checkDialog"
               @click.prevent="login"
             >Login</button>
           </div>
           <button
             class="btn login-btn text"
-            :disabled="loading"
             :loading="loading"
             @click.prevent="facebookLogin"
           >Login with Facebook</button>
         </div>
-
-        <!-- <v-btn color="primary" :disabled="loading" :loading="loading" @click.prevent="login" class="text">Login</v-btn>
-        <v-spacer />
-        <v-btn color="primary" :disabled="loading" :loading="loading" @click.prevent="facebookLogin" class="text">Login with Facebook</v-btn>-->
       </v-form>
+      <div class="cancel-btn" @click="closePopup">
+        <i class="material-icons">close</i>
+      </div>
     </div>
 
     <div class="dialog-outer" v-if="!showLogin">
@@ -69,20 +70,20 @@
         <div class="btn-box">
           <button
             class="btn reset-btn text"
-            :disabled="loading"
             :loading="loading"
             @click.prevent="reset"
           >Reset</button>
           <button
             class="btn login-btn text"
-            :disabled="loading"
+            :disabled="!valid"
             :loading="loading"
             type="submit"
           >Sign up</button>
         </div>
-        <!-- <v-btn type="submit" color="success" :disabled="loading" :loading="loading" class="text">Sign up</v-btn>
-        <v-spacer />-->
       </v-form>
+      <div class="cancel-btn" @click="closePopup">
+        <i class="material-icons">close</i>
+      </div>
     </div>
   </div>
 </template>
@@ -122,7 +123,7 @@ export default {
   computed: {
     passwordConfirmRules() {
       return [
-        () => this.password === this.passwordConfirm || "password must match",
+        () => this.password === this.passwordConfirm || "Password must match",
         v => !!v || "Confirmation password is required"
       ];
     },
@@ -134,17 +135,15 @@ export default {
     },
     loading() {
       return this.$store.getters.loading;
+    },
+    checkDialog() {
+      this.checking = this.$store.getters.checking
+      if(this.checking){
+        this.closePopup()
+      }
     }
   },
-  mounted() {
-    this.check();
-  },
   methods: {
-    check() {
-      let prac = ''
-      prac = this.$store.getters.checking
-      console.log("prac : " + prac)
-    },
     reset() {
       this.$refs.form.reset();
     },
@@ -177,14 +176,8 @@ export default {
         this.$store.dispatch("signUserIn", {
           email: this.email,
           password: this.password
-        }).then(()=>{
-          console.log("로그인 후 : " + this.checking)
-          if(this.checking){
-            this.closePopup()
-          } else {
-            this.reset()
-          }
         })
+        this.reset()
       }
     },
     facebookLogin() {
@@ -193,6 +186,7 @@ export default {
     },
     closePopup() {
       this.reset();
+      this.showLogin = true;
       return this.$emit("child", false);
     }
   }

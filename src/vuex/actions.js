@@ -33,7 +33,7 @@ export default {
         }
       )
   },
-  signUserIn({
+  signUserIn({ // 로컬 로그인
     commit
   }, payload) {
     commit('setLoading', true)
