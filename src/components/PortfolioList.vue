@@ -11,7 +11,8 @@
         lg3
       >
         <div class="portfolio-content" data-aos="fade-up">
-          <div class="img" :style="{'background-image': 'url(' + portfolios[i-1].img + ')'}"></div>
+          <!-- <div class="img" :style="{'background-image': 'url(' + portfolios[i-1].img + ')'}"></div> -->
+          <img class="img" :src=portfolios[i-1].img :alt=portfolios[i-1].title>
           <div class="content">
             <h3 class="title text">{{ portfolios[i-1].title }}</h3>
             <div
@@ -234,8 +235,9 @@ a:hover {
     position: absolute;
     top: 0;
     left: 0;
-    background-size: cover;
-    background-position: center;
+    // background-size: cover;
+    // background-position: center;
+    object-fit: cover;
     transition: all 0.3s;
   }
   .content {
