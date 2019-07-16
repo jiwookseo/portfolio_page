@@ -37,6 +37,9 @@
           <span>+ New Portfolio</span>
         </div>
       </v-flex>
+      <div class="section-btn-box" v-if="allowCreate && limit < portfolios.length">
+        <div class="load-more-btn" @click="loadMore">Load More</div>
+      </div>
 
       <!-- Dialogs -->
       <v-dialog v-model="dialogWrite" width="500" persistent>
@@ -193,6 +196,9 @@ export default {
     },
     parents() {
       this.dialogWrite = false;
+    },
+    loadMore() {
+      this.limit += 4;
     }
   }
 };
