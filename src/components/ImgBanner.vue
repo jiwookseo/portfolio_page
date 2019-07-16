@@ -1,5 +1,6 @@
 <template>
-  <div class="imgBannerOuter" :style="{ 'background-image': 'url(' + imgSrc + ')'}">
+  <div class="imgBannerOuter">
+    <img :src=imgSrc alt="Main Image Banner" class="imgBanner">
     <div class="imgBannerContent">
       <div class="changeBg" @click="pickFile" v-if="adminUser">
         <i class="material-icons">photo_library</i>
@@ -69,9 +70,16 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  background-position: center;
-  background-attachment: fixed;
-  background-size: cover;
+  // background-position: center;
+  // background-attachment: fixed;
+  // background-size: cover;
+  .imgBanner {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+    object-fit: cover;
+  }
   .imgBannerContent {
     width: 100%;
     height: 100%;

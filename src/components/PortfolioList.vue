@@ -12,7 +12,7 @@
       >
         <div class="portfolio-content" data-aos="fade-up">
           <!-- <div class="img" :style="{'background-image': 'url(' + portfolios[i-1].img + ')'}"></div> -->
-          <img class="img" :src=portfolios[i-1].img :alt=portfolios[i-1].title>
+          <img class="img" :src=portfolios[i-1].img :alt="portfolios[i-1].title + ' (portfolio image)'">
           <div class="content">
             <h3 class="title text">{{ portfolios[i-1].title }}</h3>
             <div
