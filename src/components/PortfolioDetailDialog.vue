@@ -1,42 +1,39 @@
 <template>
-    <div class="dialog-outer">
-        <h3 class="Title">{{title}}</h3>
-        <p class="Date">{{date_created}}</p>
-        <!-- <div class="Img" :style="{'background-image': 'url(' + img + ')'}"></div> -->
-        <img :src=img class="Img" :alt="title + ' (portfolio image)'">
-        <p class="Content">{{content}}</p>
-        <div class="cancel-btn" @click="closeDialog">
-          <i class="material-icons">close</i>
-        </div>
+  <div class="dialog-outer">
+    <h3 class="Title">{{portfolio.title}}</h3>
+    <p class="Date">{{date_created}}</p>
+    <!-- <div class="Img" :style="{'background-image': 'url(' + img + ')'}"></div> -->
+    <img :src="portfolio.img" class="Img" :alt="portfolio.title + ' (portfolio image)'" />
+    <p class="Content">{{portfolio.content}}</p>
+    <div class="cancel-btn" @click="closeDialog">
+      <i class="material-icons">close</i>
     </div>
+  </div>
 </template>
 
 <script>
 export default {
-    name: "PortfolioDetailDialog",
-    data() {
-        return {
-            date: ''
-        }
-    },
-    props: {
-        title: {type: String},
-        content: {type: String},
-        img: {type: String},
-        created_at: {type: Number}
-    },
-    computed: {
-        date_created() {
-            const date = new Date(this.created_at * 1000);
-            return String(date).split('GMT')[0]
-        }
-    },
-    methods: {
-      closeDialog() {
-        this.$emit("child_detail");
-      }
+  name: "PortfolioDetailDialog",
+  data() {
+    return {
+      date: ""
+    };
+  },
+  props: {
+    portfolio: { type: Object }
+  },
+  computed: {
+    date_created() {
+      const date = new Date(this.portfolio.created_at.seconds * 1000);
+      return String(date).split("GMT")[0];
     }
-}
+  },
+  methods: {
+    closeDialog() {
+      this.$emit("child_detail");
+    }
+  }
+};
 </script>
 
 
@@ -78,5 +75,4 @@ export default {
   line-height: 1.7em;
   white-space: pre-wrap;
 }
-
 </style>
