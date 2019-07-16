@@ -4,9 +4,8 @@
   <div class="content">
     <h2 class="section-title text">Post</h2>
 		<PostList :limit=6 :allowCreate=true />
-		
-		
   </div>
+  <Footer />
 </div>
 </template>
 
@@ -15,12 +14,14 @@
 import firestore from "../firebase/firestore";
 import HeaderSub from '../components/HeaderSub';
 import PostList from '../components/PostList'
+import Footer from "../components/Footer";
 
 export default {
   name: "PostPage",
   components: {
     HeaderSub,
     PostList,
+    Footer
 	},
 	data() {
 		return {

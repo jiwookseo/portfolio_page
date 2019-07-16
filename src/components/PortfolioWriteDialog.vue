@@ -12,29 +12,26 @@
       ></v-textarea>
 
       <!-- <v-text-field v-model="img" label="Image URL" required></v-text-field> -->
-      <div>
-        <div style="margin:auto; text-align:center;">
+      <div class="img-select-box">
+        <div class="img-preview">
           <img
-            id="img-preview"
             :src="imgInput"
-            @click="pickFile"
             @change="onFilePicked"
-            style="cursor:wait"
-            width="180px"
-            height="120px"
+            alt = "Current Portfolio Image"
           />
+          <div class="choose-img-prompt" @click="pickFile"  title="Change Image">
+            <i class="material-icons">image_search</i>
+          </div>
         </div>
-        <div>
+        <div class="img-picker">
           <!-- <v-icon @click="pickFile" @change="onFilePicked">attach_file</v-icon> -->
           <v-text-field
             label="Select Image"
             @click="pickFile"
-            style="display: none"
             v-model="imgInput"
           ></v-text-field>
           <input
             type="file"
-            style="display: none"
             ref="image"
             accept="image/*"
             @change="onFilePicked"
@@ -163,6 +160,44 @@ export default {
   position: relative;
 }
 
+.img-select-box {
+  .img-preview {
+    height: 120px;
+    width: 180px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      cursor: pointer
+    }
+    .choose-img-prompt {
+      width: 100%; height: 100%;
+      position: absolute;
+      top: 0; left: 0;
+      background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.2));
+      transition: all 0.5s;
+      opacity: 0;
+      cursor: pointer;
+      i {
+        @include centerItem;
+        color: white;
+        font-size: 3em;
+      }
+    }
+    &:hover > .choose-img-prompt {
+      opacity: 1;
+    }
+  }
+  .img-picker {
+    display: none;
+  }
+}
+
+
 .btn-box {
   height: 50px;
   margin-top: 20px;
@@ -179,4 +214,6 @@ export default {
     float: right;
   }
 }
+
+
 </style>

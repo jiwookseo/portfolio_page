@@ -3,7 +3,7 @@
     <img :src=imgSrc alt="Main Image Banner" class="imgBanner">
     <div class="imgBannerContent">
       <div class="changeBg" @click="pickFile" v-if="adminUser">
-        <i class="material-icons">photo_library</i>
+        <i class="material-icons">image_search</i>
       </div>
       <input type="file" style="display: none" ref="image" accept="image/*" @change="onFilePicked" />
       <div class="bannerTitle">Team Six !!!!!</div>
