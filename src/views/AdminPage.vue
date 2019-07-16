@@ -83,5 +83,6 @@ a, a:hover {
 
 .content-container {
   padding: 0 50px 50px;
+  min-height: calc(100vh - 345px);
 }
 </style>

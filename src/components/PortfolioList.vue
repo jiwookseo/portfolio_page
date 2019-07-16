@@ -11,14 +11,15 @@
         lg3
       >
         <div class="portfolio-content" data-aos="fade-up">
-          <div class="img" :style="{'background-image': 'url(' + portfolios[i-1].img + ')'}"></div>
+          <!-- <div class="img" :style="{'background-image': 'url(' + portfolios[i-1].img + ')'}"></div> -->
+          <img class="img" :src=portfolios[i-1].img :alt="portfolios[i-1].title + ' (portfolio image)'">
           <div class="content">
             <h3 class="title text">{{ portfolios[i-1].title }}</h3>
             <div
               class="more text"
               @click="viewDetail(portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img, portfolios[i-1].created_at.seconds)"
             >Read More</div>
-            <div class="btn-box">
+            <div class="btn-box" v-if="adminUser">
               <div
                 class="update"
                 @click="openPortfolioWriter(false, portfolios[i-1].id, portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img)"
@@ -32,11 +33,14 @@
           </div>
         </div>
       </v-flex>
-      <v-flex v-if="allowCreate" class="portfolio" xs12 sm6 md4 lg3>
+      <v-flex v-if="allowCreate && adminUser" class="portfolio" xs12 sm6 md4 lg3>
         <div class="portfolio-content new" @click="openPortfolioWriter()" data-aos="fade-up">
           <span>+ New Portfolio</span>
         </div>
       </v-flex>
+      <div class="section-btn-box" v-if="allowCreate && limit < portfolios.length">
+        <div class="load-more-btn" @click="loadMore">Load More</div>
+      </div>
 
       <!-- Dialogs -->
       <v-dialog v-model="dialogWrite" width="500" persistent>
@@ -74,7 +78,7 @@
         <div class="snackbar-content">
           Delete this portfolio?
           <button @click="deletePortfolio(deleteID)" class="del-btn">Delete</button>
-          <button @click="snackbar_del = false" class="cancel-btn">Cancel</button>
+          <button @click="snackbar_del = false">Cancel</button>
         </div>
       </v-snackbar>
       <v-snackbar
@@ -111,6 +115,18 @@ export default {
     PortfolioDetailDialog,
     PortfolioWriteDialog
   },
+  computed: {
+    adminUser () {
+      if(this.$store.getters.user != null){
+        if(this.$store.getters.user.email === this.$store.getters.admin){
+          return true
+        }
+        else {
+          return false
+        }
+      }
+    }
+  },
   data() {
     return {
       id: "",
@@ -140,7 +156,7 @@ export default {
       id = "",
       title = "",
       content = "",
-      img = "http://dy.gnch.or.kr/img/no-image.jpg"
+      img = "https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg"
     ) {
       this.createMode = create;
       this.id = id;
@@ -181,6 +197,9 @@ export default {
     },
     parents() {
       this.dialogWrite = false;
+    },
+    loadMore() {
+      this.limit += 4;
     }
   }
 };
@@ -216,8 +235,9 @@ a:hover {
     position: absolute;
     top: 0;
     left: 0;
-    background-size: cover;
-    background-position: center;
+    // background-size: cover;
+    // background-position: center;
+    object-fit: cover;
     transition: all 0.3s;
   }
   .content {

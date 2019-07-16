@@ -3,10 +3,8 @@
   <HeaderSub />
   <div class="content">
     <h2 class="section-title text">Post</h2>
-		<PostList :limit=4 :allowCreate=true />
-		<div class="section-btn-box">
-			<div class="load-more-btn">Load More</div>
-		</div>
+		<PostList :limit=6 :allowCreate=true />
+		
 		
   </div>
 </div>

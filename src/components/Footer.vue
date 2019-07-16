@@ -14,7 +14,7 @@
 
   <div id="copyrights">SSAFY Team Six ©2019</div>
   <div id="top-btn" @click="totop"><span><i class="material-icons">keyboard_arrow_up</i></span></div>
-  <router-link to="/admin">
+  <router-link to="/admin" v-if="adminUser">
     <div id="toAdmin" title="Admin Page"><i class="material-icons">how_to_reg</i></div>
   </router-link>
 </footer>
@@ -37,8 +37,20 @@ export default {
       tempMin: null,
       tempMax: null,
       humidity: null,
-      image: 'http://openweathermap.org/img/w/'+ this.img +'.png',
+      image: 'https://openweathermap.org/img/w/'+ this.img +'.png',
     };
+  },
+  computed: {
+    adminUser () {
+      if(this.$store.getters.user != null){
+        if(this.$store.getters.user.email === this.$store.getters.admin){
+          return true
+        }
+        else {
+          return false
+        }
+      }
+    }
   },
   methods: {
     totop() {
@@ -52,7 +64,7 @@ export default {
     this.$exit();
     },
     showWeather() {
-      axios.defaults.baseURL = 'http://api.openweathermap.org/data/2.5'
+      axios.defaults.baseURL = 'https://api.openweathermap.org/data/2.5'
       axios
         .get(
           `/weather?q=${this.query}&units=metric&&appid=${"122032a774c9f3b73131bfdf9e95c2b4"}`,
@@ -64,7 +76,7 @@ export default {
           this.tempMin = response.data.main.temp_min;
           this.tempMax = response.data.main.temp_max;
           this.humidity = response.data.main.humidity;
-          this.image ='http://openweathermap.org/img/w/'+ response.data.weather[0].icon+ '.png';
+          this.image ='https://openweathermap.org/img/w/'+ response.data.weather[0].icon+ '.png';
           this.error = false;
         })
         .catch(() => {

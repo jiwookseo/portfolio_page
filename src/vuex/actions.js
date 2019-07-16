@@ -42,7 +42,7 @@ export default {
       .then(
         user => {
           commit('setLoading', false)
-          commit('checking', true)
+          commit('loginSuccess', true)
           Vue.swal("Welcome!", "로그인 되었습니다", "success")
           console.log(payload.email)
           const newUser = {
@@ -105,7 +105,7 @@ export default {
       .signOut()
       .then(() => {
         commit('setUser', null)
-        commit('checking', false)
+        commit('loginSuccess', false)
       })
       .catch((error) => console.error(`SingOut Error: ${error}`))
   },
@@ -118,5 +118,5 @@ export default {
     commit
   }, payload) {
     commit('setError', payload)
-  },
+  }
 }

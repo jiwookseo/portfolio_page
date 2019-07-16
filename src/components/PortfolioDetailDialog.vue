@@ -2,7 +2,8 @@
     <div class="dialog-outer">
         <h3 class="Title">{{title}}</h3>
         <p class="Date">{{date_created}}</p>
-        <div class="Img" :style="{'background-image': 'url(' + img + ')'}"></div>
+        <!-- <div class="Img" :style="{'background-image': 'url(' + img + ')'}"></div> -->
+        <img :src=img class="Img" :alt="title + ' (portfolio image)'">
         <p class="Content">{{content}}</p>
         <div class="cancel-btn" @click="closeDialog">
           <i class="material-icons">close</i>
@@ -57,7 +58,7 @@ export default {
   margin-bottom: 20px;
 }
 .Date {
-  color: gray;
+  color: $gray;
   margin-bottom: 10px;
 }
 .Img {
@@ -67,13 +68,15 @@ export default {
     height: 200px;
   }
   border-radius: 3px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+  // background-repeat: no-repeat;
+  // background-position: center;
+  // background-size: cover;
+  object-fit: cover;
 }
 .Content {
   margin-top: 10px;
   line-height: 1.7em;
+  white-space: pre-wrap;
 }
 
 </style>

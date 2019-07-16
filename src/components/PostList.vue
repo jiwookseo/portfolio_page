@@ -15,17 +15,22 @@
         <p class="content text">{{ posts[i-1].content }}</p>
         <div class="btn-box">
           <div class="read-more" @click="viewDetail(i)">Read More</div>
-          <div class="update" @click="openPostWriter(i)">
+          <div class="update" @click="openPostWriter(i)" v-if="adminUser">
             <i class="material-icons">edit</i>
           </div>
-          <div class="delete" @click="deleteConfirm(i)">
+          <div class="delete" @click="deleteConfirm(i)" v-if="adminUser">
             <i class="material-icons">delete</i>
           </div>
         </div>
       </v-flex>
-      <v-flex v-if="allowCreate" @click="openPostWriter()" class="post" xs12 sm6 data-aos="fade-up">
-        <span class="text">+ New Post</span>
+      <v-flex v-if="allowCreate && adminUser" class="post new" xs12 sm6 data-aos="fade-up">
+        <span class="text" @click="openPostWriter()">+ New Post</span>
+        <hr />
       </v-flex>
+
+      <div class="section-btn-box" v-if="allowCreate && limit < posts.length">
+        <div class="load-more-btn" @click="loadMore">Load More</div>
+      </div>
 
       <!-- Dialogs -->
       <v-dialog v-model="dialogWrite" width="500" persistent>
@@ -53,7 +58,7 @@
         <div class="snackbar-content">
           Delete this post?
           <button @click="deletePost()" class="del-btn">Delete</button>
-          <button @click="snackbar_del = false" class="cancel-btn">Cancel</button>
+          <button @click="snackbar_del = false">Cancel</button>
         </div>
       </v-snackbar>
       <v-snackbar
@@ -85,6 +90,18 @@ export default {
   props: {
     limit: { type: Number, default: 4 },
     allowCreate: { type: Boolean, default: false }
+  },
+  computed: {
+    adminUser () {
+      if(this.$store.getters.user != null){
+        if(this.$store.getters.user.email === this.$store.getters.admin){
+          return true
+        }
+        else {
+          return false
+        }
+      }
+    }
   },
   data() {
     return {
@@ -152,6 +169,9 @@ export default {
     date_created(created_at) {
       const date = new Date(created_at * 1000);
       return String(date).split("GMT")[0];
+    },
+    loadMore() {
+      this.limit += 4;
     }
   }
 };
@@ -175,9 +195,10 @@ export default {
     background: $blue-accent;
     border: 1.2px solid $blue-accent;
     border-radius: 2px;
+    transition: all 0.2s;
   }
   .date {
-    color: gray;
+    color: $gray;
     font-size: 0.8em;
     margin-top: 10px;
   }
@@ -185,6 +206,28 @@ export default {
     @include line-clamp-4;
     margin: 5px 0 10px;
     // min-height: 83.2px;
+  }
+  &.new {
+    hr {
+      background: $light-gray;
+      border-color: $light-gray;
+    }
+    span {
+      display: inline-block;
+      width: 60%;
+      font-size: 1.5em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: $light-gray;
+      &:hover {
+        color: #181818;
+      }
+    }
+    span:hover ~ hr {
+      background: $blue-accent;
+      border-color: $blue-accent;
+    }
   }
 }
 
@@ -224,7 +267,7 @@ export default {
     }
     i {
       font-size: 1.5em;
-      color: #8d9cb2;
+      color: $gray;
     }
   }
 }

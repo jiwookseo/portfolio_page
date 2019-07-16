@@ -60,7 +60,7 @@
   }
 }
 @mixin nudge-btn-gray { // gray; nudge left
-  background: #9AAEBB;
+  background: $light-gray;
   box-shadow: -5px 0 #8D9CB2;
   &:hover {
     box-shadow: -3px 0 #8D9CB2;
@@ -72,7 +72,7 @@
   }
 }
 @mixin nudge-btn-primary { // blue; nudge right
-  background: #00C0FF;
+  background: $blue-accent-light;
   box-shadow: 5px 0 $blue-accent;
   &:disabled {
     background: #d6dee3;

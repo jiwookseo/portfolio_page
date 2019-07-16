@@ -1,7 +1,8 @@
 <template>
-  <div class="imgBannerOuter" :style="{ 'background-image': 'url(' + imgSrc + ')'}">
+  <div class="imgBannerOuter">
+    <img :src=imgSrc alt="Main Image Banner" class="imgBanner">
     <div class="imgBannerContent">
-      <div class="changeBg" @click="pickFile">
+      <div class="changeBg" @click="pickFile" v-if="adminUser">
         <i class="material-icons">photo_library</i>
       </div>
       <input type="file" style="display: none" ref="image" accept="image/*" @change="onFilePicked" />
@@ -24,6 +25,18 @@ export default {
     return {
       imgSrc: "https://source.unsplash.com/random/1600x900/"
     };
+  },
+  computed: {
+    adminUser () {
+      if(this.$store.getters.user != null){
+        if(this.$store.getters.user.email === this.$store.getters.admin){
+          return true
+        }
+        else {
+          return false
+        }
+      }
+    }
   },
   methods: {
     scrollTo() {
@@ -57,9 +70,16 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  background-position: center;
-  background-attachment: fixed;
-  background-size: cover;
+  // background-position: center;
+  // background-attachment: fixed;
+  // background-size: cover;
+  .imgBanner {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+    object-fit: cover;
+  }
   .imgBannerContent {
     width: 100%;
     height: 100%;
