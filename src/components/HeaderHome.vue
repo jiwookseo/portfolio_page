@@ -1,6 +1,6 @@
 <template>
   <header class="homeHeader">
-    <ImgBanner :imgSrc="imgSrc" />
+    <ImgBanner />
     <nav class="navbar">
       <div class="nav-logo text" @click="scrollToTop">{{websiteTitle}}</div>
       <FavBtn class="nav-fav" />
@@ -69,7 +69,6 @@ export default {
   },
   data() {
     return {
-      imgSrc: "https://source.unsplash.com/random/1600x900/",
       dialog: false,
       showSidebar: false,
       menus: [
@@ -85,7 +84,7 @@ export default {
     signOut() {
       this.logout();
       this.$swal("Goodbye!", "로그아웃 되었습니다", "success");
-      console.log(this.$route.path)
+      console.log(this.$route.path);
       this.$router.replace(this.$route.path);
     },
     scrollTo(target) {
@@ -96,11 +95,14 @@ export default {
       this.showSidebar = false;
     },
     scrollToTop() {
-      this.showSidebar = false
+      this.showSidebar = false;
       setTimeout(function() {
-        $("html, body").animate({
-          scrollTop: 0
-        }, 700);
+        $("html, body").animate(
+          {
+            scrollTop: 0
+          },
+          700
+        );
       }, 200);
     },
     sb_login() {
