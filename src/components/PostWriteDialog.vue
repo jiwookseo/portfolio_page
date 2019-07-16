@@ -69,7 +69,6 @@ export default {
       this.$emit("child_snackbar", msg);
     },
     async create() {
-      console.log(this.titleInput, this.contentInput);
       const res = await firestore.postPost(this.titleInput, this.contentInput);
       this.$emit("child_updatePost");
       this.reset();
