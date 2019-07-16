@@ -74,6 +74,7 @@ export default {
 .Content {
   margin-top: 10px;
   line-height: 1.7em;
+  white-space: pre-wrap;
 }
 
 </style>
