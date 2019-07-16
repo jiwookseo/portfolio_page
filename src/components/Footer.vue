@@ -14,7 +14,7 @@
 
   <div id="copyrights">SSAFY Team Six ©2019</div>
   <div id="top-btn" @click="totop"><span><i class="material-icons">keyboard_arrow_up</i></span></div>
-  <router-link to="/admin">
+  <router-link to="/admin" v-if="adminUser">
     <div id="toAdmin" title="Admin Page"><i class="material-icons">how_to_reg</i></div>
   </router-link>
 </footer>
@@ -39,6 +39,18 @@ export default {
       humidity: null,
       image: 'http://openweathermap.org/img/w/'+ this.img +'.png',
     };
+  },
+  computed: {
+    adminUser () {
+      if(this.$store.getters.user != null){
+        if(this.$store.getters.user.email === this.$store.getters.admin){
+          return true
+        }
+        else {
+          return false
+        }
+      }
+    }
   },
   methods: {
     totop() {

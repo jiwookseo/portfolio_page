@@ -1,7 +1,7 @@
 <template>
   <div class="imgBannerOuter" :style="{ 'background-image': 'url(' + imgSrc + ')'}">
     <div class="imgBannerContent">
-      <div class="changeBg" @click="pickFile">
+      <div class="changeBg" @click="pickFile" v-if="adminUser">
         <i class="material-icons">photo_library</i>
       </div>
       <input type="file" style="display: none" ref="image" accept="image/*" @change="onFilePicked" />
@@ -24,6 +24,18 @@ export default {
     return {
       imgSrc: "https://source.unsplash.com/random/1600x900/"
     };
+  },
+  computed: {
+    adminUser () {
+      if(this.$store.getters.user != null){
+        if(this.$store.getters.user.email === this.$store.getters.admin){
+          return true
+        }
+        else {
+          return false
+        }
+      }
+    }
   },
   methods: {
     scrollTo() {
