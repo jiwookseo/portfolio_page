@@ -55,7 +55,7 @@ export default {
   margin-bottom: 20px;
 }
 .Date {
-  color: gray;
+  color: $gray;
   margin-bottom: 10px;
 }
 .Content {

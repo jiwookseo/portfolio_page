@@ -29,8 +29,9 @@
           </div>
         </div>
       </v-flex>
-      <v-flex v-if="allowCreate" @click="openPostWriter()" class="post" xs12 sm6 data-aos="fade-up">
-        <span class="text">+ New Post</span>
+      <v-flex v-if="allowCreate" class="post new" xs12 sm6 data-aos="fade-up">
+        <span class="text" @click="openPostWriter()">+ New Post</span>
+        <hr />
       </v-flex>
 
       <!-- Dialogs -->
@@ -63,7 +64,7 @@
         <div class="snackbar-content">
           Delete this post?
           <button @click="deletePost(deleteID)" class="del-btn">Delete</button>
-          <button @click="snackbar_del = false" class="cancel-btn">Cancel</button>
+          <button @click="snackbar_del = false">Cancel</button>
         </div>
       </v-snackbar>
       <v-snackbar
@@ -188,9 +189,10 @@ export default {
     background: $blue-accent;
     border: 1.2px solid $blue-accent;
     border-radius: 2px;
+    transition: all 0.2s;
   }
   .date {
-    color: gray;
+    color: $gray;
     font-size: 0.8em;
     margin-top: 10px;
   }
@@ -198,6 +200,28 @@ export default {
     @include line-clamp-4;
     margin: 5px 0 10px;
     // min-height: 83.2px;
+  }
+  &.new {
+    hr {
+      background: $light-gray;
+      border-color: $light-gray;
+    }
+    span {
+      display: inline-block;
+      width: 60%;
+      font-size: 1.5em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: $light-gray;
+      &:hover {
+        color: #181818;
+      }
+    }
+    span:hover ~ hr {
+      background: $blue-accent;
+      border-color: $blue-accent;
+    }
   }
 }
 
@@ -237,7 +261,7 @@ export default {
     }
     i {
       font-size: 1.5em;
-      color: #8D9CB2;
+      color: $gray;
     }
   }
 }

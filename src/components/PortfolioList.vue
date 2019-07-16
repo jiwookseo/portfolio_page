@@ -74,7 +74,7 @@
         <div class="snackbar-content">
           Delete this portfolio?
           <button @click="deletePortfolio(deleteID)" class="del-btn">Delete</button>
-          <button @click="snackbar_del = false" class="cancel-btn">Cancel</button>
+          <button @click="snackbar_del = false">Cancel</button>
         </div>
       </v-snackbar>
       <v-snackbar
@@ -140,7 +140,7 @@ export default {
       id = "",
       title = "",
       content = "",
-      img = "http://dy.gnch.or.kr/img/no-image.jpg"
+      img = "https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg"
     ) {
       this.createMode = create;
       this.id = id;
