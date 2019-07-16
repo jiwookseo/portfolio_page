@@ -1,7 +1,10 @@
 <template>
   <div class="imgBannerOuter" :style="{ 'background-image': 'url(' + imgSrc + ')'}">
     <div class="imgBannerContent">
-      <div class="changeBg"><i class="material-icons">photo_library</i></div>
+      <div class="changeBg" @click="pickFile">
+        <i class="material-icons">photo_library</i>
+      </div>
+      <input type="file" style="display: none" ref="image" accept="image/*" @change="onFilePicked" />
       <div class="bannerTitle">Team Six !!!!!</div>
       <div class="scrollPrompt" @click="scrollTo()">
         SCROLL DOWN
@@ -13,14 +16,33 @@
 
 
 <script>
+import axios from "axios";
+
 export default {
   name: "ImgBanner",
-  props: {
-    imgSrc: { type: String }
+  data() {
+    return {
+      imgSrc: "https://source.unsplash.com/random/1600x900/"
+    };
   },
   methods: {
     scrollTo() {
       this.$parent.scrollTo("#aboutme");
+    },
+    pickFile() {
+      this.$refs.image.click();
+    },
+    onFilePicked() {
+      const formData = new FormData();
+      const file = this.$refs.image.files[0];
+      formData.append("image", file, file.name);
+      axios
+        .post("https://api.imgur.com/3/image/", formData, {
+          headers: {
+            Authorization: "Client-ID 5d0f43f26473d77"
+          }
+        })
+        .then(res => (this.imgSrc = res.data.data.link));
     }
   }
 };
@@ -45,8 +67,10 @@ export default {
     background-color: rgba(0, 0, 0, 0.2);
     .changeBg {
       position: absolute;
-      bottom: 20px; left: 20px;
-      width: 50px; height: 50px;
+      bottom: 20px;
+      left: 20px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       color: white;
       border: 2px solid white;
@@ -56,7 +80,9 @@ export default {
       i {
         @include centerItem;
       }
-      &:hover {opacity: 0.5;}
+      &:hover {
+        opacity: 0.5;
+      }
     }
     .bannerTitle {
       text-align: center;
@@ -84,8 +110,9 @@ export default {
       i {
         transform: translateY(7px);
       }
-      &::before, &::after {
-        content: '';
+      &::before,
+      &::after {
+        content: "";
         width: 95%;
         height: 135%;
         border: 0px solid white;
