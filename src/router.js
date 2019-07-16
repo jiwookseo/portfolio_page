@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import HomePage from './views/HomePage.vue';
 import PortfolioPage from './views/PortfolioPage.vue';
 import PostPage from './views/PostPage.vue';
+import AdminPage from './views/AdminPage.vue';
 
 Vue.use(Router)
 
@@ -30,6 +31,11 @@ export default new Router({
       name: 'post',
       component: PostPage
     },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: AdminPage
+    }
     // {
     //   path: '/about',
     //   name: 'about',
