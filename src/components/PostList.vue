@@ -212,17 +212,19 @@ export default {
     font-size: 0.9em;
     cursor: pointer;
     color: $blue-accent;
-    border: 2px solid $blue-accent;
+    border: 3px solid $blue-accent;
     border-radius: 3px;
-    box-shadow: 0 5px $blue-accent;
+    box-shadow: 0 0 2px $blue-accent;
     position: relative;
+    transition: all 0.2s;
     &:hover {
-      box-shadow: 0 3px $blue-accent;
-      top: 2px;
+      color: #00C0FF;
+      border-color: #00C0FF;
+      box-shadow: none;
     }
     &:active {
-      box-shadow: none;
-      top: 5px;
+      color: #0071b2;
+      border-color: #0071b2;
     }
   }
   .update,
@@ -235,7 +237,7 @@ export default {
     }
     i {
       font-size: 1.5em;
-      color: #181818;
+      color: #8D9CB2;
     }
   }
 }

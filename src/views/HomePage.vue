@@ -6,12 +6,25 @@
         <h2 class="section-title text" data-aos="fade-right">About me</h2>
         <div class="text" style="text-align: center" v-if="user">[테스트문장] {{user.email}}님 반갑습니다</div>
         <div class="text" style="text-align: center" v-if="adminUser">[테스트문장] 관계자님 반갑습니다</div>
-
+        <v-container>
+          <v-layout row wrap>
+            <v-flex xs8 offset-xs2 sm4 offset-sm0 class="content-container" data-aos="fade-right">
+              <div class="inner">
+                <img src="../assets/teamsix.png" alt="Team Six">
+              </div>
+            </v-flex>
+            <v-flex xs12 sm8 class="content-container" data-aos="fade-left">
+              <div class="inner">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, odit delectus magni impedit quos eveniet iusto officia mollitia aliquid, est, amet explicabo deleniti! Itaque accusantium id corporis delectus sint sunt quam expedita nisi porro animi. Totam cumque delectus voluptatibus, natus eveniet dolore ipsam sapiente minima quibusdam eum nemo itaque quam. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit, similique? Praesentium voluptatum harum quod provident labore magni perferendis quidem ducimus?
+              </div>
+            </v-flex>
+          </v-layout>
+        </v-container>
       </section>
       <section id="portfolio">
         <h2 class="section-title text" data-aos="fade-left">Portfolio</h2>
         <PortfolioList :limit=4 />
-        <div class="section-btn-box">
+        <div class="section-btn-box" data-aos="fade-up">
           <router-link to="/portfolio">
             <div class="section-more-btn">
               More Portfolios <i class="material-icons">arrow_forward</i>
@@ -23,7 +36,7 @@
       <section id="post">
         <h2 class="section-title text" data-aos="fade-right">Post</h2>
         <PostList :limit=4 />
-        <div class="section-btn-box">
+        <div class="section-btn-box" data-aos="fade-up">
           <router-link to="/post">
             <div class="section-more-btn">
               More Posts <i class="material-icons">arrow_forward</i>
@@ -34,7 +47,7 @@
       <section id="project">
         <h2 class="section-title text" data-aos="fade-left">Project</h2>
         <LineChart class="linechart" data-aos="fade-up" />
-        <div class="section-btn-box">
+        <div class="section-btn-box" data-aos="fade-up">
             <a target="_blank" href="https://lab.ssafy.com/jiwonjulietyoon/webmobile-sub2">
             <div class="section-more-btn">
               View GitLab <i class="material-icons">arrow_forward</i>
@@ -133,7 +146,30 @@ section {
   }
 }
 
-
+#aboutme {
+  .content-container {
+    height: auto;
+    padding: 10px;
+    &:first-child {
+      @include viewportMin(1264) {
+        padding-right: 10px;
+        padding-left: 10%;
+      }
+    }
+    &:last-child {
+      @include viewportMin(1264) {
+        padding-left: 10px;
+        padding-right: 10%;
+      }
+    }
+  }
+  .inner {
+    height: auto;
+    img {
+      width: 100%;
+    }
+  }
+}
 
 
 
