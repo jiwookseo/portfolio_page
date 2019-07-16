@@ -2,7 +2,7 @@
 import axios from "axios";
 import { Line } from "vue-chartjs";
 
-const labURL = `https://lab.ssafy.com/api/v4/projects/6043/repository/commits/?private_token=mSzGEe1Ba9KXsNynKz-A&per_page=100`;
+const labURL = `https://lab.ssafy.com/api/v4/projects/6043/repository/commits/?private_token=mSzGEe1Ba9KXsNynKz-A&per_page=200`;
 let ydate = [];
 const pointBackgroundColor = [
   "rgb(172, 248, 139)",

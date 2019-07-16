@@ -12,21 +12,19 @@
       >
         <div class="portfolio-content" data-aos="fade-up">
           <!-- <div class="img" :style="{'background-image': 'url(' + portfolios[i-1].img + ')'}"></div> -->
-          <img class="img" :src=portfolios[i-1].img :alt="portfolios[i-1].title + ' (portfolio image)'">
+          <img
+            class="img"
+            :src="portfolios[i-1].img"
+            :alt="portfolios[i-1].title + ' (portfolio image)'"
+          />
           <div class="content">
             <h3 class="title text">{{ portfolios[i-1].title }}</h3>
-            <div
-              class="more text"
-              @click="viewDetail(portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img, portfolios[i-1].created_at.seconds)"
-            >Read More</div>
+            <div class="more text" @click="viewDetail(i)">Read More</div>
             <div class="btn-box" v-if="adminUser">
-              <div
-                class="update"
-                @click="openPortfolioWriter(false, portfolios[i-1].id, portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img)"
-              >
+              <div class="update" @click="openPortfolioWriter(i)">
                 <i class="material-icons">edit</i>
               </div>
-              <div class="delete" @click="deleteConfirm(portfolios[i-1].id)">
+              <div class="delete" @click="deleteConfirm(i)">
                 <i class="material-icons">delete</i>
               </div>
             </div>
@@ -48,22 +46,12 @@
           @child="parents"
           @child_snackbar="parent_snackbar"
           @child_updatePortfolio="parent_updatePortfolio"
-          :createMode="createMode"
-          :id="id"
-          :title="title"
-          :content="content"
-          :img="img"
+          :portfolio="selectedPortfolio"
+          :dialogWrite="dialogWrite"
         />
       </v-dialog>
       <v-dialog v-model="dialogDetail" width="500">
-        <PortfolioDetailDialog
-          @child_detail="parent_detail"
-          :id="id"
-          :title="title"
-          :content="content"
-          :img="img"
-          :created_at="created_at"
-        />
+        <PortfolioDetailDialog @child_detail="parent_detail" :portfolio="selectedPortfolio" />
       </v-dialog>
 
       <!-- Snackbars -->
@@ -77,7 +65,7 @@
       >
         <div class="snackbar-content">
           Delete this portfolio?
-          <button @click="deletePortfolio(deleteID)" class="del-btn">Delete</button>
+          <button @click="deletePortfolio()" class="del-btn">Delete</button>
           <button @click="snackbar_del = false">Cancel</button>
         </div>
       </v-snackbar>
@@ -116,23 +104,23 @@ export default {
     PortfolioWriteDialog
   },
   computed: {
-    adminUser () {
-      if(this.$store.getters.user != null){
-        if(this.$store.getters.user.email === this.$store.getters.admin){
-          return true
-        }
-        else {
-          return false
+    adminUser() {
+      if (this.$store.getters.user != null) {
+        if (this.$store.getters.user.email === this.$store.getters.admin) {
+          return true;
+        } else {
+          return false;
         }
       }
     }
   },
   data() {
     return {
-      id: "",
-      title: "",
-      content: "",
-      img: "",
+      selectedPortfolio: {
+        created_at: { seconds: 0 },
+        img:
+          "https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg"
+      },
       created_at: 0,
       portfolios: [],
       dialogWrite: false,
@@ -151,33 +139,33 @@ export default {
     async getPortfolios() {
       this.portfolios = await firestore.getPortfolios();
     },
-    openPortfolioWriter(
-      create = true,
-      id = "",
-      title = "",
-      content = "",
-      img = "https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg"
-    ) {
-      this.createMode = create;
-      this.id = id;
-      this.title = title;
-      this.content = content;
-      this.img = img;
+    openPortfolioWriter(index = -1) {
+      this.selectedPortfolio =
+        index === -1
+          ? {
+              created_at: { seconds: 0 },
+              img:
+                "https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg"
+            }
+          : this.portfolios[index - 1];
       this.dialogWrite = true;
     },
-    deleteConfirm(id) {
+    deleteConfirm(index) {
       this.snackbar_del = true;
-      this.deleteID = id;
+      this.deleteID = this.portfolios[index - 1].id;
     },
     triggerSnackbarAlert(msg) {
       this.snackbar_msg = msg;
       this.snackbar_alert = true;
     },
-    async deletePortfolio(id) {
-      await firestore.deletePortfolio(id);
-      await this.getPortfolios();
-      this.snackbar_del = false;
-      this.triggerSnackbarAlert("Portfolio deleted");
+    deletePortfolio() {
+      firestore
+        .deletePortfolio(this.deleteID)
+        .then(() => this.getPortfolios())
+        .then(() => {
+          this.snackbar_del = false;
+          this.triggerSnackbarAlert("Portfolio deleted");
+        });
     },
     async parent_updatePortfolio() {
       await this.getPortfolios();
@@ -188,11 +176,8 @@ export default {
     parent_detail() {
       this.dialogDetail = false;
     },
-    viewDetail(title, content, img, created_at) {
-      this.title = title;
-      this.content = content;
-      this.img = img;
-      this.created_at = created_at;
+    viewDetail(index) {
+      this.selectedPortfolio = this.portfolios[index - 1];
       this.dialogDetail = true;
     },
     parents() {
