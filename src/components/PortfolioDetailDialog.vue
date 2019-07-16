@@ -3,7 +3,7 @@
         <h3 class="Title">{{title}}</h3>
         <p class="Date">{{date_created}}</p>
         <!-- <div class="Img" :style="{'background-image': 'url(' + img + ')'}"></div> -->
-        <img :src=img class="Img" :alt=title>
+        <img :src=img class="Img" :alt="title + ' (portfolio image)'">
         <p class="Content">{{content}}</p>
         <div class="cancel-btn" @click="closeDialog">
           <i class="material-icons">close</i>
