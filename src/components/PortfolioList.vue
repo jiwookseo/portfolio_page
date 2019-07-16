@@ -140,7 +140,7 @@ export default {
       id = "",
       title = "",
       content = "",
-      img = "http://dy.gnch.or.kr/img/no-image.jpg"
+      img = "https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg"
     ) {
       this.createMode = create;
       this.id = id;
