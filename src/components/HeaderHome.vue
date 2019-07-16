@@ -2,7 +2,7 @@
   <header class="homeHeader">
     <ImgBanner :imgSrc="imgSrc" />
     <nav class="navbar">
-      <div class="nav-logo text">{{websiteTitle}}</div>
+      <div class="nav-logo text" @click="scrollToTop">{{websiteTitle}}</div>
       <FavBtn class="nav-fav" />
       <div></div>
       <div v-if="!user" class="login-btn text" @click.stop="dialog = true">Login</div>
@@ -18,7 +18,7 @@
     </nav>
     <transition name="slide-fade">
       <nav class="sidebar" v-if="showSidebar">
-        <div class="sb-nav-logo">{{websiteTitle}}</div>
+        <div class="sb-nav-logo" @click="scrollToTop">{{websiteTitle}}</div>
         <ul>
           <li
             v-for="menu in menus"
@@ -94,6 +94,14 @@ export default {
     sb_scrollTo(target) {
       this.$parent.scrollTo(target);
       this.showSidebar = false;
+    },
+    scrollToTop() {
+      this.showSidebar = false
+      setTimeout(function() {
+        $("html, body").animate({
+          scrollTop: 0
+        }, 700);
+      }, 200);
     },
     sb_login() {
       this.showSidebar = false;

@@ -7,7 +7,7 @@
         <span @click="showLogin = false">create an account</span>
       </div>
       <v-form ref="form" v-model="valid" lazy-validation>
-        <v-text-field v-model="email" :rules="emailRules" :disabled="loading" :loading="loading" label="Email" required></v-text-field>
+        <v-text-field v-model="email" :rules="emailRules" :disabled="loading" :loading="loading" label="Email" required class="mb-3"></v-text-field>
         <v-text-field
           v-model="password"
           :rules="passwordRules"
@@ -18,7 +18,7 @@
           required
         ></v-text-field>
         <div class="btn-box">
-          <div>
+          <div class="mb-1">
             <button
               class="btn reset-btn text"
               :disabled="loading"
@@ -52,12 +52,19 @@
         <span @click="showLogin = true" class="text">login to your account</span>
       </div>
       <v-form ref="form" @submit.prevent="signUp" v-model="valid" lazy-validation>
-        <v-text-field v-model="email" :rules="emailRules" label="Email" required></v-text-field>
+        <v-text-field 
+          v-model="email" 
+          :rules="emailRules" 
+          label="Email" 
+          required
+          class="mb-2"
+        ></v-text-field>
         <v-text-field
           v-model="password"
           :rules="passwordRules"
           label="Password"
           :type="'password'"
+          class="mb-2"
           required
         ></v-text-field>
         <v-text-field
@@ -200,7 +207,7 @@ export default {
 
 .dialog-outer {
   width: 100%;
-  height: 370px;
+  height: 400px;
   background: white;
   padding: 20px;
   position: relative;
