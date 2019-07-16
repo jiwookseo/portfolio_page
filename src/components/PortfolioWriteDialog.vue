@@ -54,6 +54,7 @@
 
 <script>
 import firestore from "../firebase/firestore";
+import axios from "axios";
 
 export default {
   name: "PortfolioWriteDialog",
@@ -111,7 +112,18 @@ export default {
     pickFile() {
       this.$refs.image.click();
     },
-    onFilePicked() {}
+    onFilePicked() {
+      const formData = new FormData();
+      const file = this.$refs.image.files[0];
+      formData.append("image", file, file.name);
+      axios
+        .post("https://api.imgur.com/3/image/", formData, {
+          headers: {
+            Authorization: "Client-ID 5d0f43f26473d77"
+          }
+        })
+        .then(res => (this.img = res.data.data.link));
+    }
   }
 };
 </script>
@@ -146,6 +158,4 @@ export default {
     float: right;
   }
 }
-
-
 </style>
