@@ -85,5 +85,17 @@ export default {
         'time': time
       }
     );
+  },
+  async getLog() {
+    let data = []
+    
+    let db = await firebaseApp.database();
+    let ref = db.ref('LOG').orderByChild('time');
+    ref.on("value", function(snapshot) {
+      snapshot.forEach(function(childSnapshot) {
+        data.push(childSnapshot.val());
+      });
+    });
+    return data.reverse();
   }
 }

@@ -7,15 +7,50 @@
     </div>
     <h2 class="section-title">Admin Page</h2>
     <div class="content-container">
+      <div class="mb-5">
+        <select v-model="selectedPath">
+          <option disabled value="">Please select one</option>
+          <option value="/">"/"</option>
+          <option value="/portfolio">"/portfolio"</option>
+          <option value="/post">"/post"</option>
+        </select>
+        <br>
+        <span>Path: {{ selectedPath }}</span>
+      </div>
+      <hr>
 
+      <p v-for="log in computedLogs">{{log}}</p>
     </div>
   </div>
 </template>
 
 
 <script>
+import firestore from "../firebase/firestore";
+
 export default {
-  
+  name: "AdminPage",
+  data() {
+    return {
+      logs: [],
+      selectedPath: ''
+    }
+  },
+  mounted() {
+    this.getLogs();
+  },
+  computed: {
+    computedLogs() {
+      return this.logs.filter(log => {
+        return log.path == this.selectedPath;
+      })
+    }
+  },
+  methods: {
+    async getLogs() {
+      this.logs = await firestore.getLog();
+    }
+  }
 }
 </script>
 
@@ -46,4 +81,7 @@ a, a:hover {
   }
 }
 
+.content-container {
+  padding: 0 50px 50px;
+}
 </style>
