@@ -74,7 +74,7 @@
         <div class="snackbar-content">
           Delete this portfolio?
           <button @click="deletePortfolio(deleteID)" class="del-btn">Delete</button>
-          <button @click="snackbar_del = false" class="cancel-btn">Cancel</button>
+          <button @click="snackbar_del = false">Cancel</button>
         </div>
       </v-snackbar>
       <v-snackbar
