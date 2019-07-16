@@ -18,7 +18,7 @@
               class="more text"
               @click="viewDetail(portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img, portfolios[i-1].created_at.seconds)"
             >Read More</div>
-            <div class="btn-box">
+            <div class="btn-box" v-if="adminUser">
               <div
                 class="update"
                 @click="openPortfolioWriter(false, portfolios[i-1].id, portfolios[i-1].title, portfolios[i-1].content, portfolios[i-1].img)"
@@ -32,7 +32,7 @@
           </div>
         </div>
       </v-flex>
-      <v-flex v-if="allowCreate" class="portfolio" xs12 sm6 md4 lg3>
+      <v-flex v-if="allowCreate && adminUser" class="portfolio" xs12 sm6 md4 lg3>
         <div class="portfolio-content new" @click="openPortfolioWriter()" data-aos="fade-up">
           <span>+ New Portfolio</span>
         </div>
@@ -110,6 +110,18 @@ export default {
   components: {
     PortfolioDetailDialog,
     PortfolioWriteDialog
+  },
+  computed: {
+    adminUser () {
+      if(this.$store.getters.user != null){
+        if(this.$store.getters.user.email === this.$store.getters.admin){
+          return true
+        }
+        else {
+          return false
+        }
+      }
+    }
   },
   data() {
     return {
