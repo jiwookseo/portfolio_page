@@ -60,6 +60,7 @@ export default {
 }
 .Content {
   line-height: 1.7em;
+  white-space: pre-wrap;
 }
 
 </style>
