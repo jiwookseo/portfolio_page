@@ -1,9 +1,9 @@
 <template>
   <div class="dialog-outer">
     <v-form ref="form" v-model="valid" lazy-validation>
-      <v-text-field v-model="title" label="Title" required :rules="titleRules"></v-text-field>
+      <v-text-field v-model="titleInput" label="Title" required :rules="titleRules"></v-text-field>
       <v-textarea
-        v-model="content"
+        v-model="contentInput"
         label="Content"
         required
         :rules="contentRules"
@@ -13,17 +13,12 @@
       <div class="btn-box">
         <button @click.prevent="reset" class="btn reset-btn">Reset</button>
         <button
-          v-if="createMode"
+          v-if="!!!post.id"
           @click.prevent="create"
           class="btn create-btn"
           :disabled="!valid"
         >Create</button>
-        <button
-          v-if="!createMode"
-          @click.prevent="update"
-          class="btn create-btn"
-          :disabled="!valid"
-        >Update</button>
+        <button v-else @click.prevent="update" class="btn create-btn" :disabled="!valid">Update</button>
       </div>
     </v-form>
     <div class="cancel-btn" @click="closeDialog">
@@ -39,21 +34,25 @@ import firestore from "../firebase/firestore";
 export default {
   name: "PostWriteDialog",
   props: {
-    id: { type: String },
-    title: { type: String },
-    content: { type: String },
-    createMode: { type: Boolean, default: true }
+    post: { type: Object },
+    dialogWrite: { type: Boolean, default: true }
   },
   watch: {
-    createMode: function() {
-      this.resetValidation();
+    post: function() {
+      this.titleInput = this.post.title;
+      this.contentInput = this.post.content;
+      if (!!!this.post.id) {
+        this.$refs.form.resetValidation();
+      }
     }
   },
   data() {
     return {
       valid: true,
       titleRules: [v => !!v || "Title is required"],
-      contentRules: [v => !!v || "Content is required"]
+      contentRules: [v => !!v || "Content is required"],
+      titleInput: "",
+      contentInput: ""
     };
   },
   methods: {
@@ -70,18 +69,21 @@ export default {
       this.$emit("child_snackbar", msg);
     },
     async create() {
-      const res = await firestore.postPost(this.title, this.content);
-      await this.$emit("child_updatePost");
+      const res = await firestore.postPost(this.titleInput, this.contentInput);
+      this.$emit("child_updatePost");
       this.reset();
       this.closeDialog();
       this.triggerParentSnackbar("Post created");
     },
-    async update() {
-      await firestore.updatePost(this.id, this.title, this.content);
-      await this.$emit("child_updatePost");
-      this.closeDialog();
-      this.reset();
-      this.triggerParentSnackbar("Post updated");
+    update() {
+      firestore
+        .updatePost(this.post.id, this.titleInput, this.contentInput)
+        .then(() => {
+          this.$emit("child_updatePost");
+          this.closeDialog();
+          this.reset();
+          this.triggerParentSnackbar("Post updated");
+        });
     }
   }
 };

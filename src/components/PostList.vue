@@ -7,25 +7,18 @@
         :key="posts[i-1].id"
         xs12
         sm6
-        data-aos="fade-up" 
+        data-aos="fade-up"
       >
         <h3 class="title text">{{ posts[i-1].title }}</h3>
         <hr />
         <p class="date">{{ date_created(posts[i-1].created_at.seconds) }}</p>
         <p class="content text">{{ posts[i-1].content }}</p>
         <div class="btn-box">
-          <div
-            class="read-more"
-            @click="viewDetail(posts[i-1].title, posts[i-1].content, posts[i-1].created_at.seconds)"
-          >Read More</div>
-          <div
-            class="update"
-            @click="openPostWriter(false, posts[i-1].id, posts[i-1].title, posts[i-1].content)"
-            v-if="adminUser"
-          >
+          <div class="read-more" @click="viewDetail(i)">Read More</div>
+          <div class="update" @click="openPostWriter(i)" v-if="adminUser">
             <i class="material-icons">edit</i>
           </div>
-          <div class="delete" @click="deleteConfirm(posts[i-1].id)" v-if="adminUser">
+          <div class="delete" @click="deleteConfirm(i)" v-if="adminUser">
             <i class="material-icons">delete</i>
           </div>
         </div>
@@ -45,16 +38,12 @@
           @child="parents"
           @child_snackbar="parent_snackbar"
           @child_updatePost="parent_updatePost"
-          :createMode="createMode"
-          :id="id"
-          :title="title"
-          :content="content"
+          :post="selectedPost"
+          :dialogWrite="dialogWrite"
         />
       </v-dialog>
       <v-dialog v-model="dialogDetail" width="500">
-        <PostDetailDialog 
-          @child_detail="parent_detail"
-          :id="id" :title="title" :content="content" :created_at="created_at" />
+        <PostDetailDialog @child_detail="parent_detail" :post="selectedPost" />
       </v-dialog>
 
       <!-- Snackbars -->
@@ -68,7 +57,7 @@
       >
         <div class="snackbar-content">
           Delete this post?
-          <button @click="deletePost(deleteID)" class="del-btn">Delete</button>
+          <button @click="deletePost()" class="del-btn">Delete</button>
           <button @click="snackbar_del = false">Cancel</button>
         </div>
       </v-snackbar>
@@ -116,10 +105,7 @@ export default {
   },
   data() {
     return {
-      id: "",
-      title: "",
-      content: "",
-      created_at: 0,
+      selectedPost: { created_at: { seconds: 0 } },
       posts: [],
       dialogWrite: false,
       createMode: true,
@@ -138,29 +124,30 @@ export default {
     PostDetailDialog
   },
   methods: {
-    async getPosts() {
-      this.posts = await firestore.getPosts();
+    getPosts() {
+      firestore.getPosts().then(res => (this.posts = res));
     },
-    openPostWriter(create = true, id = "", title = "", content = "") {
-      this.createMode = create;
-      this.id = id;
-      this.title = title;
-      this.content = content;
+    openPostWriter(index = -1) {
+      this.selectedPost =
+        index === -1 ? { created_at: { seconds: 0 } } : this.posts[index - 1];
       this.dialogWrite = true;
     },
-    deleteConfirm(id) {
+    deleteConfirm(index) {
       this.snackbar_del = true;
-      this.deleteID = id;
+      this.deleteID = this.posts[index - 1].id;
     },
     triggerSnackbarAlert(msg) {
       this.snackbar_msg = msg;
       this.snackbar_alert = true;
     },
-    async deletePost(id) {
-      await firestore.deletePost(id);
-      await this.getPosts();
-      this.snackbar_del = false;
-      this.triggerSnackbarAlert("Post deleted");
+    deletePost() {
+      firestore
+        .deletePost(this.deleteID)
+        .then(() => this.getPosts())
+        .then(() => {
+          this.snackbar_del = false;
+          this.triggerSnackbarAlert("Post deleted");
+        });
     },
     async parent_updatePost() {
       await this.getPosts();
@@ -174,10 +161,9 @@ export default {
     parent_detail() {
       this.dialogDetail = false;
     },
-    viewDetail(title, content, created_at) {
-      this.title = title;
-      this.content = content;
-      this.created_at = created_at;
+    viewDetail(index) {
+      this.selectedPost =
+        index === -1 ? { created_at: { seconds: 0 } } : this.posts[index - 1];
       this.dialogDetail = true;
     },
     date_created(created_at) {
@@ -262,8 +248,8 @@ export default {
     position: relative;
     transition: all 0.2s;
     &:hover {
-      color: #00C0FF;
-      border-color: #00C0FF;
+      color: #00c0ff;
+      border-color: #00c0ff;
       box-shadow: none;
     }
     &:active {
