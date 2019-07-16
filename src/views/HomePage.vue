@@ -4,7 +4,7 @@
     <div class="homeContent">
       <section id="aboutme">
         <h2 class="section-title text" data-aos="fade-right">About me</h2>
-        <div class="text" style="text-align: center" v-if="user">[테스트문장] {{user.email}}님 반갑습니다</div>
+        <div class="text" style="text-align: center" v-if="user"> <img :src="user.photoUrl"/> {{user.email}}님 반갑습니다</div>
         <div class="text" style="text-align: center" v-if="adminUser">[테스트문장] 관계자님 반갑습니다</div>
         <v-container>
           <v-layout row wrap>
