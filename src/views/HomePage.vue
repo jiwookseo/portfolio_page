@@ -31,7 +31,6 @@
             </div>
           </router-link>
         </div>
-        <!-- <div><PortfolioWriteModal /></div> -->
       </section>
       <section id="post">
         <h2 class="section-title text" data-aos="fade-right">Post</h2>
@@ -55,6 +54,7 @@
             </a>
         </div>
       </section>
+      <Footer />
     </div>
   </div>
 </template>
@@ -64,18 +64,18 @@ import "../js/navbar.js";
 import firestore from "../firebase/firestore";
 import HeaderHome from "../components/HeaderHome";
 import PortfolioList from "../components/PortfolioList";
-import PortfolioWriteModal from "../components/PortfolioWriteModal";
 import PostList from "../components/PostList";
 import LineChart from "../components/LineChart";
+import Footer from "../components/Footer";
 
 export default {
   name: "HomePage",
   components: {
     HeaderHome,
     PortfolioList,
-    PortfolioWriteModal,
     PostList,
-    LineChart
+    LineChart,
+    Footer
   },
   data() {
     return {
@@ -132,6 +132,9 @@ a, a:hover {
 }
 #wrap {
   width: 100%;
+}
+::-webkit-scrollbar {
+  display: none;
 }
 .homeContent {
   width: 100%;

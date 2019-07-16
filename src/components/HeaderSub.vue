@@ -1,9 +1,9 @@
 <template>
   <header>
     <nav class="navbar">
-      <div class="nav-item text">
-        <router-link to="/">HOME</router-link>
-      </div>
+      <router-link to="/">
+        <div class="nav-item text">HOME</div>
+      </router-link>
       <div class="btn-right">
         <router-link to="/portfolio">
           <div class="nav-item text">Portfolio</div>

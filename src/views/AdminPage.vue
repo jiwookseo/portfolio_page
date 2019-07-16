@@ -58,6 +58,31 @@ export default {
 <style lang="scss" scoped>
 @import "../css/mixin.scss";
 @import "../css/style.scss";
+.wrap {
+  height: 100vh;
+  overflow-y: auto;
+}
+.wrap::-webkit-scrollbar {
+  display: initial;
+  width: 7px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 50px;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+.wrap::-webkit-scrollbar-thumb:vertical {
+  -webkit-border-radius: 50px;
+  background-color: rgba(0, 0, 0, 0.4);
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0);
+  min-height: 10px;
+  &:active {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50px;
+    -webkit-border-radius: 50px;
+  }
+}
 
 a, a:hover {
   color: initial;
@@ -83,6 +108,6 @@ a, a:hover {
 
 .content-container {
   padding: 0 50px 50px;
-  min-height: calc(100vh - 345px);
 }
+
 </style>

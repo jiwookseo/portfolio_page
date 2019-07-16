@@ -7,7 +7,16 @@
         <span @click="showLogin = false">create an account</span>
       </div>
       <v-form ref="form" v-model="valid" lazy-validation>
-        <v-text-field v-model="email" :rules="emailRules" :disabled="loading" :loading="loading" label="Email" required class="mb-3"></v-text-field>
+        <v-text-field 
+          v-model="email" 
+          :rules="emailRules" 
+          :disabled="loading" 
+          :loading="loading" 
+          label="Email" 
+          required 
+          class="mb-3"
+          @keydown.enter="login"
+        ></v-text-field>
         <v-text-field
           v-model="password"
           :rules="passwordRules"
@@ -16,6 +25,7 @@
           label="Password"
           :type="'password'"
           required
+          @keydown.enter="login"
         ></v-text-field>
         <div class="btn-box">
           <div class="mb-1">
@@ -51,13 +61,14 @@
         or
         <span @click="showLogin = true" class="text">login to your account</span>
       </div>
-      <v-form ref="form" @submit.prevent="signUp" v-model="valid" lazy-validation>
+      <v-form ref="form" v-model="valid" lazy-validation>
         <v-text-field
           v-model="email"
           :rules="emailRules"
           label="Email"
           required
           class="mb-2"
+          @keydown.enter="signUp"
         ></v-text-field>
         <v-text-field
           v-model="password"
@@ -66,6 +77,7 @@
           :type="'password'"
           class="mb-2"
           required
+          @keydown.enter="signUp"
         ></v-text-field>
         <v-text-field
           v-model="passwordConfirm"
@@ -73,6 +85,7 @@
           label="Password Confirm"
           :type="'password'"
           required
+          @keydown.enter="signUp"
         ></v-text-field>
         <div class="btn-box">
           <button
@@ -84,7 +97,7 @@
             class="btn login-btn text"
             :disabled="!valid"
             :loading="loading"
-            type="submit"
+            @click.prevent="signUp"
           >Sign up</button>
         </div>
       </v-form>
