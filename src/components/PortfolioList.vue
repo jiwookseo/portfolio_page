@@ -33,7 +33,7 @@
         </div>
       </v-flex>
       <v-flex v-if="allowCreate" class="portfolio" xs12 sm6 md4 lg3>
-        <div class="portfolio-content new" @click="openPortfolioWriter" data-aos="fade-up">
+        <div class="portfolio-content new" @click="openPortfolioWriter()" data-aos="fade-up">
           <span>+ New Portfolio</span>
         </div>
       </v-flex>
