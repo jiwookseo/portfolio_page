@@ -11,7 +11,7 @@ export default {
   error(state) {
     return state.error
   },
-  checking(state) {
-    return state.checking
+  loginSuccess(state) {
+    return state.loginSuccess
   }
 }

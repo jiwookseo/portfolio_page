@@ -82,8 +82,8 @@ export default {
     }
   },
   computed: {
-    checking() {
-      return this.$store.getters.checking
+    loginSuccess() {
+      return this.$store.getters.loginSuccess
     },
     user () {
       return this.$store.getters.user
