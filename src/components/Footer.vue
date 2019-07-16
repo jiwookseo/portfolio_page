@@ -37,7 +37,7 @@ export default {
       tempMin: null,
       tempMax: null,
       humidity: null,
-      image: 'http://openweathermap.org/img/w/'+ this.img +'.png',
+      image: 'https://openweathermap.org/img/w/'+ this.img +'.png',
     };
   },
   computed: {
@@ -64,7 +64,7 @@ export default {
     this.$exit();
     },
     showWeather() {
-      axios.defaults.baseURL = 'http://api.openweathermap.org/data/2.5'
+      axios.defaults.baseURL = 'https://api.openweathermap.org/data/2.5'
       axios
         .get(
           `/weather?q=${this.query}&units=metric&&appid=${"122032a774c9f3b73131bfdf9e95c2b4"}`,
@@ -76,7 +76,7 @@ export default {
           this.tempMin = response.data.main.temp_min;
           this.tempMax = response.data.main.temp_max;
           this.humidity = response.data.main.humidity;
-          this.image ='http://openweathermap.org/img/w/'+ response.data.weather[0].icon+ '.png';
+          this.image ='https://openweathermap.org/img/w/'+ response.data.weather[0].icon+ '.png';
           this.error = false;
         })
         .catch(() => {
