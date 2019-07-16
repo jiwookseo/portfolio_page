@@ -101,7 +101,7 @@ export default {
     return {
       valid: false,
       showLogin: true,
-      checking: false,
+      loginSuccess: false,
       email: "",
       emailRules: [
         v => !!v || "E-mail is required",
@@ -137,8 +137,8 @@ export default {
       return this.$store.getters.loading;
     },
     checkDialog() {
-      this.checking = this.$store.getters.checking
-      if(this.checking){
+      this.loginSuccess = this.$store.getters.loginSuccess
+      if(this.loginSuccess){
         this.closePopup()
       }
     }
