@@ -41,7 +41,7 @@ export default {
   },
   computed: {
     computedLogs() {
-      return this.logs.filter(log => {
+      return this.logs.reverse().filter(log => {
         return log.path == this.selectedPath;
       })
     }
