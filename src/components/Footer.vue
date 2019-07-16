@@ -1,10 +1,24 @@
 <template>
 <footer>
+  <div>
+    <!-- <figure class="icons">
+      <skycon condition="clear-night" width="40" height="40"></skycon>
+      <skycon condition="partly-cloudy-day" width="40" height="40"></skycon>
+      <skycon condition="partly-cloudy-night" width="40" height="40"></skycon>
+      <skycon condition="cloudy" width="40" height="40"></skycon>
+      <skycon condition="rain" width="40" height="40"></skycon>
+      <skycon condition="sleet" width="40" height="40"></skycon>
+      <skycon condition="snow" width="40" height="40"></skycon>
+      <skycon condition="wind" width="40" height="40"></skycon>
+      <skycon condition="fog" width="40" height="40"></skycon>
+    </figure> -->
+  </div>
+
   <div id="weather">
     <div title="오늘의 날씨" v-on:close="exit">
       <div v-if="!!city">
         <div class="weather-city">
-          <div class="city-name">{{ city }}</div><img :src='image'>
+          <div class="city-name">{{ city }}</div><skycon :condition='condition' width="40" height="40"></skycon>
         </div>
         <div>기온 : {{tempMin}}&deg;C / {{tempMax}}&deg;C</div>
         <div>습도 : {{humidity}}%</div>
@@ -20,10 +34,15 @@
 </footer>
 </template>
 
+<script src="https://rawgithub.com/darkskyapp/skycons/master/skycons.js"></script>
 <script>
 import axios from 'axios';
 import { setTimeout } from 'timers';
+import Vue from 'vue'
+import VueSkycons from 'vue-skycon'
 const apiKey = process.env.API_KEY;
+
+Vue.use(VueSkycons)
 
 export default {
   name: "Footer",
@@ -37,7 +56,8 @@ export default {
       tempMin: null,
       tempMax: null,
       humidity: null,
-      image: 'https://openweathermap.org/img/w/'+ this.img +'.png',
+      image: '',
+      condition: '',
     };
   },
   computed: {
@@ -76,19 +96,28 @@ export default {
           this.tempMin = response.data.main.temp_min;
           this.tempMax = response.data.main.temp_max;
           this.humidity = response.data.main.humidity;
-          this.image ='https://openweathermap.org/img/w/'+ response.data.weather[0].icon+ '.png';
+          this.image = response.data.weather[0].id;
           this.error = false;
+          if(this.image < 300) this.condition = 'cloudy';
+          else if(this.image < 400) this.condition = 'sleet';
+          else if(this.image < 600) this.condition = 'rain';
+          else if(this.image < 700) this.condition = 'snow';
+          else if(this.image < 800) this.condition = 'fog';
+          else if(this.image == 800) this.condition = 'clear-day';
+
         })
         .catch(() => {
           this.error = true;
           this.city = '';
         });
     },
+
   },
   beforeMount(){
     this.showWeather();
   },
 }
+
 </script>
 
 <style lang="scss" scoped>
@@ -107,10 +136,11 @@ footer {
 #weather {
   position: absolute;
   width: 150px;
-  height: 100px;
+  height: 110px;
   bottom: 40%;
   left: 5%;
   padding-left: 20px;
+  padding-top: 10px;
   opacity: 0.8;
   border-radius: 5px;
   background: linear-gradient(#6190E8,  #A7BFE8);
@@ -193,5 +223,9 @@ $top-btn-size: 35px;
     @include centerItem;
   }
 }
-
+figure {
+	margin: 5em auto;
+	width: 350px;
+	height: 150px;
+}
 </style>
