@@ -82,6 +82,9 @@ export default {
     }
   },
   computed: {
+    checking() {
+      return this.$store.getters.checking
+    },
     user () {
       return this.$store.getters.user
     },

@@ -7,16 +7,12 @@
         <span @click="showLogin = false">create an account</span>
       </div>
       <v-form ref="form" v-model="valid" lazy-validation>
-        <v-text-field 
-          v-model="email" 
-          :rules="emailRules" 
-          label="Email" 
-          required
-          class="mb-3"
-        ></v-text-field>
+        <v-text-field v-model="email" :rules="emailRules" :disabled="loading" :loading="loading" label="Email" required class="mb-3"></v-text-field>
         <v-text-field
           v-model="password"
           :rules="passwordRules"
+          :disabled="loading"
+          :loading="loading"
           label="Password"
           :type="'password'"
           required
@@ -33,6 +29,7 @@
               class="btn login-btn text"
               :disabled="!valid"
               :loading="loading"
+              :checkDialog="checkDialog"
               @click.prevent="login"
             >Login</button>
           </div>
@@ -111,6 +108,7 @@ export default {
     return {
       valid: false,
       showLogin: true,
+      checking: false,
       email: "",
       emailRules: [
         v => !!v || "E-mail is required",
@@ -144,6 +142,12 @@ export default {
     },
     loading() {
       return this.$store.getters.loading;
+    },
+    checkDialog() {
+      this.checking = this.$store.getters.checking
+      if(this.checking){
+        this.closePopup()
+      }
     }
   },
   methods: {
@@ -179,8 +183,8 @@ export default {
         this.$store.dispatch("signUserIn", {
           email: this.email,
           password: this.password
-        });
-        this.reset();
+        })
+        this.reset()
       }
     },
     facebookLogin() {

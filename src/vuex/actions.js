@@ -33,7 +33,7 @@ export default {
         }
       )
   },
-  signUserIn({
+  signUserIn({ // 로컬 로그인
     commit
   }, payload) {
     commit('setLoading', true)
@@ -42,6 +42,7 @@ export default {
       .then(
         user => {
           commit('setLoading', false)
+          commit('checking', true)
           Vue.swal("Welcome!", "로그인 되었습니다", "success")
           console.log(payload.email)
           const newUser = {
@@ -104,6 +105,7 @@ export default {
       .signOut()
       .then(() => {
         commit('setUser', null)
+        commit('checking', false)
       })
       .catch((error) => console.error(`SingOut Error: ${error}`))
   },
