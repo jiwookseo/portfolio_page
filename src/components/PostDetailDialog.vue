@@ -1,8 +1,8 @@
 <template>
   <div class="dialog-outer">
-    <h3 class="Title">{{title}}</h3>
+    <h3 class="Title">{{post.title}}</h3>
     <p class="Date">{{date_created}}</p>
-    <p class="Content">{{content}}</p>
+    <p class="Content">{{post.content}}</p>
     <div class="cancel-btn" @click="closeDialog">
       <i class="material-icons">close</i>
     </div>
@@ -11,29 +11,27 @@
 
 <script>
 export default {
-	name: "PostDetailDialog",
-	data() {
-		return {
-			date: ''
-		}
-	},
-	props: {
-		title: {type: String},
-		content: {type: String},
-		created_at: {type: Number}
-	},
-	computed: {
-		date_created() {
-			const date = new Date(this.created_at * 1000);
-      return String(date).split('GMT')[0]
-		}
+  name: "PostDetailDialog",
+  data() {
+    return {
+      date: ""
+    };
+  },
+  props: {
+    post: { type: Object }
+  },
+  computed: {
+    date_created() {
+      const date = new Date(this.post.created_at.seconds * 1000);
+      return String(date).split("GMT")[0];
+    }
   },
   methods: {
     closeDialog() {
       this.$emit("child_detail");
     }
   }
-}
+};
 </script>
 
 
@@ -61,5 +59,4 @@ export default {
 .Content {
   line-height: 1.7em;
 }
-
 </style>
