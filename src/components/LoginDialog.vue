@@ -100,6 +100,7 @@ export default {
     return {
       valid: false,
       showLogin: true,
+      checking: false,
       email: "",
       emailRules: [
         v => !!v || "E-mail is required",
@@ -135,7 +136,15 @@ export default {
       return this.$store.getters.loading;
     }
   },
+  mounted() {
+    this.check();
+  },
   methods: {
+    check() {
+      let prac = ''
+      prac = this.$store.getters.checking
+      console.log("prac : " + prac)
+    },
     reset() {
       this.$refs.form.reset();
     },
@@ -168,8 +177,14 @@ export default {
         this.$store.dispatch("signUserIn", {
           email: this.email,
           password: this.password
-        });
-        this.reset();
+        }).then(()=>{
+          console.log("로그인 후 : " + this.checking)
+          if(this.checking){
+            this.closePopup()
+          } else {
+            this.reset()
+          }
+        })
       }
     },
     facebookLogin() {

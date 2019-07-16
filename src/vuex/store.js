@@ -10,6 +10,7 @@ const state = {
   user: null,
   loading: false,
   error: null,
+  checking: false
 }
 export default new Vuex.Store({
   state,
@@ -28,5 +29,9 @@ export default new Vuex.Store({
     clearError (state) {
       state.error = null
     },
+    checking (state, payload) {
+      console.log("checking 변경! " + payload)
+      state.checking = payload
+    }
   }
 })
