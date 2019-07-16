@@ -13,6 +13,5 @@ export default {
   },
   loginSuccess(state) {
     return state.loginSuccess
-  },
-
+  }
 }

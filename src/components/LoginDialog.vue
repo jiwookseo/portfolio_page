@@ -52,10 +52,10 @@
         <span @click="showLogin = true" class="text">login to your account</span>
       </div>
       <v-form ref="form" @submit.prevent="signUp" v-model="valid" lazy-validation>
-        <v-text-field 
-          v-model="email" 
-          :rules="emailRules" 
-          label="Email" 
+        <v-text-field
+          v-model="email"
+          :rules="emailRules"
+          label="Email"
           required
           class="mb-2"
         ></v-text-field>
@@ -146,7 +146,8 @@ export default {
     checkDialog() {
       this.loginSuccess = this.$store.getters.loginSuccess
       if(this.loginSuccess){
-        this.closePopup()
+        this.showLogin = true;
+        return this.$emit("child", false);
       }
     }
   },

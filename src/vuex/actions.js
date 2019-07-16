@@ -105,7 +105,7 @@ export default {
       .signOut()
       .then(() => {
         commit('setUser', null)
-        commit('checking', false)
+        commit('loginSuccess', false)
       })
       .catch((error) => console.error(`SingOut Error: ${error}`))
   },
@@ -118,5 +118,5 @@ export default {
     commit
   }, payload) {
     commit('setError', payload)
-  },
+  }
 }
