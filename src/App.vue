@@ -4,7 +4,7 @@
       <router-view />
       <TranslateBtn />
       <ChatBtn />
-      <router-link to="/admin">
+      <router-link to="/admin" v-if="adminUser">
         <div id="toAdmin" title="Admin Page">
           <i class="material-icons">how_to_reg</i>
         </div>
@@ -25,7 +25,17 @@ export default {
   },
   data() {
     return {};
-  }
+  },
+  computed: {
+    adminUser() {
+      if (
+        !this.$store.getters.user ||
+        this.$store.getters.user.email !== this.$store.getters.admin
+      )
+        return false;
+      else return true;
+    }
+  },
 };
 </script>
 
@@ -52,7 +62,7 @@ export default {
   z-index: 15;
   cursor: pointer;
   &:hover {
-    opacity: 0.5;
+    opacity: 1;
   }
   i {
     @include centerItem;

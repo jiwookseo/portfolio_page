@@ -131,9 +131,10 @@ a:hover {
   position: fixed;
   top: 0;
   right: 0;
+  color: white;
   @include mobile {
     background: rgba(240, 248, 255, 0.5);
+    color: initial;
   }
-  color: initial;
 }
 </style>

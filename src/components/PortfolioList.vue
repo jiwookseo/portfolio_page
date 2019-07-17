@@ -315,8 +315,8 @@ a:hover {
   }
 }
 .portfolio-content.new {
-  box-shadow: inset 0 0 0 4px $nav-bg;
-  color: $nav-bg;
+  box-shadow: inset 0 0 0 4px $light-gray;
+  color: $light-gray;
   transition: color 0.25s 0.09s;
   position: relative;
   cursor: pointer;

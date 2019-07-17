@@ -129,7 +129,7 @@ export default {
 footer {
   width: 100%;
   height: 200px;
-  background: radial-gradient(ellipse at bottom, $footer-bg, $footer-bg-dark);
+  background: linear-gradient(to bottom, $footer-bg 91%, $nav-bg 91%);
   color: white;
   text-transform: uppercase;
   position: relative;
@@ -141,10 +141,11 @@ footer {
   height: 110px;
   bottom: 75px;
   left: 130px;
-  padding-left: 15px;
-  padding-top: 10px;
+  padding-left: 10px;
+  padding-top: 5px;
   border-radius: 5px;
-  background: linear-gradient(to right, #9ddff8, #8EA3D8);
+  background: rgb(130, 191, 213);
+  border: 4.5px solid rgb(154, 221, 246);
   .weather-city {
     height: 50px;
     .city-name {
@@ -156,6 +157,7 @@ footer {
     }
   }
 }
+
 
 #copyrights {
   position: absolute;
@@ -188,7 +190,7 @@ $top-btn-size: 35px;
   top: $top-btn-size * -1;
   left: 50%;
   transform: translate(-50%);
-  background: radial-gradient(circle at 50% 20%, $footer-bg, $footer-bg-dark);
+  background: $footer-bg;
   cursor: pointer;
   span {
     width: 100%;
@@ -208,6 +210,10 @@ $top-btn-size: 35px;
     animation: bobup 0.7s ease-in-out infinite alternate;
   }
 }
+
+
+
+
 
 
 figure {
