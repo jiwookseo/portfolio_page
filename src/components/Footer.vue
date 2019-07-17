@@ -1,17 +1,5 @@
 <template>
   <footer>
-    <!-- <figure class="icons">
-      <skycon condition="clear-night" width="40" height="40"></skycon>
-      <skycon condition="partly-cloudy-day" width="40" height="40"></skycon>
-      <skycon condition="partly-cloudy-night" width="40" height="40"></skycon>
-      <skycon condition="cloudy" width="40" height="40"></skycon>
-      <skycon condition="rain" width="40" height="40"></skycon>
-      <skycon condition="sleet" width="40" height="40"></skycon>
-      <skycon condition="snow" width="40" height="40"></skycon>
-      <skycon condition="wind" width="40" height="40"></skycon>
-      <skycon condition="fog" width="40" height="40"></skycon>
-    </figure>-->
-
     <div class="check-toggle">
       <div class="toggle toggle--daynight">
         <input
@@ -28,14 +16,14 @@
 
     <transition name="weatherB">
       <div id="weather" v-show="checkWeather">
-        <div title="오늘의 날씨" v-on:close="exit">
+        <div title="Today's weather" v-on:close="exit">
           <div v-if="!!city">
             <div class="weather-city">
               <div class="city-name">{{ city }}</div>
               <skycon :condition="condition" width="40" height="40"></skycon>
             </div>
-            <div>기온 : {{tempMin}}&deg;C / {{tempMax}}&deg;C</div>
-            <div>습도 : {{humidity}}%</div>
+            <div>Temp : {{tempMin}}&deg;C / {{tempMax}}&deg;C</div>
+            <div>Humidity : {{humidity}}%</div>
           </div>
         </div>
       </div>
@@ -47,11 +35,6 @@
         <i class="material-icons">keyboard_arrow_up</i>
       </span>
     </div>
-    <router-link to="/admin">
-      <div id="toAdmin" title="Admin Page">
-        <i class="material-icons">how_to_reg</i>
-      </div>
-    </router-link>
   </footer>
 </template>
 
@@ -102,7 +85,7 @@ export default {
           }&units=metric&&appid=${"122032a774c9f3b73131bfdf9e95c2b4"}`
         )
         .then(response => {
-          this.city = "서울";
+          this.city = "Seoul";
           this.weatherDescription = response.data.weather[0].description;
           this.temp = response.data.main.temp;
           this.tempMin = response.data.main.temp_min;
@@ -146,7 +129,7 @@ export default {
 footer {
   width: 100%;
   height: 200px;
-  background: $footer-bg;
+  background: radial-gradient(ellipse at bottom, $footer-bg, $footer-bg-dark);
   color: white;
   text-transform: uppercase;
   position: relative;
@@ -154,25 +137,26 @@ footer {
 }
 #weather {
   position: absolute;
-  width: 150px;
+  width: 145px;
   height: 110px;
-  bottom: 40%;
-  left: 140px;
-  padding-left: 20px;
+  bottom: 75px;
+  left: 130px;
+  padding-left: 15px;
   padding-top: 10px;
   border-radius: 5px;
-  background: linear-gradient(#6190e8, #a7bfe8);
+  background: linear-gradient(to right, #9ddff8, #8EA3D8);
   .weather-city {
     height: 50px;
     .city-name {
       font-size: 1.5em;
-      width: 50px;
+      width: 75px;
       height: 50px;
       line-height: 50px;
       float: left;
     }
   }
 }
+
 #copyrights {
   position: absolute;
   width: 100%;
@@ -204,7 +188,7 @@ $top-btn-size: 35px;
   top: $top-btn-size * -1;
   left: 50%;
   transform: translate(-50%);
-  background: $footer-bg;
+  background: radial-gradient(circle at 50% 20%, $footer-bg, $footer-bg-dark);
   cursor: pointer;
   span {
     width: 100%;
@@ -225,24 +209,7 @@ $top-btn-size: 35px;
   }
 }
 
-#toAdmin {
-  width: 50px;
-  height: 50px;
-  position: absolute;
-  border-radius: 50%;
-  color: white;
-  border: 2px solid white;
-  bottom: 20px;
-  left: 20px;
-  opacity: 0.1;
-  cursor: pointer;
-  &:hover {
-    opacity: 0.3;
-  }
-  i {
-    @include centerItem;
-  }
-}
+
 figure {
   margin: 5em auto;
   width: 350px;

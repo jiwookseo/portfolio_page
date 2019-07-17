@@ -11,6 +11,7 @@
     @include mobile {
         display: none;
     }
+    color: white;
 }
 
 .slide-fade-enter-active {
@@ -30,11 +31,12 @@
     position: fixed;
     top: 0; left: 0;
     background: $nav-bg;
-    box-shadow: 2px 0 10px gray;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
     z-index: 10;
     @include viewportMin(601) {
         display: none;
     }
+    color: white;
 }
 
 .sb-nav-logo, .sb-nav-menu {
@@ -43,6 +45,7 @@
     line-height: 50px;
     padding: 0 20px;
     cursor: pointer;
+    color: white;
 }
 .sb-nav-logo {
     text-align: right;

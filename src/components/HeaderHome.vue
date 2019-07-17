@@ -174,5 +174,6 @@ export default {
   @include mobile {
     display: initial;
   }
+  color: initial;
 }
 </style>
