@@ -146,8 +146,8 @@ export default {
     this.getPortfolios();
   },
   methods: {
-    async getPortfolios() {
-      this.portfolios = await firestore.getPortfolios();
+    getPortfolios() {
+      firestore.getPortfolios().then(res => (this.portfolios = res));
     },
     openPortfolioWriter(index = -1) {
       this.selectedPortfolio =
@@ -177,8 +177,8 @@ export default {
           this.triggerSnackbarAlert("Portfolio deleted");
         });
     },
-    async parent_updatePortfolio() {
-      await this.getPortfolios();
+    parent_updatePortfolio() {
+      this.getPortfolios();
     },
     parent_snackbar(msg) {
       this.triggerSnackbarAlert(msg);

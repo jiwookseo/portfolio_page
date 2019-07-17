@@ -156,8 +156,8 @@ export default {
           this.triggerSnackbarAlert("Post deleted");
         });
     },
-    async parent_updatePost() {
-      await this.getPosts();
+    parent_updatePost() {
+      this.getPosts();
     },
     parent_snackbar(msg) {
       this.triggerSnackbarAlert(msg);
