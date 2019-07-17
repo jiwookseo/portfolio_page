@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "aos": "^3.0.0-beta.6",
+    "apexcharts": "^3.8.2",
     "axios": "^0.19.0",
     "chart.js": "^2.8.0",
     "core-js": "^2.6.5",
@@ -17,6 +18,7 @@
     "skycons-component": "^1.1.2",
     "skycons-ts": "0.0.2",
     "vue": "^2.6.10",
+    "vue-apexcharts": "^1.4.0",
     "vue-chartjs": "^3.4.2",
     "vue-router": "^3.0.3",
     "vue-simplemde": "^0.5.2",
