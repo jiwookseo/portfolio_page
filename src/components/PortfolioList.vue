@@ -115,13 +115,12 @@ export default {
   },
   computed: {
     adminUser() {
-      if (this.$store.getters.user != null) {
-        if (this.$store.getters.user.email === this.$store.getters.admin) {
-          return true;
-        } else {
-          return false;
-        }
-      }
+      if (
+        !this.$store.getters.user ||
+        this.$store.getters.user.email !== this.$store.getters.admin
+      )
+        return false;
+      else return true;
     }
   },
   data() {
@@ -147,8 +146,8 @@ export default {
     this.getPortfolios();
   },
   methods: {
-    async getPortfolios() {
-      this.portfolios = await firestore.getPortfolios();
+    getPortfolios() {
+      firestore.getPortfolios().then(res => (this.portfolios = res));
     },
     openPortfolioWriter(index = -1) {
       this.selectedPortfolio =
@@ -178,8 +177,8 @@ export default {
           this.triggerSnackbarAlert("Portfolio deleted");
         });
     },
-    async parent_updatePortfolio() {
-      await this.getPortfolios();
+    parent_updatePortfolio() {
+      this.getPortfolios();
     },
     parent_snackbar(msg) {
       this.triggerSnackbarAlert(msg);

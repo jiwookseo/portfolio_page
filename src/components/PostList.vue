@@ -100,13 +100,12 @@ export default {
   },
   computed: {
     adminUser() {
-      if (this.$store.getters.user != null) {
-        if (this.$store.getters.user.email === this.$store.getters.admin) {
-          return true;
-        } else {
-          return false;
-        }
-      }
+      if (
+        !this.$store.getters.user ||
+        this.$store.getters.user.email !== this.$store.getters.admin
+      )
+        return false;
+      else return true;
     }
   },
   watch: {
@@ -157,8 +156,8 @@ export default {
           this.triggerSnackbarAlert("Post deleted");
         });
     },
-    async parent_updatePost() {
-      await this.getPosts();
+    parent_updatePost() {
+      this.getPosts();
     },
     parent_snackbar(msg) {
       this.triggerSnackbarAlert(msg);
