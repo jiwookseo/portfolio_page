@@ -188,8 +188,6 @@ export default {
       }
     },
     login() {
-      console.log(this.email)
-      console.log(this.password)
       if (
         typeof this.email === "undefined" ||
         typeof this.password === "undefined"
