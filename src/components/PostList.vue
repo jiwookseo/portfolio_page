@@ -3,7 +3,7 @@
     <v-layout row wrap>
       <v-flex
         class="post"
-        v-for="i in posts.length > limit ? limit : posts.length"
+        v-for="i in posts.length > postLimit ? postLimit : posts.length"
         :key="posts[i-1].id"
         xs12
         sm6
@@ -28,7 +28,7 @@
         <hr />
       </v-flex>
 
-      <div class="section-btn-box" v-if="allowCreate && limit < posts.length">
+      <div class="section-btn-box" v-if="allowCreate && postLimit < posts.length">
         <div class="load-more-btn" @click="loadMore">Load More</div>
       </div>
 
@@ -92,15 +92,19 @@ export default {
     allowCreate: { type: Boolean, default: false }
   },
   computed: {
-    adminUser () {
-      if(this.$store.getters.user != null){
-        if(this.$store.getters.user.email === this.$store.getters.admin){
-          return true
-        }
-        else {
-          return false
+    adminUser() {
+      if (this.$store.getters.user != null) {
+        if (this.$store.getters.user.email === this.$store.getters.admin) {
+          return true;
+        } else {
+          return false;
         }
       }
+    }
+  },
+  watch: {
+    limit: function() {
+      this.postLimit = this.limit;
     }
   },
   data() {
@@ -113,7 +117,8 @@ export default {
       snackbar_del: false,
       deleteID: "",
       snackbar_alert: false,
-      snackbar_msg: ""
+      snackbar_msg: "",
+      postLimit: 4
     };
   },
   mounted() {
@@ -171,7 +176,7 @@ export default {
       return String(date).split("GMT")[0];
     },
     loadMore() {
-      this.limit += 4;
+      this.postLimit += 4;
     }
   }
 };

@@ -3,7 +3,7 @@
     <v-layout row wrap>
       <v-flex
         class="portfolio"
-        v-for="i in portfolios.length > limit ? limit : portfolios.length"
+        v-for="i in portfolios.length > portfolioLimit ? portfolioLimit : portfolios.length"
         :key="portfolios[i-1].id"
         xs12
         sm6
@@ -36,7 +36,7 @@
           <span>+ New Portfolio</span>
         </div>
       </v-flex>
-      <div class="section-btn-box" v-if="allowCreate && limit < portfolios.length">
+      <div class="section-btn-box" v-if="allowCreate && portfolioLimit < portfolios.length">
         <div class="load-more-btn" @click="loadMore">Load More</div>
       </div>
 
@@ -103,6 +103,11 @@ export default {
     PortfolioDetailDialog,
     PortfolioWriteDialog
   },
+  watch: {
+    limit: function() {
+      this.portfolioLimit = this.limit;
+    }
+  },
   computed: {
     adminUser() {
       if (this.$store.getters.user != null) {
@@ -129,7 +134,8 @@ export default {
       snackbar_del: false,
       deleteID: "",
       snackbar_alert: false, // Replaces window alert box
-      snackbar_msg: "" // For snackbar_alert
+      snackbar_msg: "", // For snackbar_alert
+      portfolioLimit: 4
     };
   },
   mounted() {
@@ -184,7 +190,7 @@ export default {
       this.dialogWrite = false;
     },
     loadMore() {
-      this.limit += 4;
+      this.portfolioLimit += 4;
     }
   }
 };
