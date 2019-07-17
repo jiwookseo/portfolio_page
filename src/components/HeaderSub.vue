@@ -2,7 +2,7 @@
   <header>
     <nav class="navbar">
       <router-link to="/">
-        <div class="nav-item text">HOME</div>
+        <div class="nav-item text"><b>Team Six</b></div>
       </router-link>
       <div class="btn-right">
         <router-link to="/portfolio">
@@ -18,7 +18,7 @@
     <transition name="slide-fade">
       <nav class="sidebar" v-if="showSidebar">
         <router-link to="/">
-          <div class="sb-nav-logo text">HOME</div>
+          <div class="sb-nav-logo text">Team Six</div>
         </router-link>
         <ul>
           <router-link to="/portfolio">

@@ -182,6 +182,22 @@
     padding: 0 30px;
     height: calc(90vh - 110px);
     overflow-y: auto;
+    &::-webkit-scrollbar {
+      display: initial;
+      width: 7px;
+    }
+    &::-webkit-scrollbar-thumb:vertical {
+      -webkit-border-radius: 50px;
+      background-color: rgba(0, 0, 0, 0.4);
+      background-clip: padding-box;
+      border: 1px solid rgba(0, 0, 0, 0);
+      min-height: 10px;
+      &:active {
+        background-color: rgba(0, 0, 0, 0.6);
+        border-radius: 50px;
+        -webkit-border-radius: 50px;
+      }
+    }
   }
   .btn-box-bottom {
     margin-top: 10px;
@@ -227,7 +243,7 @@
       width: 230px;
       bottom: 10px;
       right: 60px;
-      border-radius: 10px;
+      border-radius: 5px;
       background: white;
       border: 2px solid $blue-accent;
       font-size: 0.8em;

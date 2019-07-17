@@ -1,6 +1,6 @@
 <template>
   <div id="wrap">
-    <HeaderHome :websiteTitle="'HOME'" />
+    <HeaderHome :websiteTitle="'Team Six'" />
     <div class="homeContent">
       <section id="aboutme">
         <h2 class="section-title text" data-aos="fade-right">About me</h2>
