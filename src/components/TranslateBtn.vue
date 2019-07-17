@@ -165,7 +165,7 @@ export default {
   width: 250px;
   bottom: 20px;
   right: 85px;
-  border-radius: 10px;
+  border-radius: 5px;
   background: white;
   border: 2px solid $blue-accent;
   font-size: 0.9em;

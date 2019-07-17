@@ -135,6 +135,7 @@ export default {
 }
 .nav-logo {
   float: left;
+  font-weight: bold;
   padding: 0 20px;
   cursor: pointer;
   &:hover {

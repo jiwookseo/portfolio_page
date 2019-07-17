@@ -33,7 +33,7 @@
             hide-selected
             hide-details
             append-outer-icon="g_translate"
-            :items="langauge"
+            :items="language"
             label="Select language"
             v-model="selectedLanguage"
           ></v-select>
@@ -68,7 +68,7 @@ export default {
       translatedText: {},
       translated: false,
       selectedLanguage: "",
-      langauge: [
+      language: [
         {
           text: "Korean",
           value: "ko"
