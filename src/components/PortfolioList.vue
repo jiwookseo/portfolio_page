@@ -42,12 +42,13 @@
 
       <!-- Dialogs -->
       <v-dialog v-model="dialogWrite" width="500" persistent>
-        <PortfolioWriteDialog
+        <WriteDialog
           @child="parents"
           @child_snackbar="parent_snackbar"
           @child_updatePortfolio="parent_updatePortfolio"
-          :portfolio="selectedPortfolio"
+          :article="selectedPortfolio"
           :dialogWrite="dialogWrite"
+          :isPortfolio="true"
         />
       </v-dialog>
       <v-dialog v-model="dialogDetail" width="500">
@@ -94,7 +95,7 @@
 
 <script>
 import DetailDialog from "./DetailDialog";
-import PortfolioWriteDialog from "./PortfolioWriteDialog";
+import WriteDialog from "./WriteDialog";
 import firestore from "../firebase/firestore";
 
 export default {
@@ -105,7 +106,7 @@ export default {
   },
   components: {
     DetailDialog,
-    PortfolioWriteDialog
+    WriteDialog
   },
   watch: {
     limit: function() {

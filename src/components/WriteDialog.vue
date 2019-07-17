@@ -16,7 +16,7 @@
           rows="10"
           auto-grow
         ></v-textarea>
-        <div class="img-select-box">
+        <div v-if="isPortfolio" class="img-select-box">
           <div class="img-preview">
             <img :src="imgInput" @change="onFilePicked" alt="Current Portfolio Image" />
             <div class="choose-img-prompt" @click="pickFile" title="Change Image">
@@ -32,7 +32,7 @@
       <div class="btn-box-bottom">
         <button @click.prevent="reset" class="btn reset-btn">Reset</button>
         <button
-          v-if="!portfolio.id"
+          v-if="!article.id"
           @click.prevent="create"
           class="btn create-btn"
           :disabled="!valid"
@@ -51,15 +51,16 @@ import axios from "axios";
 export default {
   name: "PortfolioWriteDialog",
   props: {
-    portfolio: { type: Object },
-    dialogWrite: { type: Boolean, default: true }
+    article: { type: Object },
+    dialogWrite: { type: Boolean, default: true },
+    isPortfolio: { type: Boolean, default: false }
   },
   watch: {
-    portfolio: function() {
-      this.titleInput = this.portfolio.title;
-      this.contentInput = this.portfolio.content;
-      this.imgInput = this.portfolio.img;
-      if (!this.portfolio.id) {
+    article: function() {
+      this.titleInput = this.article.title;
+      this.contentInput = this.article.content;
+      this.imgInput = this.article.img;
+      if (!this.article.id) {
         this.$refs.form.resetValidation();
       }
     }
@@ -90,29 +91,49 @@ export default {
       this.$emit("child_snackbar", msg);
     },
     create() {
-      firestore
-        .postPortfolio(this.titleInput, this.contentInput, this.imgInput)
-        .then(() => {
-          this.$emit("child_updatePortfolio");
+      if (this.isPortfolio) {
+        firestore
+          .postPortfolio(this.titleInput, this.contentInput, this.imgInput)
+          .then(() => {
+            this.$emit("child_updatePortfolio");
+            this.reset();
+            this.closeDialog();
+            this.triggerParentSnackbar("Portfolio created");
+          });
+      } else {
+        firestore.postPost(this.titleInput, this.contentInput).then(() => {
+          this.$emit("child_updatePost");
           this.reset();
           this.closeDialog();
-          this.triggerParentSnackbar("Portfolio created");
+          this.triggerParentSnackbar("Post created");
         });
+      }
     },
     update() {
-      firestore
-        .updatePortfolio(
-          this.portfolio.id,
-          this.titleInput,
-          this.contentInput,
-          this.imgInput
-        )
-        .then(() => {
-          this.$emit("child_updatePortfolio");
-          this.closeDialog();
-          this.reset();
-          this.triggerParentSnackbar("Portfolio updated");
-        });
+      if (this.isPortfolio) {
+        firestore
+          .updatePortfolio(
+            this.article.id,
+            this.titleInput,
+            this.contentInput,
+            this.imgInput
+          )
+          .then(() => {
+            this.$emit("child_updatePortfolio");
+            this.closeDialog();
+            this.reset();
+            this.triggerParentSnackbar("Portfolio updated");
+          });
+      } else {
+        firestore
+          .updatePost(this.article.id, this.titleInput, this.contentInput)
+          .then(() => {
+            this.$emit("child_updatePost");
+            this.closeDialog();
+            this.reset();
+            this.triggerParentSnackbar("Post updated");
+          });
+      }
     },
     pickFile() {
       this.$refs.image.click();
