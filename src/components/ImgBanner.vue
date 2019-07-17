@@ -40,7 +40,7 @@ export default {
   name: "ImgBanner",
   data() {
     return {
-      imgSrc: "https://source.unsplash.com/random/1600x900/",
+      imgSrc: "https://picsum.photos/1600/900",
       showChangeBgMenu: false
     };
   },
@@ -62,7 +62,7 @@ export default {
       this.showChangeBgMenu = !this.showChangeBgMenu;
     },
     useRandomImg() {
-      this.imgSrc = "https://source.unsplash.com/random/1600x900/";
+      this.imgSrc = "https://picsum.photos/1600/900";
       this.showChangeBgMenu = false;
     },
     pickFile() {
