@@ -53,8 +53,10 @@ div {
     cursor: pointer;
     position: relative;
     z-index: 10;
+    color: white;
     i {
         @include centerItem;
+        
     }
 }
 </style>

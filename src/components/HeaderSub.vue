@@ -115,6 +115,7 @@ a:hover {
     float: right;
     margin-right: 50px;
   }
+  color: white;
 }
 .nav-item {
   float: left;
@@ -124,6 +125,7 @@ a:hover {
   &:hover {
     background: $nav-highlight;
   }
+  color: white;
 }
 .nav-fav {
   position: fixed;
@@ -132,5 +134,6 @@ a:hover {
   @include mobile {
     background: rgba(240, 248, 255, 0.5);
   }
+  color: initial;
 }
 </style>

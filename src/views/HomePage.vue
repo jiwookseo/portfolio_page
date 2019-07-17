@@ -4,11 +4,11 @@
     <div class="homeContent">
       <section id="aboutme">
         <h2 class="section-title text" data-aos="fade-right">About me</h2>
-        <div class="text" style="text-align: center" v-if="user">
+        <!-- <div class="text" style="text-align: center" v-if="user">
           <img :src="user.photoUrl" />
           {{user.email}}님 반갑습니다
         </div>
-        <div class="text" style="text-align: center" v-if="adminUser">[테스트문장] 관계자님 반갑습니다</div>
+        <div class="text" style="text-align: center" v-if="adminUser">[테스트문장] 관계자님 반갑습니다</div> -->
         <v-container>
           <v-layout row wrap>
             <v-flex xs8 offset-xs2 sm4 offset-sm0 class="content-container" data-aos="fade-right">
@@ -18,7 +18,7 @@
             </v-flex>
             <v-flex xs12 sm8 class="content-container" data-aos="fade-left">
               <div
-                class="inner"
+                class="inner text"
               >Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, odit delectus magni impedit quos eveniet iusto officia mollitia aliquid, est, amet explicabo deleniti! Itaque accusantium id corporis delectus sint sunt quam expedita nisi porro animi. Totam cumque delectus voluptatibus, natus eveniet dolore ipsam sapiente minima quibusdam eum nemo itaque quam. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit, similique? Praesentium voluptatum harum quod provident labore magni perferendis quidem ducimus?</div>
             </v-flex>
           </v-layout>
@@ -29,7 +29,7 @@
         <PortfolioList :limit="4" />
         <div class="section-btn-box" data-aos="fade-up">
           <router-link to="/portfolio">
-            <div class="section-more-btn">
+            <div class="section-more-btn text">
               More Portfolios
               <i class="material-icons">arrow_forward</i>
             </div>
@@ -41,7 +41,7 @@
         <PostList :limit="4" />
         <div class="section-btn-box" data-aos="fade-up">
           <router-link to="/post">
-            <div class="section-more-btn">
+            <div class="section-more-btn text">
               More Posts
               <i class="material-icons">arrow_forward</i>
             </div>
@@ -50,15 +50,19 @@
       </section>
       <section id="project">
         <h2 class="section-title text" data-aos="fade-left">Project</h2>
-        <Radarchart class="radarchart"></Radarchart>
+        <!-- <Radarchart class="radarchart" /> -->
         <LineChart class="linechart" data-aos="fade-up" />
-        <div class="section-btn-box" data-aos="fade-up">
+        <div class="section-btn-box hideMobile" data-aos="fade-up">
           <a target="_blank" href="https://lab.ssafy.com/jiwonjulietyoon/webmobile-sub2">
-            <div class="section-more-btn">
+            <div class="section-more-btn text">
               View GitLab
               <i class="material-icons">arrow_forward</i>
             </div>
           </a>
+        </div>
+        <div class="showMobile deviceRotateMsg">
+          <div><span><i class="material-icons">screen_rotation</i></span></div>
+          <p class="text">Please rotate your device to landscape mode.</p>
         </div>
       </section>
       <Footer />
@@ -132,6 +136,7 @@ export default {
 <style lang="scss" scoped>
 @import "../css/mixin.scss";
 @import "../css/style.scss";
+
 a,
 a:hover {
   color: initial;
@@ -263,4 +268,38 @@ $slant_m: 20px;
     border-width: 0 0 $slant_m 100vw;
   }
 }
+
+.hideMobile {
+  @include mobile {
+    display: none;
+  }
+}
+.showMobile {
+  @include viewportMin(601) {
+    display: none;
+  }
+}
+
+
+.deviceRotateMsg {
+  & > div {
+    height: 100px;
+    position: relative;
+    span {
+      @include centerItem;
+      i {
+        font-size: 4em;
+        animation: spin 3s linear infinite;
+      }
+    }
+  }
+  p {
+    text-align: center;
+  }
+}
+@keyframes spin {
+  0% {transform: rotate(0deg);}
+  100% {transform: rotate(360deg);}
+}
+
 </style>

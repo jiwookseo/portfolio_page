@@ -54,6 +54,7 @@ export default {
 .content {
     margin: 80px 0 50px;
     height: auto;
+    min-height: 100vh;
 }
 
 </style>
