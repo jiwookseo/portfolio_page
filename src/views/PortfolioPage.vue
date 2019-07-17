@@ -5,6 +5,7 @@
             <h2 class="section-title text">Portfolio</h2>
             <PortfolioList :limit=6 :allowCreate=true />
         </div>
+        <Footer />
     </div>
 </template>
 
@@ -13,12 +14,14 @@
 import firestore from '../firebase/firestore';
 import HeaderSub from '../components/HeaderSub';
 import PortfolioList from '../components/PortfolioList';
+import Footer from "../components/Footer";
 
 export default {
     name: "PortfolioPage",
     components: {
         HeaderSub,
-        PortfolioList
+        PortfolioList,
+        Footer
     },
     data() {
       return {

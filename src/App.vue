@@ -2,7 +2,6 @@
   <v-app id="app">
     <v-content class="content">
       <router-view />
-      <Footer />
       <TranslateBtn />
       <ChatBtn />
     </v-content>
@@ -10,14 +9,12 @@
 </template>
 
 <script>
-import Footer from "./components/Footer";
 import ChatBtn from "./components/ChatBtn";
 import TranslateBtn from "./components/TranslateBtn";
 
 export default {
   name: "App",
   components: {
-    Footer,
     ChatBtn,
     TranslateBtn
   },
@@ -33,6 +30,8 @@ export default {
 @import "./css/style.scss";
 @import "./css/mixin.scss";
 
+
+
 .content {
   position: relative;
 }
@@ -40,6 +39,7 @@ export default {
 
 <style lang="scss">
 @import "./css/style.scss";
+
 body {
   overflow-y: auto;
   overflow-x: hidden;
