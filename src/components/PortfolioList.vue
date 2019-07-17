@@ -115,13 +115,12 @@ export default {
   },
   computed: {
     adminUser() {
-      if (this.$store.getters.user != null) {
-        if (this.$store.getters.user.email === this.$store.getters.admin) {
-          return true;
-        } else {
-          return false;
-        }
-      }
+      if (
+        !this.$store.getters.user ||
+        this.$store.getters.user.email !== this.$store.getters.admin
+      )
+        return false;
+      else return true;
     }
   },
   data() {
