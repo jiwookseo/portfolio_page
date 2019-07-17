@@ -2,8 +2,23 @@
   <div class="imgBannerOuter">
     <img :src=imgSrc alt="Main Image Banner" class="imgBanner">
     <div class="imgBannerContent">
-      <div class="changeBg" @click="pickFile" v-if="adminUser">
-        <i class="material-icons">image_search</i>
+      <div class="changeBgBtnBox" v-if="adminUser">
+        <transition name="bg-random">
+          <div class="randomImg" @click="useRandomImg" v-show="showChangeBgMenu" title="Use Random Image">
+            <i class="material-icons">wallpaper</i>
+          </div>
+        </transition>
+        <transition name="bg-select">
+          <div class="selectImg" @click="pickFile" v-show="showChangeBgMenu" title="Select Image">
+            <i class="material-icons">image_search</i>
+          </div>
+        </transition>
+        <div class="changeBg" 
+          @click="toggleChangeBgMenu"
+          :class="{btnActive: showChangeBgMenu}"
+        >
+          <i class="material-icons">photo_library</i>
+        </div>
       </div>
       <input type="file" style="display: none" ref="image" accept="image/*" @change="onFilePicked" />
       <div class="bannerTitle">Team Six !!!!!</div>
@@ -23,7 +38,8 @@ export default {
   name: "ImgBanner",
   data() {
     return {
-      imgSrc: "https://source.unsplash.com/random/1600x900/"
+      imgSrc: "https://source.unsplash.com/random/1600x900/",
+      showChangeBgMenu: false
     };
   },
   computed: {
@@ -42,6 +58,13 @@ export default {
     scrollTo() {
       this.$parent.scrollTo("#aboutme");
     },
+    toggleChangeBgMenu() {
+      this.showChangeBgMenu = !this.showChangeBgMenu;
+    },
+    useRandomImg() {
+      this.imgSrc = "https://source.unsplash.com/random/1600x900/";
+      this.showChangeBgMenu = false
+    },
     pickFile() {
       this.$refs.image.click();
     },
@@ -56,6 +79,7 @@ export default {
           }
         })
         .then(res => (this.imgSrc = res.data.data.link));
+      this.showChangeBgMenu = false;
     }
   }
 };
@@ -85,25 +109,6 @@ export default {
     height: 100%;
     position: relative;
     background-color: rgba(0, 0, 0, 0.2);
-    .changeBg {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      color: white;
-      border: 2px solid white;
-      opacity: 0.1;
-      transition: all 0.3s;
-      cursor: pointer;
-      i {
-        @include centerItem;
-      }
-      &:hover {
-        opacity: 0.5;
-      }
-    }
     .bannerTitle {
       text-align: center;
       font-family: $font-title;
@@ -115,52 +120,109 @@ export default {
       left: 50%;
       transform: translate(-50%, -50%);
     }
-    .scrollPrompt {
-      position: absolute;
-      bottom: 50px;
-      left: 50%;
-      transform: translate(-50%);
-      padding: 5px 20px 12px 25px;
-      color: white;
-      border: 1.5px solid white;
-      cursor: pointer;
-      transition: all 0.3s;
-      background-color: rgba(0, 0, 0, 0.3);
-      white-space: nowrap;
-      i {
-        transform: translateY(7px);
-      }
-      &::before,
-      &::after {
-        content: "";
-        width: 95%;
-        height: 135%;
-        border: 0px solid white;
-        transition: all 0.3s;
-        @include centerItem;
-      }
-      &::before {
-        border-top-width: 1.5px;
-        border-bottom-width: 1.5px;
-        transform: translate(-50%, -50%) scaleX(0);
-        transform-origin: left;
-      }
-      &::after {
-        border-left-width: 1.5px;
-        border-right-width: 1.5px;
-        transform: translate(-50%, -50%) scaleY(0);
-        transform-origin: top;
-      }
-      &:hover::before {
-        transform: translate(-50%, -50%) scaleX(1);
-      }
-      &:hover::after {
-        transform: translate(-50%, -50%) scaleY(1);
-      }
-      &:hover {
-        background-color: rgba(0, 0, 0, 0);
-      }
+  }
+}
+
+.changeBgBtnBox {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 50px;
+  height: 200px;
+  color: white;
+  .randomImg, .selectImg, .changeBg {
+    position: absolute;
+    left: 0;
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    border: 2px solid white;
+    cursor: pointer;
+  }
+  .changeBg {
+    bottom: 0; 
+    opacity: 0.1;
+    transition: all 0.3s;
+    i {
+      @include centerItem;
     }
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+  .btnActive {
+    opacity: 0.5 !important;
+  }
+  .randomImg, .selectImg {
+    transition: all 0.5s;
+    opacity: 0.5;
+    i {
+      @include centerItem;
+    }
+  }
+  .selectImg {
+    bottom: 60px;
+  }
+  .randomImg {
+    bottom: 120px;
+  }
+}
+
+.bg-random-enter-active, .bg-random-leave-active, .bg-select-enter-active, .bg-select-leave-active {
+  transition: all 0.5s ease;
+}
+.bg-select-enter, .bg-select-leave-to {
+  transform: translateY(60px);
+  opacity: 0;
+}
+.bg-random-enter, .bg-random-leave-to {
+  transform: translateY(120px);
+  opacity: 0;
+}
+
+.scrollPrompt {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translate(-50%);
+  padding: 5px 20px 12px 25px;
+  color: white;
+  border: 1.5px solid white;
+  cursor: pointer;
+  transition: all 0.3s;
+  background-color: rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+  i {
+    transform: translateY(7px);
+  }
+  &::before,
+  &::after {
+    content: "";
+    width: 95%;
+    height: 135%;
+    border: 0px solid white;
+    transition: all 0.3s;
+    @include centerItem;
+  }
+  &::before {
+    border-top-width: 1.5px;
+    border-bottom-width: 1.5px;
+    transform: translate(-50%, -50%) scaleX(0);
+    transform-origin: left;
+  }
+  &::after {
+    border-left-width: 1.5px;
+    border-right-width: 1.5px;
+    transform: translate(-50%, -50%) scaleY(0);
+    transform-origin: top;
+  }
+  &:hover::before {
+    transform: translate(-50%, -50%) scaleX(1);
+  }
+  &:hover::after {
+    transform: translate(-50%, -50%) scaleY(1);
+  }
+  &:hover {
+    background-color: rgba(0, 0, 0, 0);
   }
 }
 </style>
