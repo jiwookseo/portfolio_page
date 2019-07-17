@@ -30,7 +30,6 @@ export default new Vuex.Store({
       state.error = null
     },
     loginSuccess (state, payload) {
-      console.log("loginSuccess 변경! " + payload)
       state.loginSuccess = payload
     }
   }

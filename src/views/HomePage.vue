@@ -147,7 +147,7 @@ a:hover {
 }
 section {
   width: 100%;
-  height: auto;
+  height: 100%;
   padding: 80px 0 50px;
   position: relative;
   &:nth-of-type(odd) {
