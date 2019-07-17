@@ -43,7 +43,11 @@
         />
       </v-dialog>
       <v-dialog v-model="dialogDetail" width="500">
-        <PostDetailDialog @child_detail="parent_detail" :post="selectedPost" />
+        <PostDetailDialog
+          @child_detail="parent_detail"
+          :post="selectedPost"
+          :dialogDetail="dialogDetail"
+        />
       </v-dialog>
 
       <!-- Snackbars -->

@@ -75,9 +75,13 @@ export default {
     };
   },
   props: {
-    portfolio: { type: Object }
+    portfolio: { type: Object },
+    dialogDetail: { type: Boolean, default: false }
   },
   watch: {
+    dialogDetail: function() {
+      this.askToTranslate = false;
+    },
     portfolio: function() {
       if (this.translated) {
         this.loading = true;

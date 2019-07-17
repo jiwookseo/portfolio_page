@@ -51,7 +51,11 @@
         />
       </v-dialog>
       <v-dialog v-model="dialogDetail" width="500">
-        <PortfolioDetailDialog @child_detail="parent_detail" :portfolio="selectedPortfolio" />
+        <PortfolioDetailDialog
+          @child_detail="parent_detail"
+          :portfolio="selectedPortfolio"
+          :dialogDetail="dialogDetail"
+        />
       </v-dialog>
 
       <!-- Snackbars -->
