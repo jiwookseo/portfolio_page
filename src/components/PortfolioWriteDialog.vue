@@ -1,45 +1,48 @@
 <template>
   <div class="dialog-outer">
+    <div class="btn-box-top">
+      <div class="cancel-btn" @click="closeDialog">
+        <i class="material-icons">close</i>
+      </div>
+    </div>
     <v-form ref="form" v-model="valid" lazy-validation>
-      <v-text-field v-model="titleInput" label="Title" required :rules="titleRules"></v-text-field>
-      <v-textarea
-        v-model="contentInput"
-        label="Content"
-        required
-        :rules="contentRules"
-        rows="10"
-        auto-grow
-      ></v-textarea>
-
-      <!-- <v-text-field v-model="img" label="Image URL" required></v-text-field> -->
-      <div class="img-select-box">
-        <div class="img-preview">
-          <img
-            :src="imgInput"
-            @change="onFilePicked"
-            alt = "Current Portfolio Image"
-          />
-          <div class="choose-img-prompt" @click="pickFile"  title="Change Image">
-            <i class="material-icons">image_search</i>
+      <div class="scrollable-content">
+        <v-text-field v-model="titleInput" label="Title" required :rules="titleRules"></v-text-field>
+        <v-textarea
+          v-model="contentInput"
+          label="Content"
+          required
+          :rules="contentRules"
+          rows="10"
+          auto-grow
+        ></v-textarea>
+        <div class="img-select-box">
+          <div class="img-preview">
+            <img
+              :src="imgInput"
+              @change="onFilePicked"
+              alt = "Current Portfolio Image"
+            />
+            <div class="choose-img-prompt" @click="pickFile"  title="Change Image">
+              <i class="material-icons">image_search</i>
+            </div>
+          </div>
+          <div class="img-picker">
+            <v-text-field
+              label="Select Image"
+              @click="pickFile"
+              v-model="imgInput"
+            ></v-text-field>
+            <input
+              type="file"
+              ref="image"
+              accept="image/*"
+              @change="onFilePicked"
+            />
           </div>
         </div>
-        <div class="img-picker">
-          <!-- <v-icon @click="pickFile" @change="onFilePicked">attach_file</v-icon> -->
-          <v-text-field
-            label="Select Image"
-            @click="pickFile"
-            v-model="imgInput"
-          ></v-text-field>
-          <input
-            type="file"
-            ref="image"
-            accept="image/*"
-            @change="onFilePicked"
-          />
-        </div>
       </div>
-
-      <div class="btn-box">
+      <div class="btn-box-bottom">
         <button @click.prevent="reset" class="btn reset-btn">Reset</button>
         <button
           v-if="!!!portfolio.id"
@@ -50,9 +53,6 @@
         <button v-else @click.prevent="update" class="btn create-btn" :disabled="!valid">Update</button>
       </div>
     </v-form>
-    <div class="cancel-btn" @click="closeDialog">
-      <i class="material-icons">close</i>
-    </div>
   </div>
 </template>
 
@@ -151,14 +151,6 @@ export default {
 @import "../css/style.scss";
 @import "../css/mixin.scss";
 
-.dialog-outer {
-  width: 100%;
-  height: 80vh;
-  background: white;
-  padding: 30px;
-  overflow: auto;
-  position: relative;
-}
 
 .img-select-box {
   .img-preview {
@@ -198,22 +190,6 @@ export default {
 }
 
 
-.btn-box {
-  height: 50px;
-  margin-top: 20px;
-  padding: 0 10px;
-  .btn {
-    @include nudge-btn;
-  }
-  .reset-btn {
-    @include nudge-btn-gray;
-    float: left;
-  }
-  .create-btn {
-    @include nudge-btn-primary;
-    float: right;
-  }
-}
 
 
 </style>

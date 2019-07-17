@@ -215,6 +215,7 @@ export default {
     @include line-clamp-4;
     margin: 5px 0 10px;
     // min-height: 83.2px;
+    word-break: break-word;
   }
   &.new {
     hr {

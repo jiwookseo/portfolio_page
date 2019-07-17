@@ -137,14 +137,6 @@ export default {
 @import "../css/style.scss";
 @import "../css/mixin.scss";
 
-.dialog-outer {
-  width: 100%;
-  height: 70vh;
-  background: white;
-  padding: 30px;
-  overflow: auto;
-  position: relative;
-}
 .Title {
   font-size: 2em;
   margin-bottom: 20px;
@@ -155,7 +147,7 @@ export default {
 }
 .Content {
   line-height: 1.7em;
-  white-space: pre-wrap;
+  // white-space: pre-wrap;
 }
 
 @keyframes bobup {
