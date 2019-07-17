@@ -32,12 +32,8 @@
 
 <script>
 import LoadingSpinner from "./LoadingSpinner";
-import axios from "axios";
 import { setTimeout } from "timers";
 import translateDOM from "../js/translate";
-
-const translateURL =
-  "https://us-central1-test-68bfc.cloudfunctions.net/translate";
 
 export default {
   name: "TranslateBtn",
@@ -89,7 +85,7 @@ export default {
     };
   },
   watch: {
-    $route(to, from) {
+    $route() {
       if (this.translated) {
         this.loading = true;
         setTimeout(() => {
@@ -159,9 +155,6 @@ export default {
   &:hover {
     animation: bobup 0.5s ease-in-out infinite alternate;
   }
-}
-.chat-btn {
-  bottom: 20px;
 }
 .tr-btn {
   bottom: 80px;
