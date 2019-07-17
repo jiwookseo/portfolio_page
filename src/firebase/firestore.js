@@ -7,120 +7,141 @@ const POSTS = "posts";
 const PORTFOLIOS = "portfolios";
 
 export default {
-  async getPosts() {
-    let posts = [];
-    let snapshot = await firestore
-      .collection(POSTS)
-      .orderBy("created_at", "desc")
-      .get();
-    snapshot.docs.forEach(doc => {
-      posts.push({
-        id: doc.id,
-        title: doc.data().title,
-        content: doc.data().content,
-        created_at: doc.data().created_at
-      });
-    });
-    return posts;
-  },
-  async postPost(title, content) {
-    await firestore.collection(POSTS).add({
-      title,
-      content,
-      created_at: Firebase.firestore.FieldValue.serverTimestamp()
+  getPosts() {
+    return new Promise((resolve, reject) => {
+      let posts = [];
+      firestore
+        .collection(POSTS)
+        .orderBy("created_at", "desc")
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            posts.push({
+              id: doc.id,
+              ...doc.data()
+            });
+          });
+          resolve(posts);
+        })
+        .catch(err => reject(err));
     });
   },
-  async deletePost(docID) {
-    await firestore
-      .collection(POSTS)
-      .doc(docID)
-      .delete();
-  },
-  async updatePost(docID, title, content) {
-    await firestore
-      .collection(POSTS)
-      .doc(docID)
-      .update({
-        title: title,
-        content: content
-      });
-  },
-  async getPortfolios() {
-    let portfolios = [];
-    let snapshot = await firestore
-      .collection(PORTFOLIOS)
-      .orderBy("created_at", "desc")
-      .get();
-    snapshot.docs.forEach(doc => {
-      portfolios.push({
-        id: doc.id,
-        title: doc.data().title,
-        content: doc.data().content,
-        img: doc.data().img,
-        created_at: doc.data().created_at
-      });
-    });
-    return portfolios;
-  },
-  async postPortfolio(title, content, img) {
-    await firestore.collection(PORTFOLIOS).add({
-      title,
-      content,
-      img,
-      created_at: Firebase.firestore.FieldValue.serverTimestamp()
+  postPost(title, content) {
+    return new Promise((resolve, reject) => {
+      firestore
+        .collection(POSTS)
+        .add({
+          title,
+          content,
+          created_at: Firebase.firestore.FieldValue.serverTimestamp()
+        })
+        .then(res => resolve(res))
+        .catch(err => reject(err));
     });
   },
-  async deletePortfolio(docID) {
-    await firestore
-      .collection(PORTFOLIOS)
-      .doc(docID)
-      .delete();
+  deletePost(docID) {
+    return new Promise((resolve, reject) => {
+      firestore
+        .collection(POSTS)
+        .doc(docID)
+        .delete()
+        .then(res => resolve(res))
+        .catch(err => reject(err));
+    });
   },
-  async updatePortfolio(docID, title, content, img) {
-    await firestore
-      .collection(PORTFOLIOS)
-      .doc(docID)
-      .update({
-        title: title,
-        content: content,
-        img: img
-      });
+  updatePost(docID, title, content) {
+    return new Promise((resolve, reject) => {
+      firestore
+        .collection(POSTS)
+        .doc(docID)
+        .update({
+          title: title,
+          content: content
+        })
+        .then(res => resolve(res))
+        .catch(err => reject(err));
+    });
   },
-  logView(user, id, path, time) {
-    db.ref("LOG/" + user).set({
-      userId: id,
-      path: path,
-      time: time
+  getPortfolios() {
+    return new Promise((resolve, reject) => {
+      let portfolios = [];
+      firestore
+        .collection(PORTFOLIOS)
+        .orderBy("created_at", "desc")
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            portfolios.push({
+              id: doc.id,
+              ...doc.data()
+            });
+          });
+          resolve(portfolios);
+        })
+        .catch(err => reject(err));
+    });
+  },
+  postPortfolio(title, content, img) {
+    return new Promise((resolve, reject) => {
+      firestore
+        .collection(PORTFOLIOS)
+        .add({
+          title,
+          content,
+          img,
+          created_at: Firebase.firestore.FieldValue.serverTimestamp()
+        })
+        .then(res => resolve(res))
+        .catch(err => reject(err));
+    });
+  },
+  deletePortfolio(docID) {
+    return new Promise((resolve, reject) => {
+      firestore
+        .collection(PORTFOLIOS)
+        .doc(docID)
+        .delete()
+        .then(res => resolve(res))
+        .catch(err => reject(err));
+    });
+  },
+  updatePortfolio(docID, title, content, img) {
+    return new Promise((resolve, reject) => {
+      firestore
+        .collection(PORTFOLIOS)
+        .doc(docID)
+        .update({
+          title,
+          content,
+          img
+        })
+        .then(res => resolve(res))
+        .catch(err => reject(err));
     });
   },
   addLog(path, username, time) {
     let db = firebaseApp.database();
     let log = db.ref("LOG");
     log.push({
-      path: path,
-      username: username,
-      time: time
+      path,
+      username,
+      time
     });
   },
-  async getLog() {
-    let data = [];
-
-    let db = await firebaseApp.database();
-    var ind = 0
-    let ref = db.ref("LOG").orderByChild("time");
-    ref.once("value", function(snapshot) {
-      snapshot.forEach(function(childSnapshot) {
-        // console.log(childSnapshot.val().path);
-        data.push(
-          {
-            path : childSnapshot.val().path,
-            username : childSnapshot.val().username,
-            time : childSnapshot.val().time,
-          }
-        );
-        ind ++;
-      });
+  getLog() {
+    return new Promise((resolve, reject) => {
+      let data = [];
+      let db = firebaseApp.database();
+      let ref = db.ref("LOG").orderByChild("time");
+      ref
+        .once("value")
+        .then(snapshot => {
+          snapshot.forEach(function(childSnapshot) {
+            data.push(childSnapshot.val());
+          });
+          resolve(data);
+        })
+        .catch(err => reject(err));
     });
-    return data;
   }
 };
