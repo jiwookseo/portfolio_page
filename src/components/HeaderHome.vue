@@ -83,7 +83,7 @@ export default {
     ...mapActions(["logout"]),
     signOut() {
       this.logout();
-      this.$swal("Goodbye!", "로그아웃 되었습니다", "success");
+      this.$swal("Goodbye!", "Logout successful", "success");
       console.log(this.$route.path);
       this.$router.replace(this.$route.path);
     },
