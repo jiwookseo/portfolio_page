@@ -4,41 +4,46 @@
     <div class="homeContent">
       <section id="aboutme">
         <h2 class="section-title text" data-aos="fade-right">About me</h2>
-        <div class="text" style="text-align: center" v-if="user"> <img :src="user.photoUrl"/> {{user.email}}님 반갑습니다</div>
+        <div class="text" style="text-align: center" v-if="user">
+          <img :src="user.photoUrl" />
+          {{user.email}}님 반갑습니다
+        </div>
         <div class="text" style="text-align: center" v-if="adminUser">[테스트문장] 관계자님 반갑습니다</div>
         <v-container>
           <v-layout row wrap>
             <v-flex xs8 offset-xs2 sm4 offset-sm0 class="content-container" data-aos="fade-right">
               <div class="inner">
-                <img src="../assets/teamsix.png" alt="Team Six">
+                <img src="../assets/teamsix.png" alt="Team Six" />
               </div>
             </v-flex>
             <v-flex xs12 sm8 class="content-container" data-aos="fade-left">
-              <div class="inner">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, odit delectus magni impedit quos eveniet iusto officia mollitia aliquid, est, amet explicabo deleniti! Itaque accusantium id corporis delectus sint sunt quam expedita nisi porro animi. Totam cumque delectus voluptatibus, natus eveniet dolore ipsam sapiente minima quibusdam eum nemo itaque quam. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit, similique? Praesentium voluptatum harum quod provident labore magni perferendis quidem ducimus?
-              </div>
+              <div
+                class="inner"
+              >Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, odit delectus magni impedit quos eveniet iusto officia mollitia aliquid, est, amet explicabo deleniti! Itaque accusantium id corporis delectus sint sunt quam expedita nisi porro animi. Totam cumque delectus voluptatibus, natus eveniet dolore ipsam sapiente minima quibusdam eum nemo itaque quam. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit, similique? Praesentium voluptatum harum quod provident labore magni perferendis quidem ducimus?</div>
             </v-flex>
           </v-layout>
         </v-container>
       </section>
       <section id="portfolio">
         <h2 class="section-title text" data-aos="fade-left">Portfolio</h2>
-        <PortfolioList :limit=4 />
+        <PortfolioList :limit="4" />
         <div class="section-btn-box" data-aos="fade-up">
           <router-link to="/portfolio">
             <div class="section-more-btn">
-              More Portfolios <i class="material-icons">arrow_forward</i>
+              More Portfolios
+              <i class="material-icons">arrow_forward</i>
             </div>
           </router-link>
         </div>
       </section>
       <section id="post">
         <h2 class="section-title text" data-aos="fade-right">Post</h2>
-        <PostList :limit=4 />
+        <PostList :limit="4" />
         <div class="section-btn-box" data-aos="fade-up">
           <router-link to="/post">
             <div class="section-more-btn">
-              More Posts <i class="material-icons">arrow_forward</i>
+              More Posts
+              <i class="material-icons">arrow_forward</i>
             </div>
           </router-link>
         </div>
@@ -48,11 +53,12 @@
         <Radarchart class="radarchart"></Radarchart>
         <LineChart class="linechart" data-aos="fade-up" />
         <div class="section-btn-box" data-aos="fade-up">
-            <a target="_blank" href="https://lab.ssafy.com/jiwonjulietyoon/webmobile-sub2">
+          <a target="_blank" href="https://lab.ssafy.com/jiwonjulietyoon/webmobile-sub2">
             <div class="section-more-btn">
-              View GitLab <i class="material-icons">arrow_forward</i>
+              View GitLab
+              <i class="material-icons">arrow_forward</i>
             </div>
-            </a>
+          </a>
         </div>
       </section>
       <Footer />
@@ -81,25 +87,22 @@ export default {
     Radarchart
   },
   data() {
-    return {
-    }
+    return {};
   },
   computed: {
     loginSuccess() {
-      return this.$store.getters.loginSuccess
+      return this.$store.getters.loginSuccess;
     },
-    user () {
-      return this.$store.getters.user
+    user() {
+      return this.$store.getters.user;
     },
-    adminUser () {
-      if(this.$store.getters.user != null){
-        if(this.$store.getters.user.email === this.$store.getters.admin){
-          return true
-        }
-        else {
-          return false
-        }
-      }
+    adminUser() {
+      if (
+        !this.$store.getters.user ||
+        this.$store.getters.user.email !== this.$store.getters.admin
+      )
+        return false;
+      else return true;
     }
   },
   mounted() {
@@ -109,29 +112,29 @@ export default {
     scrollTo(target) {
       let targetscrolltop = $(target).offset().top;
       setTimeout(function() {
-        $("html, body").animate({scrollTop: targetscrolltop + 10}, 700);
+        $("html, body").animate({ scrollTop: targetscrolltop + 10 }, 700);
       }, 200);
     },
     addLog() {
-      let username = '';
+      let username = "";
       if (!this.$store.getters.user) {
         username = "Anonymous User";
-      }
-      else {
+      } else {
         username = this.$store.getters.user.email;
       }
       let time = new Date();
       firestore.addLog("/", username, time.getTime());
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
 @import "../css/mixin.scss";
 @import "../css/style.scss";
-a, a:hover {
-    color: initial;
+a,
+a:hover {
+  color: initial;
 }
 #wrap {
   width: 100%;
@@ -144,7 +147,7 @@ a, a:hover {
 }
 section {
   width: 100%;
-  height: auto;
+  height: 100%;
   padding: 80px 0 50px;
   position: relative;
   &:nth-of-type(odd) {
@@ -180,8 +183,6 @@ section {
   }
 }
 
-
-
 #project {
   padding: 80px 30px 80px;
   .linechart {
@@ -189,14 +190,12 @@ section {
       display: none;
     }
   }
-  .radarchart{
+  .radarchart {
     @include viewportMin(601) {
       display: none;
     }
   }
 }
-
-
 
 .section-more-btn {
   display: inline-block;
@@ -216,13 +215,13 @@ section {
     margin-left: 50px;
   }
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     right: -20px;
     top: -45%;
     width: 70px;
     height: 100px;
-    background: #00CCFF;
+    background: #00ccff;
     transform: rotate(-20deg);
     transition: all 0.3s;
   }
@@ -233,10 +232,6 @@ section {
     transform: translate(-50%, 2px);
   }
 }
-
-
-
-
 
 $slant_h: 30px;
 $slant_m: 20px;
@@ -268,6 +263,4 @@ $slant_m: 20px;
     border-width: 0 0 $slant_m 100vw;
   }
 }
-
-
 </style>

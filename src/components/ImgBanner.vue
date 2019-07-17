@@ -1,10 +1,15 @@
 <template>
   <div class="imgBannerOuter">
-    <img :src=imgSrc alt="Main Image Banner" class="imgBanner">
+    <img :src="imgSrc" alt="Main Image Banner" class="imgBanner" />
     <div class="imgBannerContent">
       <div class="changeBgBtnBox" v-if="adminUser">
         <transition name="bg-random">
-          <div class="randomImg" @click="useRandomImg" v-show="showChangeBgMenu" title="Use Random Image">
+          <div
+            class="randomImg"
+            @click="useRandomImg"
+            v-show="showChangeBgMenu"
+            title="Use Random Image"
+          >
             <i class="material-icons">wallpaper</i>
           </div>
         </transition>
@@ -13,10 +18,7 @@
             <i class="material-icons">image_search</i>
           </div>
         </transition>
-        <div class="changeBg" 
-          @click="toggleChangeBgMenu"
-          :class="{btnActive: showChangeBgMenu}"
-        >
+        <div class="changeBg" @click="toggleChangeBgMenu" :class="{btnActive: showChangeBgMenu}">
           <i class="material-icons">photo_library</i>
         </div>
       </div>
@@ -38,20 +40,18 @@ export default {
   name: "ImgBanner",
   data() {
     return {
-      imgSrc: "https://source.unsplash.com/random/1600x900/",
+      imgSrc: "https://picsum.photos/1600/900",
       showChangeBgMenu: false
     };
   },
   computed: {
-    adminUser () {
-      if(this.$store.getters.user != null){
-        if(this.$store.getters.user.email === this.$store.getters.admin){
-          return true
-        }
-        else {
-          return false
-        }
-      }
+    adminUser() {
+      if (
+        !this.$store.getters.user ||
+        this.$store.getters.user.email !== this.$store.getters.admin
+      )
+        return false;
+      else return true;
     }
   },
   methods: {
@@ -62,8 +62,8 @@ export default {
       this.showChangeBgMenu = !this.showChangeBgMenu;
     },
     useRandomImg() {
-      this.imgSrc = "https://source.unsplash.com/random/1600x900/";
-      this.showChangeBgMenu = false
+      this.imgSrc = "https://picsum.photos/1600/900";
+      this.showChangeBgMenu = false;
     },
     pickFile() {
       this.$refs.image.click();
@@ -101,7 +101,8 @@ export default {
     width: 100%;
     height: 100%;
     position: absolute;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     object-fit: cover;
   }
   .imgBannerContent {
@@ -130,16 +131,19 @@ export default {
   width: 50px;
   height: 200px;
   color: white;
-  .randomImg, .selectImg, .changeBg {
+  .randomImg,
+  .selectImg,
+  .changeBg {
     position: absolute;
     left: 0;
-    width: 50px; height: 50px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     border: 2px solid white;
     cursor: pointer;
   }
   .changeBg {
-    bottom: 0; 
+    bottom: 0;
     opacity: 0.1;
     transition: all 0.3s;
     i {
@@ -152,7 +156,8 @@ export default {
   .btnActive {
     opacity: 0.5 !important;
   }
-  .randomImg, .selectImg {
+  .randomImg,
+  .selectImg {
     transition: all 0.5s;
     opacity: 0.5;
     i {
@@ -167,14 +172,19 @@ export default {
   }
 }
 
-.bg-random-enter-active, .bg-random-leave-active, .bg-select-enter-active, .bg-select-leave-active {
+.bg-random-enter-active,
+.bg-random-leave-active,
+.bg-select-enter-active,
+.bg-select-leave-active {
   transition: all 0.5s ease;
 }
-.bg-select-enter, .bg-select-leave-to {
+.bg-select-enter,
+.bg-select-leave-to {
   transform: translateY(60px);
   opacity: 0;
 }
-.bg-random-enter, .bg-random-leave-to {
+.bg-random-enter,
+.bg-random-leave-to {
   transform: translateY(120px);
   opacity: 0;
 }
