@@ -41,6 +41,7 @@ export default {
   extends: Line,
   data() {
     return {
+
       datacollection: {
         //Data to be represented on x-axis
         labels: ydate,
@@ -71,7 +72,8 @@ export default {
           display: true
         },
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+
       }
     };
   },

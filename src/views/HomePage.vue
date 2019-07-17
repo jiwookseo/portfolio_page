@@ -46,8 +46,10 @@
       <section id="project">
         <h2 class="section-title text" data-aos="fade-left">Project</h2>
         <Radarchart class="radarchart"></Radarchart>
-        <LineChart class="linechart" data-aos="fade-up" />
-        <div class="section-btn-box" data-aos="fade-up">
+        <div style="height:400px">
+          <LineChart class="linechart" data-aos="fade-up" height="400"/>
+        </div>
+        <div class="section-btn-box linechart" data-aos="fade-up">
             <a target="_blank" href="https://lab.ssafy.com/jiwonjulietyoon/webmobile-sub2">
             <div class="section-more-btn">
               View GitLab <i class="material-icons">arrow_forward</i>
@@ -144,7 +146,7 @@ a, a:hover {
 }
 section {
   width: 100%;
-  height: auto;
+  height: 100%;
   padding: 80px 0 50px;
   position: relative;
   &:nth-of-type(odd) {
