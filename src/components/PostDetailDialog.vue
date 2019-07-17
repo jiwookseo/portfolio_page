@@ -155,7 +155,8 @@ export default {
 }
 .Content {
   line-height: 1.7em;
-  white-space: pre-wrap;
+  white-space: pre-line;
+  word-wrap: break-word;
 }
 
 @keyframes bobup {

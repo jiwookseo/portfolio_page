@@ -50,6 +50,11 @@ export default {
       axios
         .get(labURL)
         .then(response => {
+          gtcount = 0;
+          jiwoncount = 0;
+          jiwookcount = 0;
+          gyuseokcount = 0;
+          gibeomcount = 0;
           for (var i = 0; i < response.data.length; i++) {
             this.datel.push(response.data[i].committed_date.substring(8, 10));
             this.pname.push(response.data[i].author_email);
@@ -79,7 +84,7 @@ export default {
           }
 
           for (var i = 0; i < this.datel.length; i++) {
-            if (response.data[i].title.slice(0, 13)!== "Merge branch ") {
+            if (response.data[i].title.slice(0, 13) !== "Merge branch ") {
               if (this.pname[i] == 'jiwookseo.dev@gmail.com') {
                 if (dateString == this.datel[i]) {
                   jiwookcount++;
@@ -89,7 +94,7 @@ export default {
           }
 
           for (var i = 0; i < this.datel.length; i++) {
-            if (response.data[i].title.slice(0, 13)!== "Merge branch ") {
+            if (response.data[i].title.slice(0, 13) !== "Merge branch ") {
               if (this.pname[i] == 'kim6394@hanmail.net') {
                 if (dateString == this.datel[i]) {
                   gyuseokcount++;
@@ -99,7 +104,7 @@ export default {
           }
 
           for (var i = 0; i < this.datel.length; i++) {
-            if (response.data[i].title.slice(0, 13)!== "Merge branch ") {
+            if (response.data[i].title.slice(0, 13) !== "Merge branch ") {
               if (this.pname[i] == 'gaivn0928@naver.com') {
                 if (dateString == this.datel[i]) {
                   gibeomcount++;
