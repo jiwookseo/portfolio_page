@@ -55,15 +55,10 @@
   </footer>
 </template>
 
-<script src="https://rawgithub.com/darkskyapp/skycons/master/skycons.js"></script>
 <script>
 import axios from "axios";
 import { setTimeout } from "timers";
-import Vue from "vue";
 import VueSkycons from "vue-skycon";
-const apiKey = process.env.API_KEY;
-
-Vue.use(VueSkycons);
 
 export default {
   name: "Footer",
@@ -97,10 +92,9 @@ export default {
       this.$exit();
     },
     showWeather() {
-      axios.defaults.baseURL = "https://api.openweathermap.org/data/2.5";
       axios
         .get(
-          `/weather?q=${
+          `https://api.openweathermap.org/data/2.5/weather?q=${
             this.query
           }&units=metric&&appid=${"122032a774c9f3b73131bfdf9e95c2b4"}`
         )
