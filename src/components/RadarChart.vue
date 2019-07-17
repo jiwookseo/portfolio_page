@@ -59,8 +59,6 @@ export default {
             this.datel.push(response.data[i].committed_date.substring(8, 10));
             this.pname.push(response.data[i].author_email);
           }
-          console.log(response.data.length);
-
 
           var dateString = date.getDate();
           for (var i = 0; i < this.datel.length; i++) {
@@ -118,7 +116,6 @@ export default {
           this.data.push(jiwookcount);
           this.data.push(jiwoncount);
           this.data.push(gibeomcount);
-          console.log(this.data);
 
         })
         .catch(() => {});
