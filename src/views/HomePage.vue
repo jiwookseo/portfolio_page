@@ -45,7 +45,7 @@
       </section>
       <section id="project">
         <h2 class="section-title text" data-aos="fade-left">Project</h2>
-        <Radarchart></Radarchart>
+        <Radarchart class="radarchart"></Radarchart>
         <LineChart class="linechart" data-aos="fade-up" />
         <div class="section-btn-box" data-aos="fade-up">
             <a target="_blank" href="https://lab.ssafy.com/jiwonjulietyoon/webmobile-sub2">
@@ -186,6 +186,11 @@ section {
   padding: 80px 30px 80px;
   .linechart {
     @include mobile {
+      display: none;
+    }
+  }
+  .radarchart{
+    @include viewportMin(601) {
       display: none;
     }
   }
