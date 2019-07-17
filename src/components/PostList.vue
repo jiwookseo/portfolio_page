@@ -43,9 +43,9 @@
         />
       </v-dialog>
       <v-dialog v-model="dialogDetail" width="500">
-        <PostDetailDialog
+        <DetailDialog
           @child_detail="parent_detail"
-          :post="selectedPost"
+          :article="selectedPost"
           :dialogDetail="dialogDetail"
         />
       </v-dialog>
@@ -85,12 +85,15 @@
 
 <script>
 import PostWriteDialog from "./PostWriteDialog";
-import PostDetailDialog from "./PostDetailDialog";
+import DetailDialog from "./DetailDialog";
 import firestore from "../firebase/firestore";
-import { setTimeout } from "timers";
 
 export default {
   name: "PostList",
+  components: {
+    PostWriteDialog,
+    DetailDialog
+  },
   props: {
     limit: { type: Number, default: 4 },
     allowCreate: { type: Boolean, default: false }
@@ -127,10 +130,6 @@ export default {
   },
   mounted() {
     this.getPosts();
-  },
-  components: {
-    PostWriteDialog,
-    PostDetailDialog
   },
   methods: {
     getPosts() {

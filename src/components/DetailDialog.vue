@@ -6,10 +6,15 @@
       </div>
     </div>
     <div class="scrollable-content">
-      <h2 class="Title ptf-dialog">{{ portfolio.title }}</h2>
+      <h2 class="Title article-dialog">{{ article.title }}</h2>
       <p class="Date">{{date_created}}</p>
-      <img :src="portfolio.img" class="Img" :alt="portfolio.title + ' (portfolio image)'" />
-      <p class="Content ptf-dialog">{{portfolio.content}}</p>
+      <img
+        v-if="isPortfolio"
+        :src="article.img"
+        class="Img"
+        :alt="article.title + ' (article image)'"
+      />
+      <p class="Content article-dialog">{{article.content}}</p>
     </div>
     <LoadingSpinner v-show="loading" :message="'Translating...'" />
     <div class="btn-box-bottom">
@@ -49,7 +54,7 @@ import { setTimeout } from "timers";
 import translateDOM from "../js/translate";
 
 export default {
-  name: "PortfolioDetailDialog",
+  name: "DetailDialog",
   components: {
     LoadingSpinner
   },
@@ -80,14 +85,15 @@ export default {
     };
   },
   props: {
-    portfolio: { type: Object },
-    dialogDetail: { type: Boolean, default: false }
+    article: { type: Object },
+    dialogDetail: { type: Boolean, default: false },
+    isPortfolio: { type: Boolean, default: false }
   },
   watch: {
     dialogDetail: function() {
       this.askToTranslate = false;
     },
-    portfolio: function() {
+    article: function() {
       if (this.translated) {
         this.loading = true;
         setTimeout(() => {
@@ -99,7 +105,7 @@ export default {
   },
   computed: {
     date_created() {
-      const date = new Date(this.portfolio.created_at.seconds * 1000);
+      const date = new Date(this.article.created_at.seconds * 1000);
       return String(date).split("GMT")[0];
     }
   },
@@ -113,7 +119,7 @@ export default {
         force
       ) {
         this.loading = true;
-        this.textDOMs = this.$el.querySelectorAll(".ptf-dialog");
+        this.textDOMs = this.$el.querySelectorAll(".article-dialog");
         translateDOM(source, target, this.textDOMs).then(res => {
           this.originalText = res.originalText;
           this.translatedText[target] = res.translatedText;
@@ -169,6 +175,4 @@ export default {
   white-space: pre-wrap;
   word-break: break-word;
 }
-
-
 </style>

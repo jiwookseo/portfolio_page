@@ -13,7 +13,7 @@
       <div class="btn-box">
         <button @click.prevent="reset" class="btn reset-btn">Reset</button>
         <button
-          v-if="!!!post.id"
+          v-if="!post.id"
           @click.prevent="create"
           class="btn create-btn"
           :disabled="!valid"
@@ -41,7 +41,7 @@ export default {
     post: function() {
       this.titleInput = this.post.title;
       this.contentInput = this.post.content;
-      if (!!!this.post.id) {
+      if (!this.post.id) {
         this.$refs.form.resetValidation();
       }
     }

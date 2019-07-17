@@ -18,34 +18,21 @@
         ></v-textarea>
         <div class="img-select-box">
           <div class="img-preview">
-            <img
-              :src="imgInput"
-              @change="onFilePicked"
-              alt = "Current Portfolio Image"
-            />
-            <div class="choose-img-prompt" @click="pickFile"  title="Change Image">
+            <img :src="imgInput" @change="onFilePicked" alt="Current Portfolio Image" />
+            <div class="choose-img-prompt" @click="pickFile" title="Change Image">
               <i class="material-icons">image_search</i>
             </div>
           </div>
           <div class="img-picker">
-            <v-text-field
-              label="Select Image"
-              @click="pickFile"
-              v-model="imgInput"
-            ></v-text-field>
-            <input
-              type="file"
-              ref="image"
-              accept="image/*"
-              @change="onFilePicked"
-            />
+            <v-text-field label="Select Image" @click="pickFile" v-model="imgInput"></v-text-field>
+            <input type="file" ref="image" accept="image/*" @change="onFilePicked" />
           </div>
         </div>
       </div>
       <div class="btn-box-bottom">
         <button @click.prevent="reset" class="btn reset-btn">Reset</button>
         <button
-          v-if="!!!portfolio.id"
+          v-if="!portfolio.id"
           @click.prevent="create"
           class="btn create-btn"
           :disabled="!valid"
@@ -72,7 +59,7 @@ export default {
       this.titleInput = this.portfolio.title;
       this.contentInput = this.portfolio.content;
       this.imgInput = this.portfolio.img;
-      if (!!!this.portfolio.id) {
+      if (!this.portfolio.id) {
         this.$refs.form.resetValidation();
       }
     }
@@ -151,7 +138,6 @@ export default {
 @import "../css/style.scss";
 @import "../css/mixin.scss";
 
-
 .img-select-box {
   .img-preview {
     height: 120px;
@@ -161,16 +147,24 @@ export default {
     position: relative;
     img {
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      cursor: pointer
+      cursor: pointer;
     }
     .choose-img-prompt {
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
       position: absolute;
-      top: 0; left: 0;
-      background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.2));
+      top: 0;
+      left: 0;
+      background: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 0.05),
+        rgba(0, 0, 0, 0.2)
+      );
       transition: all 0.5s;
       opacity: 0;
       cursor: pointer;
@@ -188,8 +182,4 @@ export default {
     display: none;
   }
 }
-
-
-
-
 </style>
