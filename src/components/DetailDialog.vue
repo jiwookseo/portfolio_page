@@ -175,4 +175,16 @@ export default {
   white-space: pre-wrap;
   word-break: break-word;
 }
+
+.slide-fade-enter-active {
+  transition: all 0.5s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.5s ease;
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+  transform: translateX(50px);
+  opacity: 0;
+}
 </style>

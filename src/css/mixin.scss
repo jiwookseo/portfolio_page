@@ -177,6 +177,7 @@
   .btn-box-top {
     height: 50px;
     position: relative;
+    box-shadow: 0 1px 10px 0 white;
   }
   .scrollable-content {
     padding: 0 30px;
@@ -200,9 +201,9 @@
     }
   }
   .btn-box-bottom {
-    margin-top: 10px;
-    height: 50px;
+    height: 60px;
     position: relative;
+    box-shadow: 0 -1px 10px 0 white;
   }
 }
 
@@ -296,6 +297,7 @@
 .dialog-outer {
   .btn-box-bottom {
     .btn {
+      margin-top: 10px;
       @include nudge-btn;
     }
     .reset-btn {
