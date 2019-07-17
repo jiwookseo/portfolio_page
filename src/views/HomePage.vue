@@ -45,6 +45,7 @@
       </section>
       <section id="project">
         <h2 class="section-title text" data-aos="fade-left">Project</h2>
+        <Radarchart></Radarchart>
         <LineChart class="linechart" data-aos="fade-up" />
         <div class="section-btn-box" data-aos="fade-up">
             <a target="_blank" href="https://lab.ssafy.com/jiwonjulietyoon/webmobile-sub2">
@@ -67,6 +68,7 @@ import PortfolioList from "../components/PortfolioList";
 import PostList from "../components/PostList";
 import LineChart from "../components/LineChart";
 import Footer from "../components/Footer";
+import Radarchart from "../components/RadarChart";
 
 export default {
   name: "HomePage",
@@ -75,7 +77,8 @@ export default {
     PortfolioList,
     PostList,
     LineChart,
-    Footer
+    Footer,
+    Radarchart
   },
   data() {
     return {
