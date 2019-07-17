@@ -106,10 +106,19 @@ export default {
     let data = [];
 
     let db = await firebaseApp.database();
+    var ind = 0
     let ref = db.ref("LOG").orderByChild("time");
     ref.once("value", function(snapshot) {
       snapshot.forEach(function(childSnapshot) {
-        data.push(childSnapshot.val());
+        // console.log(childSnapshot.val().path);
+        data.push(
+          {
+            path : childSnapshot.val().path,
+            username : childSnapshot.val().username,
+            time : childSnapshot.val().time,
+          }
+        );
+        ind ++;
       });
     });
     return data;
