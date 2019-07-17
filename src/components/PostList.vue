@@ -34,11 +34,11 @@
 
       <!-- Dialogs -->
       <v-dialog v-model="dialogWrite" width="500" persistent>
-        <PostWriteDialog
+        <WriteDialog
           @child="parents"
           @child_snackbar="parent_snackbar"
           @child_updatePost="parent_updatePost"
-          :post="selectedPost"
+          :article="selectedPost"
           :dialogWrite="dialogWrite"
         />
       </v-dialog>
@@ -84,14 +84,14 @@
 
 
 <script>
-import PostWriteDialog from "./PostWriteDialog";
+import WriteDialog from "./WriteDialog";
 import DetailDialog from "./DetailDialog";
 import firestore from "../firebase/firestore";
 
 export default {
   name: "PostList",
   components: {
-    PostWriteDialog,
+    WriteDialog,
     DetailDialog
   },
   props: {

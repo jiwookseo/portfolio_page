@@ -35,7 +35,7 @@ const email = [
 const data = {};
 email.forEach(e => (data[e] = {}));
 
-let count = email.map(e => []);
+let count = email.map(() => []);
 
 export default {
   extends: Line,
