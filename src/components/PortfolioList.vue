@@ -51,10 +51,11 @@
         />
       </v-dialog>
       <v-dialog v-model="dialogDetail" width="500">
-        <PortfolioDetailDialog
+        <DetailDialog
           @child_detail="parent_detail"
-          :portfolio="selectedPortfolio"
+          :article="selectedPortfolio"
           :dialogDetail="dialogDetail"
+          :isPortfolio="true"
         />
       </v-dialog>
 
@@ -92,10 +93,9 @@
 
 
 <script>
-import firestore from "../firebase/firestore";
-
-import PortfolioDetailDialog from "./PortfolioDetailDialog";
+import DetailDialog from "./DetailDialog";
 import PortfolioWriteDialog from "./PortfolioWriteDialog";
+import firestore from "../firebase/firestore";
 
 export default {
   name: "PortfolioList",
@@ -104,7 +104,7 @@ export default {
     allowCreate: { type: Boolean, default: false }
   },
   components: {
-    PortfolioDetailDialog,
+    DetailDialog,
     PortfolioWriteDialog
   },
   watch: {
