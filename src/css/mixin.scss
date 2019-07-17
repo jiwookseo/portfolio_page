@@ -172,7 +172,7 @@
 
 .dialog-outer {
   width: 100%;
-  height: 90vh;
+  height: 80vh;
   background: white;
   .btn-box-top {
     height: 50px;
@@ -181,7 +181,7 @@
   }
   .scrollable-content {
     padding: 0 30px;
-    height: calc(90vh - 110px);
+    height: calc(80vh - 110px);
     overflow-y: auto;
     &::-webkit-scrollbar {
       display: initial;

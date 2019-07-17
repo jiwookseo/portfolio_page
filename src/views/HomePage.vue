@@ -215,6 +215,7 @@ section {
   font-weight: 600;
   overflow: hidden;
   white-space: nowrap;
+  transition: all 0.3s;
   i {
     transform: translateY(7px);
     margin-left: 50px;
@@ -226,7 +227,7 @@ section {
     top: -45%;
     width: 70px;
     height: 100px;
-    background: #00ccff;
+    background: $blue-accent-light;
     transform: rotate(-20deg);
     transition: all 0.3s;
   }
