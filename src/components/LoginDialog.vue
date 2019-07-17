@@ -7,13 +7,13 @@
         <span @click="showLogin = false">create an account</span>
       </div>
       <v-form ref="form" v-model="valid" lazy-validation>
-        <v-text-field 
-          v-model="email" 
-          :rules="emailRules" 
-          :disabled="loading" 
-          :loading="loading" 
-          label="Email" 
-          required 
+        <v-text-field
+          v-model="email"
+          :rules="emailRules"
+          :disabled="loading"
+          :loading="loading"
+          label="Email"
+          required
           class="mb-3"
           @keydown.enter="login"
         ></v-text-field>
@@ -173,10 +173,10 @@ export default {
         typeof this.email === "undefined" ||
         typeof this.password === "undefined" ||
         typeof this.passwordConfirm === "undefined" ){
-        Vue.swal("에러", "email and password is required", "error");
+        Vue.swal("Error", "Email and password is required", "error");
       }
       else if (this.password !== this.passwordConfirm) {
-        Vue.swal("에러", "password must match", "error");
+        Vue.swal("Error", "Password must match", "error");
         this.passwordConfirm = "";
       } else {
         this.$store.dispatch("signUserUp", {
@@ -194,7 +194,7 @@ export default {
         typeof this.email === "undefined" ||
         typeof this.password === "undefined"
       ) {
-        Vue.swal("에러", "email and password is required", "error");
+        Vue.swal("Error", "Email and password is required", "error");
       } else {
         this.$store.dispatch("signUserIn", {
           email: this.email,

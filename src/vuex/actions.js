@@ -14,7 +14,7 @@ export default {
       .then(
         user => {
           commit('setLoading', false)
-          Vue.swal("Welcome!", "회원가입을 축하드립니다", "success")
+          Vue.swal("Welcome!", "You have signed up successfully", "success")
           const newUser = {
             id: user.uid,
             name: user.displayName,
@@ -29,7 +29,7 @@ export default {
           commit('setLoading', false)
           commit('setError', error)
           console.log(error)
-          Vue.swal("에러", ""+error, "error")
+          Vue.swal("Error", ""+error, "error")
         }
       )
   },
@@ -43,7 +43,7 @@ export default {
         user => {
           commit('setLoading', false)
           commit('loginSuccess', true)
-          Vue.swal("Welcome!", "로그인 되었습니다", "success")
+          Vue.swal("Welcome!", "Login successful", "success")
           console.log(payload.email)
           const newUser = {
             id: user.uid,
@@ -59,7 +59,7 @@ export default {
           commit('setLoading', false)
           commit('setError', error)
           console.log(error)
-          Vue.swal("에러", ""+error, "error")
+          Vue.swal("Error", ""+error, "error")
         }
       )
   },
@@ -72,7 +72,7 @@ export default {
       .then(
         user => {
           commit('setLoading', false)
-          Vue.swal("Welcome!", "로그인 되었습니다", "success")
+          Vue.swal("Welcome!", "Login successful", "success")
           const newUser = {
             id: user.uid,
             name: user.displayName,
@@ -86,7 +86,7 @@ export default {
         error => {
           commit('setLoading', false)
           commit('setError', error)
-          Vue.swal("에러", ""+error, "error")
+          Vue.swal("Error", ""+error, "error")
         }
       )
   },
