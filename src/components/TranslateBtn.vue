@@ -32,10 +32,8 @@
 
 <script>
 import LoadingSpinner from "./LoadingSpinner";
-import axios from "axios";
-
-const translateURL =
-  "https://us-central1-test-68bfc.cloudfunctions.net/translate";
+import { setTimeout } from "timers";
+import translateDOM from "../js/translate";
 
 export default {
   name: "TranslateBtn",
@@ -87,10 +85,13 @@ export default {
     };
   },
   watch: {
-    $route(to, from) {
+    $route() {
       if (this.translated) {
-        this.translated = false;
-        this.translate("en", this.selectedLanguage, true);
+        this.loading = true;
+        setTimeout(() => {
+          this.translated = false;
+          this.translate("en", this.selectedLanguage, true);
+        }, 500);
       }
     }
   },
@@ -103,35 +104,12 @@ export default {
         this.translatedText[target].length !== this.textDOMs.length ||
         force
       ) {
-        this.textDOMs = document.querySelectorAll(".text");
-        this.originalText = [];
-        this.translatedText[target] = Array(this.textDOMs.length);
-        this.textDOMs.forEach(dom => this.originalText.push(dom.innerText));
         this.loading = true;
-        let counter = 0;
-        this.textDOMs.forEach((dom, i) => {
-          axios
-            .get(
-              `${translateURL}?text=${this.originalText[i]}&source=${source}&target=${target}`
-            )
-            .then(res => {
-              this.translatedText[target][i] =
-                res.data.message.result.translatedText;
-            })
-            .then(() => {
-              dom.innerText = this.translatedText[target][i];
-              counter++;
-              if (counter === this.textDOMs.length) {
-                this.loading = false;
-              }
-            })
-            .catch(error => {
-              console.log(error);
-              counter++;
-              if (counter === this.textDOMs.length) {
-                this.loading = false;
-              }
-            });
+        this.textDOMs = document.querySelectorAll(".text");
+        translateDOM(source, target, this.textDOMs).then(res => {
+          this.originalText = res.originalText;
+          this.translatedText[target] = res.translatedText;
+          this.loading = false;
         });
       } else {
         this.textDOMs.forEach(
@@ -178,9 +156,6 @@ export default {
     animation: bobup 0.5s ease-in-out infinite alternate;
   }
 }
-.chat-btn {
-  bottom: 20px;
-}
 .tr-btn {
   bottom: 80px;
 }
@@ -215,19 +190,19 @@ export default {
       text-transform: uppercase;
       cursor: pointer;
       color: white;
-      box-shadow: 0px 0px 3px 0px #9AAEBB;
+      box-shadow: 0px 0px 3px 0px #9aaebb;
       &:first-child {
         margin-right: 10px;
-        background: #19ABFF;
+        background: #19abff;
         &:hover {
           background: $blue-accent;
           box-shadow: none;
         }
       }
       &:last-child {
-        background: #9AAEBB;
+        background: #9aaebb;
         &:hover {
-          background: #8D9CB2;
+          background: #8d9cb2;
           box-shadow: none;
         }
       }
