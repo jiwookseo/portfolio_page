@@ -73,9 +73,13 @@ export default {
     };
   },
   props: {
-    post: { type: Object }
+    post: { type: Object },
+    dialogDetail: { type: Boolean, default: false }
   },
   watch: {
+    dialogDetail: function() {
+      this.askToTranslate = false;
+    },
     post: function() {
       if (this.translated) {
         this.loading = true;
