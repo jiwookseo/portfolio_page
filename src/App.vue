@@ -51,4 +51,8 @@ div,
 span {
   font-family: $font-content;
 }
+
+#line-chart {
+  height: 400px !important;
+}
 </style>

@@ -152,6 +152,9 @@ export default {
 .Title {
   font-size: 2em;
   margin-bottom: 20px;
+  @include mobile {
+    font-size: 1.7em;
+  }
 }
 .Date {
   color: $gray;
@@ -159,14 +162,7 @@ export default {
 }
 .Img {
   width: 100%;
-  height: 250px;
-  @include mobile {
-    height: 200px;
-  }
   border-radius: 3px;
-  // background-repeat: no-repeat;
-  // background-position: center;
-  // background-size: cover;
   object-fit: cover;
 }
 .Content {
