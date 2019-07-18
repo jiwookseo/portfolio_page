@@ -1,5 +1,9 @@
 <template>
   <footer>
+    <div class="footer-logo">
+      <div>TS</div>
+    </div>
+
     <div class="check-toggle">
       <div class="toggle toggle--daynight">
         <input
@@ -135,6 +139,26 @@ footer {
   position: relative;
   z-index: 9;
 }
+
+.footer-logo {
+  position: absolute;
+  left: 50%;
+  top: 30px;
+  transform: translate(-50%) skewY(5deg);
+  width: 90px;
+  height: 80px;
+  background: $nav-bg;
+  line-height: 80px;
+  text-align: center;
+  opacity: 0.25;
+  & > div {
+    font-size: 3em;
+    transform: skewY(-5deg);
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 1px;
+  }
+}
+
 #weather {
   position: absolute;
   width: 145px;
