@@ -126,7 +126,7 @@ export default {
   font-style: normal;
   font-weight: 400;
   src: local("Audiowide"), local("Audiowide-Regular"),
-    url(http://themes.googleusercontent.com/static/fonts/audiowide/v2/8XtYtNKEyyZh481XVWfVOj8E0i7KZn-EPnyo3HZu7kw.woff)
+    url(https://themes.googleusercontent.com/static/fonts/audiowide/v2/8XtYtNKEyyZh481XVWfVOj8E0i7KZn-EPnyo3HZu7kw.woff)
       format("woff");
 }
 

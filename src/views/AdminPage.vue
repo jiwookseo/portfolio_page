@@ -12,7 +12,6 @@
 </div>
 </template>
 
-
 <script>
 import firestore from "../firebase/firestore";
 import Vue from 'vue'
