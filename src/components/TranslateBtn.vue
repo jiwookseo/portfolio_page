@@ -33,31 +33,12 @@
 <script>
 import LoadingSpinner from "./LoadingSpinner";
 import { setTimeout } from "timers";
-import translateDOM from "../js/translate";
+import translateText from "../js/translate";
 
 export default {
   name: "TranslateBtn",
   components: {
     LoadingSpinner
-  },
-  mounted() {
-    // console.log(this.textDOMs);
-    // 마운트 시에 모든 언어를 번역해 저장해 놓는 방식. 파파고 API 사용량의 문제(일 1만자)로 제한적 사용.
-    // const source = "en";
-    // this.langauge.forEach(e => {
-    //   const target = e.value;
-    //   this.translatedText[target] = Array(this.textDOMs.length);
-    //   for (let index = 0; index < this.textDOMs.length; index++) {
-    //     axios
-    //       .get(
-    //         `${translateURL}?text=${this.originalText[index]}&source=${source}&target=${target}`
-    //       )
-    //       .then(res => {
-    //         this.translatedText[target][index] =
-    //           res.data.message.result.translatedText;
-    //       });
-    //   }
-    // });
   },
   data() {
     return {
@@ -106,10 +87,23 @@ export default {
       ) {
         this.loading = true;
         this.textDOMs = document.querySelectorAll(".text");
-        translateDOM(source, target, this.textDOMs).then(res => {
-          this.originalText = res.originalText;
-          this.translatedText[target] = res.translatedText;
-          this.loading = false;
+        this.originalText = [];
+        this.translatedText[target] = Array(this.textDOMs.length);
+        this.textDOMs.forEach(dom => this.originalText.push(dom.innerText));
+        let counter = 0;
+        this.textDOMs.forEach((dom, i) => {
+          this.originalText.push(dom.innerText);
+          translateText(source, target, dom.innerText)
+            .then(res => {
+              dom.innerText = res.translatedText;
+              this.translatedText[target][i] = res.translatedText;
+              counter++;
+              if (counter === this.textDOMs.length) this.loading = false;
+            })
+            .catch(() => {
+              counter++;
+              if (counter === this.textDOMs.length) this.loading = false;
+            });
         });
       } else {
         this.textDOMs.forEach(

@@ -7,9 +7,9 @@
     </div>
     <v-form ref="form" v-model="valid" lazy-validation>
       <div class="scrollable-content">
-        <v-text-field v-model="titleInput" label="Title" required :rules="titleRules"></v-text-field>
+        <v-text-field v-model="title" label="Title" required :rules="titleRules"></v-text-field>
         <v-textarea
-          v-model="contentInput"
+          v-model="content"
           label="Content"
           required
           :rules="contentRules"
@@ -18,13 +18,13 @@
         ></v-textarea>
         <div v-if="isPortfolio" class="img-select-box">
           <div class="img-preview">
-            <img :src="imgInput" @change="onFilePicked" alt="Current Portfolio Image" />
+            <img :src="img" @change="onFilePicked" alt="Current Portfolio Image" />
             <div class="choose-img-prompt" @click="pickFile" title="Change Image">
               <i class="material-icons">image_search</i>
             </div>
           </div>
           <div class="img-picker">
-            <v-text-field label="Select Image" @click="pickFile" v-model="imgInput"></v-text-field>
+            <v-text-field label="Select Image" @click="pickFile" v-model="img"></v-text-field>
             <input type="file" ref="image" accept="image/*" @change="onFilePicked" />
           </div>
         </div>
@@ -49,7 +49,7 @@ import firestore from "../firebase/firestore";
 import axios from "axios";
 
 export default {
-  name: "PortfolioWriteDialog",
+  name: "WriteDialog",
   props: {
     article: { type: Object },
     dialogWrite: { type: Boolean, default: true },
@@ -57,12 +57,14 @@ export default {
   },
   watch: {
     article: function() {
-      this.titleInput = this.article.title;
-      this.contentInput = this.article.content;
-      this.imgInput = this.article.img;
       if (!this.article.id) {
         this.$refs.form.resetValidation();
       }
+    },
+    dialogWrite: function() {
+      this.title = this.article.title;
+      this.content = this.article.content;
+      this.img = this.article.img;
     }
   },
   data() {
@@ -70,15 +72,15 @@ export default {
       valid: true,
       titleRules: [v => !!v || "Title is required"],
       contentRules: [v => !!v || "Content is required"],
-      titleInput: "",
-      contentInput: "",
-      imgInput: ""
+      title: "",
+      content: "",
+      img: ""
     };
   },
   methods: {
     reset() {
       this.$refs.form.reset();
-      this.imgInput =
+      this.img =
         "https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg";
     },
     resetValidation() {
@@ -92,16 +94,14 @@ export default {
     },
     create() {
       if (this.isPortfolio) {
-        firestore
-          .postPortfolio(this.titleInput, this.contentInput, this.imgInput)
-          .then(() => {
-            this.$emit("child_updatePortfolio");
-            this.reset();
-            this.closeDialog();
-            this.triggerParentSnackbar("Portfolio created");
-          });
+        firestore.postPortfolio(this.title, this.content, this.img).then(() => {
+          this.$emit("child_updatePortfolio");
+          this.reset();
+          this.closeDialog();
+          this.triggerParentSnackbar("Portfolio created");
+        });
       } else {
-        firestore.postPost(this.titleInput, this.contentInput).then(() => {
+        firestore.postPost(this.title, this.content).then(() => {
           this.$emit("child_updatePost");
           this.reset();
           this.closeDialog();
@@ -112,12 +112,7 @@ export default {
     update() {
       if (this.isPortfolio) {
         firestore
-          .updatePortfolio(
-            this.article.id,
-            this.titleInput,
-            this.contentInput,
-            this.imgInput
-          )
+          .updatePortfolio(this.article.id, this.title, this.content, this.img)
           .then(() => {
             this.$emit("child_updatePortfolio");
             this.closeDialog();
@@ -126,7 +121,7 @@ export default {
           });
       } else {
         firestore
-          .updatePost(this.article.id, this.titleInput, this.contentInput)
+          .updatePost(this.article.id, this.title, this.content)
           .then(() => {
             this.$emit("child_updatePost");
             this.closeDialog();
@@ -148,7 +143,7 @@ export default {
             Authorization: "Client-ID 5d0f43f26473d77"
           }
         })
-        .then(res => (this.imgInput = res.data.data.link));
+        .then(res => (this.img = res.data.data.link));
     }
   }
 };
