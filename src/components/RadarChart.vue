@@ -29,7 +29,7 @@ export default {
       pname: [],
       chartOptions: {
         title: {
-          text: 'Oneday-Radarchart'
+          text: "Today's Commits"
         },
         labels: ['Geuntae', 'Gyuseok', 'Jiwook', 'Jiwon', 'Gibeom'],
       },
