@@ -77,7 +77,7 @@ export default {
             type: 'column'
           },
           title: {
-            text: 'Weekly Visits Per Day'
+            text: 'Visits Per Day of the Week'
           },
           subtitle: {
             // text: 'Click the columns to view versions. Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>'
@@ -114,37 +114,44 @@ export default {
             colorByPoint: true,
             data: [{
                 name: "SUN",
-                y: percent[0],
+                y: this.percent[0],
+                color: "rgb(172, 248, 139)"
                 // drilldown: "Chrome"
               },
               {
                 name: "MON",
-                y: percent[1],
+                y: this.percent[1],
+                color: "rgb(0, 234, 185)"
                 // drilldown: "Firefox"
               },
               {
                 name: "TUE",
-                y: percent[2],
+                y: this. percent[2],
+                color: "#00D1CF"
                 // drilldown: "Internet Explorer"
               },
               {
                 name: "WED",
-                y: percent[3],
+                y: this.percent[3],
+                color: "rgb(0, 192, 255)"
                 // drilldown: "Safari"
               },
               {
                 name: "THU",
-                y: percent[4],
+                y: this.percent[4],
+                color: "#728BE7"
                 // drilldown: "Edge"
               },
               {
                 name: "FRI",
-                y: percent[5],
+                y: this.percent[5],
+                color: "rgb(147, 108, 201)"
                 // drilldown: "Opera"
               },
               {
                 name: "SAT",
-                y: percent[6],
+                y: this.percent[6],
+                color: "rgb(255, 123, 153)"
                 // drilldown: null
               }
             ]
