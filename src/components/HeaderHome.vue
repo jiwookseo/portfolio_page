@@ -2,7 +2,11 @@
   <header class="homeHeader">
     <ImgBanner />
     <nav class="navbar">
-      <div class="nav-logo text" @click="scrollToTop">{{websiteTitle}}</div>
+      <div class="nav-logo">
+        <div class="team6-logo" @click="scrollToTop">
+          <div>TS</div>
+        </div>
+      </div>
       <FavBtn class="nav-fav" />
       <div></div>
       <div v-if="!user" class="login-btn text" @click.stop="dialog = true">Login</div>
@@ -19,7 +23,11 @@
     <div class="sidebar-block" v-if="showSidebar"></div>
     <transition name="slide-fade">
       <nav class="sidebar" v-if="showSidebar">
-        <div class="sb-nav-logo" @click="scrollToTop">{{websiteTitle}}</div>
+        <div class="sb-nav-logo">
+          <div class="team6-logo" @click="scrollToTop">
+            <div>TS</div>
+          </div>
+        </div>
         <ul>
           <li
             v-for="menu in menus"
@@ -93,7 +101,7 @@ export default {
       if (this.showSidebar && event) {
         if (event.clientX > 180) {
           this.showSidebar = false;
-        };
+        }
       }
     },
     ...mapActions(["logout"]),
@@ -156,7 +164,7 @@ export default {
   cursor: pointer;
   color: $blue-accent;
   &:hover {
-    background: $nav-highlight;
+    animation: logo-color 0.4s linear infinite alternate;
   }
 }
 .nav-menus {

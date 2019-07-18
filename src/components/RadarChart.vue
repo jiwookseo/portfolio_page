@@ -1,16 +1,15 @@
 <template>
-<div>
-  <apexchart type=radar height=350 :options="chartOptions" :series="series" />
-</div>
+  <div>
+    <apexchart type="radar" height="350" :options="chartOptions" :series="series" />
+  </div>
 </template>
 <script>
-import VueApexCharts from 'vue-apexcharts';
-import Vue from 'vue';
+import VueApexCharts from "vue-apexcharts";
+import Vue from "vue";
 import axios from "axios";
 Vue.use(VueApexCharts);
 const labURL = `https://lab.ssafy.com/api/v4/projects/6043/repository/commits/?private_token=mSzGEe1Ba9KXsNynKz-A&per_page=100`;
-Vue.component('apexchart', VueApexCharts);
-
+Vue.component("apexchart", VueApexCharts);
 
 var gtcount = 0;
 var jiwoncount = 0;
@@ -20,8 +19,6 @@ var gibeomcount = 0;
 
 const date = new Date();
 
-
-
 export default {
   data: function() {
     return {
@@ -29,19 +26,57 @@ export default {
       pname: [],
       chartOptions: {
         title: {
-          text: "Today's Commits"
+          text: "Today's Commits",
+          align: "center",
+          margin: 0,
+          offsetX: 0,
+          offsetY: 20,
+          floating: false,
+          style: {
+            fontSize: "2.2em",
+            fontFamily: '"Do Hyeon", sans-serif',
+            color: "#263238"
+          }
         },
-        labels: ['Geuntae', 'Gyuseok', 'Jiwook', 'Jiwon', 'Gibeom'],
+        labels: ["Geuntae", "Gyuseok", "Jiwook", "Jiwon", "Gibeom"],
+        fill: {
+          opacity: 0.4,
+          colors: ["rgba(0, 192, 255, 0.3)"]
+        },
+        stroke: {
+          show: true,
+          width: 3,
+          colors: ["rgb(0, 192, 255)"]
+        },
+        markers: {
+          colors: ["rgb(0, 192, 255)"],
+          size: 3,
+          strokeWidth: 1.5
+        },
+        chart: {
+          toolbar: {
+            show: false
+          },
+          dropShadow: {
+            enabled: true,
+            top: 7,
+            left: 7,
+            blur: 5,
+            opacity: 0.1
+          }
+        }
       },
       data: []
-    }
+    };
   },
   computed: {
     series: function() {
-      return [{
-        name: 'commits',
-        data: this.data
-      }];
+      return [
+        {
+          name: "commits",
+          data: this.data
+        }
+      ];
     }
   },
   methods: {
@@ -73,7 +108,7 @@ export default {
 
           for (i = 0; i < this.datel.length; i++) {
             if (response.data[i].title.slice(0, 13) !== "Merge branch ") {
-              if (this.pname[i] == 'jiwonjulietyoon@gmail.com') {
+              if (this.pname[i] == "jiwonjulietyoon@gmail.com") {
                 if (dateString == this.datel[i]) {
                   jiwoncount++;
                 }
@@ -83,7 +118,7 @@ export default {
 
           for (i = 0; i < this.datel.length; i++) {
             if (response.data[i].title.slice(0, 13) !== "Merge branch ") {
-              if (this.pname[i] == 'jiwookseo.dev@gmail.com') {
+              if (this.pname[i] == "jiwookseo.dev@gmail.com") {
                 if (dateString == this.datel[i]) {
                   jiwookcount++;
                 }
@@ -93,7 +128,7 @@ export default {
 
           for (i = 0; i < this.datel.length; i++) {
             if (response.data[i].title.slice(0, 13) !== "Merge branch ") {
-              if (this.pname[i] == 'kim6394@hanmail.net') {
+              if (this.pname[i] == "kim6394@hanmail.net") {
                 if (dateString == this.datel[i]) {
                   gyuseokcount++;
                 }
@@ -103,7 +138,7 @@ export default {
 
           for (i = 0; i < this.datel.length; i++) {
             if (response.data[i].title.slice(0, 13) !== "Merge branch ") {
-              if (this.pname[i] == 'gaivn0928@naver.com') {
+              if (this.pname[i] == "gaivn0928@naver.com") {
                 if (dateString == this.datel[i]) {
                   gibeomcount++;
                 }
@@ -116,14 +151,12 @@ export default {
           this.data.push(jiwookcount);
           this.data.push(jiwoncount);
           this.data.push(gibeomcount);
-
         })
         .catch(() => {});
     }
   },
   mounted() {
     this.getData();
-
   }
 };
 </script>

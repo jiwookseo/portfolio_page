@@ -188,6 +188,7 @@ section {
     font-size:16px;
     img {
       width: 100%;
+      box-shadow: 0 0 0 6px $footer-bg;
     }
   }
 }

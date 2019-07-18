@@ -2,7 +2,11 @@
   <header>
     <nav class="navbar">
       <router-link to="/">
-        <div class="nav-item nav-logo text"><b>Team Six</b></div>
+        <div class="nav-item nav-logo">
+          <div class="team6-logo">
+            <div>TS</div>
+          </div>
+        </div>
       </router-link>
       <div class="btn-right">
         <router-link to="/portfolio">
@@ -19,7 +23,11 @@
     <transition name="slide-fade">
       <nav class="sidebar" v-if="showSidebar">
         <router-link to="/">
-          <div class="sb-nav-logo text">Team Six</div>
+          <div class="sb-nav-logo">
+            <div class="team6-logo">
+              <div>TS</div>
+            </div>
+          </div>
         </router-link>
         <ul>
           <router-link to="/portfolio">
@@ -83,7 +91,7 @@ export default {
       if (this.showSidebar && event) {
         if (event.clientX > 180) {
           this.showSidebar = false;
-        };
+        }
       }
     },
     ...mapActions(["logout"]),
@@ -144,6 +152,10 @@ a:hover {
 }
 .nav-logo {
   color: $blue-accent;
+  &:hover {
+    background: $nav-bg;
+    animation: logo-color 0.4s linear infinite alternate;
+  }
 }
 .nav-fav {
   position: fixed;

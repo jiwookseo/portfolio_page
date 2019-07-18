@@ -140,7 +140,7 @@ export default {
                 this.content = res.translatedText;
                 this.translatedText[target].content = res.translatedText;
               })
-              .then(res => (this.loading = false))
+              .then(() => (this.loading = false))
           );
       } else {
         this.title = this.translatedText[target].title;
