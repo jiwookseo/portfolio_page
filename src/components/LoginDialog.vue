@@ -121,7 +121,6 @@ export default {
     return {
       valid: false,
       showLogin: true,
-      loginSuccess: false,
       email: "",
       emailRules: [
         v => !!v || "E-mail is required",
@@ -157,11 +156,11 @@ export default {
       return this.$store.getters.loading;
     },
     checkDialog() {
-      this.loginSuccess = this.$store.getters.loginSuccess
-      if(this.loginSuccess){
-        this.showLogin = true;
+      let loginSuccess = this.$store.getters.loginSuccess
+      if(loginSuccess){
         return this.$emit("child", false);
       }
+      return null;
     }
   },
   methods: {
