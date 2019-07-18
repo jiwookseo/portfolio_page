@@ -32,6 +32,20 @@ export default {
           text: "Today's Commits"
         },
         labels: ['Geuntae', 'Gyuseok', 'Jiwook', 'Jiwon', 'Gibeom'],
+        fill: {
+          opacity: 0.4,
+          colors: ['rgba(0, 192, 255, 0.3)']
+        }, 
+        stroke: {
+          show: true,
+          width: 3,
+          colors: ['rgb(0, 192, 255)']
+        },
+        markers: {
+          colors: ['rgb(0, 192, 255)'],
+          size: 3,
+          strokeWidth: 1.5
+        }
       },
       data: []
     }
