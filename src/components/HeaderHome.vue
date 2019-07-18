@@ -16,6 +16,7 @@
         >{{ menu.name }}</li>
       </ul>
     </nav>
+    <div class="sidebar-block" v-if="showSidebar"></div>
     <transition name="slide-fade">
       <nav class="sidebar" v-if="showSidebar">
         <div class="sb-nav-logo" @click="scrollToTop">{{websiteTitle}}</div>
@@ -47,6 +48,7 @@
 </template>
 
 <script>
+
 import ImgBanner from "./ImgBanner";
 import FavBtn from "./FavBtn";
 import LoginDialog from "./LoginDialog";
@@ -79,7 +81,21 @@ export default {
       ]
     };
   },
+  created() {
+    window.addEventListener('click', this.sidebarSlideIn);
+    this.sidebarSlideIn();
+  },
+  destroyed() {
+    window.removeEventListener('click', this.sidebarSlideIn);
+  },
   methods: {
+    sidebarSlideIn(event) {
+      if (this.showSidebar && event) {
+        if (event.clientX > 180) {
+          this.showSidebar = false;
+        };
+      }
+    },
     ...mapActions(["logout"]),
     signOut() {
       this.logout();

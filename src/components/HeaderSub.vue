@@ -15,6 +15,7 @@
         <div v-if="user" @click="signOut" class="nav-item login-btn text">Logout</div>
       </div>
     </nav>
+    <div class="sidebar-block" v-if="showSidebar"></div>
     <transition name="slide-fade">
       <nav class="sidebar" v-if="showSidebar">
         <router-link to="/">
@@ -70,7 +71,21 @@ export default {
       showSidebar: false
     };
   },
+  created() {
+    window.addEventListener('click', this.sidebarSlideIn);
+    this.sidebarSlideIn();
+  },
+  destroyed() {
+    window.removeEventListener('click', this.sidebarSlideIn);
+  },
   methods: {
+    sidebarSlideIn(event) {
+      if (this.showSidebar && event) {
+        if (event.clientX > 180) {
+          this.showSidebar = false;
+        };
+      }
+    },
     ...mapActions(["logout"]),
     signOut() {
       this.logout()

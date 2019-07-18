@@ -25,6 +25,18 @@
   opacity: 0;
 }
 
+.sidebar-block {
+  width: 100vh;
+  height: 100vh;
+  position: fixed;
+  top: 0; left: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  @include viewportMin(601) {
+    display: none;
+  }
+}
+
 .sidebar {
   width: 180px;
   height: 100vh;
