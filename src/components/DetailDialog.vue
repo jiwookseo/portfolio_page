@@ -6,15 +6,10 @@
       </div>
     </div>
     <div class="scrollable-content">
-      <h2 class="Title article-dialog">{{ article.title }}</h2>
+      <h2 class="Title">{{ title }}</h2>
       <p class="Date">{{date_created}}</p>
-      <img
-        v-if="isPortfolio"
-        :src="article.img"
-        class="Img"
-        :alt="article.title + ' (article image)'"
-      />
-      <p class="Content article-dialog">{{article.content}}</p>
+      <img v-if="isPortfolio" :src="img" class="Img" :alt="title + ' (portfolio image)'" />
+      <p class="Content">{{content}}</p>
     </div>
     <LoadingSpinner v-show="loading" :message="'Translating...'" />
     <div class="btn-box-bottom">
@@ -51,7 +46,7 @@
 <script>
 import LoadingSpinner from "./LoadingSpinner";
 import { setTimeout } from "timers";
-import translateDOM from "../js/translate";
+import translateText from "../js/translate";
 
 export default {
   name: "DetailDialog",
@@ -63,8 +58,7 @@ export default {
       date: "",
       askToTranslate: false,
       loading: false,
-      textDOMs: [],
-      originalText: [],
+      originalText: {},
       translatedText: {},
       translated: false,
       selectedLanguage: "",
@@ -81,7 +75,10 @@ export default {
           text: "French",
           value: "fr"
         }
-      ]
+      ],
+      title: "",
+      content: "",
+      img: ""
     };
   },
   props: {
@@ -94,6 +91,14 @@ export default {
       this.askToTranslate = false;
     },
     article: function() {
+      this.title = this.article.title;
+      this.content = this.article.content;
+      this.img = this.article.img;
+      this.originalText = {
+        title: this.article.title,
+        content: this.article.content
+      };
+      this.translatedText = {};
       if (this.translated) {
         this.loading = true;
         setTimeout(() => {
@@ -113,28 +118,35 @@ export default {
     translate: function(source, target, force = false) {
       if (this.translated) return;
       else this.translated = true;
-      if (
-        !this.translatedText[target] ||
-        this.translatedText[target].length !== this.textDOMs.length ||
-        force
-      ) {
+      if (!this.translatedText[target] || force) {
         this.loading = true;
-        this.textDOMs = this.$el.querySelectorAll(".article-dialog");
-        translateDOM(source, target, this.textDOMs).then(res => {
-          this.originalText = res.originalText;
-          this.translatedText[target] = res.translatedText;
-          this.loading = false;
-        });
+        this.translatedText[target] = {
+          title: "",
+          content: ""
+        };
+        translateText(source, target, this.originalText.title)
+          .then(res => {
+            this.title = res.translatedText;
+            this.translatedText[target].title = res.translatedText;
+          })
+          .then(
+            translateText(source, target, this.originalText.content)
+              .then(res => {
+                this.content = res.translatedText;
+                this.translatedText[target].content = res.translatedText;
+              })
+              .then(res => (this.loading = false))
+          );
       } else {
-        this.textDOMs.forEach(
-          (dom, i) => (dom.innerText = this.translatedText[target][i])
-        );
+        this.title = this.translatedText[target].title;
+        this.content = this.translatedText[target].content;
       }
     },
     showOrigin: function() {
       if (!this.translated) return;
       else this.translated = false;
-      this.textDOMs.forEach((dom, i) => (dom.innerText = this.originalText[i]));
+      this.title = this.originalText.title;
+      this.content = this.originalText.content;
     },
     closeDialog() {
       this.$emit("child_detail");
