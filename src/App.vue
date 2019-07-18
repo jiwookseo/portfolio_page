@@ -61,6 +61,7 @@ export default {
   opacity: 0.1;
   z-index: 15;
   cursor: pointer;
+  display: none;
   &:hover {
     opacity: 1;
   }
