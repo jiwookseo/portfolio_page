@@ -144,6 +144,10 @@ a:hover {
 }
 .nav-logo {
   color: $blue-accent;
+  &:hover {
+    background: $nav-bg;
+    animation: logo-color 0.4s linear infinite alternate;
+  }
 }
 .nav-fav {
   position: fixed;

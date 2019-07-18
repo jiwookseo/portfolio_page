@@ -156,7 +156,7 @@ export default {
   cursor: pointer;
   color: $blue-accent;
   &:hover {
-    background: $nav-highlight;
+    animation: logo-color 0.4s linear infinite alternate;
   }
 }
 .nav-menus {
