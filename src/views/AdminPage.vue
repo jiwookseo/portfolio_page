@@ -46,8 +46,11 @@ export default {
     computedLogs() {
       if(this.logs.length != 0 && this.flag == false){
         for (var i = 0; i < this.logs.length; i++) {
-          this.times.push(this.logs[i].time);
+          this.times.push(this.logs[i]);
         }
+        console.log(this.times);
+
+
       }
       return this.logs.reverse().filter(log => {
         return log.path == this.selectedPath;

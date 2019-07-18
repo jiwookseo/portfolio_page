@@ -3,7 +3,7 @@
         <HeaderSub />
         <div class="content">
             <h2 class="section-title text">Portfolio</h2>
-            <PortfolioList :limit=6 :allowCreate=true />
+            <PortfolioList :limit="6" allowCreate=true />
         </div>
         <Footer />
     </div>
@@ -25,7 +25,7 @@ export default {
     },
     data() {
       return {
-        
+
       }
     },
     mounted() {
@@ -41,7 +41,7 @@ export default {
           username = this.$store.getters.user.email;
         }
         let time = new Date();
-        firestore.addLog("/portfolio", username, time.getTime());
+        firestore.addLog("/portfolio", username, time.getDay());
       }
     }
 }
