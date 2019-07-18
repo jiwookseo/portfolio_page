@@ -17,9 +17,11 @@
               </div>
             </v-flex>
             <v-flex xs12 sm8 class="content-container" data-aos="fade-left">
-              <div
-                class="inner text"
-              >Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, odit delectus magni impedit quos eveniet iusto officia mollitia aliquid, est, amet explicabo deleniti! Itaque accusantium id corporis delectus sint sunt quam expedita nisi porro animi. Totam cumque delectus voluptatibus, natus eveniet dolore ipsam sapiente minima quibusdam eum nemo itaque quam. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit, similique? Praesentium voluptatum harum quod provident labore magni perferendis quidem ducimus?</div>
+              <div class="inner text" style="font-size:17px;">
+                안녕하세요. SSAFY 서울 2반 6조입니다!<br>
+                웹/모바일 프로젝트로 Vue.js와 파이어베이스를 통해 포트폴리오 블로그를 만들고 있습니다.<br>
+                프로젝트 기간동안 좋은 결과물 만들 수 있도록 노력하겠습니다!<br>
+              </div>
             </v-flex>
           </v-layout>
         </v-container>
