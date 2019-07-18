@@ -17,10 +17,11 @@
               </div>
             </v-flex>
             <v-flex xs12 sm8 class="content-container" data-aos="fade-left">
-              <div class="inner text" style="font-size:17px;">
+              <div class="inner text">
                 안녕하세요. SSAFY 서울 2반 6조입니다!<br>
                 웹/모바일 프로젝트로 Vue.js와 파이어베이스를 통해 포트폴리오 블로그를 만들고 있습니다.<br>
-                프로젝트 기간동안 좋은 결과물 만들 수 있도록 노력하겠습니다!<br>
+                프로젝트 기간동안 좋은 결과물 만들 수 있도록 노력하겠습니다!<br><br>
+                프로젝트 진행 기간 : 2019.07.09. ~ 2019.07.19.
               </div>
             </v-flex>
           </v-layout>
@@ -184,6 +185,7 @@ section {
   }
   .inner {
     height: auto;
+    font-size:16px;
     img {
       width: 100%;
     }
