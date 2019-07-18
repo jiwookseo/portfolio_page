@@ -127,7 +127,7 @@ export default {
         username = this.$store.getters.user.email;
       }
       let time = new Date();
-      firestore.addLog("/", username, time.getTime());
+      firestore.addLog("/", username, time.getDay());
     }
   }
 };
