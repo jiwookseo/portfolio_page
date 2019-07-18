@@ -8,7 +8,12 @@
     <div class="scrollable-content">
       <h2 class="Title">{{ title }}</h2>
       <p class="Date">{{date_created}}</p>
-      <img v-if="isPortfolio" :src="img" class="Img" :alt="title + ' (portfolio image)'" />
+      <img
+        v-if="img && img!=='https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg'"
+        :src="img"
+        class="Img"
+        :alt="title + ' (portfolio image)'"
+      />
       <p class="Content">{{content}}</p>
     </div>
     <LoadingSpinner v-show="loading" :message="'Translating...'" />
