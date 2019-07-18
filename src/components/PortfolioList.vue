@@ -127,8 +127,7 @@ export default {
     return {
       selectedPortfolio: {
         created_at: { seconds: 0 },
-        img:
-          "https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg"
+        img: "http://anzancity.ir/uploads/posts/village-warning.jpg"
       },
       created_at: 0,
       portfolios: [],
@@ -154,8 +153,7 @@ export default {
         index === -1
           ? {
               created_at: { seconds: 0 },
-              img:
-                "https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg"
+              img: "http://anzancity.ir/uploads/posts/village-warning.jpg"
             }
           : this.portfolios[index - 1];
       this.dialogWrite = true;

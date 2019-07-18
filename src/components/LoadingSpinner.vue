@@ -16,7 +16,9 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+@import "../css/style.scss";
+
 .loader-container {
   position: fixed;
   top: 0;
@@ -24,7 +26,7 @@ export default {
   height: 100vh;
   width: 100vw;
   text-align: center;
-  background-color: #e74c3c;
+  background-color: $nav-bg;
   overflow: hidden;
   opacity: 0.9;
   transition: all 0.2s ease;

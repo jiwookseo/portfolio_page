@@ -80,8 +80,7 @@ export default {
   methods: {
     reset() {
       this.$refs.form.reset();
-      this.img =
-        "https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg";
+      this.img = "http://anzancity.ir/uploads/posts/village-warning.jpg";
     },
     resetValidation() {
       this.$refs.form.resetValidation();
@@ -93,20 +92,24 @@ export default {
       this.$emit("child_snackbar", msg);
     },
     create() {
-      if (this.isPortfolio) {
-        firestore.postPortfolio(this.title, this.content, this.img).then(() => {
-          this.$emit("child_updatePortfolio");
-          this.reset();
-          this.closeDialog();
-          this.triggerParentSnackbar("Portfolio created");
-        });
-      } else {
-        firestore.postPost(this.title, this.content).then(() => {
-          this.$emit("child_updatePost");
-          this.reset();
-          this.closeDialog();
-          this.triggerParentSnackbar("Post created");
-        });
+      if (this.$refs.form.validate()) {
+        if (this.isPortfolio) {
+          firestore
+            .postPortfolio(this.title, this.content, this.img)
+            .then(() => {
+              this.$emit("child_updatePortfolio");
+              this.reset();
+              this.closeDialog();
+              this.triggerParentSnackbar("Portfolio created");
+            });
+        } else {
+          firestore.postPost(this.title, this.content).then(() => {
+            this.$emit("child_updatePost");
+            this.reset();
+            this.closeDialog();
+            this.triggerParentSnackbar("Post created");
+          });
+        }
       }
     },
     update() {
