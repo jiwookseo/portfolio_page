@@ -12,6 +12,7 @@
     display: none;
   }
   color: white;
+  position: relative;
 }
 
 .slide-fade-enter-active {
@@ -53,10 +54,10 @@
 
 
 @keyframes logo-color {
-  0% {color: #00D8E6;}
-  33% {color: #00C0FF;}
-  67% {color: #00A2FF;}
-  100% {color: #00A2FF;}
+  0% {background: #00D8E6;}
+  33% {background: #00C0FF;}
+  67% {background: #00A2FF;}
+  100% {background: #00A2FF;}
 }
 
 .sb-nav-logo, .sb-nav-menu {
@@ -64,19 +65,46 @@
   height: 50px;
   line-height: 50px;
   padding: 0 20px;
-  cursor: pointer;
   color: white;
 }
 .sb-nav-logo {
-  text-align: right;
-  font-weight: bold;
-  color: $blue-accent;
+  position: relative;
+}
+
+.team6-logo {
+  width: 40px; height: 34px;
+  background: $blue-accent;
+  position: absolute;
+  transform: skewY(5deg);
+  color: white;
+  line-height: 34px;
+  text-align: center;
+  cursor: pointer;
+  .sb-nav-logo > & {
+    top: 9px;
+    right: 20px;
+  }
+  .nav-logo > & {
+    top: 5.5px;
+    left: 2.5%;
+  }
   &:hover {
-    animation: logo-color 0.4s linear infinite alternate;
+    animation: logo-color 0.3s linear infinite alternate;
+  }
+  & > div {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    transform: skewY(-5deg);
+    font-size: 1.2em;
+    font-weight: bold;
+    letter-spacing: 1px;
   }
 }
+
 .sb-nav-menu:hover {
   background: $nav-highlight;
+  cursor: pointer;
 }
 
 .menu-btn {
