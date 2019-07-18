@@ -25,7 +25,7 @@ export default {
 	},
 	data() {
 		return {
-			
+
 		}
   },
   mounted() {
@@ -41,7 +41,7 @@ export default {
         username = this.$store.getters.user.email;
       }
       let time = new Date();
-      firestore.addLog("/post", username, time.getTime());
+      firestore.addLog("/post", username, time.getDay());
     }
   }
 }
