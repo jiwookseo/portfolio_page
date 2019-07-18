@@ -8,26 +8,35 @@
   <h2 class="section-title">Admin Page</h2>
   <div class="content-container">
     <div class="mb-5">
-      <select v-model="selectedPath">
+      <!-- <select v-model="selectedPath">
         <option disabled value="">Please select one</option>
         <option value="/">"/"</option>
         <option value="/portfolio">"/portfolio"</option>
         <option value="/post">"/post"</option>
-      </select>
+      </select> -->
       <br>
-      <span>Path: {{ selectedPath }}</span>
+      <!-- <span>Path: {{ selectedPath }}</span> -->
     </div>
     <hr>
 
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+
     <p v-for="log in computedLogs">{{log}}</p>
-    </div>
   </div>
+</div>
 </div>
 </template>
 
 
 <script>
 import firestore from "../firebase/firestore";
+import Vue from 'vue'
+import HighchartsVue from 'highcharts-vue'
+import Highcharts from 'highcharts'
+
+
+
 
 export default {
   name: "AdminPage",
@@ -36,7 +45,9 @@ export default {
       logs: [],
       selectedPath: '',
       times: [],
-      flag : false,
+      flag: false,
+      dataset: [],
+      percent: [],
     }
   },
   mounted() {
@@ -44,13 +55,113 @@ export default {
   },
   computed: {
     computedLogs() {
-      if(this.logs.length != 0 && this.flag == false){
+      if (this.logs.length != 0 && this.flag == false) {
         for (var i = 0; i < this.logs.length; i++) {
-          this.times.push(this.logs[i]);
+          this.times.push(this.logs[i].time);
         }
-        console.log(this.times);
 
+        for (var i = 0; i < 7; i++) {
+          this.dataset.push(0);
+          this.percent.push(0);
+        }
 
+        for (var i = 0; i < this.times.length; i++) {
+          if (this.times[i] == 0) this.dataset[0]++;
+          else if (this.times[i] == 1) this.dataset[1]++;
+          else if (this.times[i] == 2) this.dataset[2]++;
+          else if (this.times[i] == 3) this.dataset[3]++;
+          else if (this.times[i] == 4) this.dataset[4]++;
+          else if (this.times[i] == 5) this.dataset[5]++;
+          else if (this.times[i] == 6) this.dataset[6]++;
+        }
+
+        for (var i = 0; i < 7; i++) {
+          this.percent[i] = (this.dataset[i] / this.times.length) * 100;
+        }
+
+        // 차트 부분
+        Vue.use(HighchartsVue);
+
+        Highcharts.chart('container', {
+          chart: {
+            type: 'column'
+          },
+          title: {
+            text: 'Weakly visits per Day'
+          },
+          subtitle: {
+            // text: 'Click the columns to view versions. Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>'
+          },
+          xAxis: {
+            type: 'category'
+          },
+          yAxis: {
+            title: {
+              text: 'Visits'
+            }
+
+          },
+          legend: {
+            enabled: false
+          },
+          plotOptions: {
+            series: {
+              borderWidth: 0,
+              dataLabels: {
+                enabled: true,
+                format: '{point.y:.1f}%'
+              }
+            }
+          },
+
+          tooltip: {
+            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+          },
+
+          series: [{
+            name: "Visit",
+            colorByPoint: true,
+            data: [{
+                name: "SUN",
+                y: this.percent[0],
+                // drilldown: "Chrome"
+              },
+              {
+                name: "MON",
+                y: this.percent[1],
+                // drilldown: "Firefox"
+              },
+              {
+                name: "TUE",
+                y:this. percent[2],
+                // drilldown: "Internet Explorer"
+              },
+              {
+                name: "WED",
+                y: this.percent[3],
+                // drilldown: "Safari"
+              },
+              {
+                name: "THU",
+                y: this.percent[4],
+                // drilldown: "Edge"
+              },
+              {
+                name: "FRI",
+                y: this.percent[5],
+                // drilldown: "Opera"
+              },
+              {
+                name: "SAT",
+                y: this.percent[6],
+                // drilldown: null
+              }
+            ]
+          }],
+        });
+
+        // 여기까지 차트
       }
       return this.logs.reverse().filter(log => {
         return log.path == this.selectedPath;
