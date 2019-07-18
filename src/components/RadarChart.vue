@@ -11,13 +11,13 @@ Vue.use(VueApexCharts);
 const labURL = `https://lab.ssafy.com/api/v4/projects/6043/repository/commits/?private_token=mSzGEe1Ba9KXsNynKz-A&per_page=100`;
 Vue.component('apexchart', VueApexCharts);
 
-const data = [];
+
 var gtcount = 0;
 var jiwoncount = 0;
 var jiwookcount = 0;
 var gyuseokcount = 0;
 var gibeomcount = 0;
-var dd = [];
+
 const date = new Date();
 
 
@@ -61,7 +61,7 @@ export default {
           }
 
           var dateString = date.getDate();
-          for (var i = 0; i < this.datel.length; i++) {
+          for (i = 0; i < this.datel.length; i++) {
             if (response.data[i].title.slice(0, 13) !== "Merge branch ") {
               if (this.pname[i] == "gtkim4617@naver.com") {
                 if (dateString == this.datel[i]) {
@@ -71,7 +71,7 @@ export default {
             }
           }
 
-          for (var i = 0; i < this.datel.length; i++) {
+          for (i = 0; i < this.datel.length; i++) {
             if (response.data[i].title.slice(0, 13) !== "Merge branch ") {
               if (this.pname[i] == 'jiwonjulietyoon@gmail.com') {
                 if (dateString == this.datel[i]) {
@@ -81,7 +81,7 @@ export default {
             }
           }
 
-          for (var i = 0; i < this.datel.length; i++) {
+          for (i = 0; i < this.datel.length; i++) {
             if (response.data[i].title.slice(0, 13) !== "Merge branch ") {
               if (this.pname[i] == 'jiwookseo.dev@gmail.com') {
                 if (dateString == this.datel[i]) {
@@ -91,7 +91,7 @@ export default {
             }
           }
 
-          for (var i = 0; i < this.datel.length; i++) {
+          for (i = 0; i < this.datel.length; i++) {
             if (response.data[i].title.slice(0, 13) !== "Merge branch ") {
               if (this.pname[i] == 'kim6394@hanmail.net') {
                 if (dateString == this.datel[i]) {
@@ -101,7 +101,7 @@ export default {
             }
           }
 
-          for (var i = 0; i < this.datel.length; i++) {
+          for (i = 0; i < this.datel.length; i++) {
             if (response.data[i].title.slice(0, 13) !== "Merge branch ") {
               if (this.pname[i] == 'gaivn0928@naver.com') {
                 if (dateString == this.datel[i]) {
