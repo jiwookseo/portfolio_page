@@ -2,7 +2,7 @@
   <header>
     <nav class="navbar">
       <router-link to="/">
-        <div class="nav-item text"><b>Team Six</b></div>
+        <div class="nav-item nav-logo text"><b>Team Six</b></div>
       </router-link>
       <div class="btn-right">
         <router-link to="/portfolio">
@@ -126,6 +126,9 @@ a:hover {
     background: $nav-highlight;
   }
   color: white;
+}
+.nav-logo {
+  color: $blue-accent;
 }
 .nav-fav {
   position: fixed;

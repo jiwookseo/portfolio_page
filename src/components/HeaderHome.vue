@@ -138,6 +138,7 @@ export default {
   font-weight: bold;
   padding: 0 20px;
   cursor: pointer;
+  color: $blue-accent;
   &:hover {
     background: $nav-highlight;
   }

@@ -50,8 +50,8 @@
       </section>
       <section id="project">
         <h2 class="section-title text" data-aos="fade-left">Project</h2>
-        <!-- <Radarchart class="radarchart" /> -->
-        <LineChart class="linechart" data-aos="fade-up" />
+        <LineChart class="linechart hideMobile" data-aos="fade-up" />
+        <Radarchart class="radarchart hideMobile" data-aos="fade-up" />
         <div class="section-btn-box hideMobile" data-aos="fade-up">
           <a target="_blank" href="https://lab.ssafy.com/jiwonjulietyoon/webmobile-sub2">
             <div class="section-more-btn text">
@@ -60,7 +60,7 @@
             </div>
           </a>
         </div>
-        <div class="showMobile deviceRotateMsg">
+        <div class="showMobile deviceRotateMsg" data-aos="fade-up">
           <div><span><i class="material-icons">screen_rotation</i></span></div>
           <p class="text">Please rotate your device to landscape mode.</p>
         </div>
@@ -190,15 +190,13 @@ section {
 
 #project {
   padding: 80px 30px 80px;
-  .linechart {
+  .linechart .radarchart {
     @include mobile {
       display: none;
     }
   }
   .radarchart {
-    @include viewportMin(601) {
-      display: none;
-    }
+    margin-top: 100px;
   }
 }
 
@@ -290,7 +288,8 @@ $slant_m: 20px;
       @include centerItem;
       i {
         font-size: 4em;
-        animation: spin 3s linear infinite;
+        transform: rotate(45deg);
+        animation: spin 2.5s linear infinite;
       }
     }
   }
@@ -299,8 +298,10 @@ $slant_m: 20px;
   }
 }
 @keyframes spin {
-  0% {transform: rotate(0deg);}
-  100% {transform: rotate(360deg);}
+  0% {transform: rotate(45deg);}
+  10% {transform: rotate(45deg);}
+  35% {transform: rotate(-45deg);}
+  100% {transform: rotate(-45deg);}
 }
 
 </style>
