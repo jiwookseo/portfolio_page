@@ -10,7 +10,6 @@
     <div id="visits-chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
   </div>
 </div>
-</div>
 </template>
 
 
@@ -28,7 +27,6 @@ export default {
   data() {
     return {
       logs: [],
-      selectedPath: '',
       times: [],
     }
   },
@@ -39,9 +37,6 @@ export default {
     logs: function() {
       this.computedLogs();
     }
-  },
-  computed: {
-
   },
   methods: {
     async getLogs() {
@@ -114,43 +109,43 @@ export default {
             colorByPoint: true,
             data: [{
                 name: "SUN",
-                y: this.percent[0],
+                y: percent[0],
                 color: "rgb(172, 248, 139)"
                 // drilldown: "Chrome"
               },
               {
                 name: "MON",
-                y: this.percent[1],
+                y: percent[1],
                 color: "rgb(0, 234, 185)"
                 // drilldown: "Firefox"
               },
               {
                 name: "TUE",
-                y: this. percent[2],
+                y: percent[2],
                 color: "#00D1CF"
                 // drilldown: "Internet Explorer"
               },
               {
                 name: "WED",
-                y: this.percent[3],
+                y: percent[3],
                 color: "rgb(0, 192, 255)"
                 // drilldown: "Safari"
               },
               {
                 name: "THU",
-                y: this.percent[4],
+                y: percent[4],
                 color: "#728BE7"
                 // drilldown: "Edge"
               },
               {
                 name: "FRI",
-                y: this.percent[5],
+                y: percent[5],
                 color: "rgb(147, 108, 201)"
                 // drilldown: "Opera"
               },
               {
                 name: "SAT",
-                y: this.percent[6],
+                y: percent[6],
                 color: "rgb(255, 123, 153)"
                 // drilldown: null
               }

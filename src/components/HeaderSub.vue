@@ -83,7 +83,7 @@ export default {
       if (this.showSidebar && event) {
         if (event.clientX > 180) {
           this.showSidebar = false;
-        };
+        }
       }
     },
     ...mapActions(["logout"]),
