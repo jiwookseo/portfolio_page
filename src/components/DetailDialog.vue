@@ -141,7 +141,8 @@ export default {
                 this.translatedText[target].content = res.translatedText;
               })
               .then(() => (this.loading = false))
-          );
+          )
+          .catch(() => (this.loading = false));
       } else {
         this.title = this.translatedText[target].title;
         this.content = this.translatedText[target].content;
