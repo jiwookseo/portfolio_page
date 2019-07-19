@@ -90,9 +90,9 @@
 
 - HomePage.vue : 메인 홈페이지 (header - imgbanner - portfolio - post - project - footer)
 
-- PortfolioPage.vue : 전체 포트폴리오 리스트를 확인할 수 있는 페이지 (추가/삭제는 admin만 가능)
+- PortfolioPage.vue : 전체 포트폴리오 리스트를 확인할 수 있는 페이지 (추가/수정/삭제는 admin만 가능)
 
-- PostPage.vue : 전체 포스트 리스트를 확인할 수 있는 페이지 (추가/삭제는 admin만 가능)
+- PostPage.vue : 전체 포스트 리스트를 확인할 수 있는 페이지 (추가/수정/삭제는 admin만 가능)
 ```
 
 <br>
@@ -105,9 +105,13 @@
 
 - getters.js : 계산된 state 속성 관리 ( user, admin, loading, error, loginSuccess )
 
-- store.js : getters/actions 및 mutation 구현 및 stroe 생성
+- store.js : getters/actions 및 mutation 구현 및 store 생성
 
 ```
+
+<br>
+
+*) 메인 이미지 배너 변경, 포스트/포트폴리오 생성 수정 삭제, 어드민 페이지에서의 웹 로그 조회 등 관리자 권한은 "admin@admin.com / admin123" 계정만 부여됩니다.
 
 <br>
 
