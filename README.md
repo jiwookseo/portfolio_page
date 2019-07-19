@@ -14,7 +14,11 @@
 
 <br>
 
+<br>
 
+<img src="/src/assets/play.gif">
+
+<br>
 
 <br>
 
@@ -46,7 +50,7 @@
 
 - PortfolioList.vue : 파이어베이스에 저장된 포트폴리오를 불러와 출력 구현
 
-- Post.vue : 포스트 기본 형식 틀 구현 
+- Post.vue : 포스트 기본 형식 틀 구현
 
 - RadarChart.vue : 팀원들의 당일 커밋 수 그래프 차트 구현
 
