@@ -5,7 +5,7 @@ import {
 } from '@/firebase/firebaseAuth'
 
 export default {
-  signUserUp({
+  signUserUp({ // 로컬 회원가입
     commit
   }, payload) {
     commit('setLoading', true)
@@ -17,7 +17,7 @@ export default {
           Vue.swal("Welcome!", "You have signed up successfully", "success")
           const newUser = {
             id: user.uid,
-            name: user.displayName,
+            name: user.displayName, // payload로 name 값 받기?
             email: user.email,
             photoUrl: user.photoURL
           }
@@ -104,7 +104,7 @@ export default {
     firebaseAuth
       .signOut()
       .then(() => {
-        commit('setUser', null)
+        commit('setUser', null) // null 값으로 user의 정보를 만들 때 생기는 오류 체크하기
         commit('loginSuccess', false)
       })
       .catch((error) => console.error(`SingOut Error: ${error}`))
