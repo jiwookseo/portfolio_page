@@ -1,0 +1,366 @@
+<template>
+  <v-container>
+    <v-layout row wrap>
+      <v-flex
+        class="portfolio"
+        v-for="i in portfolios.length > portfolioLimit ? portfolioLimit : portfolios.length"
+        :key="portfolios[i-1].id"
+        xs12
+        sm6
+        md4
+        lg3
+      >
+        <div class="portfolio-content" data-aos="fade-up">
+          <!-- <div class="img" :style="{'background-image': 'url(' + portfolios[i-1].img + ')'}"></div> -->
+          <img
+            class="img"
+            :src="portfolios[i-1].img"
+            :alt="portfolios[i-1].title + ' (portfolio image)'"
+          />
+          <div class="content">
+            <h3 class="title text">{{ portfolios[i-1].title }}</h3>
+            <div class="more text" @click="viewDetail(i)">Read More</div>
+            <div class="btn-box" v-if="adminUser">
+              <div class="update" @click="openPortfolioWriter(i)">
+                <i class="material-icons">edit</i>
+              </div>
+              <div class="delete" @click="deleteConfirm(i)">
+                <i class="material-icons">delete</i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </v-flex>
+      <v-flex v-if="allowCreate && adminUser" class="portfolio" xs12 sm6 md4 lg3>
+        <div class="portfolio-content new" @click="openPortfolioWriter()" data-aos="fade-up">
+          <span>+ New Portfolio</span>
+        </div>
+      </v-flex>
+      <div class="section-btn-box" v-if="allowCreate && portfolioLimit < portfolios.length">
+        <div class="load-more-btn" @click="loadMore">Load More</div>
+      </div>
+
+      <!-- Dialogs -->
+      <v-dialog v-model="dialogWrite" width="500" persistent>
+        <WriteDialog
+          @child="parents"
+          @child_snackbar="parent_snackbar"
+          @child_updatePortfolio="parent_updatePortfolio"
+          :article="selectedPortfolio"
+          :dialogWrite="dialogWrite"
+          :isPortfolio="true"
+        />
+      </v-dialog>
+      <v-dialog v-model="dialogDetail" width="500">
+        <DetailDialog
+          @child_detail="parent_detail"
+          :article="selectedPortfolio"
+          :dialogDetail="dialogDetail"
+          :isPortfolio="true"
+        />
+      </v-dialog>
+
+      <!-- Snackbars -->
+      <v-snackbar
+        v-model="snackbar_del"
+        top
+        auto-height
+        :timeout="0"
+        color="#FF5E61"
+        class="snackbar-del"
+      >
+        <div class="snackbar-content">
+          Delete this portfolio?
+          <button @click="deletePortfolio()" class="del-btn">Delete</button>
+          <button @click="snackbar_del = false">Cancel</button>
+        </div>
+      </v-snackbar>
+      <v-snackbar
+        v-model="snackbar_alert"
+        top
+        auto-height
+        :timeout="4000"
+        color="#FF5E61"
+        class="snackbar-alert"
+      >
+        <div class="snackbar-content">
+          {{ snackbar_msg }}
+          <button @click="snackbar_alert = false" class="ok-btn">OK</button>
+        </div>
+      </v-snackbar>
+    </v-layout>
+  </v-container>
+</template>
+
+
+<script>
+import DetailDialog from "./DetailDialog";
+import WriteDialog from "./WriteDialog";
+import firestore from "../firebase/firestore";
+
+export default {
+  name: "PortfolioList",
+  props: {
+    limit: { type: Number, default: 4 },
+    allowCreate: { type: Boolean, default: false }
+  },
+  components: {
+    DetailDialog,
+    WriteDialog
+  },
+  watch: {
+    limit: function() {
+      this.portfolioLimit = this.limit;
+    }
+  },
+  computed: {
+    adminUser() {
+      if (
+        !this.$store.getters.user ||
+        this.$store.getters.user.email !== this.$store.getters.admin
+      )
+        return false;
+      else return true;
+    }
+  },
+  data() {
+    return {
+      selectedPortfolio: {
+        created_at: { seconds: 0 },
+        img: "http://anzancity.ir/uploads/posts/village-warning.jpg"
+      },
+      created_at: 0,
+      portfolios: [],
+      dialogWrite: false,
+      createMode: true,
+      dialogDetail: false,
+      snackbar_del: false,
+      deleteID: "",
+      snackbar_alert: false, // Replaces window alert box
+      snackbar_msg: "", // For snackbar_alert
+      portfolioLimit: 4
+    };
+  },
+  mounted() {
+    this.getPortfolios();
+  },
+  methods: {
+    getPortfolios() {
+      firestore.getPortfolios().then(res => (this.portfolios = res));
+    },
+    openPortfolioWriter(index = -1) {
+      this.selectedPortfolio =
+        index === -1
+          ? {
+              created_at: { seconds: 0 },
+              img: "http://anzancity.ir/uploads/posts/village-warning.jpg"
+            }
+          : this.portfolios[index - 1];
+      this.dialogWrite = true;
+    },
+    deleteConfirm(index) {
+      this.snackbar_del = true;
+      this.deleteID = this.portfolios[index - 1].id;
+    },
+    triggerSnackbarAlert(msg) {
+      this.snackbar_msg = msg;
+      this.snackbar_alert = true;
+    },
+    deletePortfolio() {
+      firestore
+        .deletePortfolio(this.deleteID)
+        .then(() => this.getPortfolios())
+        .then(() => {
+          this.snackbar_del = false;
+          this.triggerSnackbarAlert("Portfolio deleted");
+        });
+    },
+    parent_updatePortfolio() {
+      this.getPortfolios();
+    },
+    parent_snackbar(msg) {
+      this.triggerSnackbarAlert(msg);
+    },
+    parent_detail() {
+      this.dialogDetail = false;
+    },
+    viewDetail(index) {
+      this.selectedPortfolio = this.portfolios[index - 1];
+      this.dialogDetail = true;
+    },
+    parents() {
+      this.dialogWrite = false;
+    },
+    loadMore() {
+      this.portfolioLimit += 4;
+    }
+  }
+};
+</script>
+
+
+<style lang="scss" scoped>
+@import "../css/mixin.scss";
+@import "../css/style.scss";
+a,
+a:hover {
+  color: initial;
+}
+.portfolio {
+  height: 200px;
+  padding: 10px 5px;
+  @include viewportMax(960) {
+    padding: 10px 5%;
+  }
+  @include mobile {
+    padding: 10px 10%;
+  }
+}
+.portfolio-content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 5px;
+  .img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    // background-size: cover;
+    // background-position: center;
+    object-fit: cover;
+    transition: all 0.3s;
+  }
+  .content {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #3d4756;
+    transition: all 0.5s;
+    opacity: 0;
+    color: white;
+    .title {
+      position: absolute;
+      top: 15%;
+      width: 100%;
+      text-align: center;
+      padding: 20px 20px;
+      @include textTruncate;
+    }
+    .more {
+      padding: 5px 15px;
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%);
+      bottom: 20%;
+      border: 1.5px solid white;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+      white-space: nowrap;
+      background-image: linear-gradient(to right, white 50%, transparent 50%);
+      background-size: 200% 100%;
+      background-position: right;
+      &:hover {
+        background-position: left;
+        color: #3d4756;
+      }
+    }
+    .btn-box {
+      position: absolute;
+      top: 5px;
+      right: 0;
+    }
+    .delete,
+    .update {
+      display: inline-block;
+      margin-right: 5px;
+      cursor: pointer;
+      transform-origin: bottom;
+      i {
+        font-size: 1.5em;
+      }
+      &:hover {
+        animation: jiggle 0.15s linear 0.2s 4 forwards;
+      }
+    }
+  }
+  &:hover {
+    .content {
+      opacity: 1;
+    }
+    .img {
+      transform: scale(1.1);
+    }
+  }
+}
+@keyframes jiggle {
+  0% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
+.portfolio-content.new {
+  box-shadow: inset 0 0 0 4px $light-gray;
+  color: $light-gray;
+  transition: color 0.25s 0.09s;
+  position: relative;
+  cursor: pointer;
+  span {
+    font-size: 1.5em;
+    @include centerItem;
+    white-space: nowrap;
+  }
+  &::before,
+  &::after {
+    border: 0 solid transparent;
+    content: "";
+    box-sizing: border-box;
+    pointer-events: none;
+    position: absolute;
+    width: 0;
+    height: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 5px;
+  }
+  &::before {
+    border-bottom-width: 4px;
+    border-left-width: 4px;
+  }
+  &::after {
+    border-top-width: 4px;
+    border-right-width: 4px;
+  }
+  &:hover {
+    color: $blue-accent;
+  }
+  &:hover::before,
+  &:hover::after {
+    border-color: $blue-accent;
+    transition: border-color 0s, width 0.25s, height 0.25s;
+    width: 100%;
+    height: 100%;
+  }
+  &:hover::before {
+    transition-delay: 0s, 0s, 0.25s;
+  }
+  &:hover::after {
+    transition-delay: 0s, 0.25s, 0s;
+  }
+}
+
+// Snackbar: mixin.scss
+</style>

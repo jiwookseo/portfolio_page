@@ -1,0 +1,126 @@
+@import './mixin.scss';
+@import './style.scss';
+
+.navbar {
+  width: 100%;
+  height: 50px;
+  line-height: 46px;
+  border-bottom: 4px solid $blue-accent;
+  background: $nav-bg;
+  z-index: 10;
+  @include mobile {
+    display: none;
+  }
+  color: white;
+  position: relative;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.5s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.5s ease;
+}
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateX(-180px);
+  opacity: 0;
+}
+
+.sidebar-block {
+  width: 100vh;
+  height: 100vh;
+  position: fixed;
+  top: 0; left: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  @include viewportMin(601) {
+    display: none;
+  }
+}
+
+.sidebar {
+  width: 180px;
+  height: 100vh;
+  position: fixed;
+  top: 0; left: 0;
+  background: $nav-bg;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  @include viewportMin(601) {
+    display: none;
+  }
+  color: white;
+}
+
+
+@keyframes logo-color {
+  0% {background: #00D8E6;}
+  33% {background: #00C0FF;}
+  67% {background: #00A2FF;}
+  100% {background: #00A2FF;}
+}
+
+.sb-nav-logo, .sb-nav-menu {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 20px;
+  color: white;
+}
+.sb-nav-logo {
+  position: relative;
+}
+
+.team6-logo {
+  width: 40px; height: 34px;
+  background: $blue-accent;
+  position: absolute;
+  transform: skewY(5deg);
+  color: white;
+  line-height: 34px;
+  text-align: center;
+  cursor: pointer;
+  .sb-nav-logo > & {
+    top: 9px;
+    right: 20px;
+  }
+  .nav-logo > & {
+    top: 5.5px;
+    left: 2.5%;
+  }
+  &:hover {
+    animation: logo-color 0.3s linear infinite alternate;
+  }
+  & > div {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    transform: skewY(-5deg);
+    font-size: 1.2em;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+}
+
+.sb-nav-menu:hover {
+  background: $nav-highlight;
+  cursor: pointer;
+}
+
+.menu-btn {
+  position: fixed;
+  top: 0; left: 0;
+  width: 50px; height: 50px;
+  z-index: 15;
+  cursor: pointer;
+  background: rgba(240, 248, 255, 0.5);
+  display: none;
+  @include mobile {
+    display: initial;
+  }
+  span i {
+    @include centerItem;
+  }
+}
+
+
