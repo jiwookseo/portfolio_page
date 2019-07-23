@@ -16,7 +16,7 @@
       />
       <p class="Content">{{content}}</p>
     </div>
-    <div id="disqus_thread" class="pd-3"></div>
+    <div id="disqus_thread" class="px-4"></div>
     <LoadingSpinner v-show="loading" :message="'Translating...'" />
     <div class="btn-box-bottom">
       <div class="tr-btn" @click="askToTranslate = !askToTranslate" title="Translate">
