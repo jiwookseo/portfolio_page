@@ -18,6 +18,10 @@
       </div>
     </div>
 
+    <div>
+      <button>Chat Bot Button</button>
+    </div>
+
     <transition name="weatherB">
       <div id="weather" v-show="checkWeather">
         <div title="Today's weather" v-on:close="exit">
