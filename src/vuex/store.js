@@ -10,7 +10,9 @@ const state = {
   user: null,
   loading: false,
   error: null,
-  loginSuccess: false
+  loginSuccess: false,
+  posts: [],
+  portfolios: []
 }
 export default new Vuex.Store({
   state,
@@ -31,6 +33,12 @@ export default new Vuex.Store({
     },
     loginSuccess (state, payload) {
       state.loginSuccess = payload
+    },
+    getPosts(state, payload) {
+      state.posts = payload;
+    },
+    getPortfolios(state, payload) {
+      state.portfolios = payload;
     }
   }
 })
