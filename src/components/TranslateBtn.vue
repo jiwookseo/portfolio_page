@@ -85,26 +85,28 @@ export default {
         this.translatedText[target].length !== this.textDOMs.length ||
         force
       ) {
-        this.loading = true;
         this.textDOMs = document.querySelectorAll(".text");
-        this.originalText = [];
-        this.translatedText[target] = Array(this.textDOMs.length);
-        this.textDOMs.forEach(dom => this.originalText.push(dom.innerText));
-        let counter = 0;
-        this.textDOMs.forEach((dom, i) => {
-          this.originalText.push(dom.innerText);
-          translateText(source, target, dom.innerText)
-            .then(res => {
-              dom.innerText = res.translatedText;
-              this.translatedText[target][i] = res.translatedText;
-              counter++;
-              if (counter === this.textDOMs.length) this.loading = false;
-            })
-            .catch(() => {
-              counter++;
-              if (counter === this.textDOMs.length) this.loading = false;
-            });
-        });
+        if (this.textDOMs.length) {
+          this.loading = true;
+          this.originalText = [];
+          this.translatedText[target] = Array(this.textDOMs.length);
+          this.textDOMs.forEach(dom => this.originalText.push(dom.innerText));
+          let counter = 0;
+          this.textDOMs.forEach((dom, i) => {
+            this.originalText.push(dom.innerText);
+            translateText(source, target, dom.innerText)
+              .then(res => {
+                dom.innerText = res.translatedText;
+                this.translatedText[target][i] = res.translatedText;
+                counter++;
+                if (counter === this.textDOMs.length) this.loading = false;
+              })
+              .catch(() => {
+                counter++;
+                if (counter === this.textDOMs.length) this.loading = false;
+              });
+          });
+        }
       } else {
         this.textDOMs.forEach(
           (dom, i) => (dom.innerText = this.translatedText[target][i])
