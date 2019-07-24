@@ -31,13 +31,15 @@ export default {
   },
   data() {
     return {
-      portfolio: {
-        created_at: {seconds: 0}
-      }
     };
   },
+  computed: {
+    portfolio() {
+      return this.$store.getters.getPortfolio(this.$route.params.id);
+    }
+  },
   mounted() {
-    this.getPortfolio();
+    this.$store.dispatch("getPortfolios");
     var disqus_config = function() {
       this.page.url = "https://ssafy-teamsix.firebaseapp.com/"; // Replace PAGE_URL with your page's canonical URL variable
       this.page.identifier = this.$route.params.id; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
@@ -52,14 +54,14 @@ export default {
     console.log("PortfolioDetailPage.vue Mounted")
   },
   methods: {
-    getPortfolio() {
-      firestore
-        .getPortfolio(this.$route.params.id)
-        .then(res => (this.portfolio = res));
-    },
     date_created(created_at) {
-      const date = new Date(created_at * 1000);
-      return String(date).split("GMT")[0];
+      if (created_at === 0) {
+        return ""
+      }
+      else {
+        const date = new Date(created_at * 1000);
+        return String(date).split("GMT")[0];
+      }
     },
   }
 };
