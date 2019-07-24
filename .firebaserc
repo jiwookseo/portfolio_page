@@ -1,6 +1,5 @@
 {
   "projects": {
-    "default": "your-firebase-project-id",
     "staging": "ssafy-teamsix"
   }
 }
