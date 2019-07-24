@@ -39,6 +39,7 @@ export default {
   mounted() {
     this.$store.dispatch("getPosts");
     this.$store.dispatch("getPortfolios");
+    console.log("App.vue Mounted");
   }
 };
 </script>
