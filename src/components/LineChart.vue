@@ -4,8 +4,8 @@ import { Line } from "vue-chartjs";
 
 
 
-console.log(process.env.VUE_APP_ACCESS_TOKKEN);
-const labURL = `https://lab.ssafy.com/api/v4/projects/6043/repository/commits/?private_token=`+process.env.VUE_APP_ACCESS_TOKKEN+'&per_page=321';
+
+const labURL = `https://lab.ssafy.com/api/v4/projects/7508/repository/commits/?private_token=`+process.env.VUE_APP_ACCESS_TOKKEN+'&per_page=321';
 let ydate = [];
 const pointBackgroundColor = [
   "rgb(172, 248, 139)",
@@ -82,7 +82,7 @@ export default {
   },
   methods: {
     getData() {
-      axios.defaults.baseURL = `https://lab.ssafy.com/api/v4/projects/6043/repository/commits/?private_token=`+process.env.VUE_APP_ACCESS_TOKKEN+'&per_page=321';
+      axios.defaults.baseURL = `https://lab.ssafy.com/api/v4/projects/7508/repository/commits/?private_token=`+process.env.VUE_APP_ACCESS_TOKKEN+'&per_page=321';
       axios
         .get(labURL)
         .then(response => {
