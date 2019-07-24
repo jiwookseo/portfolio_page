@@ -71,6 +71,13 @@
           @keydown.enter="signUp"
         ></v-text-field>
         <v-text-field
+          v-model="name"
+          label="Name"
+          required
+          class="mb-2"
+          @keydown.enter="signUp"
+        ></v-text-field>
+        <v-text-field
           v-model="password"
           :rules="passwordRules"
           label="Password"
@@ -131,7 +138,8 @@ export default {
         v => !v || v.length >= 6 || "Password must be greater than 6 characters"
       ],
       password: "",
-      passwordConfirm: ""
+      passwordConfirm: "",
+      name: ""
     };
   },
   watch: {
@@ -170,6 +178,7 @@ export default {
     signUp() {
       if(
         typeof this.email === "undefined" ||
+        typeof this.name === "undefined" ||
         typeof this.password === "undefined" ||
         typeof this.passwordConfirm === "undefined" ){
         Vue.swal("Error", "Email and password is required", "error");

@@ -15,13 +15,21 @@ export default {
         user => {
           commit('setLoading', false)
           Vue.swal("Welcome!", "You have signed up successfully", "success")
-          const newUser = {
-            id: user.uid,
-            name: user.displayName, // payload로 name 값 받기?
-            email: user.email,
-            photoUrl: user.photoURL
+
+          user = firebaseAuth.currentUser;
+
+          if(user){
+            user.updateProfile({
+               displayName: payload.name
+            }).then(()=>{
+              const newUser = {
+                id: user.uid,
+                name: user.displayName,
+                email: user.email
+              }
+              commit('setUser', newUser)
+            })
           }
-          commit('setUser', newUser)
         }
       )
       .catch(
@@ -44,14 +52,9 @@ export default {
           commit('setLoading', false)
           commit('loginSuccess', true)
           Vue.swal("Welcome!", "Login successful", "success")
-          console.log(payload.email)
-          const newUser = {
-            id: user.uid,
-            name: user.displayName,
-            email: user.email,
-            photoUrl: user.photoURL
-          }
-          commit('setUser', newUser)
+
+          user = firebaseAuth.currentUser;
+          commit('setUser', user)
         }
       )
       .catch(
