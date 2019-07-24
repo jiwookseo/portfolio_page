@@ -24,6 +24,8 @@ const state = {
     img: '',
     created_at: {seconds: 0}
   },
+  userAll: [],
+  userInfo: null
 }
 export default new Vuex.Store({
   state,
@@ -50,6 +52,12 @@ export default new Vuex.Store({
     },
     getPortfolios(state, payload) {
       state.portfolios = payload;
+    },
+    getUserAll(state, payload) {
+      state.userAll = payload;
+    },
+    getUserInfo(state, payload) {
+      state.userInfo = payload;
     }
   }
 })

@@ -94,7 +94,9 @@ export default {
     Radarchart
   },
   data() {
-    return {};
+    return {
+      userInfo: {}
+    };
   },
   computed: {
     loginSuccess() {

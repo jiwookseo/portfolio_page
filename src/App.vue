@@ -39,6 +39,7 @@ export default {
   mounted() {
     this.$store.dispatch("getPosts");
     this.$store.dispatch("getPortfolios");
+    this.$store.dispatch("getUserAll");
   }
 };
 </script>

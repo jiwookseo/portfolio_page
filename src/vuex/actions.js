@@ -138,5 +138,17 @@ export default {
     firestore.getPortfolios().then(res => {
       commit('getPortfolios', res)
     })
-  }
+  },
+  getUserAll({commit}) {
+    firestore.getUserAll().then(res => {
+      commit('getUserAll', res)
+    })
+  },
+  /*
+  getUserInfo({commit}) {
+    firestore.getUser().then(res => {
+      commit('getUserInfo', res)
+    })
+  },
+  */
 }

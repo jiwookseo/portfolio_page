@@ -1,7 +1,11 @@
 <template>
   <div>
-    <div class="chat-btn">
+    <div class="chat-btn" @click="chat = !chat">
       <i class="material-icons">chat</i>
+    </div>
+    <div v-show="chat">
+      <iframe class="chatBox" allow="microphone;" width="350" height="430" src="https://console.dialogflow.com/api-client/demo/embedded/10acde14-fbcc-4dd7-b815-a789f1727841">
+      </iframe>
     </div>
   </div>
 </template>
@@ -11,7 +15,9 @@ export default {
   name: "ChatBtn",
   components: {},
   data() {
-    return {};
+    return {
+      chat : false,
+    };
   }
 };
 </script>
@@ -48,5 +54,10 @@ export default {
 }
 .chat-btn {
   bottom: 20px;
+}
+.chatBox{
+  position: fixed;
+  bottom: 20px;
+  right: 85px;
 }
 </style>

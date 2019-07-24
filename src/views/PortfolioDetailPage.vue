@@ -13,10 +13,11 @@
     <div class="portfolio-content">
       <h3 class="Title">{{portfolio.title}}</h3>
       <p class="Date">{{date_created(portfolio.created_at.seconds)}}</p>
-      <img class="Img" :src="portfolio.img">
+      <img class="Img" :src="portfolio.img" />
       <p class="Content">{{portfolio.content}}</p>
     </div>
     <div id="disqus_thread" class="px-4"></div>
+    <Comment :isPortfolio="true" :article="portfolio" />
     <Footer />
   </div>
 </template>
@@ -24,10 +25,12 @@
 <script>
 import firestore from "../firebase/firestore";
 import Footer from "../components/Footer";
+import Comment from "../components/Comment";
 
 export default {
   components: {
-    Footer
+    Footer,
+    Comment
   },
   data() {
     return {
@@ -51,7 +54,7 @@ export default {
       s.setAttribute("data-timestamp", +new Date());
       (d.head || d.body).appendChild(s);
     })();
-    console.log("PortfolioDetailPage.vue Mounted")
+    console.log("PortfolioDetailPage.vue Mounted");
   },
   methods: {
     date_created(created_at) {
@@ -71,9 +74,11 @@ export default {
 <style lang="scss" scoped>
 @import "../css/mixin.scss";
 @import "../css/style.scss";
-a, a:hover {
+a,
+a:hover {
   color: initial;
-  width: 0; height: 0;
+  width: 0;
+  height: 0;
 }
 .btn-box {
   height: 50px;
