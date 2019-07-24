@@ -19,7 +19,7 @@ Vue.config.productionTip = false;
 
 Vue.use(VueSimplemde);
 Vue.use(VueSweetalert2);
-
+const { VUE_APP_ACCESS_TOKKEN } = process.env;
 
 new Vue({
   created() {
