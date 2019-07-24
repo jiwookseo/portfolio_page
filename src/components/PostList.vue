@@ -14,7 +14,9 @@
         <p class="date">{{ date_created(posts[i-1].created_at.seconds) }}</p>
         <p class="content text">{{ posts[i-1].content }}</p>
         <div class="btn-box">
-          <div class="read-more" @click="viewDetail(i)">Read More</div>
+          <router-link :to="{name: 'PostDetailPage', params: {id: posts[i-1].id}}">
+            <div class="read-more">Read More</div>
+          </router-link>
           <div class="update" @click="openPostWriter(i)" v-if="adminUser">
             <i class="material-icons">edit</i>
           </div>
@@ -187,7 +189,9 @@ export default {
 <style lang="scss" scoped>
 @import "../css/mixin.scss";
 @import "../css/style.scss";
-
+a, a:hover {
+  color: initial;
+}
 .post {
   padding: 25px;
   h3 {

@@ -100,7 +100,7 @@ export default {
   },
   getPortfolio(id) {
     return new Promise((resolve, reject) => {
-      firestore.collection(PORTFOLIO).doc(id).get()
+      firestore.collection(PORTFOLIOS).doc(id).get()
         .then(doc => {
           if (doc.exists) {
             resolve({

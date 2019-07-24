@@ -19,7 +19,9 @@
           />
           <div class="content">
             <h3 class="title text">{{ portfolios[i-1].title }}</h3>
-            <div class="more text" @click="viewDetail(i)">Read More</div>
+            <router-link :to="{name: 'PortfolioDetailPage', params: {id: portfolios[i-1].id}}">
+              <div class="more text">Read More</div>
+            </router-link>
             <div class="btn-box" v-if="adminUser">
               <div class="update" @click="openPortfolioWriter(i)">
                 <i class="material-icons">edit</i>
@@ -260,6 +262,7 @@ a:hover {
       cursor: pointer;
       transition: all 0.3s;
       text-align: center;
+      color: white;
       white-space: nowrap;
       background-image: linear-gradient(to right, white 50%, transparent 50%);
       background-size: 200% 100%;
