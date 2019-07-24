@@ -16,6 +16,7 @@
       <p class="Content">{{post.content}}</p>
     </div>
     <div id="disqus_thread" class="px-4"></div>
+    <Comment :article="post" />
     <Footer />
   </div>
 </template>
@@ -23,15 +24,17 @@
 <script>
 import firestore from "../firebase/firestore";
 import Footer from "../components/Footer";
+import Comment from "../components/Comment";
 
 export default {
   components: {
-    Footer
+    Footer,
+    Comment
   },
   data() {
     return {
       post: {
-        created_at: {seconds: 0}
+        created_at: { seconds: 0 }
       }
     };
   },
@@ -57,7 +60,7 @@ export default {
     date_created(created_at) {
       const date = new Date(created_at * 1000);
       return String(date).split("GMT")[0];
-    },
+    }
   }
 };
 </script>
@@ -66,9 +69,11 @@ export default {
 <style lang="scss" scoped>
 @import "../css/mixin.scss";
 @import "../css/style.scss";
-a, a:hover {
+a,
+a:hover {
   color: initial;
-  width: 0; height: 0;
+  width: 0;
+  height: 0;
 }
 .btn-box {
   height: 50px;
@@ -111,5 +116,4 @@ a, a:hover {
 #disqus_thread {
   margin-bottom: 50px;
 }
-
 </style>
