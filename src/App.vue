@@ -36,6 +36,10 @@ export default {
       else return true;
     }
   },
+  mounted() {
+    this.$store.dispatch("getPosts");
+    this.$store.dispatch("getPortfolios");
+  }
 };
 </script>
 

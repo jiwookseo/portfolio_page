@@ -106,6 +106,9 @@ export default {
       )
         return false;
       else return true;
+    },
+    posts() {
+      return this.$store.state.posts
     }
   },
   watch: {
@@ -116,7 +119,6 @@ export default {
   data() {
     return {
       selectedPost: { created_at: { seconds: 0 } },
-      posts: [],
       dialogWrite: false,
       createMode: true,
       dialogDetail: false,
@@ -126,9 +128,6 @@ export default {
       snackbar_msg: "",
       postLimit: 4
     };
-  },
-  mounted() {
-    this.getPosts();
   },
   methods: {
     getPosts() {
@@ -150,7 +149,7 @@ export default {
     deletePost() {
       firestore
         .deletePost(this.deleteID)
-        .then(() => this.getPosts())
+        .then(() => this.$store.dispatch("getPosts"))
         .then(() => {
           this.snackbar_del = false;
           this.triggerSnackbarAlert("Post deleted");
