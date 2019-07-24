@@ -8,7 +8,7 @@ import VueApexCharts from "vue-apexcharts";
 import Vue from "vue";
 import axios from "axios";
 Vue.use(VueApexCharts);
-const labURL = `https://lab.ssafy.com/api/v4/projects/6043/repository/commits/?private_token=mSzGEe1Ba9KXsNynKz-A&per_page=100`;
+const labURL = `https://lab.ssafy.com/api/v4/projects/6043/repository/commits/?private_token=`+process.env.VUE_APP_ACCESS_TOKKEN+'&per_page=100';
 Vue.component("apexchart", VueApexCharts);
 
 var gtcount = 0;
@@ -81,7 +81,7 @@ export default {
   },
   methods: {
     getData() {
-      axios.defaults.baseURL = `https://lab.ssafy.com/api/v4/projects/6043/repository/commits/?private_token=mSzGEe1Ba9KXsNynKz-A&per_page=100`;
+      axios.defaults.baseURL = `https://lab.ssafy.com/api/v4/projects/6043/repository/commits/?private_token=`+process.env.VUE_APP_ACCESS_TOKKEN+'&per_page=100';
       axios
         .get(labURL)
         .then(response => {
