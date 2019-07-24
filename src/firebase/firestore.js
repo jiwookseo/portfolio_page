@@ -20,6 +20,54 @@ export default {
         .catch(err => reject(err));
     });
   },
+  getUserAll() {
+    return new Promise((resolve, reject) => {
+      let userAll = [];
+      firestore
+        .collection(USERS)
+        .orderBy("authority", "asc")
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            userAll.push({
+              id: doc.id,
+              ...doc.data()
+            });
+          });
+          resolve(userAll);
+        })
+        .catch(err => reject(err));
+    });
+  },
+  getUser(id) {
+    return new Promise((resolve, reject) => {
+      firestore.collection(USERS).doc(id).get()
+        .then(doc => {
+          if (doc.exists) {
+            resolve({
+              id: doc.id,
+              ...doc.data()
+            });
+          }
+          else {
+            // alert msg saying that the particular document does not exist
+          }
+        })
+        .catch(err => reject(err));
+    })
+  },
+  updateUser(docID, authority) {
+    return new Promise((resolve, reject) => {
+      firestore
+        .collection(USERS)
+        .doc(docID)
+        .update({
+          authority: authority
+        })
+        .then(res => resolve(res))
+        .catch(err => reject(err));
+    });
+  },
   getPosts() {
     return new Promise((resolve, reject) => {
       let posts = [];

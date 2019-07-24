@@ -12,7 +12,9 @@ const state = {
   error: null,
   loginSuccess: false,
   posts: [],
-  portfolios: []
+  portfolios: [],
+  userAll: [],
+  userInfo: null
 }
 export default new Vuex.Store({
   state,
@@ -39,6 +41,12 @@ export default new Vuex.Store({
     },
     getPortfolios(state, payload) {
       state.portfolios = payload;
+    },
+    getUserAll(state, payload) {
+      state.userAll = payload;
+    },
+    getUserInfo(state, payload) {
+      state.userInfo = payload;
     }
   }
 })

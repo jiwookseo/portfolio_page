@@ -6,6 +6,21 @@
     </router-link>
   </div>
   <h2 class="section-title">Admin Page</h2>
+
+  <v-container>
+    <v-data-table
+      :headers="headers"
+      :items="userAll"
+      hide-actions
+      class="elevation-1"
+    >
+      <template slot="items" slot-scope="props">
+        <td class="text-xs-left">{{ props.item.email }}</td>
+        <td class="text-xs-left">{{ props.item.authority }}</td>
+      </template>
+    </v-data-table>
+  </v-container>
+
   <div class="content-container">
     <div id="visits-chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
   </div>
@@ -18,15 +33,16 @@ import Vue from 'vue'
 import HighchartsVue from 'highcharts-vue'
 import Highcharts from 'highcharts'
 
-
-
-
 export default {
   name: "AdminPage",
   data() {
     return {
       logs: [],
       times: [],
+      headers: [
+        {text: '이메일', value: 'email', sortable: false},
+        {text: '권한', value: 'authority'}
+      ]
     }
   },
   mounted() {
@@ -37,7 +53,15 @@ export default {
       this.computedLogs();
     }
   },
+  computed: {
+    userAll() {
+      return this.$store.state.userAll
+    }
+  },
   methods: {
+    getUserAll() {
+      firestore.getUserAll().then(res => (this.userAll = res));
+    },
     async getLogs() {
       this.logs = await firestore.getLog();
     },
