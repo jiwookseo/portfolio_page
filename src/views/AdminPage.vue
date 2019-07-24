@@ -14,10 +14,11 @@
       hide-actions
       class="elevation-1"
     >
-      <template slot="items" slot-scope="props">
-        <td class="text-xs-left">{{ props.item.email }}</td>
-        <td class="text-xs-left">{{ props.item.authority }}</td>
-      </template>
+    <template slot="items" slot-scope="props">
+      <td class="text-xs-left">{{ props.item.email }}</td>
+      <td class="text-xs-left">{{ props.item.authority }}</td>
+      <td class="text-xs-left"><v-btn text small color="primary">수정</v-btn></td>
+    </template>
     </v-data-table>
   </v-container>
 
@@ -41,7 +42,8 @@ export default {
       times: [],
       headers: [
         {text: '이메일', value: 'email', sortable: false},
-        {text: '권한', value: 'authority'}
+        {text: '권한', value: 'authority'},
+        {text: '권한 변경', value: 'modify', sortable: false}
       ]
     }
   },
