@@ -121,6 +121,9 @@ export default {
       )
         return false;
       else return true;
+    },
+    portfolios() {
+      return this.$store.state.portfolios
     }
   },
   data() {
@@ -130,7 +133,6 @@ export default {
         img: "http://anzancity.ir/uploads/posts/village-warning.jpg"
       },
       created_at: 0,
-      portfolios: [],
       dialogWrite: false,
       createMode: true,
       dialogDetail: false,
@@ -140,9 +142,6 @@ export default {
       snackbar_msg: "", // For snackbar_alert
       portfolioLimit: 4
     };
-  },
-  mounted() {
-    this.getPortfolios();
   },
   methods: {
     getPortfolios() {
@@ -169,7 +168,7 @@ export default {
     deletePortfolio() {
       firestore
         .deletePortfolio(this.deleteID)
-        .then(() => this.getPortfolios())
+        .then(() => this.$store.dispatch("getPortfolios"))
         .then(() => {
           this.snackbar_del = false;
           this.triggerSnackbarAlert("Portfolio deleted");

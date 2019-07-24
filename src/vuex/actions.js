@@ -2,7 +2,8 @@ import Vue from 'vue';
 import firebase from "firebase";
 import {
   firebaseAuth
-} from '@/firebase/firebaseAuth'
+} from '@/firebase/firebaseAuth';
+import firestore from "../firebase/firestore";
 
 export default {
   signUserUp({ // 로컬 회원가입
@@ -118,5 +119,15 @@ export default {
     commit
   }, payload) {
     commit('setError', payload)
+  },
+  getPosts({commit}) {
+    firestore.getPosts().then(res => {
+      commit('getPosts', res)
+    })
+  },
+  getPortfolios({commit}) {
+    firestore.getPortfolios().then(res => {
+      commit('getPortfolios', res)
+    })
   }
 }

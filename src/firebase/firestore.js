@@ -26,6 +26,23 @@ export default {
         .catch(err => reject(err));
     });
   },
+  getPost(id) {
+    return new Promise((resolve, reject) => {
+      firestore.collection(POSTS).doc(id).get()
+        .then(doc => {
+          if (doc.exists) {
+            resolve({
+              id: doc.id,
+              ...doc.data()
+            });
+          }
+          else {
+            // alert msg saying that the particular document does not exist
+          }
+        })
+        .catch(err => reject(err));
+    })
+  },
   postPost(title, content) {
     return new Promise((resolve, reject) => {
       firestore
@@ -80,6 +97,23 @@ export default {
         })
         .catch(err => reject(err));
     });
+  },
+  getPortfolio(id) {
+    return new Promise((resolve, reject) => {
+      firestore.collection(PORTFOLIO).doc(id).get()
+        .then(doc => {
+          if (doc.exists) {
+            resolve({
+              id: doc.id,
+              ...doc.data()
+            });
+          }
+          else {
+            // alert msg saying that the particular document does not exist
+          }
+        })
+        .catch(err => reject(err));
+    })
   },
   postPortfolio(title, content, img) {
     return new Promise((resolve, reject) => {
