@@ -29,6 +29,12 @@ export default {
                 email: user.email
               }
               commit('setUser', newUser)
+
+              let userEmail = newUser.email
+              let userAuthority = '3'
+              firestore.postUser(userEmail, userAuthority).then(() => {
+                console.log("success postUser")
+              });
             })
           }
         }
