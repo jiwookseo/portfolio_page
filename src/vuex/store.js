@@ -12,7 +12,18 @@ const state = {
   error: null,
   loginSuccess: false,
   posts: [],
+  postExample: {
+    title: '',
+    content: '',
+    created_at: {seconds: 0}
+  },
   portfolios: [],
+  portfolioExample: {
+    title: '',
+    content: '',
+    img: '',
+    created_at: {seconds: 0}
+  },
   userAll: [],
   userInfo: null
 }

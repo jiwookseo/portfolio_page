@@ -30,6 +30,7 @@ export default {
   },
   mounted() {
     this.addLog();
+    this.$store.dispatch("getPosts");
   },
   methods: {
     addLog() {

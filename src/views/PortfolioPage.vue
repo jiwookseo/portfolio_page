@@ -28,6 +28,7 @@ export default {
   },
   mounted() {
     this.addLog();
+    this.$store.dispatch("getPortfolios");
   },
   methods: {
     addLog() {

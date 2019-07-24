@@ -11,7 +11,7 @@
       </router-link>
     </div>
     <div class="post-content">
-      <h3 class="Title">{{post.title}}</h3>
+      <h3 class="Title">{{post.title || ""}}</h3>
       <p class="Date">{{date_created(post.created_at.seconds)}}</p>
       <p class="Content">{{post.content}}</p>
     </div>
@@ -33,13 +33,15 @@ export default {
   },
   data() {
     return {
-      post: {
-        created_at: { seconds: 0 }
-      }
     };
   },
+  computed: {
+    post() {
+      return this.$store.getters.getPost(this.$route.params.id);
+    }
+  },
   mounted() {
-    this.getPost();
+    this.$store.dispatch("getPosts");
     var disqus_config = function() {
       this.page.url = "https://ssafy-teamsix.firebaseapp.com/"; // Replace PAGE_URL with your page's canonical URL variable
       this.page.identifier = this.$route.params.id; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
@@ -51,16 +53,17 @@ export default {
       s.setAttribute("data-timestamp", +new Date());
       (d.head || d.body).appendChild(s);
     })();
-    // Firestore => Vuex => component
   },
   methods: {
-    getPost() {
-      firestore.getPost(this.$route.params.id).then(res => (this.post = res));
-    },
     date_created(created_at) {
-      const date = new Date(created_at * 1000);
-      return String(date).split("GMT")[0];
-    }
+      if (created_at === 0) {
+        return ""
+      }
+      else {
+        const date = new Date(created_at * 1000);
+        return String(date).split("GMT")[0];
+      }
+    },
   }
 };
 </script>

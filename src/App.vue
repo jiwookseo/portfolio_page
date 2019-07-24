@@ -40,8 +40,6 @@ export default {
     this.$store.dispatch("getPosts");
     this.$store.dispatch("getPortfolios");
     this.$store.dispatch("getUserAll");
-    
-    console.log("App.vue Mounted");
   }
 };
 </script>
