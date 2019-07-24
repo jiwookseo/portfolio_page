@@ -72,6 +72,7 @@
         ></v-text-field>
         <v-text-field
           v-model="name"
+          :rules="nameRules"
           label="Name"
           required
           class="mb-2"
@@ -132,6 +133,9 @@ export default {
       emailRules: [
         v => !!v || "E-mail is required",
         v => /.+@.+/.test(v) || "E-mail must be valid"
+      ],
+      nameRules: [
+        v => !!v || "Name is required"
       ],
       passwordRules: [
         v => !!v || "Password is required",
@@ -229,7 +233,7 @@ export default {
 
 .dialog-outer {
   width: 100%;
-  height: 400px;
+  height: 450px;
   background: white;
   padding: 20px;
   position: relative;

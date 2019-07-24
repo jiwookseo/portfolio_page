@@ -5,8 +5,21 @@ const firestore = Firebase.firestore();
 
 const POSTS = "posts";
 const PORTFOLIOS = "portfolios";
+const USERS = "users";
 
 export default {
+  postUser(email, authority) {
+    return new Promise((resolve, reject) => {
+      firestore
+        .collection(USERS)
+        .add({
+          email,
+          authority
+        })
+        .then(res => resolve(res))
+        .catch(err => reject(err));
+    });
+  },
   getPosts() {
     return new Promise((resolve, reject) => {
       let posts = [];
