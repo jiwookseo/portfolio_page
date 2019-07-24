@@ -14,6 +14,7 @@ import 'aos/dist/aos.css';
 import * as firebase from 'firebase'
 import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css';
+import './registerServiceWorker'
 
 Vue.config.productionTip = false;
 
