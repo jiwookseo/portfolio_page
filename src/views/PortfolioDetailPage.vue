@@ -16,7 +16,6 @@
       <img class="Img" :src="portfolio.img" />
       <p class="Content">{{portfolio.content}}</p>
     </div>
-    <div id="disqus_thread" class="px-4"></div>
     <Comment :isPortfolio="true" :article="portfolio" />
     <Footer />
   </div>
@@ -33,8 +32,7 @@ export default {
     Comment
   },
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
     portfolio() {
@@ -43,29 +41,17 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getPortfolios");
-    var disqus_config = function() {
-      this.page.url = "https://ssafy-teamsix.firebaseapp.com/"; // Replace PAGE_URL with your page's canonical URL variable
-      this.page.identifier = this.$route.params.id; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-    (function() {
-      var d = document,
-        s = d.createElement("script");
-      s.src = "https://ssafy-teamsix.disqus.com/embed.js";
-      s.setAttribute("data-timestamp", +new Date());
-      (d.head || d.body).appendChild(s);
-    })();
     console.log("PortfolioDetailPage.vue Mounted");
   },
   methods: {
     date_created(created_at) {
       if (created_at === 0) {
-        return ""
-      }
-      else {
+        return "";
+      } else {
         const date = new Date(created_at * 1000);
         return String(date).split("GMT")[0];
       }
-    },
+    }
   }
 };
 </script>
