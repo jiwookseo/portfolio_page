@@ -54,10 +54,17 @@
 
 
 @keyframes logo-color {
-  0% {background: #00D8E6;}
-  33% {background: #00C0FF;}
-  67% {background: #00A2FF;}
-  100% {background: #00A2FF;}
+  0% {background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 0%, #00D8E6 0%, #00C0FF 0%, #00A2FF 0%);}
+  2% {background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 0%, #00D8E6 0%, #00C0FF 0%, #00A2FF 20%);}
+  4% {background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 0%, #00D8E6 0%, #00C0FF 20%, #00A2FF 40%);}
+  6% {background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 0%, #00D8E6 20%, #00C0FF 40%, #00A2FF 60%);}
+  8% {background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 20%, #00D8E6 40%, #00C0FF 60%, #00A2FF 80%);}
+  10% {background: linear-gradient(to top right, #00A2FF 20%, #00C0FF 40%, #00D8E6 60%, #00C0FF 80%, #00A2FF 100%);}
+  12% {background: linear-gradient(to top right, #00A2FF 40%, #00C0FF 60%, #00D8E6 80%, #00C0FF 100%, #00A2FF 100%);}
+  14% {background: linear-gradient(to top right, #00A2FF 60%, #00C0FF 80%, #00D8E6 100%, #00C0FF 100%, #00A2FF 105%);}
+  16% {background: linear-gradient(to top right, #00A2FF 80%, #00C0FF 100%, #00D8E6 100%, #00C0FF 100%, #00A2FF 100%);}
+  18% {background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 0%, #00D8E6 0%, #00C0FF 0%, #00A2FF 0%);}
+  100% {background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 0%, #00D8E6 0%, #00C0FF 0%, #00A2FF 0%);}
 }
 
 .sb-nav-logo, .sb-nav-menu {
@@ -70,10 +77,9 @@
 .sb-nav-logo {
   position: relative;
 }
-
 .team6-logo {
   width: 40px; height: 34px;
-  background: $blue-accent;
+  background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 0%, #00D8E6 0%, #00C0FF 0%, #00A2FF 0%);
   position: absolute;
   transform: skewY(5deg);
   color: white;
@@ -89,7 +95,7 @@
     left: 2.5%;
   }
   &:hover {
-    animation: logo-color 0.3s linear infinite alternate;
+    animation: logo-color 1s ease infinite;
   }
   & > div {
     position: absolute;
