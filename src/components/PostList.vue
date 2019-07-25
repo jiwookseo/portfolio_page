@@ -41,7 +41,6 @@
         <WriteDialog
           @child="parents"
           @child_snackbar="parent_snackbar"
-          @child_updatePost="parent_updatePost"
           :article="selectedPost"
           :dialogWrite="dialogWrite"
         />
@@ -112,7 +111,7 @@ export default {
       else return true;
     },
     posts() {
-      return this.$store.state.posts
+      return this.$store.state.posts;
     }
   },
   watch: {
@@ -159,9 +158,6 @@ export default {
           this.triggerSnackbarAlert("Post deleted");
         });
     },
-    parent_updatePost() {
-      this.$store.dispatch("getPosts");
-    },
     parent_snackbar(msg) {
       this.triggerSnackbarAlert(msg);
     },
@@ -191,7 +187,8 @@ export default {
 <style lang="scss" scoped>
 @import "../css/mixin.scss";
 @import "../css/style.scss";
-a, a:hover {
+a,
+a:hover {
   color: initial;
 }
 .post {

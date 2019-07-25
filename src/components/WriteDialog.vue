@@ -103,14 +103,14 @@ export default {
           firestore
             .postPortfolio(this.title, this.content, this.img)
             .then(() => {
-              this.$emit("child_updatePortfolio");
+              this.$store.dispatch("getPortfolios");
               this.reset();
               this.closeDialog();
               this.triggerParentSnackbar("Portfolio created");
             });
         } else {
           firestore.postPost(this.title, this.content).then(() => {
-            this.$emit("child_updatePost");
+            this.$store.dispatch("getPost");
             this.reset();
             this.closeDialog();
             this.triggerParentSnackbar("Post created");
@@ -123,7 +123,7 @@ export default {
         firestore
           .updatePortfolio(this.article.id, this.title, this.content, this.img)
           .then(() => {
-            this.$emit("child_updatePortfolio");
+            this.$store.dispatch("getPortfolios");
             this.closeDialog();
             this.reset();
             this.triggerParentSnackbar("Portfolio updated");
@@ -132,7 +132,7 @@ export default {
         firestore
           .updatePost(this.article.id, this.title, this.content)
           .then(() => {
-            this.$emit("child_updatePost");
+            this.$store.dispatch("getPost");
             this.closeDialog();
             this.reset();
             this.triggerParentSnackbar("Post updated");

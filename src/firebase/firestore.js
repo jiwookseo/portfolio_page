@@ -79,19 +79,30 @@ export default {
         .orderBy("created_at", "desc")
         .get()
         .then(snapshot => {
-          snapshot.docs.forEach(async doc => {
-            const comments = await ref
+          let counter = 0;
+          snapshot.docs.forEach(doc => {
+            ref
               .doc(doc.id)
               .collection(COMMENTS)
               .orderBy("created_at", "desc")
-              .get();
-            posts.push({
-              id: doc.id,
-              comments: comments.docs.map(res => res.data()),
-              ...doc.data()
-            });
+              .get()
+              .then(comments => {
+                posts.push({
+                  id: doc.id,
+                  comments: comments.docs.map(res => ({
+                    id: res.id,
+                    ...res.data()
+                  })),
+                  ...doc.data()
+                });
+              })
+              .then(() => {
+                counter++;
+                if (counter === snapshot.docs.length) {
+                  resolve(posts);
+                }
+              });
           });
-          resolve(posts);
         })
         .catch(err => reject(err));
     });
@@ -140,19 +151,30 @@ export default {
         .orderBy("created_at", "desc")
         .get()
         .then(snapshot => {
-          snapshot.docs.forEach(async doc => {
-            const comments = await ref
+          let counter = 0;
+          snapshot.docs.forEach(doc => {
+            ref
               .doc(doc.id)
               .collection(COMMENTS)
               .orderBy("created_at", "desc")
-              .get();
-            portfolios.push({
-              id: doc.id,
-              comments: comments.docs.map(res => res.data()),
-              ...doc.data()
-            });
+              .get()
+              .then(comments => {
+                portfolios.push({
+                  id: doc.id,
+                  comments: comments.docs.map(res => ({
+                    id: res.id,
+                    ...res.data()
+                  })),
+                  ...doc.data()
+                });
+              })
+              .then(() => {
+                counter++;
+                if (counter === snapshot.docs.length) {
+                  resolve(portfolios);
+                }
+              });
           });
-          resolve(portfolios);
         })
         .catch(err => reject(err));
     });
@@ -195,7 +217,7 @@ export default {
         .catch(err => reject(err));
     });
   },
-  postComment(isPortfolio, articleID, content) {
+  postComment(isPortfolio, articleID, content, user) {
     return new Promise((resolve, reject) => {
       const article = firestore
         .collection(isPortfolio ? PORTFOLIOS : POSTS)
@@ -207,6 +229,8 @@ export default {
         .collection(COMMENTS)
         .add({
           content,
+          userID: user.id,
+          userName: user.name,
           created_at: Firebase.firestore.FieldValue.serverTimestamp(),
           updated_at: Firebase.firestore.FieldValue.serverTimestamp()
         })

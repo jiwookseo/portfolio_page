@@ -1,6 +1,6 @@
 <template>
-  <div class="px-4 pb-5">
-    <h3>{{comments.length}} Comments</h3>
+  <div class="comment-box">
+    <div class="title font-weight-bold mb-4 ml-1">{{comments.length}} Comments</div>
     <!-- {{article.comments}} -->
     <v-text-field
       v-model="content"
@@ -9,8 +9,23 @@
       solo
       @keyup.enter="create"
     ></v-text-field>
-    <p v-if="!comments.length">Be the first to comment.</p>
-    <p v-else v-for="comment in comments" :key="comment.id">{{comment.content}}</p>
+    <v-card>
+      <v-list v-if="!comments.length">
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>Be the first to comment.</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <v-list two-line v-else>
+        <v-list-item v-for="comment in comments" :key="comment.id" read-only>
+          <v-list-item-content>
+            <v-list-item-title>{{comment.content}}</v-list-item-title>
+            <v-list-item-subtitle>{{comment.userName}}</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-card>
   </div>
 </template>
 
@@ -39,30 +54,52 @@ export default {
       this.content = "";
     },
     create() {
-      // 로그인한 유저인지 확인
-      const getAction = this.isPortfolio ? "getPortfolios" : "getPosts";
-      console.log(getAction);
-      firestore
-        .postComment(this.isPortfolio, this.article.id, this.content) // user
-        .then(res => {
-          this.$store.dispatch(getAction);
-          this.reset();
-        })
-        .catch(res => console.log(res));
+      if (this.$store.state.user) {
+        const getAction = this.isPortfolio ? "getPortfolios" : "getPosts";
+        firestore
+          .postComment(
+            this.isPortfolio,
+            this.article.id,
+            this.content,
+            this.$store.state.user
+          ) // user
+          .then(res => {
+            this.$store.dispatch(getAction);
+            this.reset();
+          })
+          .catch(res => console.log(res));
+      }
     },
-    update() {
-      // // 댓글 쓴 사람과 로그인한 유저가 같은 유저인지 확인
-      const getAction = this.isPortfolio ? "getPortfolios" : "getPosts";
-      firestore
-        .updateComment(this.isPortfolio, this.article.id, this.content) // user
-        .then(() => {
-          this.$store.dispatch(getAction);
-          this.reset();
-        });
+    update(comment) {
+      if (
+        this.$store.state.user &&
+        this.$store.state.user.id === comment.userID
+      ) {
+        const getAction = this.isPortfolio ? "getPortfolios" : "getPosts";
+        firestore
+          .updateComment(this.isPortfolio, comment.id, this.content) // user
+          .then(() => {
+            this.$store.dispatch(getAction);
+            this.reset();
+          });
+      }
     }
   }
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "../css/mixin.scss";
+@import "../css/style.scss";
+.comment-box {
+  width: 60%;
+  margin: 50px auto;
+  padding: 10px;
+  @include viewportMax(800) {
+    width: 80%;
+  }
+  @include mobile {
+    width: 100%;
+  }
+}
 </style>
