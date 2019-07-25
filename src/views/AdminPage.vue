@@ -8,18 +8,49 @@
   <h2 class="section-title">Admin Page</h2>
 
   <v-container>
-    <v-data-table
-      :headers="headers"
-      :items="userAll"
-      hide-actions
-      class="elevation-1"
-    >
-    <template slot="items" slot-scope="props">
-      <td class="text-xs-left">{{ props.item.email }}</td>
-      <td class="text-xs-left">{{ props.item.authority }}</td>
-      <td class="text-xs-left"><v-btn text small color="primary">수정</v-btn></td>
-    </template>
-    </v-data-table>
+    <v-card>
+      <v-card-title>
+        <h1>User</h1>
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="search"
+          label="Search"
+          single-line
+          hide-details
+      ></v-text-field>
+      </v-card-title>
+      <v-data-table
+        :headers="headers"
+        :items="userAll"
+        :search="search"
+        hide-actions
+        class="elevation-1"
+        :loading="loading"
+      >
+      <template slot="items" slot-scope="props">
+        <td class="text-xs-left">{{ props.item.email }}</td>
+        <td class="text-xs-left" v-if="props.item.authority === '1'">관리자</td>
+        <td class="text-xs-left" v-else-if="props.item.authority === '2'">팀원</td>
+        <td class="text-xs-left" v-else-if="props.item.authority === '3'">방문자</td>
+        <td class="text-xs-left" v-if="props.item.authority === '1'"></td>
+        <td class="text-xs-center" v-if="props.item.authority != '1'">
+          <form @submit.prevent="changeAuth(props.item.id, props.item.selected)">
+            <v-flex xs10 sm6 d-flex>
+              <v-select
+                :items="auth"
+                label="권한 선택"
+                v-model="props.item.selected"
+                solo
+              ></v-select>
+              <v-btn text small color="primary" type="submit">수정</v-btn>
+            </v-flex>
+          </form>
+        </td>
+      </template>
+
+      </v-data-table>
+    </v-card>
   </v-container>
 
   <div class="content-container">
@@ -38,13 +69,16 @@ export default {
   name: "AdminPage",
   data() {
     return {
+      search: '',
+      auth: ['팀원', '방문자'],
       logs: [],
       times: [],
       headers: [
         {text: '이메일', value: 'email', sortable: false},
         {text: '권한', value: 'authority'},
         {text: '권한 변경', value: 'modify', sortable: false}
-      ]
+      ],
+      loading: false
     }
   },
   mounted() {
@@ -57,12 +91,36 @@ export default {
   },
   computed: {
     userAll() {
-      return this.$store.state.userAll
-    }
+      return this.$store.state.userAll.map(user => ({
+          selected:"default",
+          ...user
+        })
+      )
+    },
   },
   methods: {
+    changeAuth(id, selected) {
+      this.loading = true;
+      let num = ''
+      if(selected === '방문자') num = '3'
+      else if(selected === '팀원') num = '2'
+      if(num === '3' || num === '2'){
+        firestore.updateUserById(id, num)
+        .then(() => {
+          console.log("update Success")
+          this.loading = false;
+          this.$store.dispatch("getUserAll");
+        })
+      }
+      else {
+        console.log("선택해주세요")
+        this.loading = false;
+      }
+    },
     getUserAll() {
-      firestore.getUserAll().then(res => (this.userAll = res));
+      firestore.getUserAll().then((res) => {
+        this.userAll = res
+      });
     },
     async getLogs() {
       this.logs = await firestore.getLog();
