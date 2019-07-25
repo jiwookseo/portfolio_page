@@ -1,5 +1,5 @@
 import Vue from "vue";
-import "./plugins/vuetify";
+import vuetify from "./plugins/vuetify";
 import VueSimplemde from "vue-simplemde";
 import "simplemde/dist/simplemde.min.css";
 import App from "./App.vue";
@@ -22,6 +22,7 @@ Vue.use(VueSimplemde);
 Vue.use(VueSweetalert2);
 
 new Vue({
+  vuetify,
   created() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
