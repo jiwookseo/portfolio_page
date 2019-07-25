@@ -15,7 +15,6 @@
       <p class="Date">{{date_created(post.created_at.seconds)}}</p>
       <p class="Content">{{post.content}}</p>
     </div>
-    <div id="disqus_thread" class="px-4"></div>
     <Comment :article="post" />
     <Footer />
   </div>
@@ -32,8 +31,7 @@ export default {
     Comment
   },
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
     post() {
@@ -42,28 +40,16 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getPosts");
-    var disqus_config = function() {
-      this.page.url = "https://ssafy-teamsix.firebaseapp.com/"; // Replace PAGE_URL with your page's canonical URL variable
-      this.page.identifier = this.$route.params.id; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-    (function() {
-      var d = document,
-        s = d.createElement("script");
-      s.src = "https://ssafy-teamsix.disqus.com/embed.js";
-      s.setAttribute("data-timestamp", +new Date());
-      (d.head || d.body).appendChild(s);
-    })();
   },
   methods: {
     date_created(created_at) {
       if (created_at === 0) {
-        return ""
-      }
-      else {
+        return "";
+      } else {
         const date = new Date(created_at * 1000);
         return String(date).split("GMT")[0];
       }
-    },
+    }
   }
 };
 </script>

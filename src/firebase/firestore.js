@@ -6,6 +6,7 @@ const firestore = Firebase.firestore();
 const POSTS = "posts";
 const PORTFOLIOS = "portfolios";
 const USERS = "users";
+const COMMENTS = "comments";
 
 export default {
   postUser(email, authority) {
@@ -44,9 +45,9 @@ export default {
           }
         })
         .catch(err => reject(err));
-    })
+    });
   },
-  getUserAll() {
+  updateUserById(docID, authority) {
     return new Promise((resolve, reject) => {
       let userAll = [];
       firestore
@@ -84,39 +85,39 @@ export default {
   // },
   getPosts() {
     return new Promise((resolve, reject) => {
-      let posts = [];
-      firestore
-        .collection(POSTS)
+      const posts = [];
+      const ref = firestore.collection(POSTS);
+      ref
         .orderBy("created_at", "desc")
         .get()
         .then(snapshot => {
+          let counter = 0;
           snapshot.docs.forEach(doc => {
-            posts.push({
-              id: doc.id,
-              ...doc.data()
-            });
+            ref
+              .doc(doc.id)
+              .collection(COMMENTS)
+              .orderBy("created_at", "desc")
+              .get()
+              .then(comments => {
+                posts.push({
+                  id: doc.id,
+                  comments: comments.docs.map(res => ({
+                    id: res.id,
+                    ...res.data()
+                  })),
+                  ...doc.data()
+                });
+              })
+              .then(() => {
+                counter++;
+                if (counter === snapshot.docs.length) {
+                  resolve(posts);
+                }
+              });
           });
-          resolve(posts);
         })
         .catch(err => reject(err));
     });
-  },
-  getPost(id) {
-    return new Promise((resolve, reject) => {
-      firestore.collection(POSTS).doc(id).get()
-        .then(doc => {
-          if (doc.exists) {
-            resolve({
-              id: doc.id,
-              ...doc.data()
-            });
-          }
-          else {
-            // alert msg saying that the particular document does not exist
-          }
-        })
-        .catch(err => reject(err));
-    })
   },
   postPost(title, content) {
     return new Promise((resolve, reject) => {
@@ -156,39 +157,39 @@ export default {
   },
   getPortfolios() {
     return new Promise((resolve, reject) => {
-      let portfolios = [];
-      firestore
-        .collection(PORTFOLIOS)
+      const portfolios = [];
+      const ref = firestore.collection(PORTFOLIOS);
+      ref
         .orderBy("created_at", "desc")
         .get()
         .then(snapshot => {
+          let counter = 0;
           snapshot.docs.forEach(doc => {
-            portfolios.push({
-              id: doc.id,
-              ...doc.data()
-            });
+            ref
+              .doc(doc.id)
+              .collection(COMMENTS)
+              .orderBy("created_at", "desc")
+              .get()
+              .then(comments => {
+                portfolios.push({
+                  id: doc.id,
+                  comments: comments.docs.map(res => ({
+                    id: res.id,
+                    ...res.data()
+                  })),
+                  ...doc.data()
+                });
+              })
+              .then(() => {
+                counter++;
+                if (counter === snapshot.docs.length) {
+                  resolve(portfolios);
+                }
+              });
           });
-          resolve(portfolios);
         })
         .catch(err => reject(err));
     });
-  },
-  getPortfolio(id) {
-    return new Promise((resolve, reject) => {
-      firestore.collection(PORTFOLIOS).doc(id).get()
-        .then(doc => {
-          if (doc.exists) {
-            resolve({
-              id: doc.id,
-              ...doc.data()
-            });
-          }
-          else {
-            // alert msg saying that the particular document does not exist
-          }
-        })
-        .catch(err => reject(err));
-    })
   },
   postPortfolio(title, content, img) {
     return new Promise((resolve, reject) => {
@@ -223,6 +224,42 @@ export default {
           title,
           content,
           img
+        })
+        .then(res => resolve(res))
+        .catch(err => reject(err));
+    });
+  },
+  postComment(isPortfolio, articleID, content, user) {
+    return new Promise((resolve, reject) => {
+      const article = firestore
+        .collection(isPortfolio ? PORTFOLIOS : POSTS)
+        .doc(articleID);
+      article.update({
+        updated_at: Firebase.firestore.FieldValue.serverTimestamp()
+      });
+      article
+        .collection(COMMENTS)
+        .add({
+          content,
+          userID: user.id,
+          userName: user.name,
+          created_at: Firebase.firestore.FieldValue.serverTimestamp(),
+          updated_at: Firebase.firestore.FieldValue.serverTimestamp()
+        })
+        .then(res => resolve(res))
+        .catch(err => reject(err));
+    });
+  },
+  updateComment(isPortfolio, articleID, commentID, content) {
+    return new Promise((resolve, reject) => {
+      firestore
+        .collection(isPortfolio ? PORTFOLIOS : POSTS)
+        .doc(articleID)
+        .collection(COMMENTS)
+        .doc(commentID)
+        .update({
+          content,
+          updated_at: Firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(res => resolve(res))
         .catch(err => reject(err));
