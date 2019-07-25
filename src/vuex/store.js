@@ -24,6 +24,10 @@ const state = {
     img: '',
     created_at: {seconds: 0}
   },
+  userExample: {
+    email: '',
+    authority: ''
+  },
   userAll: [],
   userInfo: null
 }

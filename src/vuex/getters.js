@@ -19,5 +19,8 @@ export default {
   },
   getPortfolio: (state) => (id) => {
     return state.portfolios.find(portfolio => portfolio.id === id) || state.portfolioExample
+  },
+  getUser: (state) => (id) => {
+    return state.users.find(user => user.id === id) || state.userExample
   }
 }

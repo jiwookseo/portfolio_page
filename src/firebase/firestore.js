@@ -56,7 +56,7 @@ export default {
         .catch(err => reject(err));
     })
   },
-  updateUser(docID, authority) {
+  updateUserById(docID, authority) {
     return new Promise((resolve, reject) => {
       firestore
         .collection(USERS)
