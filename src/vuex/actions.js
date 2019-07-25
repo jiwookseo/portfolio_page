@@ -21,17 +21,18 @@ export default {
 
           if(user){
             user.updateProfile({
-               displayName: payload.name
+               displayName: payload.name,
             }).then(()=>{
               const newUser = {
                 id: user.uid,
                 name: user.displayName,
-                email: user.email
+                email: user.email,
+                authority: '3'
               }
               commit('setUser', newUser)
 
               let userEmail = newUser.email
-              let userAuthority = '3'
+              let userAuthority = newUser.authority
               firestore.postUser(userEmail, userAuthority).then(() => {
                 console.log("success postUser")
               });
@@ -87,7 +88,7 @@ export default {
             id: user.uid,
             name: user.displayName,
             email: user.email,
-            photoUrl: user.photoURL
+            photoUrl: user.photoURL,
           }
           commit('setUser', newUser)
         }
