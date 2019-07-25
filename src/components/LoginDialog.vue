@@ -193,7 +193,8 @@ export default {
       } else {
         this.$store.dispatch("signUserUp", {
           email: this.email,
-          password: this.password
+          password: this.password,
+          name: this.name
         });
         this.showLogin = true;
         this.closePopup();

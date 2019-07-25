@@ -23,6 +23,8 @@
                 프로젝트 기간동안 좋은 결과물 만들 수 있도록 노력하겠습니다!<br><br>
                 프로젝트 진행 기간 : 2019.07.09. ~ 2019.07.19.
               </div>
+              <p v-if="user">{{user}}</p>
+              <p v-if="user">{{user.name}}</p>
             </v-flex>
           </v-layout>
         </v-container>
