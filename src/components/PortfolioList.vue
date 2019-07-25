@@ -47,7 +47,6 @@
         <WriteDialog
           @child="parents"
           @child_snackbar="parent_snackbar"
-          @child_updatePortfolio="parent_updatePortfolio"
           :article="selectedPortfolio"
           :dialogWrite="dialogWrite"
           :isPortfolio="true"
@@ -125,7 +124,7 @@ export default {
       else return true;
     },
     portfolios() {
-      return this.$store.state.portfolios
+      return this.$store.state.portfolios;
     }
   },
   data() {
@@ -175,9 +174,6 @@ export default {
           this.snackbar_del = false;
           this.triggerSnackbarAlert("Portfolio deleted");
         });
-    },
-    parent_updatePortfolio() {
-      this.$store.dispatch("getPortfolios");
     },
     parent_snackbar(msg) {
       this.triggerSnackbarAlert(msg);
