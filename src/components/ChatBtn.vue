@@ -55,9 +55,10 @@ export default {
 .chat-btn {
   bottom: 20px;
 }
-.chatBox{
+.chatBox {
   position: fixed;
   bottom: 20px;
   right: 85px;
+  z-index: 15;
 }
 </style>
