@@ -52,8 +52,11 @@ export default {
   name: "WriteDialog",
   props: {
     article: { type: Object },
-    dialogWrite: { type: Boolean, default: true },
+    dialogWrite: { type: Boolean, default: false },
     isPortfolio: { type: Boolean, default: false }
+  },
+  mounted() {
+    this.setData();
   },
   watch: {
     article: function() {
@@ -62,9 +65,7 @@ export default {
       }
     },
     dialogWrite: function() {
-      this.title = this.article.title;
-      this.content = this.article.content;
-      this.img = this.article.img;
+      this.setData();
     }
   },
   data() {
@@ -78,6 +79,11 @@ export default {
     };
   },
   methods: {
+    setData() {
+      this.title = this.article.title;
+      this.content = this.article.content;
+      this.img = this.article.img;
+    },
     reset() {
       this.$refs.form.reset();
       this.img = "http://anzancity.ir/uploads/posts/village-warning.jpg";
