@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import firestore from "../firebase/firestore";
 import Footer from "../components/Footer";
 import Comment from "../components/Comment";
 
