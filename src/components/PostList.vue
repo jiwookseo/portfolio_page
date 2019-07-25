@@ -14,9 +14,11 @@
         <p class="date">{{ date_created(posts[i-1].created_at.seconds) }}</p>
         <p class="content text">{{ posts[i-1].content }}</p>
         <div class="btn-box">
-          <router-link :to="{name: 'PostDetailPage', params: {id: posts[i-1].id}}">
-            <div class="read-more">Read More</div>
-          </router-link>
+          <div>
+            <router-link :to="{name: 'PostDetailPage', params: {id: posts[i-1].id}}">
+              <div class="read-more">Read More</div>
+            </router-link>
+          </div>
           <div class="update" @click="openPostWriter(i)" v-if="adminUser">
             <i class="material-icons">edit</i>
           </div>
@@ -132,9 +134,9 @@ export default {
     };
   },
   methods: {
-    getPosts() {
-      firestore.getPosts().then(res => (this.posts = res));
-    },
+    // getPosts() {
+    //   firestore.getPosts().then(res => (this.posts = res));
+    // },
     openPostWriter(index = -1) {
       this.selectedPost =
         index === -1 ? { created_at: { seconds: 0 } } : this.posts[index - 1];
@@ -158,7 +160,7 @@ export default {
         });
     },
     parent_updatePost() {
-      this.getPosts();
+      this.$store.dispatch("getPosts");
     },
     parent_snackbar(msg) {
       this.triggerSnackbarAlert(msg);

@@ -146,9 +146,9 @@ export default {
     };
   },
   methods: {
-    getPortfolios() {
-      firestore.getPortfolios().then(res => (this.portfolios = res));
-    },
+    // getPortfolios() {
+    //   firestore.getPortfolios().then(res => (this.portfolios = res));
+    // },
     openPortfolioWriter(index = -1) {
       this.selectedPortfolio =
         index === -1
@@ -177,7 +177,7 @@ export default {
         });
     },
     parent_updatePortfolio() {
-      this.getPortfolios();
+      this.$store.dispatch("getPortfolios");
     },
     parent_snackbar(msg) {
       this.triggerSnackbarAlert(msg);
