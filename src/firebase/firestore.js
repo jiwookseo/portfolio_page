@@ -47,7 +47,7 @@ export default {
         .catch(err => reject(err));
     });
   },
-  updateUserById(docID, authority) {
+  getUserAll() {
     return new Promise((resolve, reject) => {
       let userAll = [];
       firestore
@@ -63,6 +63,18 @@ export default {
           });
           resolve(userAll);
         })
+        .catch(err => reject(err));
+    });
+  },
+  updateUserById(docID, authority) {
+    return new Promise((resolve, reject) => {
+      firestore
+        .collection(USERS)
+        .doc(docID)
+        .update({
+          authority: authority
+        })
+        .then(res => resolve(res))
         .catch(err => reject(err));
     });
   },
