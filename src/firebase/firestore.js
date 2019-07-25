@@ -20,6 +20,32 @@ export default {
         .catch(err => reject(err));
     });
   },
+  updateUserAuthorityByEmail(email, authority) {
+    return new Promise((resolve, reject) => {
+      firestore.collection(USERS).get()
+        .then(snapshot => {
+          const docID = snapshot.docs.find(doc => doc.data().email === email).id
+          firestore.collection(USERS).doc(docID).update({authority})
+        })
+        .then(res => resolve(res))
+        .catch(err => reject(err));
+    });
+  },
+  getUserAuthority(email) {
+    return new Promise((resolve, reject) => {
+      firestore.collection(USERS).get()
+        .then(snapshot => {
+          const targetUser = snapshot.docs.find(doc => doc.data().email === email);
+          if (targetUser) {
+            resolve(targetUser.data().authority);
+          }
+          else {
+            resolve(null);
+          }
+        })
+        .catch(err => reject(err));
+    })
+  },
   getUserAll() {
     return new Promise((resolve, reject) => {
       let userAll = [];
@@ -39,35 +65,23 @@ export default {
         .catch(err => reject(err));
     });
   },
-  getUser(id) {
-    return new Promise((resolve, reject) => {
-      firestore.collection(USERS).doc(id).get()
-        .then(doc => {
-          if (doc.exists) {
-            resolve({
-              id: doc.id,
-              ...doc.data()
-            });
-          }
-          else {
-            // alert msg saying that the particular document does not exist
-          }
-        })
-        .catch(err => reject(err));
-    })
-  },
-  updateUser(docID, authority) {
-    return new Promise((resolve, reject) => {
-      firestore
-        .collection(USERS)
-        .doc(docID)
-        .update({
-          authority: authority
-        })
-        .then(res => resolve(res))
-        .catch(err => reject(err));
-    });
-  },
+  // getUser(id) {
+  //   return new Promise((resolve, reject) => {
+  //     firestore.collection(USERS).doc(id).get()
+  //       .then(doc => {
+  //         if (doc.exists) {
+  //           resolve({
+  //             id: doc.id,
+  //             ...doc.data()
+  //           });
+  //         }
+  //         else {
+  //           // alert msg saying that the particular document does not exist
+  //         }
+  //       })
+  //       .catch(err => reject(err));
+  //   })
+  // },
   getPosts() {
     return new Promise((resolve, reject) => {
       let posts = [];

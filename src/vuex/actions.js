@@ -18,8 +18,7 @@ export default {
           Vue.swal("Welcome!", "You have signed up successfully", "success")
 
           user = firebaseAuth.currentUser;
-
-          if(user){
+          if (user) {
             user.updateProfile({
                displayName: payload.name,
             }).then(()=>{
@@ -27,15 +26,11 @@ export default {
                 id: user.uid,
                 name: user.displayName,
                 email: user.email,
+                photoURL: null,
                 authority: '3'
               }
-              commit('setUser', newUser)
-
-              let userEmail = newUser.email
-              let userAuthority = newUser.authority
-              firestore.postUser(userEmail, userAuthority).then(() => {
-                console.log("success postUser")
-              });
+              commit('setUser', newUser);
+              firestore.postUser(newUser.email, newUser.authority);
             })
           }
         }
@@ -60,9 +55,12 @@ export default {
           commit('setLoading', false)
           commit('loginSuccess', true)
           Vue.swal("Welcome!", "Login successful", "success")
-
           user = firebaseAuth.currentUser;
-          commit('setUser', user)
+          const authority = firestore.getUserAuthority(user.email);
+          commit('setUser', {
+            ...user,
+            authority
+          })
         }
       )
       .catch(
@@ -81,16 +79,22 @@ export default {
     commit('clearError')
     firebaseAuth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
       .then(
-        user => {
+        async result => {
           commit('setLoading', false)
           Vue.swal("Welcome!", "Login successful", "success")
-          const newUser = {
-            id: user.uid,
-            name: user.displayName,
-            email: user.email,
-            photoUrl: user.photoURL,
+          const existingAuthority = await firestore.getUserAuthority(result.user.email)
+          const facebookUser = {
+            id: result.user.uid,
+            name: result.user.displayName,
+            email: result.user.email,
+            photoURL: result.user.photoURL,
+            authority: existingAuthority
           }
-          commit('setUser', newUser)
+          if (existingAuthority === null) { // if it's a new User
+            facebookUser.authority = "3"
+            firestore.postUser(facebookUser.email, facebookUser.authority);
+          }
+          commit('setUser', facebookUser)
         }
       )
       .catch(
@@ -104,12 +108,16 @@ export default {
   autoSignIn({
     commit
   }, payload) {
-    commit('setUser', {
-      id: payload.uid,
-      name: payload.displayName,
-      email: payload.email,
-      photoUrl: payload.photoURL
-    })
+    firestore.getUserAuthority(payload.email)
+    .then(authority =>
+      commit('setUser', {
+        id: payload.uid,
+        name: payload.displayName,
+        email: payload.email,
+        photoURL: payload.photoURL,
+        authority
+      })
+    )
   },
   logout({commit}) {
     firebaseAuth
@@ -120,6 +128,8 @@ export default {
       })
       .catch((error) => console.error(`SingOut Error: ${error}`))
   },
+
+
   clearError({
     commit
   }) {
