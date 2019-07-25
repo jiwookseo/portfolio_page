@@ -16,7 +16,6 @@
       />
       <p class="Content">{{content}}</p>
     </div>
-    <div id="disqus_thread" class="px-4"></div>
     <LoadingSpinner v-show="loading" :message="'Translating...'" />
     <div class="btn-box-bottom">
       <div class="tr-btn" @click="askToTranslate = !askToTranslate" title="Translate">
@@ -112,17 +111,6 @@ export default {
           this.translate("en", this.selectedLanguage, true);
         }, 500);
       }
-      var disqus_config = function() {
-        this.page.url = "https://ssafy-teamsix.firebaseapp.com/"; // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = this.article.id; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-      };
-      (function() {
-        var d = document,
-          s = d.createElement("script");
-        s.src = "https://ssafy-teamsix.disqus.com/embed.js";
-        s.setAttribute("data-timestamp", +new Date());
-        (d.head || d.body).appendChild(s);
-      })();
     }
   },
   computed: {

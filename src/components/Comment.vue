@@ -37,7 +37,7 @@ export default {
   components: {},
   props: {
     isPortfolio: { type: Boolean, default: false },
-    article: { type: Object, default: { id: 1 } }
+    article: { type: Object }
   },
   data() {
     return {
@@ -63,7 +63,7 @@ export default {
             this.content,
             this.$store.state.user
           ) // user
-          .then(res => {
+          .then(() => {
             this.$store.dispatch(getAction);
             this.reset();
           })

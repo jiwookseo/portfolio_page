@@ -54,14 +54,7 @@
       </v-dialog>
 
       <!-- Snackbars -->
-      <v-snackbar
-        v-model="snackbar_del"
-        top
-        auto-height
-        :timeout="0"
-        color="#FF5E61"
-        class="snackbar-del"
-      >
+      <v-snackbar v-model="snackbar_del" top :timeout="0" color="#FF5E61" class="snackbar-del">
         <div class="snackbar-content">
           Delete this post?
           <button @click="deletePost()" class="del-btn">Delete</button>
@@ -71,7 +64,6 @@
       <v-snackbar
         v-model="snackbar_alert"
         top
-        auto-height
         :timeout="4000"
         color="#FF5E61"
         class="snackbar-alert"
