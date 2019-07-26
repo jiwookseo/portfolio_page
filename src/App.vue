@@ -28,12 +28,12 @@ export default {
   },
   computed: {
     isAdmin() {
-      return this.$store.getters.checkIfAdmin
+      return this.$store.getters.checkIfAdmin;
     }
   },
   mounted() {
-    this.$store.dispatch("getPosts");
-    this.$store.dispatch("getPortfolios");
+    this.$store.dispatch("getArticle", "posts");
+    this.$store.dispatch("getArticle", "portfolios");
     this.$store.dispatch("getUserAll");
   }
 };
@@ -69,7 +69,6 @@ export default {
     @include centerItem;
   }
 }
-
 </style>
 
 <style lang="scss">
@@ -86,7 +85,7 @@ div,
 span {
   font-family: $font-content;
 }
-#line-chart{
+#line-chart {
   height: 400px !important;
 }
 </style>

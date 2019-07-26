@@ -7,9 +7,9 @@
     </div>
     <v-form ref="form" v-model="valid" lazy-validation>
       <div class="scrollable-content">
-        <v-text-field v-model="title" label="Title" required :rules="titleRules"></v-text-field>
+        <v-text-field v-model="data.title" label="Title" required :rules="titleRules"></v-text-field>
         <v-textarea
-          v-model="content"
+          v-model="data.content"
           label="Content"
           required
           :rules="contentRules"
@@ -18,13 +18,13 @@
         ></v-textarea>
         <div v-if="isPortfolio" class="img-select-box">
           <div class="img-preview">
-            <img :src="img" @change="onFilePicked" alt="Current Portfolio Image" />
+            <img :src="data.img" @change="onFilePicked" alt="Current Portfolio Image" />
             <div class="choose-img-prompt" @click="pickFile" title="Change Image">
               <i class="material-icons">image_search</i>
             </div>
           </div>
           <div class="img-picker">
-            <v-text-field label="Select Image" @click="pickFile" v-model="img"></v-text-field>
+            <v-text-field label="Select Image" @click="pickFile" v-model="data.img"></v-text-field>
             <input type="file" ref="image" accept="image/*" @change="onFilePicked" />
           </div>
         </div>
@@ -73,20 +73,20 @@ export default {
       valid: true,
       titleRules: [v => !!v || "Title is required"],
       contentRules: [v => !!v || "Content is required"],
-      title: "",
-      content: "",
-      img: ""
+      data: {
+        title: "",
+        content: "",
+        img: ""
+      }
     };
   },
   methods: {
     setData() {
-      this.title = this.article.title;
-      this.content = this.article.content;
-      this.img = this.article.img;
+      this.data = { ...this.article };
     },
     reset() {
       this.$refs.form.reset();
-      this.img = "http://anzancity.ir/uploads/posts/village-warning.jpg";
+      this.data.img = "http://anzancity.ir/uploads/posts/village-warning.jpg";
     },
     resetValidation() {
       this.$refs.form.resetValidation();
@@ -99,46 +99,27 @@ export default {
     },
     create() {
       if (this.$refs.form.validate()) {
-        if (this.isPortfolio) {
-          firestore
-            .postPortfolio(this.title, this.content, this.img)
-            .then(() => {
-              this.$store.dispatch("getPortfolios");
-            });
-          this.reset();
-          this.closeDialog();
-          this.triggerParentSnackbar("Portfolio created");
-        } else {
-          firestore.postPost(this.title, this.content)
-            .then(() => {
-              this.$store.dispatch("getPosts");
-            });
-          this.reset();
-          this.closeDialog();
-          this.triggerParentSnackbar("Post created");
-        }
+        const type = this.isPortfolio ? "portfolios" : "posts";
+        firestore.postArticle(type, this.data).then(() => {
+          this.$store.dispatch("getArticle", type);
+        });
+        this.reset();
+        this.closeDialog();
+        this.triggerParentSnackbar(
+          this.isPortfolio ? "Portfolio created" : "Post created"
+        );
       }
     },
     update() {
-      if (this.isPortfolio) {
-        firestore
-          .updatePortfolio(this.article.id, this.title, this.content, this.img)
-          .then(() => {
-            this.$store.dispatch("getPortfolios");
-          });
-        this.closeDialog();
-        this.reset();
-        this.triggerParentSnackbar("Portfolio updated");
-      } else {
-        firestore
-          .updatePost(this.article.id, this.title, this.content)
-          .then(() => {
-            this.$store.dispatch("getPosts");
-          });
-        this.closeDialog();
-        this.reset();
-        this.triggerParentSnackbar("Post updated");
-      }
+      const type = this.isPortfolio ? "portfolios" : "posts";
+      firestore.updateArticle(type, this.article.id, this.data).then(() => {
+        this.$store.dispatch("getArticle", type);
+      });
+      this.closeDialog();
+      this.reset();
+      this.triggerParentSnackbar(
+        this.isPortfolio ? "Portfolio updated" : "Post updated"
+      );
     },
     pickFile() {
       this.$refs.image.click();

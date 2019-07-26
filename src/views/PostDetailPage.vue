@@ -38,7 +38,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch("getPosts");
+    this.$store.dispatch("getArticle", "posts");
   },
   methods: {
     date_created(created_at) {
