@@ -22,7 +22,7 @@
             <router-link :to="{name: 'PortfolioDetailPage', params: {id: portfolios[i-1].id}}">
               <div class="more text">Read More</div>
             </router-link>
-            <div class="btn-box" v-if="adminUser">
+            <div class="btn-box" v-if="isAdmin">
               <div class="update" @click="openPortfolioWriter(i)">
                 <i class="material-icons">edit</i>
               </div>
@@ -33,7 +33,7 @@
           </div>
         </div>
       </v-flex>
-      <v-flex v-if="allowCreate && adminUser" class="portfolio" xs12 sm6 md4 lg3>
+      <v-flex v-if="allowCreate && isAdmin" class="portfolio" xs12 sm6 md4 lg3>
         <div class="portfolio-content new" @click="openPortfolioWriter()" data-aos="fade-up">
           <span>+ New Portfolio</span>
         </div>
@@ -107,13 +107,8 @@ export default {
     }
   },
   computed: {
-    adminUser() {
-      if (
-        !this.$store.getters.user ||
-        this.$store.getters.user.email !== this.$store.getters.admin
-      )
-        return false;
-      else return true;
+    isAdmin() {
+      return this.$store.getters.checkIfAdmin
     },
     portfolios() {
       return this.$store.state.portfolios;

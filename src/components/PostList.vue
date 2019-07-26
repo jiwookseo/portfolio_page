@@ -19,15 +19,15 @@
               <div class="read-more">Read More</div>
             </router-link>
           </div>
-          <div class="update" @click="openPostWriter(i)" v-if="adminUser">
+          <div class="update" @click="openPostWriter(i)" v-if="isAdmin">
             <i class="material-icons">edit</i>
           </div>
-          <div class="delete" @click="deleteConfirm(i)" v-if="adminUser">
+          <div class="delete" @click="deleteConfirm(i)" v-if="isAdmin">
             <i class="material-icons">delete</i>
           </div>
         </div>
       </v-flex>
-      <v-flex v-if="allowCreate && adminUser" class="post new" xs12 sm6 data-aos="fade-up">
+      <v-flex v-if="allowCreate && isAdmin" class="post new" xs12 sm6 data-aos="fade-up">
         <span class="text" @click="openPostWriter()">+ New Post</span>
         <hr />
       </v-flex>
@@ -94,13 +94,8 @@ export default {
     allowCreate: { type: Boolean, default: false }
   },
   computed: {
-    adminUser() {
-      if (
-        !this.$store.getters.user ||
-        this.$store.getters.user.email !== this.$store.getters.admin
-      )
-        return false;
-      else return true;
+    isAdmin() {
+      return this.$store.getters.checkIfAdmin
     },
     posts() {
       return this.$store.state.posts;
