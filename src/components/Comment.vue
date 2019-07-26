@@ -18,7 +18,7 @@
         </v-list-item>
       </v-list>
       <v-list one-line v-else>
-        <v-list-item v-for="comment in comments" :key="comment.id">
+        <v-list-item v-for="(comment, i) in comments" :key="comment.id">
           <v-list-item-content class="py-0">
             <v-layout>
               <v-flex xs11>
@@ -30,16 +30,24 @@
                   persistent-hint
                   v-model="comment.content"
                   :hint="comment.userName"
-                  :readonly="!comment.edit"
+                  :readonly="!edit || selected !== i"
                 />
               </v-flex>
               <v-flex xs1 v-if="$store.state.user.id === comment.userID">
-                <div class="btn-box">
-                  <div class="update">
+                <div class="btn-box" v-if="!edit || selected !== i">
+                  <div class="update" @click="commentEdit(comment, i)">
                     <i class="material-icons">edit</i>
                   </div>
                   <div class="delete">
                     <i class="material-icons">delete</i>
+                  </div>
+                </div>
+                <div class="btn-box" v-else>
+                  <div class="update" @click="update(comment)">
+                    <i class="material-icons">done</i>
+                  </div>
+                  <div class="delete" @click="editCancel(comment)">
+                    <i class="material-icons">clear</i>
                   </div>
                 </div>
               </v-flex>
@@ -63,20 +71,32 @@ export default {
   },
   data() {
     return {
-      content: ""
+      content: "",
+      selected: -1,
+      editContent: "",
+      edit: false
     };
   },
   computed: {
     comments() {
-      return this.article.comments
-        ? this.article.comments.map(comment => ({
-            edit: false,
-            ...comment
-          }))
-        : [];
+      return this.article.comments || [];
     }
   },
   methods: {
+    commentEdit(comment, i) {
+      this.edit = true;
+      this.selected = i;
+      this.originalContent = comment.content;
+    },
+    editClear() {
+      this.edit = false;
+      this.selected = -1;
+      this.originalContent = "";
+    },
+    editCancel(comment) {
+      comment.content = this.originalContent;
+      this.editClear();
+    },
     reset() {
       this.content = "";
     },
@@ -89,7 +109,7 @@ export default {
             this.article.id,
             this.content,
             this.$store.state.user
-          ) // user
+          )
           .then(() => {
             this.$store.dispatch(getAction);
             this.reset();
@@ -104,10 +124,15 @@ export default {
       ) {
         const getAction = this.isPortfolio ? "getPortfolios" : "getPosts";
         firestore
-          .updateComment(this.isPortfolio, comment.id, this.content) // user
+          .updateComment(
+            this.isPortfolio,
+            this.article.id,
+            comment.id,
+            comment.content
+          )
           .then(() => {
             this.$store.dispatch(getAction);
-            this.reset();
+            this.editClear();
           });
       }
     }
