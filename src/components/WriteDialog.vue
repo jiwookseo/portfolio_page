@@ -100,9 +100,11 @@ export default {
     create() {
       if (this.$refs.form.validate()) {
         const type = this.isPortfolio ? "portfolios" : "posts";
-        firestore.postArticle(type, this.data).then(() => {
-          this.$store.dispatch("getArticle", type);
-        });
+        firestore
+          .postArticle(type, this.$store.state.user, this.data)
+          .then(() => {
+            this.$store.dispatch("getArticles", type);
+          });
         this.reset();
         this.closeDialog();
         this.triggerParentSnackbar(
@@ -113,7 +115,7 @@ export default {
     update() {
       const type = this.isPortfolio ? "portfolios" : "posts";
       firestore.updateArticle(type, this.article.id, this.data).then(() => {
-        this.$store.dispatch("getArticle", type);
+        this.$store.dispatch("getArticles", type);
       });
       this.closeDialog();
       this.reset();

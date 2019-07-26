@@ -128,7 +128,7 @@ export default {
           )
           .then(() => {
             this.$store.dispatch(
-              "getArticle",
+              "getArticles",
               this.isPortfolio ? "portfolios" : "posts"
             );
             this.reset();
@@ -149,7 +149,7 @@ export default {
           )
           .then(() => {
             this.$store.dispatch(
-              "getArticle",
+              "getArticles",
               this.isPortfolio ? "portfolios" : "posts"
             );
             this.editClear();

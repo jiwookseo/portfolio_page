@@ -32,8 +32,8 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch("getArticle", "posts");
-    this.$store.dispatch("getArticle", "portfolios");
+    this.$store.dispatch("getArticles", "posts");
+    this.$store.dispatch("getArticles", "portfolios");
     this.$store.dispatch("getUserAll");
   }
 };

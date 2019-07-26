@@ -132,8 +132,8 @@ export default {
   setError({ commit }, payload) {
     commit("setError", payload);
   },
-  getArticle({ commit }, type) {
-    firestore.getArticle(type).then(res => {
+  getArticles({ commit }, type) {
+    firestore.getArticles(type).then(res => {
       commit(type === "portfolios" ? "getPortfolios" : "getPosts", res);
     });
   },
