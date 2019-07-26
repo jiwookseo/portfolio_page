@@ -94,7 +94,7 @@ import firestore from "../firebase/firestore";
 export default {
   name: "PortfolioList",
   props: {
-    limit: { type: Number, default: 4 },
+    limit: { type: Number, default: 6 },
     allowCreate: { type: Boolean, default: false }
   },
   components: {
@@ -128,13 +128,10 @@ export default {
       deleteID: "",
       snackbar_alert: false, // Replaces window alert box
       snackbar_msg: "", // For snackbar_alert
-      portfolioLimit: 4
+      portfolioLimit: 6
     };
   },
   methods: {
-    // getPortfolios() {
-    //   firestore.getPortfolios().then(res => (this.portfolios = res));
-    // },
     openPortfolioWriter(index = -1) {
       this.selectedPortfolio =
         index === -1
@@ -156,11 +153,9 @@ export default {
     deletePortfolio() {
       firestore
         .deletePortfolio(this.deleteID)
-        .then(() => this.$store.dispatch("getPortfolios"))
-        .then(() => {
-          this.snackbar_del = false;
-          this.triggerSnackbarAlert("Portfolio deleted");
-        });
+        .then(() => this.$store.dispatch("getPortfolios"));
+      this.snackbar_del = false;
+      this.triggerSnackbarAlert("Portfolio deleted");
     },
     parent_snackbar(msg) {
       this.triggerSnackbarAlert(msg);
@@ -176,7 +171,7 @@ export default {
       this.dialogWrite = false;
     },
     loadMore() {
-      this.portfolioLimit += 4;
+      this.portfolioLimit += 6;
     }
   }
 };

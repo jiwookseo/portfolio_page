@@ -104,17 +104,18 @@ export default {
             .postPortfolio(this.title, this.content, this.img)
             .then(() => {
               this.$store.dispatch("getPortfolios");
-              this.reset();
-              this.closeDialog();
-              this.triggerParentSnackbar("Portfolio created");
             });
+          this.reset();
+          this.closeDialog();
+          this.triggerParentSnackbar("Portfolio created");
         } else {
-          firestore.postPost(this.title, this.content).then(() => {
-            this.$store.dispatch("getPost");
-            this.reset();
-            this.closeDialog();
-            this.triggerParentSnackbar("Post created");
-          });
+          firestore.postPost(this.title, this.content)
+            .then(() => {
+              this.$store.dispatch("getPosts");
+            });
+          this.reset();
+          this.closeDialog();
+          this.triggerParentSnackbar("Post created");
         }
       }
     },
@@ -124,19 +125,19 @@ export default {
           .updatePortfolio(this.article.id, this.title, this.content, this.img)
           .then(() => {
             this.$store.dispatch("getPortfolios");
-            this.closeDialog();
-            this.reset();
-            this.triggerParentSnackbar("Portfolio updated");
           });
+        this.closeDialog();
+        this.reset();
+        this.triggerParentSnackbar("Portfolio updated");
       } else {
         firestore
           .updatePost(this.article.id, this.title, this.content)
           .then(() => {
-            this.$store.dispatch("getPost");
-            this.closeDialog();
-            this.reset();
-            this.triggerParentSnackbar("Post updated");
+            this.$store.dispatch("getPosts");
           });
+        this.closeDialog();
+        this.reset();
+        this.triggerParentSnackbar("Post updated");
       }
     },
     pickFile() {
