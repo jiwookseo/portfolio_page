@@ -32,10 +32,16 @@ export default {
   },
   updateUserAuthorityByEmail(email, authority) {
     return new Promise((resolve, reject) => {
-      firestore.collection(USERS).get()
+      firestore
+        .collection(USERS)
+        .get()
         .then(snapshot => {
-          const docID = snapshot.docs.find(doc => doc.data().email === email).id
-          firestore.collection(USERS).doc(docID).update({authority})
+          const docID = snapshot.docs.find(doc => doc.data().email === email)
+            .id;
+          firestore
+            .collection(USERS)
+            .doc(docID)
+            .update({ authority });
         })
         .then(res => resolve(res))
         .catch(err => reject(err));
@@ -43,13 +49,16 @@ export default {
   },
   getUserAuthority(email) {
     return new Promise((resolve, reject) => {
-      firestore.collection(USERS).get()
+      firestore
+        .collection(USERS)
+        .get()
         .then(snapshot => {
-          const targetUser = snapshot.docs.find(doc => doc.data().email === email);
+          const targetUser = snapshot.docs.find(
+            doc => doc.data().email === email
+          );
           if (targetUser) {
             resolve(targetUser.data().authority);
-          }
-          else {
+          } else {
             resolve(null);
           }
         })
@@ -282,6 +291,18 @@ export default {
           content,
           updated_at: Firebase.firestore.FieldValue.serverTimestamp()
         })
+        .then(res => resolve(res))
+        .catch(err => reject(err));
+    });
+  },
+  deleteComment(isPortfolio, articleID, commentID) {
+    return new Promise((resolve, reject) => {
+      firestore
+        .collection(isPortfolio ? PORTFOLIOS : POSTS)
+        .doc(articleID)
+        .collection(COMMENTS)
+        .doc(commentID)
+        .delete()
         .then(res => resolve(res))
         .catch(err => reject(err));
     });
