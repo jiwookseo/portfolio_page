@@ -17,11 +17,33 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-      <v-list two-line v-else>
-        <v-list-item v-for="comment in comments" :key="comment.id" read-only>
-          <v-list-item-content>
-            <v-list-item-title>{{comment.content}}</v-list-item-title>
-            <v-list-item-subtitle>{{comment.userName}}</v-list-item-subtitle>
+      <v-list one-line v-else>
+        <v-list-item v-for="comment in comments" :key="comment.id">
+          <v-list-item-content class="py-0">
+            <v-layout>
+              <v-flex xs11>
+                <v-textarea
+                  flat
+                  solo
+                  auto-grow
+                  rows="1"
+                  persistent-hint
+                  v-model="comment.content"
+                  :hint="comment.userName"
+                  :readonly="!comment.edit"
+                />
+              </v-flex>
+              <v-flex xs1 v-if="$store.state.user.id === comment.userID">
+                <div class="btn-box">
+                  <div class="update">
+                    <i class="material-icons">edit</i>
+                  </div>
+                  <div class="delete">
+                    <i class="material-icons">delete</i>
+                  </div>
+                </div>
+              </v-flex>
+            </v-layout>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -46,7 +68,12 @@ export default {
   },
   computed: {
     comments() {
-      return this.article.comments || [];
+      return this.article.comments
+        ? this.article.comments.map(comment => ({
+            edit: false,
+            ...comment
+          }))
+        : [];
     }
   },
   methods: {
@@ -100,6 +127,39 @@ export default {
   }
   @include mobile {
     width: 100%;
+  }
+}
+.btn-box {
+  position: absolute;
+  top: 15%;
+  right: 10px;
+}
+.delete,
+.update {
+  color: #3f3f3f;
+  display: inline-block;
+  margin-right: 5px;
+  cursor: pointer;
+  transform-origin: bottom;
+  i {
+    font-size: 1.2em;
+  }
+  &:hover {
+    animation: jiggle 0.15s linear 0.2s 4 forwards;
+  }
+}
+@keyframes jiggle {
+  0% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0);
   }
 }
 </style>
