@@ -90,7 +90,7 @@ export default {
     DetailDialog
   },
   props: {
-    limit: { type: Number, default: 4 },
+    limit: { type: Number, default: 6 },
     allowCreate: { type: Boolean, default: false }
   },
   computed: {
@@ -116,13 +116,10 @@ export default {
       deleteID: "",
       snackbar_alert: false,
       snackbar_msg: "",
-      postLimit: 4
+      postLimit: 6
     };
   },
   methods: {
-    // getPosts() {
-    //   firestore.getPosts().then(res => (this.posts = res));
-    // },
     openPostWriter(index = -1) {
       this.selectedPost =
         index === -1 ? { created_at: { seconds: 0 } } : this.posts[index - 1];
@@ -139,11 +136,9 @@ export default {
     deletePost() {
       firestore
         .deletePost(this.deleteID)
-        .then(() => this.$store.dispatch("getPosts"))
-        .then(() => {
-          this.snackbar_del = false;
-          this.triggerSnackbarAlert("Post deleted");
-        });
+        .then(() => this.$store.dispatch("getPosts"));
+      this.snackbar_del = false;
+      this.triggerSnackbarAlert("Post deleted");
     },
     parent_snackbar(msg) {
       this.triggerSnackbarAlert(msg);
@@ -164,7 +159,7 @@ export default {
       return String(date).split("GMT")[0];
     },
     loadMore() {
-      this.postLimit += 4;
+      this.postLimit += 6;
     }
   }
 };

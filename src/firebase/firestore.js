@@ -1,7 +1,16 @@
 import { firebaseApp } from "./firebase";
 import Firebase from "firebase/app";
 
-const firestore = Firebase.firestore();
+Firebase.firestore().enablePersistence()
+  .catch((err) => {
+    if (err.code == 'failed-precondition') {
+      console.log("Persistence can only be enabled in one tab at a time.");
+    } else if (err.code == 'unimplemented ') {
+      console.log("The current browser does not support all of the features required to enable persistence.");
+    }
+  });
+
+const firestore = Firebase.firestore()
 
 const POSTS = "posts";
 const PORTFOLIOS = "portfolios";
