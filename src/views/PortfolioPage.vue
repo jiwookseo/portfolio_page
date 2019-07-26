@@ -28,7 +28,7 @@ export default {
   },
   mounted() {
     this.addLog();
-    this.$store.dispatch("getPortfolios");
+    this.$store.dispatch("getArticle", "portfolios");
   },
   methods: {
     addLog() {

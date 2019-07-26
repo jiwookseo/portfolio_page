@@ -119,7 +119,6 @@ export default {
     },
     createComment() {
       if (this.$store.state.user) {
-        const getAction = this.isPortfolio ? "getPortfolios" : "getPosts";
         firestore
           .postComment(
             this.isPortfolio,
@@ -128,10 +127,12 @@ export default {
             this.$store.state.user
           )
           .then(() => {
-            this.$store.dispatch(getAction);
+            this.$store.dispatch(
+              "getArticle",
+              this.isPortfolio ? "portfolios" : "posts"
+            );
             this.reset();
-          })
-          .catch(res => console.log(res));
+          });
       }
     },
     updateComment(comment) {
@@ -139,7 +140,6 @@ export default {
         this.$store.state.user &&
         this.$store.state.user.id === comment.userID
       ) {
-        const getAction = this.isPortfolio ? "getPortfolios" : "getPosts";
         firestore
           .updateComment(
             this.isPortfolio,
@@ -148,7 +148,10 @@ export default {
             comment.content
           )
           .then(() => {
-            this.$store.dispatch(getAction);
+            this.$store.dispatch(
+              "getArticle",
+              this.isPortfolio ? "portfolios" : "posts"
+            );
             this.editClear();
           });
       }

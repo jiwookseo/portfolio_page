@@ -1,31 +1,30 @@
 import { firebaseApp } from "./firebase";
 import Firebase from "firebase/app";
 
-Firebase.firestore().enablePersistence()
-  .catch((err) => {
-    if (err.code == 'failed-precondition') {
-      console.log("Persistence can only be enabled in one tab at a time.");
-    } else if (err.code == 'unimplemented ') {
-      console.log("The current browser does not support all of the features required to enable persistence.");
-    }
-  });
-
-const firestore = Firebase.firestore()
-
+const firestore = Firebase.firestore();
 const POSTS = "posts";
 const PORTFOLIOS = "portfolios";
 const USERS = "users";
 const COMMENTS = "comments";
 
+firestore.enablePersistence();
+// .catch(err => {
+//   if (err.code == "failed-precondition") {
+//     console.log("Persistence can only be enabled in one tab at a time.");
+//   } else if (err.code == "unimplemented ") {
+//     console.log(
+//       "The current browser does not support all of the features required to enable persistence."
+//     );
+//   }
+// })
+
 export default {
+  // User
   postUser(email, authority) {
     return new Promise((resolve, reject) => {
       firestore
         .collection(USERS)
-        .add({
-          email,
-          authority
-        })
+        .add({ email, authority })
         .then(res => resolve(res))
         .catch(err => reject(err));
     });
@@ -96,27 +95,12 @@ export default {
         .catch(err => reject(err));
     });
   },
-  // getUser(id) {
-  //   return new Promise((resolve, reject) => {
-  //     firestore.collection(USERS).doc(id).get()
-  //       .then(doc => {
-  //         if (doc.exists) {
-  //           resolve({
-  //             id: doc.id,
-  //             ...doc.data()
-  //           });
-  //         }
-  //         else {
-  //           // alert msg saying that the particular document does not exist
-  //         }
-  //       })
-  //       .catch(err => reject(err));
-  //   })
-  // },
-  getPosts() {
+
+  // Article
+  getArticle(type) {
     return new Promise((resolve, reject) => {
-      const posts = [];
-      const ref = firestore.collection(POSTS);
+      const article = [];
+      const ref = firestore.collection(type);
       ref
         .orderBy("created_at", "desc")
         .get()
@@ -129,7 +113,7 @@ export default {
               .orderBy("created_at", "desc")
               .get()
               .then(comments => {
-                posts.push({
+                article.push({
                   id: doc.id,
                   comments: comments.docs.map(res => ({
                     id: res.id,
@@ -141,7 +125,7 @@ export default {
               .then(() => {
                 counter++;
                 if (counter === snapshot.docs.length) {
-                  resolve(posts);
+                  resolve(article);
                 }
               });
           });
@@ -149,111 +133,35 @@ export default {
         .catch(err => reject(err));
     });
   },
-  postPost(title, content) {
+  postArticle(type, payload) {
     return new Promise((resolve, reject) => {
       firestore
-        .collection(POSTS)
+        .collection(type)
         .add({
-          title,
-          content,
+          ...payload,
           created_at: Firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(res => resolve(res))
         .catch(err => reject(err));
     });
   },
-  deletePost(docID) {
+  deleteArticle(type, docID) {
     return new Promise((resolve, reject) => {
       firestore
-        .collection(POSTS)
+        .collection(type)
         .doc(docID)
         .delete()
         .then(res => resolve(res))
         .catch(err => reject(err));
     });
   },
-  updatePost(docID, title, content) {
+  updateArticle(type, docID, payload) {
     return new Promise((resolve, reject) => {
       firestore
-        .collection(POSTS)
+        .collection(type)
         .doc(docID)
         .update({
-          title: title,
-          content: content
-        })
-        .then(res => resolve(res))
-        .catch(err => reject(err));
-    });
-  },
-  getPortfolios() {
-    return new Promise((resolve, reject) => {
-      const portfolios = [];
-      const ref = firestore.collection(PORTFOLIOS);
-      ref
-        .orderBy("created_at", "desc")
-        .get()
-        .then(snapshot => {
-          let counter = 0;
-          snapshot.docs.forEach(doc => {
-            ref
-              .doc(doc.id)
-              .collection(COMMENTS)
-              .orderBy("created_at", "desc")
-              .get()
-              .then(comments => {
-                portfolios.push({
-                  id: doc.id,
-                  comments: comments.docs.map(res => ({
-                    id: res.id,
-                    ...res.data()
-                  })),
-                  ...doc.data()
-                });
-              })
-              .then(() => {
-                counter++;
-                if (counter === snapshot.docs.length) {
-                  resolve(portfolios);
-                }
-              });
-          });
-        })
-        .catch(err => reject(err));
-    });
-  },
-  postPortfolio(title, content, img) {
-    return new Promise((resolve, reject) => {
-      firestore
-        .collection(PORTFOLIOS)
-        .add({
-          title,
-          content,
-          img,
-          created_at: Firebase.firestore.FieldValue.serverTimestamp()
-        })
-        .then(res => resolve(res))
-        .catch(err => reject(err));
-    });
-  },
-  deletePortfolio(docID) {
-    return new Promise((resolve, reject) => {
-      firestore
-        .collection(PORTFOLIOS)
-        .doc(docID)
-        .delete()
-        .then(res => resolve(res))
-        .catch(err => reject(err));
-    });
-  },
-  updatePortfolio(docID, title, content, img) {
-    return new Promise((resolve, reject) => {
-      firestore
-        .collection(PORTFOLIOS)
-        .doc(docID)
-        .update({
-          title,
-          content,
-          img
+          ...payload
         })
         .then(res => resolve(res))
         .catch(err => reject(err));
@@ -307,6 +215,8 @@ export default {
         .catch(err => reject(err));
     });
   },
+
+  // Log
   addLog(path, username, time) {
     let db = firebaseApp.database();
     let log = db.ref("LOG");

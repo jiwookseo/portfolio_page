@@ -68,8 +68,8 @@ export default {
     LoginDialog
   },
   computed: {
-    user () {
-      return this.$store.getters.user
+    user() {
+      return this.$store.getters.user;
     }
   },
   props: {},
@@ -80,11 +80,11 @@ export default {
     };
   },
   created() {
-    window.addEventListener('click', this.sidebarSlideIn);
+    window.addEventListener("click", this.sidebarSlideIn);
     this.sidebarSlideIn();
   },
   destroyed() {
-    window.removeEventListener('click', this.sidebarSlideIn);
+    window.removeEventListener("click", this.sidebarSlideIn);
   },
   methods: {
     sidebarSlideIn(event) {
@@ -96,9 +96,8 @@ export default {
     },
     ...mapActions(["logout"]),
     signOut() {
-      this.logout()
-      this.$swal("Goodbye!", "Logout successful", "success")
-      console.log(this.$route.path)
+      this.logout();
+      this.$swal("Goodbye!", "Logout successful", "success");
       this.$router.replace(this.$route.path);
     },
     scrollTo(target) {
