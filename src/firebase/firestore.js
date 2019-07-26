@@ -286,6 +286,18 @@ export default {
         .catch(err => reject(err));
     });
   },
+  deleteComment(isPortfolio, articleID, commentID) {
+    return new Promise((resolve, reject) => {
+      firestore
+        .collection(isPortfolio ? PORTFOLIOS : POSTS)
+        .doc(articleID)
+        .collection(COMMENTS)
+        .doc(commentID)
+        .delete()
+        .then(res => resolve(res))
+        .catch(err => reject(err));
+    });
+  },
   addLog(path, username, time) {
     let db = firebaseApp.database();
     let log = db.ref("LOG");

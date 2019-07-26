@@ -7,7 +7,7 @@
       label="content"
       placeholder="댓글 좀 남겨주세요 관심 줍줍"
       solo
-      @keyup.enter="create"
+      @keyup.enter="createComment"
     ></v-text-field>
     <v-card>
       <v-list v-if="!comments.length">
@@ -28,9 +28,11 @@
                   auto-grow
                   rows="1"
                   persistent-hint
+                  spellcheck="false"
                   v-model="comment.content"
                   :hint="comment.userName"
                   :readonly="!edit || selected !== i"
+                  :dark="edit && selected === i"
                 />
               </v-flex>
               <v-flex xs1 v-if="$store.state.user.id === comment.userID">
@@ -38,12 +40,12 @@
                   <div class="update" @click="commentEdit(comment, i)">
                     <i class="material-icons">edit</i>
                   </div>
-                  <div class="delete">
+                  <div class="delete" @click="deleteConfirm(comment, i)">
                     <i class="material-icons">delete</i>
                   </div>
                 </div>
                 <div class="btn-box" v-else>
-                  <div class="update" @click="update(comment)">
+                  <div class="update" @click="updateComment(comment)">
                     <i class="material-icons">done</i>
                   </div>
                   <div class="delete" @click="editCancel(comment)">
@@ -56,6 +58,15 @@
         </v-list-item>
       </v-list>
     </v-card>
+
+    <!-- Snackbars -->
+    <v-snackbar v-model="snackbar_del" top :timeout="0" color="#FF5E61" class="snackbar-del">
+      <div class="snackbar-content">
+        Delete this comment?
+        <button @click="deleteComment()" class="del-btn">Delete</button>
+        <button @click="snackbar_del=false">Cancel</button>
+      </div>
+    </v-snackbar>
   </div>
 </template>
 
@@ -74,7 +85,9 @@ export default {
       content: "",
       selected: -1,
       editContent: "",
-      edit: false
+      edit: false,
+      deleteAim: {},
+      snackbar_del: false
     };
   },
   computed: {
@@ -83,6 +96,10 @@ export default {
     }
   },
   methods: {
+    deleteConfirm(comment) {
+      this.snackbar_del = true;
+      this.deleteAim = comment;
+    },
     commentEdit(comment, i) {
       this.edit = true;
       this.selected = i;
@@ -100,7 +117,7 @@ export default {
     reset() {
       this.content = "";
     },
-    create() {
+    createComment() {
       if (this.$store.state.user) {
         const getAction = this.isPortfolio ? "getPortfolios" : "getPosts";
         firestore
@@ -117,7 +134,7 @@ export default {
           .catch(res => console.log(res));
       }
     },
-    update(comment) {
+    updateComment(comment) {
       if (
         this.$store.state.user &&
         this.$store.state.user.id === comment.userID
@@ -133,6 +150,21 @@ export default {
           .then(() => {
             this.$store.dispatch(getAction);
             this.editClear();
+          });
+      }
+    },
+    deleteComment() {
+      if (
+        this.$store.state.user &&
+        this.$store.state.user.id === this.deleteAim.userID
+      ) {
+        const getAction = this.isPortfolio ? "getPortfolios" : "getPosts";
+        firestore
+          .deleteComment(this.isPortfolio, this.article.id, this.deleteAim.id)
+          .then(() => {
+            this.$store.dispatch(getAction);
+            this.editClear();
+            this.snackbar_del = false;
           });
       }
     }
