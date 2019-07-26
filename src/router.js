@@ -1,55 +1,54 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import HomePage from './views/HomePage.vue';
-import PortfolioPage from './views/PortfolioPage.vue';
-import PortfolioDetailPage from './views/PortfolioDetailPage';
-import PostPage from './views/PostPage.vue';
-import PostDetailPage from './views/PostDetailPage';
-import AdminPage from './views/AdminPage.vue';
+import Vue from "vue";
+import Router from "vue-router";
+import HomePage from "./views/HomePage.vue";
+import PortfolioPage from "./views/PortfolioPage.vue";
+import PostPage from "./views/PostPage.vue";
+import DetailPage from "./views/DetailPage";
+import AdminPage from "./views/AdminPage.vue";
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '*',
-      name: 'main',
+      path: "*",
+      name: "main",
       component: HomePage
     },
     {
-      path: '/',
-      name: 'home',
+      path: "/",
+      name: "home",
       component: HomePage
     },
     {
-      path: '/portfolio',
-      name: 'portfolio',
+      path: "/portfolio",
+      name: "portfolio",
       component: PortfolioPage
     },
     {
-      path: '/portfolio/:id',
-      name: 'PortfolioDetailPage',
-      component: PortfolioDetailPage
+      path: "/portfolio/:id",
+      name: "PortfolioDetailPage",
+      component: DetailPage
     },
     {
-      path: '/post',
-      name: 'post',
+      path: "/post",
+      name: "post",
       component: PostPage
     },
     {
-      path: '/post/:id',
-      name: 'PostDetailPage',
-      component: PostDetailPage
+      path: "/post/:id",
+      name: "PostDetailPage",
+      component: DetailPage
     },
     {
-      path: '/admin',
-      name: 'admin',
+      path: "/admin",
+      name: "admin",
       component: AdminPage
     }
   ],
   scrollBehavior() {
     return { x: 0, y: 0 };
   }
-})
+});

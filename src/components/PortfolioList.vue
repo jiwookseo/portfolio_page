@@ -153,7 +153,7 @@ export default {
     deletePortfolio() {
       firestore
         .deleteArticle("portfolios", this.deleteID)
-        .then(() => this.$store.dispatch("getArticle", "portfolios"));
+        .then(() => this.$store.dispatch("getArticles", "portfolios"));
       this.snackbar_del = false;
       this.triggerSnackbarAlert("Portfolio deleted");
     },

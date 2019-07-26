@@ -97,7 +97,7 @@ export default {
   },
 
   // Article
-  getArticle(type) {
+  getArticles(type) {
     return new Promise((resolve, reject) => {
       const article = [];
       const ref = firestore.collection(type);
@@ -133,13 +133,17 @@ export default {
         .catch(err => reject(err));
     });
   },
-  postArticle(type, payload) {
+  postArticle(type, user, payload) {
     return new Promise((resolve, reject) => {
       firestore
         .collection(type)
         .add({
           ...payload,
-          created_at: Firebase.firestore.FieldValue.serverTimestamp()
+          userID: user.id,
+          userName: user.name,
+          edited: false,
+          created_at: Firebase.firestore.FieldValue.serverTimestamp(),
+          updated_at: Firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(res => resolve(res))
         .catch(err => reject(err));
@@ -161,7 +165,9 @@ export default {
         .collection(type)
         .doc(docID)
         .update({
-          ...payload
+          ...payload,
+          edited: true,
+          updated_at: Firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(res => resolve(res))
         .catch(err => reject(err));
@@ -181,6 +187,7 @@ export default {
           content,
           userID: user.id,
           userName: user.name,
+          edited: false,
           created_at: Firebase.firestore.FieldValue.serverTimestamp(),
           updated_at: Firebase.firestore.FieldValue.serverTimestamp()
         })
@@ -197,6 +204,7 @@ export default {
         .doc(commentID)
         .update({
           content,
+          edited: true,
           updated_at: Firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(res => resolve(res))

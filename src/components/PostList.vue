@@ -136,7 +136,7 @@ export default {
     deletePost() {
       firestore
         .deleteArticle("posts", this.deleteID)
-        .then(() => this.$store.dispatch("getArticle", "posts"));
+        .then(() => this.$store.dispatch("getArticles", "posts"));
       this.snackbar_del = false;
       this.triggerSnackbarAlert("Post deleted");
     },
