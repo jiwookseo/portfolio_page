@@ -108,7 +108,7 @@ export default {
   },
   computed: {
     isAdmin() {
-      return this.$store.getters.checkIfAdmin
+      return this.$store.getters.checkIfAdmin;
     },
     portfolios() {
       return this.$store.state.portfolios;
@@ -152,8 +152,8 @@ export default {
     },
     deletePortfolio() {
       firestore
-        .deletePortfolio(this.deleteID)
-        .then(() => this.$store.dispatch("getPortfolios"));
+        .deleteArticle("portfolios", this.deleteID)
+        .then(() => this.$store.dispatch("getArticle", "portfolios"));
       this.snackbar_del = false;
       this.triggerSnackbarAlert("Portfolio deleted");
     },

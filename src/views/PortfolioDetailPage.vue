@@ -39,8 +39,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch("getPortfolios");
-    console.log("PortfolioDetailPage.vue Mounted");
+    this.$store.dispatch("getArticle", "portfolios");
   },
   methods: {
     date_created(created_at) {

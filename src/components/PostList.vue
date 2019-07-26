@@ -95,7 +95,7 @@ export default {
   },
   computed: {
     isAdmin() {
-      return this.$store.getters.checkIfAdmin
+      return this.$store.getters.checkIfAdmin;
     },
     posts() {
       return this.$store.state.posts;
@@ -135,8 +135,8 @@ export default {
     },
     deletePost() {
       firestore
-        .deletePost(this.deleteID)
-        .then(() => this.$store.dispatch("getPosts"));
+        .deleteArticle("posts", this.deleteID)
+        .then(() => this.$store.dispatch("getArticle", "posts"));
       this.snackbar_del = false;
       this.triggerSnackbarAlert("Post deleted");
     },

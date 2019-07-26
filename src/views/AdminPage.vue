@@ -1,85 +1,81 @@
 <template>
-<div class="wrap">
-  <div class="btn-box">
-    <router-link to="/">
-      <button title="Back to HomePage"><i class="material-icons">arrow_back</i></button>
-    </router-link>
+  <div class="wrap">
+    <div class="btn-box">
+      <router-link to="/">
+        <button title="Back to HomePage">
+          <i class="material-icons">arrow_back</i>
+        </button>
+      </router-link>
+    </div>
+    <h2 class="section-title">Admin Page</h2>
+
+    <v-container>
+      <v-card>
+        <v-card-title>
+          <h1>User</h1>
+          <v-spacer></v-spacer>
+          <v-text-field
+            v-model="search"
+            append-icon="search"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-card-title>
+        <v-data-table
+          :headers="headers"
+          :items="userAll"
+          :search="search"
+          hide-actions
+          class="elevation-1"
+          :loading="loading"
+        >
+          <template slot="items" slot-scope="props">
+            <td class="text-xs-left">{{ props.item.email }}</td>
+            <td class="text-xs-left" v-if="props.item.authority === '1'">관리자</td>
+            <td class="text-xs-left" v-else-if="props.item.authority === '2'">팀원</td>
+            <td class="text-xs-left" v-else-if="props.item.authority === '3'">방문자</td>
+            <td class="text-xs-left" v-if="props.item.authority === '1'"></td>
+            <td class="text-xs-center" v-if="props.item.authority != '1'">
+              <form @submit.prevent="changeAuth(props.item.id, props.item.selected)">
+                <v-flex xs10 sm6 d-flex>
+                  <v-select :items="auth" label="권한 선택" v-model="props.item.selected" solo></v-select>
+                  <v-btn text small color="primary" type="submit">수정</v-btn>
+                </v-flex>
+              </form>
+            </td>
+          </template>
+        </v-data-table>
+      </v-card>
+    </v-container>
+
+    <div class="content-container">
+      <div id="visits-chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    </div>
   </div>
-  <h2 class="section-title">Admin Page</h2>
-
-  <v-container>
-    <v-card>
-      <v-card-title>
-        <h1>User</h1>
-        <v-spacer></v-spacer>
-        <v-text-field
-          v-model="search"
-          append-icon="search"
-          label="Search"
-          single-line
-          hide-details
-      ></v-text-field>
-      </v-card-title>
-      <v-data-table
-        :headers="headers"
-        :items="userAll"
-        :search="search"
-        hide-actions
-        class="elevation-1"
-        :loading="loading"
-      >
-      <template slot="items" slot-scope="props">
-        <td class="text-xs-left">{{ props.item.email }}</td>
-        <td class="text-xs-left" v-if="props.item.authority === '1'">관리자</td>
-        <td class="text-xs-left" v-else-if="props.item.authority === '2'">팀원</td>
-        <td class="text-xs-left" v-else-if="props.item.authority === '3'">방문자</td>
-        <td class="text-xs-left" v-if="props.item.authority === '1'"></td>
-        <td class="text-xs-center" v-if="props.item.authority != '1'">
-          <form @submit.prevent="changeAuth(props.item.id, props.item.selected)">
-            <v-flex xs10 sm6 d-flex>
-              <v-select
-                :items="auth"
-                label="권한 선택"
-                v-model="props.item.selected"
-                solo
-              ></v-select>
-              <v-btn text small color="primary" type="submit">수정</v-btn>
-            </v-flex>
-          </form>
-        </td>
-      </template>
-
-      </v-data-table>
-    </v-card>
-  </v-container>
-
-  <div class="content-container">
-    <div id="visits-chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-  </div>
-</div>
 </template>
 
 <script>
 import firestore from "../firebase/firestore";
-import Vue from 'vue'
-import HighchartsVue from 'highcharts-vue'
-import Highcharts from 'highcharts'
+import Vue from "vue";
+import HighchartsVue from "highcharts-vue";
+import Highcharts from "highcharts";
 
 export default {
   name: "AdminPage",
   data() {
     return {
-      search: '',
-      auth: ['팀원', '방문자'],
+      search: "",
+      auth: ["팀원", "방문자"],
       logs: [],
       times: [],
       headers: [
-        {text: '이메일', value: 'email', sortable: false},
-        {text: '권한', value: 'authority'},
-        {text: '권한 변경', value: 'modify', sortable: false}
+        { text: "이메일", value: "email", sortable: false },
+        { text: "권한", value: "authority" },
+        { text: "권한 변경", value: "modify", sortable: false }
       ],
       loading: false
-    }
+    };
   },
   mounted() {
     this.getLogs();
@@ -92,34 +88,31 @@ export default {
   computed: {
     userAll() {
       return this.$store.state.userAll.map(user => ({
-          selected:"default",
-          ...user
-        })
-      )
-    },
+        selected: "default",
+        ...user
+      }));
+    }
   },
   methods: {
     changeAuth(id, selected) {
       this.loading = true;
-      let num = ''
-      if(selected === '방문자') num = '3'
-      else if(selected === '팀원') num = '2'
-      if(num === '3' || num === '2'){
-        firestore.updateUserById(id, num)
-        .then(() => {
-          console.log("update Success")
+      let num = "";
+      if (selected === "방문자") num = "3";
+      else if (selected === "팀원") num = "2";
+      if (num === "3" || num === "2") {
+        firestore.updateUserById(id, num).then(() => {
+          // console.log("update Success")
           this.loading = false;
           this.$store.dispatch("getUserAll");
-        })
-      }
-      else {
-        console.log("선택해주세요")
+        });
+      } else {
+        // console.log("선택해주세요")
         this.loading = false;
       }
     },
     getUserAll() {
-      firestore.getUserAll().then((res) => {
-        this.userAll = res
+      firestore.getUserAll().then(res => {
+        this.userAll = res;
       });
     },
     async getLogs() {
@@ -129,18 +122,17 @@ export default {
       let dataset = [0, 0, 0, 0, 0, 0, 0];
       let percent = [0, 0, 0, 0, 0, 0, 0];
       if (this.logs.length != 0) {
-
         for (var i = 0; i < this.logs.length; i++) {
           this.times.push(this.logs[i].time);
         }
         for (i = 0; i < this.times.length; i++) {
-          if (this.times[i] == 0) dataset[0] ++;
-          else if (this.times[i] == 1) dataset[1] ++;
-          else if (this.times[i] == 2) dataset[2] ++;
-          else if (this.times[i] == 3) dataset[3] ++;
-          else if (this.times[i] == 4) dataset[4] ++;
-          else if (this.times[i] == 5) dataset[5] ++;
-          else if (this.times[i] == 6) dataset[6] ++;
+          if (this.times[i] == 0) dataset[0]++;
+          else if (this.times[i] == 1) dataset[1]++;
+          else if (this.times[i] == 2) dataset[2]++;
+          else if (this.times[i] == 3) dataset[3]++;
+          else if (this.times[i] == 4) dataset[4]++;
+          else if (this.times[i] == 5) dataset[5]++;
+          else if (this.times[i] == 6) dataset[6]++;
         }
 
         for (i = 0; i < 7; i++) {
@@ -150,24 +142,23 @@ export default {
         // 차트 부분
         Vue.use(HighchartsVue);
 
-        Highcharts.chart('visits-chart', {
+        Highcharts.chart("visits-chart", {
           chart: {
-            type: 'column'
+            type: "column"
           },
           title: {
-            text: 'Visits Per Day of the Week'
+            text: "Visits Per Day of the Week"
           },
           subtitle: {
             // text: 'Click the columns to view versions. Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>'
           },
           xAxis: {
-            type: 'category'
+            type: "category"
           },
           yAxis: {
             title: {
-              text: 'Visits'
+              text: "Visits"
             }
-
           },
           legend: {
             enabled: false
@@ -177,71 +168,75 @@ export default {
               borderWidth: 0,
               dataLabels: {
                 enabled: true,
-                format: '{point.y:.1f}%'
+                format: "{point.y:.1f}%"
               }
             }
           },
 
           tooltip: {
-            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+            headerFormat:
+              '<span style="font-size:11px">{series.name}</span><br>',
+            pointFormat:
+              '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
           },
 
-          series: [{
-            name: "Visit",
-            colorByPoint: true,
-            data: [{
-                name: "SUN",
-                y: percent[0],
-                color: "rgb(172, 248, 139)"
-                // drilldown: "Chrome"
-              },
-              {
-                name: "MON",
-                y: percent[1],
-                color: "rgb(0, 234, 185)"
-                // drilldown: "Firefox"
-              },
-              {
-                name: "TUE",
-                y: percent[2],
-                color: "#00D1CF"
-                // drilldown: "Internet Explorer"
-              },
-              {
-                name: "WED",
-                y: percent[3],
-                color: "rgb(0, 192, 255)"
-                // drilldown: "Safari"
-              },
-              {
-                name: "THU",
-                y: percent[4],
-                color: "#728BE7"
-                // drilldown: "Edge"
-              },
-              {
-                name: "FRI",
-                y: percent[5],
-                color: "rgb(147, 108, 201)"
-                // drilldown: "Opera"
-              },
-              {
-                name: "SAT",
-                y: percent[6],
-                color: "rgb(255, 123, 153)"
-                // drilldown: null
-              }
-            ]
-          }],
+          series: [
+            {
+              name: "Visit",
+              colorByPoint: true,
+              data: [
+                {
+                  name: "SUN",
+                  y: percent[0],
+                  color: "rgb(172, 248, 139)"
+                  // drilldown: "Chrome"
+                },
+                {
+                  name: "MON",
+                  y: percent[1],
+                  color: "rgb(0, 234, 185)"
+                  // drilldown: "Firefox"
+                },
+                {
+                  name: "TUE",
+                  y: percent[2],
+                  color: "#00D1CF"
+                  // drilldown: "Internet Explorer"
+                },
+                {
+                  name: "WED",
+                  y: percent[3],
+                  color: "rgb(0, 192, 255)"
+                  // drilldown: "Safari"
+                },
+                {
+                  name: "THU",
+                  y: percent[4],
+                  color: "#728BE7"
+                  // drilldown: "Edge"
+                },
+                {
+                  name: "FRI",
+                  y: percent[5],
+                  color: "rgb(147, 108, 201)"
+                  // drilldown: "Opera"
+                },
+                {
+                  name: "SAT",
+                  y: percent[6],
+                  color: "rgb(255, 123, 153)"
+                  // drilldown: null
+                }
+              ]
+            }
+          ]
         });
 
         // 여기까지 차트
-
       }
-    },
-  },
-}
+    }
+  }
+};
 </script>
 
 
@@ -249,55 +244,55 @@ export default {
 @import "../css/mixin.scss";
 @import "../css/style.scss";
 .wrap {
-    height: 100vh;
-    overflow-y: auto;
+  height: 100vh;
+  overflow-y: auto;
 }
 .wrap::-webkit-scrollbar {
-    display: initial;
-    width: 7px;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    -webkit-border-radius: 50px;
-    &:hover {
-        background-color: rgba(0, 0, 0, 0.1);
-    }
+  display: initial;
+  width: 7px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 50px;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
 }
 .wrap::-webkit-scrollbar-thumb:vertical {
+  -webkit-border-radius: 50px;
+  background-color: rgba(0, 0, 0, 0.4);
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0);
+  min-height: 10px;
+  &:active {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50px;
     -webkit-border-radius: 50px;
-    background-color: rgba(0, 0, 0, 0.4);
-    background-clip: padding-box;
-    border: 1px solid rgba(0, 0, 0, 0);
-    min-height: 10px;
-    &:active {
-        background-color: rgba(0, 0, 0, 0.6);
-        border-radius: 50px;
-        -webkit-border-radius: 50px;
-    }
+  }
 }
 
 a,
 a:hover {
-    color: initial;
-    text-decoration: none;
+  color: initial;
+  text-decoration: none;
 }
 
 .btn-box {
-    height: 50px;
-    button {
-        height: 100%;
-        width: 50px;
-        position: relative;
-        background: rgba(0, 0, 0, 0.05);
-        &:focus {
-            outline: none;
-        }
-        i {
-            @include centerItem;
-            font-size: 2em;
-        }
+  height: 50px;
+  button {
+    height: 100%;
+    width: 50px;
+    position: relative;
+    background: rgba(0, 0, 0, 0.05);
+    &:focus {
+      outline: none;
     }
+    i {
+      @include centerItem;
+      font-size: 2em;
+    }
+  }
 }
 
 .content-container {
-    padding: 0 50px 50px;
+  padding: 0 50px 50px;
 }
 </style>

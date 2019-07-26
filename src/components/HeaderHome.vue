@@ -56,7 +56,6 @@
 </template>
 
 <script>
-
 import ImgBanner from "./ImgBanner";
 import FavBtn from "./FavBtn";
 import LoginDialog from "./LoginDialog";
@@ -90,11 +89,11 @@ export default {
     };
   },
   created() {
-    window.addEventListener('click', this.sidebarSlideIn);
+    window.addEventListener("click", this.sidebarSlideIn);
     this.sidebarSlideIn();
   },
   destroyed() {
-    window.removeEventListener('click', this.sidebarSlideIn);
+    window.removeEventListener("click", this.sidebarSlideIn);
   },
   methods: {
     sidebarSlideIn(event) {
@@ -108,7 +107,6 @@ export default {
     signOut() {
       this.logout();
       this.$swal("Goodbye!", "Logout successful", "success");
-      console.log(this.$route.path);
       this.$router.replace(this.$route.path);
     },
     scrollTo(target) {
