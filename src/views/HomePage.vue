@@ -4,11 +4,6 @@
     <div class="homeContent">
       <section id="aboutme">
         <h2 class="section-title text" data-aos="fade-right">About me</h2>
-        <!-- <div class="text" style="text-align: center" v-if="user">
-          <img :src="user.photoUrl" />
-          {{user.email}}님 반갑습니다
-        </div>
-        <div class="text" style="text-align: center" v-if="adminUser">[테스트문장] 관계자님 반갑습니다</div> -->
         <v-container>
           <v-layout row wrap>
             <v-flex xs8 offset-xs2 sm4 offset-sm0 class="content-container" data-aos="fade-right">
@@ -105,13 +100,8 @@ export default {
     user() {
       return this.$store.state.user;
     },
-    adminUser() {
-      if (
-        !this.$store.getters.user ||
-        this.$store.getters.user.email !== this.$store.getters.admin
-      )
-        return false;
-      else return true;
+    currentUserAuthority() {
+      return this.$store.getters.getCurrentUserAuthority
     }
   },
   mounted() {

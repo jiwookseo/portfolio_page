@@ -4,7 +4,7 @@
       <router-view />
       <TranslateBtn />
       <ChatBtn />
-      <router-link to="/admin" v-if="adminUser">
+      <router-link to="/admin" v-if="isAdmin">
         <div id="toAdmin" title="Admin Page">
           <i class="material-icons">how_to_reg</i>
         </div>
@@ -27,13 +27,8 @@ export default {
     return {};
   },
   computed: {
-    adminUser() {
-      if (
-        !this.$store.getters.user ||
-        this.$store.getters.user.email !== this.$store.getters.admin
-      )
-        return false;
-      else return true;
+    isAdmin() {
+      return this.$store.getters.checkIfAdmin
     }
   },
   mounted() {

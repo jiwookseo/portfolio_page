@@ -2,7 +2,7 @@
   <div class="imgBannerOuter">
     <img :src="imgSrc" alt="Main Image Banner" class="imgBanner" />
     <div class="imgBannerContent">
-      <div class="changeBgBtnBox" v-if="adminUser">
+      <div class="changeBgBtnBox" v-if="isAdmin">
         <transition name="bg-random">
           <div
             class="randomImg"
@@ -45,13 +45,8 @@ export default {
     };
   },
   computed: {
-    adminUser() {
-      if (
-        !this.$store.getters.user ||
-        this.$store.getters.user.email !== this.$store.getters.admin
-      )
-        return false;
-      else return true;
+    isAdmin() {
+      return this.$store.getters.checkIfAdmin
     }
   },
   methods: {
