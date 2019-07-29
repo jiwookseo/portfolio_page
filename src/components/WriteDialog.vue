@@ -47,6 +47,7 @@
 <script>
 import firestore from "../firebase/firestore";
 import axios from "axios";
+import { mapGetters } from "vuex";
 
 export default {
   name: "WriteDialog",
