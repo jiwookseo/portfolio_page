@@ -25,6 +25,7 @@
     "vue": "^2.6.10",
     "vue-apexcharts": "^1.4.0",
     "vue-chartjs": "^3.4.2",
+    "vue-cookies": "^1.5.13",
     "vue-json": "^1.0.5",
     "vue-router": "^3.0.3",
     "vue-simplemde": "^0.5.2",
