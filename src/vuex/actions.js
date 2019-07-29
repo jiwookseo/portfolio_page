@@ -4,20 +4,15 @@ import { firebaseAuth } from "@/firebase/firebaseAuth";
 import firestore from "../firebase/firestore";
 
 export default {
-  signUserUp(
-    {
-      // 로컬 회원가입
-      commit
-    },
-    payload
-  ) {
+  signUserUp({ commit }, payload) {
+    // 로컬 회원가입
     commit("setLoading", true);
     commit("clearError");
     firebaseAuth
       .createUserWithEmailAndPassword(payload.email, payload.password)
       .then(user => {
         commit("setLoading", false);
-        Vue.swal("Welcome!", "You have signed up successfully", "success");
+        Vue.swal("Welcome!", "Thanks for joining us :)", "success");
 
         user = firebaseAuth.currentUser;
         if (user) {
@@ -45,25 +40,23 @@ export default {
         Vue.swal("Error", "" + error, "error");
       });
   },
-  signUserIn(
-    {
-      // 로컬 로그인
-      commit
-    },
-    payload
-  ) {
+  signUserIn({ commit }, payload) {
+    // 로컬 로그인
     commit("setLoading", true);
     commit("clearError");
     firebaseAuth
       .signInWithEmailAndPassword(payload.email, payload.password)
-      .then(user => {
+      .then(async credential => {
         commit("setLoading", false);
         commit("loginSuccess", true);
-        Vue.swal("Welcome!", "Login successful", "success");
-        user = firebaseAuth.currentUser;
-        const authority = firestore.getUserAuthority(user.email);
+        const user = credential.user;
+        Vue.swal(`Welcome ${user.displayName}!`, "", "success");
+        const authority = await firestore.getUserAuthority(user.email);
         commit("setUser", {
-          ...user,
+          id: user.uid,
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
           authority
         });
       })
@@ -79,25 +72,26 @@ export default {
     commit("clearError");
     firebaseAuth
       .signInWithPopup(new firebase.auth.FacebookAuthProvider())
-      .then(async result => {
+      .then(async credential => {
         commit("setLoading", false);
-        Vue.swal("Welcome!", "Login successful", "success");
-        const existingAuthority = await firestore.getUserAuthority(
-          result.user.email
-        );
-        const facebookUser = {
-          id: result.user.uid,
-          name: result.user.displayName,
-          email: result.user.email,
-          photoURL: result.user.photoURL,
-          authority: existingAuthority
-        };
-        if (existingAuthority === null) {
-          // if it's a new User
-          facebookUser.authority = "3";
-          firestore.postUser(facebookUser.email, facebookUser.authority);
-        }
-        commit("setUser", facebookUser);
+        commit("loginSuccess", true);
+        const user = credential.user;
+        Vue.swal(`Welcome ${user.displayName}!`, "", "success");
+        firestore.getUserAuthority(user.email).then(authority => {
+          const facebookUser = {
+            id: user.uid,
+            name: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+            authority: authority || "3"
+          };
+          if (authority === null) {
+            // if it's a new User
+            console.log("new");
+            firestore.postUser(facebookUser.email, "3");
+          }
+          commit("setUser", facebookUser);
+        });
       })
       .catch(error => {
         commit("setLoading", false);
@@ -123,7 +117,7 @@ export default {
         commit("setUser", null); // null 값으로 user의 정보를 만들 때 생기는 오류 체크하기
         commit("loginSuccess", false);
       })
-      .catch(error => console.error(`SingOut Error: ${error}`));
+      .catch(error => console.error(`SignOut Error: ${error}`));
   },
 
   clearError({ commit }) {

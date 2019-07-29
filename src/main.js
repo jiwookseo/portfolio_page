@@ -26,7 +26,6 @@ var config = {
   appId: "1:207653910315:web:33636c136bf2abae"
 }; // 4. Get Firebase Configuration
 
-
 if (!firebase.apps.length) {
   firebase.initializeApp(config);
 }
@@ -62,7 +61,7 @@ new Vue({
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.$store.dispatch("autoSignIn", user);
-        console.log(user.email);
+        // console.log(user.email);
       }
     });
     AOS.init({

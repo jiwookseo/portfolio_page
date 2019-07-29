@@ -29,20 +29,36 @@ export default {
         .catch(err => reject(err));
     });
   },
+  deleteUser(email) {
+    return new Promise((resolve, reject) => {
+      firestore
+        .collection(USERS)
+        .where("email", "==", email)
+        .get()
+        .then(snapshot => {
+          let counter = 0;
+          snapshot.docs.forEach(doc =>
+            doc.ref.delete().then(() => {
+              counter++;
+              if (counter === snapshot.docs.length) {
+                resolve();
+              }
+            })
+          );
+        })
+        .catch(err => reject(err));
+    });
+  },
   updateUserAuthorityByEmail(email, authority) {
     return new Promise((resolve, reject) => {
       firestore
         .collection(USERS)
+        .where("email", "==", email)
         .get()
         .then(snapshot => {
-          const docID = snapshot.docs.find(doc => doc.data().email === email)
-            .id;
-          firestore
-            .collection(USERS)
-            .doc(docID)
-            .update({ authority });
+          console.log(snapshot.docs[0]);
+          snapshot.docs[0].ref.update({ authority }).then(res => resolve(res));
         })
-        .then(res => resolve(res))
         .catch(err => reject(err));
     });
   },
@@ -50,15 +66,13 @@ export default {
     return new Promise((resolve, reject) => {
       firestore
         .collection(USERS)
+        .where("email", "==", email)
         .get()
         .then(snapshot => {
-          const targetUser = snapshot.docs.find(
-            doc => doc.data().email === email
-          );
-          if (targetUser) {
-            resolve(targetUser.data().authority);
-          } else {
+          if (snapshot.empty) {
             resolve(null);
+          } else {
+            resolve(snapshot.docs[0].data().authority);
           }
         })
         .catch(err => reject(err));
