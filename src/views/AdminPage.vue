@@ -23,10 +23,12 @@
           ></v-text-field>
         </v-card-title>
         <v-data-table
+          class="elevation-1"
           :headers="headers"
           :items="userAll"
           :search="search"
           :loading="loading"
+          
         >
         <template v-slot:item.email="{ item }">
           <v-chip :color="getColor(item.authority)" dark>{{ item.email }}</v-chip>
@@ -47,7 +49,6 @@
             </form>
           </td>
         </template>
-        
         </v-data-table>
       </v-card>
     </v-container>
