@@ -47,8 +47,18 @@ export default {
   },
   computed: {
     ...mapGetters({
-      isAdmin: "checkIfAdmin"
+      isAdmin: "checkIfAdmin",
+      user: "user"
     })
+  },
+  watch: {
+    user() {
+      if (this.user) {
+        this.imgSrc = this.user.photoURL || "https://picsum.photos/1600/900";
+      } else {
+        this.imgSrc = "https://picsum.photos/1600/900";
+      }
+    }
   },
   methods: {
     scrollTo() {
@@ -68,11 +78,16 @@ export default {
       const formData = new FormData();
       const file = this.$refs.image.files[0];
       formData.append("image", file, file.name);
-      axios.post("https://api.imgur.com/3/image/", formData, {
-        headers: {
-          Authorization: "Client-ID 5d0f43f26473d77"
-        }
-      });
+      axios
+        .post("https://api.imgur.com/3/image/", formData, {
+          headers: {
+            Authorization: "Client-ID 5d0f43f26473d77"
+          }
+        })
+        .then(res => {
+          this.imgSrc = res.data.data.link;
+          this.$store.dispatch("setUserPhoto", this.imgSrc);
+        });
       this.showChangeBgMenu = false;
     }
   }
