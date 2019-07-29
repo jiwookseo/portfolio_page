@@ -13,10 +13,11 @@
             </v-flex>
             <v-flex xs12 sm8 class="content-container" data-aos="fade-left">
               <div class="inner text">
-                안녕하세요. SSAFY 서울 2반 6조입니다!<br>
-                웹/모바일 프로젝트로 Vue.js와 파이어베이스를 통해 포트폴리오 블로그를 만들고 있습니다.<br>
-                프로젝트 기간동안 좋은 결과물 만들 수 있도록 노력하겠습니다!<br><br>
-                프로젝트 진행 기간 : 2019.07.09. ~ 2019.07.19.
+                안녕하세요. SSAFY 서울 2반 6조입니다!
+                <br />웹/모바일 프로젝트로 Vue.js와 파이어베이스를 통해 포트폴리오 블로그를 만들고 있습니다.
+                <br />프로젝트 기간동안 좋은 결과물 만들 수 있도록 노력하겠습니다!
+                <br />
+                <br />프로젝트 진행 기간 : 2019.07.09. ~ 2019.07.19.
               </div>
               <p v-if="user">{{user}}</p>
             </v-flex>
@@ -60,7 +61,11 @@
           </a>
         </div>
         <div class="showMobile deviceRotateMsg" data-aos="fade-up">
-          <div><span><i class="material-icons">screen_rotation</i></span></div>
+          <div>
+            <span>
+              <i class="material-icons">screen_rotation</i>
+            </span>
+          </div>
           <p class="text">Please rotate your device to landscape mode.</p>
         </div>
       </section>
@@ -78,6 +83,7 @@ import PostList from "../components/PostList";
 import LineChart from "../components/LineChart";
 import Footer from "../components/Footer";
 import Radarchart from "../components/RadarChart";
+import { mapGetters } from "vuex";
 
 export default {
   name: "HomePage",
@@ -90,19 +96,10 @@ export default {
     Radarchart
   },
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
-    loginSuccess() {
-      return this.$store.getters.loginSuccess;
-    },
-    user() {
-      return this.$store.state.user;
-    },
-    currentUserAuthority() {
-      return this.$store.getters.getCurrentUserAuthority
-    }
+    ...mapGetters(["loginSuccess", "user", "currentUserAuthority"])
   },
   mounted() {
     this.addLog();
@@ -116,10 +113,10 @@ export default {
     },
     addLog() {
       let username = "";
-      if (!this.$store.getters.user) {
+      if (!this.user) {
         username = "Anonymous User";
       } else {
-        username = this.$store.getters.user.email;
+        username = this.user.email;
       }
       let time = new Date();
       firestore.addLog("/", username, time.getDay());
@@ -177,7 +174,7 @@ section {
   }
   .inner {
     height: auto;
-    font-size:16px;
+    font-size: 16px;
     img {
       width: 100%;
       box-shadow: 0 0 0 6px $footer-bg;
@@ -276,7 +273,6 @@ $slant_m: 20px;
   }
 }
 
-
 .deviceRotateMsg {
   & > div {
     height: 100px;
@@ -295,10 +291,17 @@ $slant_m: 20px;
   }
 }
 @keyframes spin {
-  0% {transform: rotate(45deg);}
-  10% {transform: rotate(45deg);}
-  35% {transform: rotate(-45deg);}
-  100% {transform: rotate(-45deg);}
+  0% {
+    transform: rotate(45deg);
+  }
+  10% {
+    transform: rotate(45deg);
+  }
+  35% {
+    transform: rotate(-45deg);
+  }
+  100% {
+    transform: rotate(-45deg);
+  }
 }
-
 </style>

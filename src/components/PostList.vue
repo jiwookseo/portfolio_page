@@ -82,6 +82,7 @@
 import WriteDialog from "./WriteDialog";
 import DetailDialog from "./DetailDialog";
 import firestore from "../firebase/firestore";
+import { mapGetters } from "vuex";
 
 export default {
   name: "PostList",
@@ -94,12 +95,10 @@ export default {
     allowCreate: { type: Boolean, default: false }
   },
   computed: {
-    isAdmin() {
-      return this.$store.getters.checkIfAdmin;
-    },
-    posts() {
-      return this.$store.state.posts;
-    }
+    ...mapGetters({
+      isAdmin: "checkIfAdmin",
+      posts: "posts"
+    })
   },
   watch: {
     limit: function() {

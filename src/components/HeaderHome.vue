@@ -59,7 +59,7 @@
 import ImgBanner from "./ImgBanner";
 import FavBtn from "./FavBtn";
 import LoginDialog from "./LoginDialog";
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "HeaderHome",
@@ -72,9 +72,7 @@ export default {
     websiteTitle: { type: String }
   },
   computed: {
-    user() {
-      return this.$store.getters.user;
-    }
+    ...mapState(["user"])
   },
   data() {
     return {

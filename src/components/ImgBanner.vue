@@ -2,7 +2,7 @@
   <div class="imgBannerOuter">
     <img :src="imgSrc" alt="Main Image Banner" class="imgBanner" />
     <div class="imgBannerContent">
-      <div class="changeBgBtnBox" v-if="isAdmin">
+      <div class="changeBgBtnBox">
         <transition name="bg-random">
           <div
             class="randomImg"
@@ -35,6 +35,7 @@
 
 <script>
 import axios from "axios";
+import { mapGetters } from "vuex";
 
 export default {
   name: "ImgBanner",
@@ -45,9 +46,9 @@ export default {
     };
   },
   computed: {
-    isAdmin() {
-      return this.$store.getters.checkIfAdmin
-    }
+    ...mapGetters({
+      isAdmin: "checkIfAdmin"
+    })
   },
   methods: {
     scrollTo() {
@@ -67,13 +68,11 @@ export default {
       const formData = new FormData();
       const file = this.$refs.image.files[0];
       formData.append("image", file, file.name);
-      axios
-        .post("https://api.imgur.com/3/image/", formData, {
-          headers: {
-            Authorization: "Client-ID 5d0f43f26473d77"
-          }
-        })
-        .then(res => (this.imgSrc = res.data.data.link));
+      axios.post("https://api.imgur.com/3/image/", formData, {
+        headers: {
+          Authorization: "Client-ID 5d0f43f26473d77"
+        }
+      });
       this.showChangeBgMenu = false;
     }
   }

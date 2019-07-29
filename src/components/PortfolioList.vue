@@ -90,6 +90,7 @@
 import DetailDialog from "./DetailDialog";
 import WriteDialog from "./WriteDialog";
 import firestore from "../firebase/firestore";
+import { mapGetters } from "vuex";
 
 export default {
   name: "PortfolioList",
@@ -107,12 +108,10 @@ export default {
     }
   },
   computed: {
-    isAdmin() {
-      return this.$store.getters.checkIfAdmin;
-    },
-    portfolios() {
-      return this.$store.state.portfolios;
-    }
+    ...mapGetters({
+      isAdmin: "checkIfAdmin",
+      portfolios: "portfolios"
+    })
   },
   data() {
     return {

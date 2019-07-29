@@ -59,7 +59,7 @@
 <script>
 import FavBtn from "./FavBtn";
 import LoginDialog from "./LoginDialog";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "HeaderSub",
@@ -68,9 +68,7 @@ export default {
     LoginDialog
   },
   computed: {
-    user() {
-      return this.$store.getters.user;
-    }
+    ...mapGetters(["user"])
   },
   props: {},
   data() {

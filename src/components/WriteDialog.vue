@@ -58,6 +58,9 @@ export default {
   mounted() {
     this.setData();
   },
+  computed: {
+    ...mapGetters(["user"])
+  },
   watch: {
     article: function() {
       if (!this.article.id) {
@@ -100,11 +103,9 @@ export default {
     create() {
       if (this.$refs.form.validate()) {
         const type = this.isPortfolio ? "portfolios" : "posts";
-        firestore
-          .postArticle(type, this.$store.state.user, this.data)
-          .then(() => {
-            this.$store.dispatch("getArticles", type);
-          });
+        firestore.postArticle(type, this.user, this.data).then(() => {
+          this.$store.dispatch("getArticles", type);
+        });
         this.reset();
         this.closeDialog();
         this.triggerParentSnackbar(

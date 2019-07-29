@@ -16,6 +16,7 @@
 <script>
 import ChatBtn from "./components/ChatBtn";
 import TranslateBtn from "./components/TranslateBtn";
+import { mapGetters } from "vuex";
 
 export default {
   name: "App",
@@ -27,9 +28,9 @@ export default {
     return {};
   },
   computed: {
-    isAdmin() {
-      return this.$store.getters.checkIfAdmin;
-    }
+    ...mapGetters({
+      isAdmin: "checkIfAdmin"
+    })
   },
   mounted() {
     this.$store.dispatch("getArticles", "posts");
