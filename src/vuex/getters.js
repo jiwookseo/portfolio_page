@@ -1,19 +1,12 @@
 export default {
-  user(state) {
-    return state.user;
-  },
-  admin(state) {
-    return state.admin;
-  },
-  loading(state) {
-    return state.loading;
-  },
-  error(state) {
-    return state.error;
-  },
-  loginSuccess(state) {
-    return state.loginSuccess;
-  },
+  user: state => state.user,
+  userAll: state => state.userAll,
+  admin: state => state.admin,
+  loading: state => state.loading,
+  error: state => state.error,
+  loginSuccess: state => state.loginSuccess,
+  portfolios: state => state.portfolios,
+  posts: state => state.posts,
   getArticle: state => (type, id) => {
     if (type === "portfolio")
       return (

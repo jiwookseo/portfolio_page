@@ -87,7 +87,8 @@ export default {
           };
           if (authority === null) {
             // if it's a new User
-            console.log("new");
+            facebookUser.photoURL = null;
+            facebookUser.updateProfile({ photoURL: null });
             firestore.postUser(facebookUser.email, "3");
           }
           commit("setUser", facebookUser);
@@ -119,7 +120,13 @@ export default {
       })
       .catch(error => console.error(`SignOut Error: ${error}`));
   },
-
+  setUserPhoto({ commit }, photoURL) {
+    const user = firebaseAuth.currentUser;
+    if (user) {
+      user.updateProfile({ photoURL });
+      commit("setUserPhoto", photoURL);
+    }
+  },
   clearError({ commit }) {
     commit("clearError");
   },

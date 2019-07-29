@@ -1,20 +1,21 @@
 <template>
-<div>
-  <HeaderSub />
-  <div class="content">
-    <h2 class="section-title text">Post</h2>
-		<PostList :limit=6 :allowCreate=true />
+  <div>
+    <HeaderSub />
+    <div class="content">
+      <h2 class="section-title text">Post</h2>
+      <PostList :limit="6" :allowCreate="true" />
+    </div>
+    <Footer />
   </div>
-  <Footer />
-</div>
 </template>
 
 
 <script>
 import firestore from "../firebase/firestore";
-import HeaderSub from '../components/HeaderSub';
-import PostList from '../components/PostList'
+import HeaderSub from "../components/HeaderSub";
+import PostList from "../components/PostList";
 import Footer from "../components/Footer";
+import { mapGetters } from "vuex";
 
 export default {
   name: "PostPage",
@@ -22,11 +23,12 @@ export default {
     HeaderSub,
     PostList,
     Footer
-	},
-	data() {
-		return {
-
-		}
+  },
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapGetters(["user"])
   },
   mounted() {
     this.addLog();
@@ -34,18 +36,17 @@ export default {
   },
   methods: {
     addLog() {
-      let username = '';
-      if (!this.$store.getters.user) {
+      let username = "";
+      if (!this.user) {
         username = "Anonymous User";
-      }
-      else {
-        username = this.$store.getters.user.email;
+      } else {
+        username = this.user.email;
       }
       let time = new Date();
       firestore.addLog("/post", username, time.getDay());
     }
   }
-}
+};
 </script>
 
 
@@ -54,7 +55,7 @@ export default {
 @import "../css/mixin.scss";
 
 .content {
-	margin: 80px 0 50px;
+  margin: 80px 0 50px;
   height: auto;
   min-height: 100vh;
 }

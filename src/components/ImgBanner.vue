@@ -2,7 +2,7 @@
   <div class="imgBannerOuter">
     <img :src="imgSrc" alt="Main Image Banner" class="imgBanner" />
     <div class="imgBannerContent">
-      <div class="changeBgBtnBox" v-if="isAdmin">
+      <div class="changeBgBtnBox">
         <transition name="bg-random">
           <div
             class="randomImg"
@@ -35,6 +35,7 @@
 
 <script>
 import axios from "axios";
+import { mapGetters } from "vuex";
 
 export default {
   name: "ImgBanner",
@@ -45,8 +46,18 @@ export default {
     };
   },
   computed: {
-    isAdmin() {
-      return this.$store.getters.checkIfAdmin
+    ...mapGetters({
+      isAdmin: "checkIfAdmin",
+      user: "user"
+    })
+  },
+  watch: {
+    user() {
+      if (this.user) {
+        this.imgSrc = this.user.photoURL || "https://picsum.photos/1600/900";
+      } else {
+        this.imgSrc = "https://picsum.photos/1600/900";
+      }
     }
   },
   methods: {
@@ -73,7 +84,10 @@ export default {
             Authorization: "Client-ID 5d0f43f26473d77"
           }
         })
-        .then(res => (this.imgSrc = res.data.data.link));
+        .then(res => {
+          this.imgSrc = res.data.data.link;
+          this.$store.dispatch("setUserPhoto", this.imgSrc);
+        });
       this.showChangeBgMenu = false;
     }
   }

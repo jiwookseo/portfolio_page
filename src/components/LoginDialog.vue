@@ -96,11 +96,7 @@
           @keydown.enter="signUp"
         ></v-text-field>
         <div class="btn-box">
-          <button
-            class="btn reset-btn text"
-            :loading="loading"
-            @click.prevent="reset"
-          >Reset</button>
+          <button class="btn reset-btn text" :loading="loading" @click.prevent="reset">Reset</button>
           <button
             class="btn login-btn text"
             :disabled="!valid"
@@ -119,6 +115,7 @@
 
 <script>
 import Vue from "vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "LoginDialog",
@@ -134,9 +131,7 @@ export default {
         v => !!v || "E-mail is required",
         v => /.+@.+/.test(v) || "E-mail must be valid"
       ],
-      nameRules: [
-        v => !!v || "Name is required"
-      ],
+      nameRules: [v => !!v || "Name is required"],
       passwordRules: [
         v => !!v || "Password is required",
         v => !v || v.length >= 6 || "Password must be greater than 6 characters"
@@ -152,24 +147,15 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(["user", "error", "loading", "loginSuccess"]),
     passwordConfirmRules() {
       return [
         () => this.password === this.passwordConfirm || "Password must match",
         v => !!v || "Confirmation password is required"
       ];
     },
-    user() {
-      return this.$store.getters.user;
-    },
-    error() {
-      return this.$store.getters.error;
-    },
-    loading() {
-      return this.$store.getters.loading;
-    },
     checkDialog() {
-      let loginSuccess = this.$store.getters.loginSuccess
-      if(loginSuccess){
+      if (this.loginSuccess) {
         return this.$emit("child", false);
       }
       return null;
@@ -180,14 +166,14 @@ export default {
       this.$refs.form.reset();
     },
     signUp() {
-      if(
+      if (
         typeof this.email === "undefined" ||
         typeof this.name === "undefined" ||
         typeof this.password === "undefined" ||
-        typeof this.passwordConfirm === "undefined" ){
+        typeof this.passwordConfirm === "undefined"
+      ) {
         Vue.swal("Error", "Email and password is required", "error");
-      }
-      else if (this.password !== this.passwordConfirm) {
+      } else if (this.password !== this.passwordConfirm) {
         Vue.swal("Error", "Password must match", "error");
         this.passwordConfirm = "";
       } else {
@@ -210,8 +196,8 @@ export default {
         this.$store.dispatch("signUserIn", {
           email: this.email,
           password: this.password
-        })
-        this.reset()
+        });
+        this.reset();
       }
     },
     facebookLogin() {

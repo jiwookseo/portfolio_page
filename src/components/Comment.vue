@@ -72,6 +72,7 @@
 
 <script>
 import firestore from "../firebase/firestore";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Comment",
@@ -91,6 +92,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["user"]),
     comments() {
       return this.article.comments || [];
     }
@@ -118,13 +120,13 @@ export default {
       this.content = "";
     },
     createComment() {
-      if (this.$store.state.user) {
+      if (this.user) {
         firestore
           .postComment(
             this.isPortfolio,
             this.article.id,
             this.content,
-            this.$store.state.user
+            this.user
           )
           .then(() => {
             this.$store.dispatch(
@@ -136,10 +138,7 @@ export default {
       }
     },
     updateComment(comment) {
-      if (
-        this.$store.state.user &&
-        this.$store.state.user.id === comment.userID
-      ) {
+      if (this.user && this.user.id === comment.userID) {
         firestore
           .updateComment(
             this.isPortfolio,
@@ -157,10 +156,7 @@ export default {
       }
     },
     deleteComment() {
-      if (
-        this.$store.state.user &&
-        this.$store.state.user.id === this.deleteAim.userID
-      ) {
+      if (this.user && this.user.id === this.deleteAim.userID) {
         const getAction = this.isPortfolio ? "getPortfolios" : "getPosts";
         firestore
           .deleteComment(this.isPortfolio, this.article.id, this.deleteAim.id)

@@ -28,27 +28,26 @@
           :items="userAll"
           :search="search"
           :loading="loading"
-          
         >
-        <template v-slot:item.email="{ item }">
-          <v-chip :color="getColor(item.authority)" dark>{{ item.email }}</v-chip>
-        </template>
-        <template v-slot:item.authority="{ item }">
-          <td v-if="item.authority == '1'">관리자</td>
-          <td v-else-if="item.authority == '2'">팀원</td>
-          <td v-else-if="item.authority == '3'">방문자</td>
-        </template>
-        <template v-slot:item.modify="{ item }">
-          <td v-if="item.authority != '1'">
-            <form @submit.prevent="changeAuth(item.id, item.selected)">
-              <v-flex xs10 sm6 d-flex>
-                <v-select :items="auth" label="권한 선택" v-model="item.selected" solo></v-select>
-                
-                <v-btn color="primary" type="submit">수정</v-btn>
-              </v-flex>
-            </form>
-          </td>
-        </template>
+          <template v-slot:item.email="{ item }">
+            <v-chip :color="getColor(item.authority)" dark>{{ item.email }}</v-chip>
+          </template>
+          <template v-slot:item.authority="{ item }">
+            <td v-if="item.authority == '1'">관리자</td>
+            <td v-else-if="item.authority == '2'">팀원</td>
+            <td v-else-if="item.authority == '3'">방문자</td>
+          </template>
+          <template v-slot:item.modify="{ item }">
+            <td v-if="item.authority != '1'">
+              <form @submit.prevent="changeAuth(item.id, item.selected)">
+                <v-flex xs10 sm6 d-flex>
+                  <v-select :items="auth" label="권한 선택" v-model="item.selected" solo></v-select>
+
+                  <v-btn color="primary" type="submit">수정</v-btn>
+                </v-flex>
+              </form>
+            </td>
+          </template>
         </v-data-table>
       </v-card>
     </v-container>
@@ -91,18 +90,18 @@ export default {
   },
   computed: {
     userAll() {
-      return this.$store.state.userAll.map(user => ({
+      return this.$store.getters.userAll.map(user => ({
         selected: "default",
         ...user
       }));
     }
   },
   methods: {
-    getColor (authority) {
-        if (authority == '1') return 'dark'
-        else if (authority == '2') return 'blue'
-        else return 'green'
-      },
+    getColor(authority) {
+      if (authority == "1") return "dark";
+      else if (authority == "2") return "blue";
+      else return "green";
+    },
     changeAuth(id, selected) {
       this.loading = true;
       let num = "";
