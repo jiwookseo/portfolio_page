@@ -81,15 +81,17 @@ export default {
           const facebookUser = {
             id: user.uid,
             name: user.displayName,
-            email: user.email,
-            photoURL: user.photoURL,
-            authority: authority || "3"
+            email: user.email
           };
-          if (authority === null) {
+          if (authority) {
+            facebookUser.photoURL = user.photoURL;
+            facebookUser.authority = authority;
+          } else {
             // if it's a new User
             facebookUser.photoURL = null;
-            facebookUser.updateProfile({ photoURL: null });
-            firestore.postUser(facebookUser.email, "3");
+            facebookUser.authority = "3";
+            user.updateProfile({ photoURL: null });
+            firestore.postUser(facebookUser.email, 3);
           }
           commit("setUser", facebookUser);
         });

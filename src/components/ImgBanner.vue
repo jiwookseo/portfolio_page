@@ -41,25 +41,28 @@ export default {
   name: "ImgBanner",
   data() {
     return {
-      imgSrc: "https://picsum.photos/1600/900",
       showChangeBgMenu: false
     };
   },
   computed: {
+    imgSrc: {
+      get() {
+        if (this.user) {
+          return this.user.photoURL || "https://picsum.photos/1600/900";
+        } else {
+          return "https://picsum.photos/1600/900";
+        }
+      },
+      set(newImage) {
+        this.$store.dispatch("setUserPhoto", newImage);
+      }
+    },
     ...mapGetters({
       isAdmin: "checkIfAdmin",
       user: "user"
     })
   },
-  watch: {
-    user() {
-      if (this.user) {
-        this.imgSrc = this.user.photoURL || "https://picsum.photos/1600/900";
-      } else {
-        this.imgSrc = "https://picsum.photos/1600/900";
-      }
-    }
-  },
+  watch: {},
   methods: {
     scrollTo() {
       this.$parent.scrollTo("#aboutme");
@@ -86,7 +89,6 @@ export default {
         })
         .then(res => {
           this.imgSrc = res.data.data.link;
-          this.$store.dispatch("setUserPhoto", this.imgSrc);
         });
       this.showChangeBgMenu = false;
     }
