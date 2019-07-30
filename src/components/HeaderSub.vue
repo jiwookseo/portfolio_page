@@ -29,7 +29,7 @@
             </div>
           </div>
         </router-link>
-        <ul>
+        <ul style="padding-left: 0;">
           <router-link to="/portfolio">
             <li class="sb-nav-menu text">Portfolio</li>
           </router-link>

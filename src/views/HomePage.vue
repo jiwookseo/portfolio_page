@@ -28,7 +28,7 @@
         <h2 class="section-title text" data-aos="fade-left">Portfolio</h2>
         <PortfolioList :limit="4" />
         <div class="section-btn-box" data-aos="fade-up">
-          <router-link to="/portfolio">
+          <router-link :to="{name: 'PortfolioDetailPage', params: {id: this.portfolios[0].id}}">
             <div class="section-more-btn text">
               More Portfolios
               <i class="material-icons">arrow_forward</i>
@@ -40,7 +40,7 @@
         <h2 class="section-title text" data-aos="fade-right">Post</h2>
         <PostList :limit="4" />
         <div class="section-btn-box" data-aos="fade-up">
-          <router-link to="/post">
+          <router-link :to="{name: 'PostDetailPage', params: {id: this.posts[0].id}}">
             <div class="section-more-btn text">
               More Posts
               <i class="material-icons">arrow_forward</i>
@@ -99,7 +99,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(["loginSuccess", "user", "currentUserAuthority"])
+    ...mapGetters(["loginSuccess", "user", "currentUserAuthority", "portfolios", "posts"])
   },
   mounted() {
     this.addLog();

@@ -25,22 +25,24 @@ export default new Router({
     {
       path: "/portfolio",
       name: "portfolio",
-      component: PortfolioPage
-    },
-    {
-      path: "/portfolio/:id",
-      name: "PortfolioDetailPage",
-      component: DetailPage
+      component: PortfolioPage,
+      children: [{
+        path: ":id",
+        name: "PortfolioDetailPage",
+        component: DetailPage,
+        props: true
+      }]
     },
     {
       path: "/post",
       name: "post",
-      component: PostPage
-    },
-    {
-      path: "/post/:id",
-      name: "PostDetailPage",
-      component: DetailPage
+      component: PostPage,
+      children: [{
+        path: ":id",
+        name: "PostDetailPage",
+        component: DetailPage,
+        props: true
+      }]
     },
     {
       path: "/admin",

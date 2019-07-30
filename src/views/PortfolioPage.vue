@@ -1,9 +1,27 @@
 <template>
   <div>
     <HeaderSub />
-    <div class="content">
+    <div class="section-content">
       <h2 class="section-title text">Portfolio</h2>
-      <PortfolioList :limit="6" :allowCreate="true" />
+      <div class="article-container">
+        <div class="article-detail">
+          <router-view />
+        </div>
+        <div class="article-list">
+          <div
+            v-for="portfolio in portfolios"
+            :key="portfolio.id"
+            class="item"
+          >
+            <router-link 
+              :to="{name: 'PortfolioDetailPage', params: {id: portfolio.id}}"
+              class="item-link text"
+            >
+              {{ portfolio.title }}
+            </router-link>
+          </div>
+        </div>
+      </div>
     </div>
     <Footer />
   </div>
@@ -28,7 +46,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(["user"])
+    ...mapGetters(["user", "portfolios"])
   },
   mounted() {
     this.addLog();
@@ -53,9 +71,4 @@ export default {
 <style lang="scss" scoped>
 @import "../css/style.scss";
 @import "../css/mixin.scss";
-.content {
-  margin: 80px 0 50px;
-  height: auto;
-  min-height: 100vh;
-}
 </style>
