@@ -132,13 +132,20 @@ export default {
       const formData = new FormData();
       const file = this.$refs.image.files[0];
       formData.append("image", file, file.name);
+      this.$store.dispatch("setSpinner", {
+        loading: true,
+        message: "Uploading..."
+      });
       axios
         .post("https://api.imgur.com/3/image/", formData, {
           headers: {
             Authorization: "Client-ID 5d0f43f26473d77"
           }
         })
-        .then(res => (this.data.img = res.data.data.link));
+        .then(res => {
+          this.data.img = res.data.data.link;
+          this.$store.dispatch("setSpinner", { loading: false });
+        });
     }
   }
 };
