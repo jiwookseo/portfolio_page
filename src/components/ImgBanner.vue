@@ -41,15 +41,16 @@ export default {
   name: "ImgBanner",
   data() {
     return {
-      showChangeBgMenu: false
+      showChangeBgMenu: false,
+      defaultImage: "https://picsum.photos/1600/900"
     };
   },
   computed: {
     imgSrc() {
       if (this.user) {
-        return this.user.photoURL || "https://picsum.photos/1600/900";
+        return this.user.photoURL || this.defaultImage;
       } else {
-        return "https://picsum.photos/1600/900";
+        return this.defaultImage;
       }
     },
     ...mapGetters({
@@ -66,8 +67,15 @@ export default {
       this.showChangeBgMenu = !this.showChangeBgMenu;
     },
     useRandomImg() {
-      this.imgSrc = "https://picsum.photos/1600/900";
+      this.$store.dispatch("setSpinner", {
+        loading: true,
+        message: "Changing..."
+      });
+      this.$store.dispatch("setUserPhoto", this.defaultImage);
       this.showChangeBgMenu = false;
+      setTimeout(() => {
+        this.$store.dispatch("setSpinner", { loading: false });
+      }, 1500);
     },
     pickFile() {
       this.$refs.image.click();
@@ -78,7 +86,7 @@ export default {
       formData.append("image", file, file.name);
       this.$store.dispatch("setSpinner", {
         loading: true,
-        message: "Uploading..."
+        message: "Changing..."
       });
       axios
         .post("https://api.imgur.com/3/image/", formData, {
@@ -88,7 +96,9 @@ export default {
         })
         .then(res => {
           this.$store.dispatch("setUserPhoto", res.data.data.link);
-          this.$store.dispatch("setSpinner", { loading: false });
+          setTimeout(() => {
+            this.$store.dispatch("setSpinner", { loading: false });
+          }, 1500);
         });
       this.showChangeBgMenu = false;
     }
