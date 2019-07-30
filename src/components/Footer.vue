@@ -33,7 +33,10 @@
       </div>
     </transition>
 
-    <div id="copyrights">SSAFY Team Six ©2019</div>
+    <div id="copyrights">
+      SSAFY Team Six ©2019
+      <v-btn @click="pushMessage">push</v-btn>
+    </div>
     <div id="top-btn" @click="totop">
       <span>
         <i class="material-icons">keyboard_arrow_up</i>
@@ -115,34 +118,33 @@ export default {
       else this.chat = false;
     },
     pushMessage() {
-    var FCM = require('fcm-node');
-    var serverKey = 'AAAAMFkjNys:APA91bGdpabEB2sSOHZu8yLpt1gnIWeeqKPtTrjCVgO-f5Kv2CDu9-olA11IvSxqANaY6GWFNl68XmzIvg5tX4SzPb5PU2P6v05TIuvJGPkuOP0gZzQvlXIZU8YxKB8_dToy_JOFrB9P'; //put your server key here
-    var fcm = new FCM(serverKey);
- 
-    var message = { //this may vary according to the message type (single recipient, multicast, topic, et cetera)
-        to: 'eWOvYDsCAVY:APA91bHmB41ftP4Myx7JO8cstRHSgM_A_AlNVHaQCxSEZqt4kvjLGtDQkAJEFYWSFR-SH5u-pT1bWFL_p9upia3nbmw7zJYFhqzs87SCZQnQSOSltbsOvEUsiwEmsPq177r6LllitLC5',
-        
-        notification: {
-            title: 'hi', 
-            body: 'bye' 
-        }
-    };
-    
-    fcm.send(message, function(err, response){
-        if (err) {
-            console.log("Something has gone wrong!");
-        } else {
-          console.log("Successfully sent with response: ", response);
-        }
-    });
+      axios
+        .post(
+          "https://fcm.googleapis.com/fcm/send",
+          {
+            to:
+              "fFupAvEDzY8:APA91bFD2arIXt6kFLaenus5H2cZQlUFPlGz9_qYMS7EzdYv2XJEW_FE_XLG0CcNoy0dDFVE6qk66BYPhaLhmjrbAb5tbBQvoOrbQgAzf94xBWmuzgxPr70M9qiR36AL2ZnxnZH1Hl7s",
+            notification: {
+              title: "test",
+              body: "test"
+            }
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization:
+                "key=AAAAMFkjNys:APA91bGdpabEB2sSOHZu8yLpt1gnIWeeqKPtTrjCVgO-f5Kv2CDu9-olA11IvSxqANaY6GWFNl68XmzIvg5tX4SzPb5PU2P6v05TIuvJGPkuOP0gZzQvlXIZU8YxKB8_dToy_JOFrB9P"
+            }
+          }
+        )
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
     }
   },
   beforeMount() {
     this.showWeather();
   },
-  mounted(){
-    this.pushMessage();
-  }
+  mounted() {}
 };
 </script>
 
