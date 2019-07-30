@@ -26,7 +26,7 @@ export default new Router({
     },
     {
       path: "/portfolios",
-      name: "Articles",
+      name: "Portfolios",
       component: Articles
     },
     {
@@ -41,7 +41,7 @@ export default new Router({
     },
     {
       path: "/posts",
-      name: "Articles",
+      name: "Posts",
       component: Articles
     },
     {
