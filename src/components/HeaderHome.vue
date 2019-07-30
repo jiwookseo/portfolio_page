@@ -28,7 +28,7 @@
             <div>TS</div>
           </div>
         </div>
-        <ul>
+        <ul style="padding-left: 0;">
           <li
             v-for="menu in menus"
             class="sb-nav-menu"

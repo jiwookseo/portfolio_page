@@ -1,15 +1,5 @@
 <template>
   <div>
-    <div class="btn-box">
-      <router-link to="/">
-        <div class="load-more-btn">Home</div>
-      </router-link>
-    </div>
-    <div class="btn-box">
-      <router-link :to="link">
-        <div class="load-more-btn">{{buttonName}}</div>
-      </router-link>
-    </div>
     <div class="article-content">
       <h3 class="Title">{{article.title || ""}}</h3>
       <p class="Date">{{date}}</p>
@@ -17,7 +7,6 @@
       <p class="Content">{{article.content}}</p>
     </div>
     <Comment :article="article" />
-    <Footer />
   </div>
 </template>
 
@@ -70,32 +59,7 @@ export default {
 <style lang="scss" scoped>
 @import "../css/mixin.scss";
 @import "../css/style.scss";
-a,
-a:hover {
-  color: initial;
-  width: 0;
-  height: 0;
-}
-.btn-box {
-  height: 50px;
-  position: relative;
-  margin-top: 10px;
-}
-.load-more-btn {
-  position: absolute;
-}
 
-.article-content {
-  width: 60%;
-  margin: 50px auto;
-  padding: 10px;
-  @include viewportMax(800) {
-    width: 80%;
-  }
-  @include mobile {
-    width: 100%;
-  }
-}
 .Title {
   font-size: 2em;
   margin-bottom: 20px;

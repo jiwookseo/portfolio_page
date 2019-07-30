@@ -1,9 +1,27 @@
 <template>
   <div>
     <HeaderSub />
-    <div class="content">
+    <div class="section-content">
       <h2 class="section-title text">Post</h2>
-      <PostList :limit="6" :allowCreate="true" />
+      <div class="article-container">
+        <div class="article-detail">
+          <router-view />
+        </div>
+        <div class="article-list">
+          <div
+            v-for="post in posts"
+            :key="post.id"
+            class="item"
+          >
+            <router-link 
+              :to="{name: 'PostDetailPage', params: {id: post.id}}"
+              class="item-link text"
+            >
+              {{ post.title }}
+            </router-link>
+          </div>
+        </div>
+      </div>
     </div>
     <Footer />
   </div>
@@ -28,7 +46,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(["user"])
+    ...mapGetters(["user", "posts"])
   },
   mounted() {
     this.addLog();
@@ -53,10 +71,4 @@ export default {
 <style lang="scss" scoped>
 @import "../css/style.scss";
 @import "../css/mixin.scss";
-
-.content {
-  margin: 80px 0 50px;
-  height: auto;
-  min-height: 100vh;
-}
 </style>

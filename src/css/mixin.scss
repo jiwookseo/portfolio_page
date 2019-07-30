@@ -316,7 +316,65 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+////////////////////////////////////////// ARTICLE DETAIL PAGE ////////////////////////////////////////////
 
+.section-content {
+  margin: 80px 0 50px;
+  height: auto;
+  min-height: calc(100vh - 150px);
+}
+.article-container {
+  position: relative;
+}
+.article-detail {
+  display: block;  // MOBILE
+  max-width: 600px;
+  height: auto;
+  margin: 0 auto;
+  padding: 10px 2%;
+  // border: 1px solid blue;
+  @include viewportMin(601) { // DESKTOP
+    display: inline-block;
+    width: 75%;
+    max-width: calc(100% - 180px);
+    vertical-align: top;
+  }
+}
+.article-list {
+  display: block;
+  background: white; // MOBILE
+  max-width: 500px;
+  height: 200px;
+  overflow-y: auto;
+  margin: 0 auto;
+  @include viewportMin(601) { // DESKTOP
+    display: inline-block;
+    width: 23%;
+    min-width: 180px;
+    height: 100%;
+    vertical-align: top;
+    margin-top: 100px;
+    overflow-y: initial;
+  }
+  a, a:hover {
+    color: initial;
+  }
+  .item {
+    height: 40px;
+    line-height: 40px;
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+    .item-link {
+      display: inline-block;
+      padding: 0 10%;
+      width: 100%; height: 100%;
+      @include textTruncate;
+    }
+  }
+}
 
-
-
+.article-content {
+  width: 100%;
+  padding: 10px 3%;
+}

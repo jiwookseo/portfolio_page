@@ -175,15 +175,8 @@ export default {
 @import "../css/mixin.scss";
 @import "../css/style.scss";
 .comment-box {
-  width: 60%;
-  margin: 50px auto;
-  padding: 10px;
-  @include viewportMax(800) {
-    width: 80%;
-  }
-  @include mobile {
-    width: 100%;
-  }
+  width: 100%;
+  padding: 10px 3%;
 }
 .btn-box {
   position: absolute;
