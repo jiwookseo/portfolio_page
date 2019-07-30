@@ -28,9 +28,6 @@ export default {
     path() {
       return this.$route.path
     }
-  },
-  mounted() {
-    console.log(this.path);
   }
 }
 </script>
