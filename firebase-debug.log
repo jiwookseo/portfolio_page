@@ -1,0 +1,23 @@
+[debug] [2019-07-30T00:31:03.142Z] ----------------------------------------------------------------------
+[debug] [2019-07-30T00:31:03.144Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\multicampus\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js use --add
+[debug] [2019-07-30T00:31:03.145Z] CLI Version:   7.2.0
+[debug] [2019-07-30T00:31:03.145Z] Platform:      win32
+[debug] [2019-07-30T00:31:03.145Z] Node Version:  v10.16.0
+[debug] [2019-07-30T00:31:03.146Z] Time:          Tue Jul 30 2019 09:31:03 GMT+0900 (GMT+09:00)
+[debug] [2019-07-30T00:31:03.146Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-07-30T00:31:03.157Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-07-30T00:31:03.157Z] > authorizing via signed-in user
+[debug] [2019-07-30T00:31:03.159Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-07-30T00:31:03.159Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-07-30T00:31:03.551Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-30T00:31:03.556Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects?page_size=100  
+ 
+[debug] [2019-07-30T00:31:05.462Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-30T00:31:51.007Z] Error: kill ENOSYS
+    at process.kill (internal/process/per_thread.js:198:13)
+    at process.listener (C:\Users\multicampus\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\signal-exit\index.js:95:15)
+    at process.emit (events.js:198:13)
+[error] 
+[error] Error: An unexpected error has occurred.
