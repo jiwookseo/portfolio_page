@@ -2,7 +2,7 @@
   <v-app id="app">
     <v-content class="content">
       <vue-page-transition>
-        <router-view :key="$route.fullPath" />
+        <router-view />
       </vue-page-transition>
       <TranslateBtn />
       <ChatBtn />
