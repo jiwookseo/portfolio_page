@@ -54,7 +54,7 @@
       </v-card>
     </v-container>
     <v-container>
-      <h2 class="section-subtitle">Data Count</h2>
+      <h2 class="section-subtitle">Count Data</h2>
       <template>
         <v-simple-table>
           <thead>
@@ -64,18 +64,28 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in category" :key="item.name">
-              <td>{{ item.name }}</td>
-              <td>{{ item.count }}</td>
+            <tr>
+              <td>Users</td>
+              <td>{{ userAll.length }}명</td>
+            </tr>
+            <tr>
+              <td>portfolios</td>
+              <td>{{ portfoliosAll.length }}개</td>
+            </tr>
+            <tr>
+              <td>Posts</td>
+              <td>{{ postsAll.length }}개</td>
             </tr>
           </tbody>
         </v-simple-table>
       </template>
     </v-container>
-
-    <div class="content-container">
-      <div id="visits-chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-    </div>
+    <v-container>
+      <h2 class="section-subtitle">Log Data</h2>
+      <div class="content-container">
+        <div id="visits-chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+      </div>
+    </v-container>
   </div>
 </template>
 
@@ -98,21 +108,7 @@ export default {
         { text: "권한", value: "authority" },
         { text: "권한 변경", value: "modify", sortable: false }
       ],
-      loading: false,
-      category: [
-        {
-          name: 'User',
-          count: this.$store.getters.userAll.length
-        },
-        {
-          name: 'Portfolios',
-          count: this.$store.getters.portfolios.length
-        },
-        {
-          name: 'Posts',
-          count: this.$store.getters.posts.length
-        }
-      ]
+      loading: false
     };
   },
   mounted() {
@@ -130,6 +126,12 @@ export default {
         ...user
       }));
     },
+    portfoliosAll() {
+      return this.$store.getters.portfolios;
+    },
+    postsAll() {
+      return this.$store.getters.posts;
+    }
   },
   methods: {
     getColor(authority) {
