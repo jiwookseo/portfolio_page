@@ -53,7 +53,7 @@
         <LineChart class="linechart hideMobile" data-aos="fade-up" />
         <Radarchart class="radarchart hideMobile" data-aos="fade-up" />
         <div class="section-btn-box hideMobile" data-aos="fade-up">
-          <a target="_blank" href="https://lab.ssafy.com/jiwonjulietyoon/webmobile-sub2">
+          <a target="_blank" href="https://lab.ssafy.com/jiwonjulietyoon/webmobile-final">
             <div class="section-more-btn text">
               View GitLab
               <i class="material-icons">arrow_forward</i>
