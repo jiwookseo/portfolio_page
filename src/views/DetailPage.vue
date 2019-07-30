@@ -11,12 +11,10 @@
 </template>
 
 <script>
-import Footer from "../components/Footer";
 import Comment from "../components/Comment";
 
 export default {
   components: {
-    Footer,
     Comment
   },
   data() {
