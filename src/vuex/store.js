@@ -11,13 +11,13 @@ const state = {
   loading: false,
   error: null,
   loginSuccess: false,
-  posts: [{id: '1', created_at: { seconds: 0 }}],
+  posts: [],
   postExample: {
     title: "",
     content: "",
     created_at: { seconds: 0 }
   },
-  portfolios: [{id: '1'}],
+  portfolios: [],
   portfolioExample: {
     title: "",
     content: "",

@@ -31,7 +31,6 @@
 <script>
 import firestore from "../firebase/firestore";
 import HeaderSub from "../components/HeaderSub";
-import PortfolioList from "../components/PortfolioList";
 import Footer from "../components/Footer";
 import { mapGetters } from "vuex";
 
@@ -39,7 +38,6 @@ export default {
   name: "PortfolioPage",
   components: {
     HeaderSub,
-    PortfolioList,
     Footer
   },
   data() {
