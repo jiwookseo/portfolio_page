@@ -9,10 +9,10 @@
         </div>
       </router-link>
       <div class="btn-right">
-        <router-link to="/portfolio">
+        <router-link to="/portfolios">
           <div class="nav-item text">Portfolio</div>
         </router-link>
-        <router-link to="/post">
+        <router-link to="/posts">
           <div class="nav-item text">Post</div>
         </router-link>
         <div v-if="!user" class="nav-item login-btn text" @click.stop="dialog = true">Login</div>

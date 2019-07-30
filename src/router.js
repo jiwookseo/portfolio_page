@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import HomePage from "./views/HomePage.vue";
 import PortfolioPage from "./views/PortfolioPage.vue";
+import Articles from "./views/Articles.vue";
 import PostPage from "./views/PostPage.vue";
 import DetailPage from "./views/DetailPage";
 import AdminPage from "./views/AdminPage.vue";
@@ -23,8 +24,12 @@ export default new Router({
       component: HomePage
     },
     {
+      path: "/portfolios",
+      name: "Articles",
+      component: Articles
+    },
+    {
       path: "/portfolio",
-      name: "portfolio",
       component: PortfolioPage,
       children: [{
         path: ":id",
@@ -34,8 +39,12 @@ export default new Router({
       }]
     },
     {
+      path: "/posts",
+      name: "Articles",
+      component: Articles
+    },
+    {
       path: "/post",
-      name: "post",
       component: PostPage,
       children: [{
         path: ":id",
