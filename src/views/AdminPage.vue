@@ -10,7 +10,7 @@
     <h2 class="section-title">Admin Page</h2>
     <v-container>
       <h2 class="section-subtitle">User Information</h2>
-      <v-card>
+      <v-card v-resize="onResize">
         <v-card-title>
           <h1>User</h1>
           <v-spacer></v-spacer>
@@ -30,25 +30,38 @@
           :sort-by="['authority', 'email']"
           :sort-desc="[false, false]"
           :loading="loading"
+          :class="{mobile: isMobile}"
         >
-          <template v-slot:item.email="{ item }">
+
+        <!-- desktop -->
+          <template v-slot:item.email="{ item }" v-if="!isMobile">
             <v-chip :color="getColor(item.authority)" dark>{{ item.email }}</v-chip>
           </template>
-          <template v-slot:item.authority="{ item }">
-            <td v-if="item.authority == '1'">관리자</td>
-            <td v-else-if="item.authority == '2'">팀원</td>
-            <td v-else-if="item.authority == '3'">방문자</td>
+          <template v-slot:item.authority="{ item }" v-if="!isMobile">
+            <td v-if="item.authority == '1'" class="text-xs-right">관리자</td>
+            <td v-else-if="item.authority == '2'" class="text-xs-right">팀원</td>
+            <td v-else-if="item.authority == '3'" class="text-xs-right">방문자</td>
           </template>
-          <template v-slot:item.modify="{ item }">
-            <td v-if="item.authority != '1'">
-              <form @submit.prevent="changeAuth(item.id, item.selected)">
-                <v-flex xs10 sm6 d-flex>
-                  <v-select :items="auth" label="권한 선택" v-model="item.selected" solo></v-select>
-
-                  <v-btn color="primary" type="submit">수정</v-btn>
-                </v-flex>
+          <template v-slot:item.authority="{ item }" v-else-if="isMobile">
+          <v-flex xs12 sm6 d-flex>
+          <v-chip :color="getColor(item.authority)" v-if="item.authority == '1'" style="color:black;">관리자</v-chip>
+          <v-chip :color="getColor(item.authority)" v-else-if="item.authority == '2'" style="color:white;">팀원</v-chip>
+          <v-chip :color="getColor(item.authority)" v-else-if="item.authority == '3'" style="color:white;">방문자</v-chip>
+          </v-flex>
+        </template>
+        <template v-slot:item.modify="{ item }" v-if="!isMobile">
+            <form @submit.prevent="changeAuth(item.id, item.selected)" v-if="item.authority != '1'" class="text-xs-right">
+              <td><v-select :items="auth" label="권한 선택" v-model="item.selected" style="width:110px;" solo></v-select></td>
+              <td><v-btn color="primary" type="submit">수정</v-btn></td>
+            </form>
+        </template>
+        <template v-slot:item.modify="{ item }" v-else-if="isMobile">
+          <v-flex xs12 sm6 d-flex>
+              <form @submit.prevent="changeAuth(item.id, item.selected)" v-if="item.authority != '1'" class="text-xs-right">
+                <td><v-select :items="auth" label="권한 선택" v-model="item.selected" style="width:110px;height:10px;" solo></v-select></td>
+                <td><v-btn color="primary" type="submit">수정</v-btn></td>
               </form>
-            </td>
+          </v-flex>
           </template>
         </v-data-table>
       </v-card>
@@ -103,6 +116,7 @@ export default {
       auth: ["팀원", "방문자"],
       logs: [],
       times: [],
+      isMobile: false,
       headers: [
         { text: "이메일", value: "email", sortable: false },
         { text: "권한", value: "authority" },
@@ -134,6 +148,12 @@ export default {
     }
   },
   methods: {
+    onResize() {
+          if (window.innerWidth < 769)
+            this.isMobile = true;
+          else
+            this.isMobile = false;
+    },
     getColor(authority) {
       if (authority == "1") return "dark";
       else if (authority == "2") return "blue";
@@ -340,4 +360,68 @@ a:hover {
 .content-container {
   padding: 0 50px 50px;
 }
+
+
+.mobile {
+  color: #333;
+}
+
+@media screen and (max-width: 768px) {
+  .mobile table.v-table tr {
+    max-width: 100%;
+    position: relative;
+    display: block;
+  }
+
+  .mobile table.v-table tr:nth-child(odd) {
+    border-left: 6px solid deeppink;
+  }
+
+  .mobile table.v-table tr:nth-child(even) {
+    border-left: 6px solid cyan;
+  }
+
+  .mobile table.v-table tr td {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid #f5f5f5;
+    height: auto;
+    padding: 10px;
+  }
+
+  .mobile table.v-table tr td ul li:before {
+    content: attr(data-label);
+    padding-right: .5em;
+    text-align: left;
+    display: block;
+    color: #999;
+
+  }
+  .v-datatable__actions__select
+  {
+    width: 50%;
+    margin: 0px;
+    justify-content: flex-start;
+  }
+  .mobile .theme--light.v-table tbody tr:hover:not(.v-datatable__expand-row) {
+    background: transparent;
+  }
+
+}
+.flex-content {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.flex-item {
+  padding: 5px;
+  width: 50%;
+  height: 40px;
+  font-weight: bold;
+}
+
 </style>
