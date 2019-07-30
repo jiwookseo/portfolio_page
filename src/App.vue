@@ -1,7 +1,9 @@
 <template>
   <v-app id="app">
     <v-content class="content">
-      <router-view />
+      <vue-page-transition>
+        <router-view :key="$route.fullPath" />
+      </vue-page-transition>
       <TranslateBtn />
       <ChatBtn />
       <LoadingSpinner v-show="spinner.loading" :message="spinner.message" />

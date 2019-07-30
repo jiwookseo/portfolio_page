@@ -29,6 +29,7 @@
     "vue-chartjs": "^3.4.2",
     "vue-cookies": "^1.5.13",
     "vue-json": "^1.0.5",
+    "vue-page-transition": "^0.2.2",
     "vue-router": "^3.0.3",
     "vue-simplemde": "^0.5.2",
     "vue-skycon": "^1.0.4",

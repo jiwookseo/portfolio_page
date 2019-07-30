@@ -5,7 +5,9 @@
       <h2 class="section-title text">Post</h2>
       <div class="article-container">
         <div class="article-detail">
-          <router-view />
+          <vue-page-transition name="fade">
+            <router-view :key="$route.fullPath" />
+          </vue-page-transition>
         </div>
         <div class="article-list">
           <div
