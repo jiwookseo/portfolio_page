@@ -27,6 +27,8 @@
           :headers="headers"
           :items="userAll"
           :search="search"
+          :sort-by="['authority', 'email']"
+          :sort-desc="[false, false]"
           :loading="loading"
         >
           <template v-slot:item.email="{ item }">
