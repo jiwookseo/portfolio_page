@@ -50,7 +50,7 @@ export default {
       if (this.article.created_at.seconds === 0) {
         return "";
       } else {
-        if (this.article.updated_at) {
+        if (this.article.edited) {
           const date = new Date(this.article.updated_at.seconds * 1000);
           return String(date).split("GMT")[0] + "(edited)";
         } else {
