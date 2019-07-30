@@ -8,8 +8,8 @@
       </router-link>
     </div>
     <h2 class="section-title">Admin Page</h2>
-
     <v-container>
+      <h2 class="section-subtitle">User Information</h2>
       <v-card>
         <v-card-title>
           <h1>User</h1>
@@ -53,6 +53,25 @@
         </v-data-table>
       </v-card>
     </v-container>
+    <v-container>
+      <h2 class="section-subtitle">Data Count</h2>
+      <template>
+        <v-simple-table>
+          <thead>
+            <tr>
+              <th class="text-left">Category</th>
+              <th class="text-left">Total Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in category" :key="item.name">
+              <td>{{ item.name }}</td>
+              <td>{{ item.count }}</td>
+            </tr>
+          </tbody>
+        </v-simple-table>
+      </template>
+    </v-container>
 
     <div class="content-container">
       <div id="visits-chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
@@ -79,7 +98,21 @@ export default {
         { text: "권한", value: "authority" },
         { text: "권한 변경", value: "modify", sortable: false }
       ],
-      loading: false
+      loading: false,
+      category: [
+        {
+          name: 'User',
+          count: this.$store.getters.userAll.length
+        },
+        {
+          name: 'Portfolios',
+          count: this.$store.getters.portfolios.length
+        },
+        {
+          name: 'Posts',
+          count: this.$store.getters.posts.length
+        }
+      ]
     };
   },
   mounted() {
@@ -96,7 +129,7 @@ export default {
         selected: "default",
         ...user
       }));
-    }
+    },
   },
   methods: {
     getColor(authority) {
