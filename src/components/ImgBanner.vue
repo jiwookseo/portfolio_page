@@ -67,15 +67,17 @@ export default {
       this.showChangeBgMenu = !this.showChangeBgMenu;
     },
     useRandomImg() {
-      this.$store.dispatch("setSpinner", {
-        loading: true,
-        message: "Changing..."
-      });
-      this.$store.dispatch("setUserPhoto", this.defaultImage);
-      this.showChangeBgMenu = false;
-      setTimeout(() => {
-        this.$store.dispatch("setSpinner", { loading: false });
-      }, 1500);
+      if (this.imgSrc !== this.defaultImage) {
+        this.$store.dispatch("setSpinner", {
+          loading: true,
+          message: "Changing..."
+        });
+        this.$store.dispatch("setUserPhoto", this.defaultImage);
+        this.showChangeBgMenu = false;
+        setTimeout(() => {
+          this.$store.dispatch("setSpinner", { loading: false });
+        }, 1500);
+      }
     },
     pickFile() {
       this.$refs.image.click();
