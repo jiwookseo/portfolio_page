@@ -56,7 +56,6 @@ export default {
         .where("email", "==", email)
         .get()
         .then(snapshot => {
-          console.log(snapshot.docs[0]);
           snapshot.docs[0].ref.update({ authority }).then(res => resolve(res));
         })
         .catch(err => reject(err));
@@ -156,8 +155,7 @@ export default {
           userID: user.id,
           userName: user.name,
           edited: false,
-          created_at: Firebase.firestore.FieldValue.serverTimestamp(),
-          updated_at: Firebase.firestore.FieldValue.serverTimestamp()
+          created_at: Firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(res => resolve(res))
         .catch(err => reject(err));

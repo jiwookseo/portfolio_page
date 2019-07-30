@@ -138,7 +138,7 @@ export default {
             Authorization: "Client-ID 5d0f43f26473d77"
           }
         })
-        .then(res => (this.img = res.data.data.link));
+        .then(res => (this.data.img = res.data.data.link));
     }
   }
 };
