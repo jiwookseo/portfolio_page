@@ -7,6 +7,7 @@ export default {
   loginSuccess: state => state.loginSuccess,
   portfolios: state => state.portfolios,
   posts: state => state.posts,
+  spinner: state => state.spinner,
   getArticle: state => (type, id) => {
     if (type === "portfolio")
       return (

@@ -4,6 +4,7 @@
       <router-view />
       <TranslateBtn />
       <ChatBtn />
+      <LoadingSpinner v-show="spinner.loading" :message="spinner.message" />
       <router-link to="/admin" v-if="isAdmin">
         <div id="toAdmin" title="Admin Page">
           <i class="material-icons">how_to_reg</i>
@@ -16,20 +17,23 @@
 <script>
 import ChatBtn from "./components/ChatBtn";
 import TranslateBtn from "./components/TranslateBtn";
+import LoadingSpinner from "./components/LoadingSpinner";
 import { mapGetters } from "vuex";
 
 export default {
   name: "App",
   components: {
     ChatBtn,
-    TranslateBtn
+    TranslateBtn,
+    LoadingSpinner
   },
   data() {
     return {};
   },
   computed: {
     ...mapGetters({
-      isAdmin: "checkIfAdmin"
+      isAdmin: "checkIfAdmin",
+      spinner: "spinner"
     })
   },
   mounted() {

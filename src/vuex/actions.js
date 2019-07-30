@@ -144,7 +144,7 @@ export default {
     firestore.getUserAll().then(res => {
       commit("getUserAll", res);
     });
-  }
+  },
   /*
   getUserInfo({commit}) {
     firestore.getUser().then(res => {
@@ -152,4 +152,8 @@ export default {
     })
   },
   */
+  setSpinner({ commit }, payload) {
+    payload.message = payload.message || "";
+    commit("setSpinner", payload);
+  }
 };

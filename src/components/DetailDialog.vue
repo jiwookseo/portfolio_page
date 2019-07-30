@@ -16,7 +16,6 @@
       />
       <p class="Content">{{content}}</p>
     </div>
-    <LoadingSpinner v-show="loading" :message="'Translating...'" />
     <div class="btn-box-bottom">
       <div class="tr-btn" @click="askToTranslate = !askToTranslate" title="Translate">
         <i class="material-icons">g_translate</i>
@@ -49,20 +48,15 @@
 </template>
 
 <script>
-import LoadingSpinner from "./LoadingSpinner";
 import { setTimeout } from "timers";
 import translateText from "../js/translate";
 
 export default {
   name: "DetailDialog",
-  components: {
-    LoadingSpinner
-  },
   data() {
     return {
       date: "",
       askToTranslate: false,
-      loading: false,
       originalText: {},
       translatedText: {},
       translated: false,
@@ -105,7 +99,10 @@ export default {
       };
       this.translatedText = {};
       if (this.translated) {
-        this.loading = true;
+        this.$store.dispatch("setSpinner", {
+          loading: true,
+          message: "Translating..."
+        });
         setTimeout(() => {
           this.translated = false;
           this.translate("en", this.selectedLanguage, true);
@@ -124,7 +121,10 @@ export default {
       if (this.translated) return;
       else this.translated = true;
       if (!this.translatedText[target] || force) {
-        this.loading = true;
+        this.$store.dispatch("setSpinner", {
+          loading: true,
+          message: "Translating..."
+        });
         this.translatedText[target] = {
           title: "",
           content: ""
@@ -140,9 +140,11 @@ export default {
                 this.content = res.translatedText;
                 this.translatedText[target].content = res.translatedText;
               })
-              .then(() => (this.loading = false))
+              .then(() =>
+                this.$store.dispatch("setSpinner", { loading: false })
+              )
           )
-          .catch(() => (this.loading = false));
+          .catch(() => this.$store.dispatch("setSpinner", { loading: false }));
       } else {
         this.title = this.translatedText[target].title;
         this.content = this.translatedText[target].content;

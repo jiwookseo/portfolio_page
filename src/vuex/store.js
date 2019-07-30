@@ -29,7 +29,11 @@ const state = {
     authority: ""
   },
   userAll: [],
-  userInfo: null
+  userInfo: null,
+  spinner: {
+    loading: false,
+    message: ""
+  }
 };
 export default new Vuex.Store({
   state,
@@ -65,6 +69,9 @@ export default new Vuex.Store({
     },
     setUserPhoto(state, payload) {
       state.user.photoURL = payload;
+    },
+    setSpinner(state, payload) {
+      state.spinner = payload;
     }
   }
 });
