@@ -45,16 +45,11 @@ export default {
     };
   },
   computed: {
-    imgSrc: {
-      get() {
-        if (this.user) {
-          return this.user.photoURL || "https://picsum.photos/1600/900";
-        } else {
-          return "https://picsum.photos/1600/900";
-        }
-      },
-      set(newImage) {
-        this.$store.dispatch("setUserPhoto", newImage);
+    imgSrc() {
+      if (this.user) {
+        return this.user.photoURL || "https://picsum.photos/1600/900";
+      } else {
+        return "https://picsum.photos/1600/900";
       }
     },
     ...mapGetters({
@@ -81,6 +76,10 @@ export default {
       const formData = new FormData();
       const file = this.$refs.image.files[0];
       formData.append("image", file, file.name);
+      this.$store.dispatch("setSpinner", {
+        loading: true,
+        message: "Uploading..."
+      });
       axios
         .post("https://api.imgur.com/3/image/", formData, {
           headers: {
@@ -88,7 +87,8 @@ export default {
           }
         })
         .then(res => {
-          this.imgSrc = res.data.data.link;
+          this.$store.dispatch("setUserPhoto", res.data.data.link);
+          this.$store.dispatch("setSpinner", { loading: false });
         });
       this.showChangeBgMenu = false;
     }

@@ -30,7 +30,7 @@ export default {
   overflow: hidden;
   opacity: 0.9;
   transition: all 0.2s ease;
-  z-index: 25;
+  z-index: 250;
 }
 
 .loader-container p {

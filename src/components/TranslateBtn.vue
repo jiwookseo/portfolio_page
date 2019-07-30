@@ -1,6 +1,5 @@
 <template>
   <div>
-    <LoadingSpinner v-show="loading" :message="'translating...'" />
     <div class="tr-btn" @click="askToTranslate = !askToTranslate">
       <i class="material-icons">g_translate</i>
     </div>
@@ -31,19 +30,14 @@
 </template>
 
 <script>
-import LoadingSpinner from "./LoadingSpinner";
 import { setTimeout } from "timers";
 import translateText from "../js/translate";
 
 export default {
   name: "TranslateBtn",
-  components: {
-    LoadingSpinner
-  },
   data() {
     return {
       askToTranslate: false,
-      loading: false,
       textDOMs: [],
       originalText: [],
       translatedText: {},
@@ -68,7 +62,10 @@ export default {
   watch: {
     $route() {
       if (this.translated) {
-        this.loading = true;
+        this.$store.dispatch("setSpinner", {
+          loading: true,
+          message: "Translating..."
+        });
         setTimeout(() => {
           this.translated = false;
           this.translate("en", this.selectedLanguage, true);
@@ -87,7 +84,10 @@ export default {
       ) {
         this.textDOMs = document.querySelectorAll(".text");
         if (this.textDOMs.length) {
-          this.loading = true;
+          this.$store.dispatch("setSpinner", {
+            loading: true,
+            message: "Translating..."
+          });
           this.originalText = [];
           this.translatedText[target] = Array(this.textDOMs.length);
           this.textDOMs.forEach(dom => this.originalText.push(dom.innerText));
@@ -99,11 +99,13 @@ export default {
                 dom.innerText = res.translatedText;
                 this.translatedText[target][i] = res.translatedText;
                 counter++;
-                if (counter === this.textDOMs.length) this.loading = false;
+                if (counter === this.textDOMs.length)
+                  this.$store.dispatch("setSpinner", { loading: false });
               })
               .catch(() => {
                 counter++;
-                if (counter === this.textDOMs.length) this.loading = false;
+                if (counter === this.textDOMs.length)
+                  this.$store.dispatch("setSpinner", { loading: false });
               });
           });
         }
