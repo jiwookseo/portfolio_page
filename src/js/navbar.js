@@ -33,12 +33,24 @@ $(document).ready(function(){
         $('.article-list').css({
           position: 'fixed',
           top: 60,
-          right: '2%'
+          right: '20px'
         });
       }
       else {
         $('.article-list').css({
           position: 'initial'
+        });
+      }
+
+      var articleListHeight = $('footer').offset().top - $('.article-list').offset().top - 10;
+      if ($(window).scrollTop() + $(window).height() >= $('footer').offset().top) {
+        $('.article-list').css({
+          height: articleListHeight
+        });
+      }
+      else {
+        $('.article-list').css({
+          height: '100%'
         });
       }
     }

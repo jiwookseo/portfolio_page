@@ -30,10 +30,10 @@
           </div>
         </router-link>
         <ul style="padding-left: 0;">
-          <router-link to="/portfolio">
+          <router-link to="/portfolios">
             <li class="sb-nav-menu text">Portfolio</li>
           </router-link>
-          <router-link to="/post">
+          <router-link to="/posts">
             <li class="sb-nav-menu text">Post</li>
           </router-link>
           <li v-if="!user" class="sb-nav-menu text" @click.stop="dialog = true">Login</li>

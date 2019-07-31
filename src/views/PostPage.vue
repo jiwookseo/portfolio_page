@@ -27,6 +27,30 @@
             </router-link>
           </div>
         </div>
+        <div class="article-list-mobile">
+          <div class="list">
+            <div class="item" v-for="p in paginatedData" :key="p.id">
+              <router-link 
+                :to="{name: 'PostDetailPage', params: {id: p.id}}"
+                class="item-link"
+              >
+                <p class="Title">{{p.title}}</p>
+                <p class="Author">{{p.userName}}</p>
+              </router-link>
+            </div>
+          </div>
+          <div class="pagination-container">
+            <v-pagination
+              v-model="page"
+              :length="pageCount"
+              :page="page"
+              total-visible="5"
+              color="#00A2FF"
+              class="paginator"
+            >
+            </v-pagination>
+          </div>
+        </div>
       </div>
     </div>
     <Footer />
@@ -47,10 +71,23 @@ export default {
     Footer
   },
   data() {
-    return {};
+    return {
+      page: 1,
+      paginationSize: 4
+    };
   },
   computed: {
-    ...mapGetters(["user", "posts"])
+    ...mapGetters(["user", "posts"]),
+    pageCount() {
+      let l = this.posts.length,
+          s = this.paginationSize;
+      return Math.floor(l/s)+1;
+    },
+    paginatedData() {
+      const start = (this.page - 1) * this.paginationSize,
+            end = start + this.paginationSize;
+      return this.posts.slice(start, end);
+    }
   },
   mounted() {
     this.addLog();
