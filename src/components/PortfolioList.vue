@@ -42,52 +42,21 @@
         <div class="load-more-btn" @click="loadMore">Load More</div>
       </div>
 
-      <!-- Dialogs -->
+      <!-- Write Dialog -->
       <v-dialog v-model="dialogWrite" width="500" persistent>
         <WriteDialog
           @child="parents"
-          @child_snackbar="parent_snackbar"
           :article="selectedPortfolio"
           :dialogWrite="dialogWrite"
           :isPortfolio="true"
         />
       </v-dialog>
-      <v-dialog v-model="dialogDetail" width="500">
-        <DetailDialog
-          @child_detail="parent_detail"
-          :article="selectedPortfolio"
-          :dialogDetail="dialogDetail"
-          :isPortfolio="true"
-        />
-      </v-dialog>
-
-      <!-- Snackbars -->
-      <v-snackbar v-model="snackbar_del" top :timeout="0" color="#FF5E61" class="snackbar-del">
-        <div class="snackbar-content">
-          Delete this portfolio?
-          <button @click="deletePortfolio()" class="del-btn">Delete</button>
-          <button @click="snackbar_del = false">Cancel</button>
-        </div>
-      </v-snackbar>
-      <v-snackbar
-        v-model="snackbar_alert"
-        top
-        :timeout="4000"
-        color="#FF5E61"
-        class="snackbar-alert"
-      >
-        <div class="snackbar-content">
-          {{ snackbar_msg }}
-          <button @click="snackbar_alert = false" class="ok-btn">OK</button>
-        </div>
-      </v-snackbar>
     </v-layout>
   </v-container>
 </template>
 
 
 <script>
-import DetailDialog from "./DetailDialog";
 import WriteDialog from "./WriteDialog";
 import firestore from "../firebase/firestore";
 import { mapGetters } from "vuex";
@@ -99,19 +68,21 @@ export default {
     allowCreate: { type: Boolean, default: false }
   },
   components: {
-    DetailDialog,
     WriteDialog
   },
   watch: {
     limit: function() {
       this.portfolioLimit = this.limit;
+    },
+    askSnackbar() {
+      if (this.askSnackbar.confirm) {
+        this.deletePortfolio();
+      }
     }
   },
   computed: {
-    ...mapGetters({
-      isAdmin: "checkIfAdmin",
-      portfolios: "portfolios"
-    })
+    ...mapGetters(["askSnackbar", "portfolios"]),
+    ...mapGetters({ isAdmin: "checkIfAdmin" })
   },
   data() {
     return {
@@ -121,12 +92,7 @@ export default {
       },
       created_at: 0,
       dialogWrite: false,
-      createMode: true,
-      dialogDetail: false,
-      snackbar_del: false,
       deleteID: "",
-      snackbar_alert: false, // Replaces window alert box
-      snackbar_msg: "", // For snackbar_alert
       portfolioLimit: 6
     };
   },
@@ -142,25 +108,23 @@ export default {
       this.dialogWrite = true;
     },
     deleteConfirm(index) {
-      this.snackbar_del = true;
+      this.$store.dispatch("setAskSnackbar", {
+        ask: true,
+        message: "Delete this portfolio?",
+        confirmMessage: "Portfolio deleted",
+        button: "Delete"
+      });
       this.deleteID = this.portfolios[index - 1].id;
     },
-    triggerSnackbarAlert(msg) {
-      this.snackbar_msg = msg;
-      this.snackbar_alert = true;
-    },
     deletePortfolio() {
-      firestore
-        .deleteArticle("portfolios", this.deleteID)
-        .then(() => this.$store.dispatch("getArticles", "portfolios"));
-      this.snackbar_del = false;
-      this.triggerSnackbarAlert("Portfolio deleted");
-    },
-    parent_snackbar(msg) {
-      this.triggerSnackbarAlert(msg);
-    },
-    parent_detail() {
-      this.dialogDetail = false;
+      firestore.deleteArticle("portfolios", this.deleteID).then(() => {
+        this.$store.dispatch("getArticles", "portfolios");
+        this.deleteID = "";
+        this.$store.dispatch("setAlertSnackbar", {
+          alert: true,
+          message: "Post deleted"
+        });
+      });
     },
     viewDetail(index) {
       this.selectedPortfolio = this.portfolios[index - 1];

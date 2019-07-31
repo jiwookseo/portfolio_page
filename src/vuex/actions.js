@@ -189,5 +189,15 @@ export default {
   }, payload) {
     payload.message = payload.message || "";
     commit("setSpinner", payload);
+  },
+  setAskSnackbar({ commit }, payload) {
+    payload.message = payload.message || "";
+    payload.button = payload.button || "";
+    payload.confirm = payload.confirm || false;
+    commit("setAskSnackbar", payload);
+  },
+  setAlertSnackbar({ commit }, payload) {
+    payload.message = payload.message || "";
+    commit("setAlertSnackbar", payload);
   }
 };

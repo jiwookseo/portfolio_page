@@ -36,43 +36,10 @@
         <div class="load-more-btn" @click="loadMore">Load More</div>
       </div>
 
-      <!-- Dialogs -->
+      <!-- Write Dialog -->
       <v-dialog v-model="dialogWrite" width="500" persistent>
-        <WriteDialog
-          @child="parents"
-          @child_snackbar="parent_snackbar"
-          :article="selectedPost"
-          :dialogWrite="dialogWrite"
-        />
+        <WriteDialog @child="parents" :article="selectedPost" :dialogWrite="dialogWrite" />
       </v-dialog>
-      <v-dialog v-model="dialogDetail" width="500">
-        <DetailDialog
-          @child_detail="parent_detail"
-          :article="selectedPost"
-          :dialogDetail="dialogDetail"
-        />
-      </v-dialog>
-
-      <!-- Snackbars -->
-      <v-snackbar v-model="snackbar_del" top :timeout="0" color="#FF5E61" class="snackbar-del">
-        <div class="snackbar-content">
-          Delete this post?
-          <button @click="deletePost()" class="del-btn">Delete</button>
-          <button @click="snackbar_del = false">Cancel</button>
-        </div>
-      </v-snackbar>
-      <v-snackbar
-        v-model="snackbar_alert"
-        top
-        :timeout="4000"
-        color="#FF5E61"
-        class="snackbar-alert"
-      >
-        <div class="snackbar-content">
-          {{ snackbar_msg }}
-          <button @click="snackbar_alert = false" class="ok-btn">OK</button>
-        </div>
-      </v-snackbar>
     </v-layout>
   </v-container>
 </template>
@@ -80,41 +47,37 @@
 
 <script>
 import WriteDialog from "./WriteDialog";
-import DetailDialog from "./DetailDialog";
 import firestore from "../firebase/firestore";
 import { mapGetters } from "vuex";
 
 export default {
   name: "PostList",
   components: {
-    WriteDialog,
-    DetailDialog
+    WriteDialog
   },
   props: {
     limit: { type: Number, default: 6 },
     allowCreate: { type: Boolean, default: false }
   },
   computed: {
-    ...mapGetters({
-      isAdmin: "checkIfAdmin",
-      posts: "posts"
-    })
+    ...mapGetters(["askSnackbar", "posts"]),
+    ...mapGetters({ isAdmin: "checkIfAdmin" })
   },
   watch: {
     limit: function() {
       this.postLimit = this.limit;
+    },
+    askSnackbar() {
+      if (this.askSnackbar.confirm) {
+        this.deletePost();
+      }
     }
   },
   data() {
     return {
       selectedPost: { created_at: { seconds: 0 } },
       dialogWrite: false,
-      createMode: true,
-      dialogDetail: false,
-      snackbar_del: false,
       deleteID: "",
-      snackbar_alert: false,
-      snackbar_msg: "",
       postLimit: 6
     };
   },
@@ -125,28 +88,26 @@ export default {
       this.dialogWrite = true;
     },
     deleteConfirm(index) {
-      this.snackbar_del = true;
+      this.$store.dispatch("setAskSnackbar", {
+        ask: true,
+        message: "Delete this post?",
+        confirmMessage: "Post deleted",
+        button: "Delete"
+      });
       this.deleteID = this.posts[index - 1].id;
     },
-    triggerSnackbarAlert(msg) {
-      this.snackbar_msg = msg;
-      this.snackbar_alert = true;
-    },
     deletePost() {
-      firestore
-        .deleteArticle("posts", this.deleteID)
-        .then(() => this.$store.dispatch("getArticles", "posts"));
-      this.snackbar_del = false;
-      this.triggerSnackbarAlert("Post deleted");
-    },
-    parent_snackbar(msg) {
-      this.triggerSnackbarAlert(msg);
+      firestore.deleteArticle("posts", this.deleteID).then(() => {
+        this.$store.dispatch("getArticles", "posts");
+        this.deleteID = "";
+        this.$store.dispatch("setAlertSnackbar", {
+          alert: true,
+          message: "Post deleted"
+        });
+      });
     },
     parents() {
       this.dialogWrite = false;
-    },
-    parent_detail() {
-      this.dialogDetail = false;
     },
     viewDetail(index) {
       this.selectedPost =
