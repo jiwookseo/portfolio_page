@@ -49,9 +49,6 @@ export default {
         }
       }
     }
-  },
-  mounted() {
-    this.$store.dispatch("getArticles", this.type + "s");
   }
 };
 </script>
