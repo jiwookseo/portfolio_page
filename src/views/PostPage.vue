@@ -10,11 +10,21 @@
           </vue-page-transition>
         </div>
         <div class="article-list">
-          <div v-for="post in posts" :key="post.id" class="item">
-            <router-link
+          <p class="header">All Posts</p>
+          <div
+            v-for="post in posts"
+            :key="post.id"
+            class="item"
+            :title="post.title"
+          >
+            <router-link 
               :to="{name: 'PostDetailPage', params: {id: post.id}}"
-              class="item-link text"
-            >{{ post.title }}</router-link>
+              class="post-item-link"
+            >
+              <div class="Title text">{{ post.title }}</div>
+              <div class="Content text">{{post.content}}</div>
+              <div class="Author">{{post.userName}}</div>
+            </router-link>
           </div>
         </div>
       </div>

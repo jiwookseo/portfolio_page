@@ -27,5 +27,21 @@ $(document).ready(function(){
         display: 'none'
       })
     }
+
+    if ($('.article-detail').length && $(window).width() > 600) {
+      if ($(window).scrollTop() >= $('.article-detail').offset().top) {
+        $('.article-list').css({
+          position: 'fixed',
+          top: 60,
+          right: '2%'
+        });
+      }
+      else {
+        $('.article-list').css({
+          position: 'initial'
+        });
+      }
+    }
+    
   });
 });

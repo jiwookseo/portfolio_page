@@ -10,11 +10,22 @@
           </vue-page-transition>
         </div>
         <div class="article-list">
-          <div v-for="portfolio in portfolios" :key="portfolio.id" class="item">
-            <router-link
+          <p class="header">All Portfolios</p>
+          <div
+            v-for="portfolio in portfolios"
+            :key="portfolio.id"
+            class="item"
+            :title="portfolio.title"
+          >
+            <router-link 
               :to="{name: 'PortfolioDetailPage', params: {id: portfolio.id}}"
-              class="item-link text"
-            >{{ portfolio.title }}</router-link>
+              class="portfolio-item-link"
+            >
+              <img :src="portfolio.img" />
+              <div class="Title text">{{ portfolio.title }}</div>
+              <div class="Content text">{{portfolio.content}}</div>
+              <div class="Author">{{portfolio.userName}}</div>
+            </router-link>
           </div>
         </div>
       </div>
