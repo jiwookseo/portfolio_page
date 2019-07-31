@@ -38,11 +38,22 @@ export default {
   data() {
     return {};
   },
+  watch: {
+    $route() {
+      const path = this.$route.matched[0].path;
+      if (path === "") {
+        this.$store.dispatch("getArticles", "posts");
+        this.$store.dispatch("getArticles", "portfolios");
+      } else {
+        if (path.slice(0, 4) === "/pos")
+          this.$store.dispatch("getArticles", "posts");
+        else this.$store.dispatch("getArticles", "portfolios");
+      }
+    }
+  },
   computed: {
     ...mapGetters(["spinner"]),
-    ...mapGetters({
-      isAdmin: "checkIfAdmin"
-    })
+    ...mapGetters({ isAdmin: "checkIfAdmin" })
   },
   mounted() {
     this.$store.dispatch("getArticles", "posts");

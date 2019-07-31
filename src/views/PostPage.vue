@@ -10,17 +10,11 @@
           </vue-page-transition>
         </div>
         <div class="article-list">
-          <div
-            v-for="post in posts"
-            :key="post.id"
-            class="item"
-          >
-            <router-link 
+          <div v-for="post in posts" :key="post.id" class="item">
+            <router-link
               :to="{name: 'PostDetailPage', params: {id: post.id}}"
               class="item-link text"
-            >
-              {{ post.title }}
-            </router-link>
+            >{{ post.title }}</router-link>
           </div>
         </div>
       </div>
@@ -50,7 +44,6 @@ export default {
   },
   mounted() {
     this.addLog();
-    this.$store.dispatch("getArticles", "posts");
   },
   methods: {
     addLog() {
