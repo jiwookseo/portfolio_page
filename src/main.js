@@ -20,6 +20,8 @@ import "./registerServiceWorker";
 
 Vue.config.productionTip = false;
 
+console.log("7.31.12");
+
 Vue.use(VueSimplemde);
 Vue.use(VueSweetalert2);
 Vue.use(VuePageTransition);
@@ -43,6 +45,9 @@ new Vue({
 }).$mount("#app");
 
 export default {
+  data: {
+    tokens: ''
+  },
 
   getNewToken() {
     console.log("토큰시작");
@@ -73,15 +78,13 @@ export default {
       .then(() => {
         // Get Token
         messaging.getToken().then(token => {
-          console.log("성공");
-          console.log("7.31.2");
-          console.log(token);
-          return token;
+
+          this.tokens = token;
         });
       })
       .catch(err => {
         console.log("실패");
-        return null;
+        this.tokens = null;
       });
   }
 

@@ -7,6 +7,9 @@ import firestore from "../firebase/firestore";
 import mainJS from "../main.js";
 
 export default {
+  data: {
+    userToken: ''
+  },
   signUserUp({
     commit
   }, payload) {
@@ -21,8 +24,7 @@ export default {
 
         user = firebaseAuth.currentUser;
 
-        const token = mainJS.getNewToken();
-        console.log(token);
+        mainJS.getNewToken();
 
         if (user) {
           user
@@ -36,10 +38,11 @@ export default {
                 email: user.email,
                 photoURL: null,
                 authority: "3",
+                token: mainJS.tokens
               };
               commit("setUser", newUser);
 
-              firestore.postUser(newUser.email, newUser.authority);
+              firestore.postUser(newUser.email, newUser.authority, newUser.token);
             });
         }
       })
@@ -69,7 +72,8 @@ export default {
           name: user.displayName,
           email: user.email,
           photoURL: user.photoURL,
-          authority
+          authority,
+          // token: user.token
         });
       })
       .catch(error => {
