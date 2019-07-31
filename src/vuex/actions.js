@@ -2,7 +2,6 @@ import Vue from "vue";
 import firebase from "firebase";
 import { firebaseAuth } from "@/firebase/firebaseAuth";
 import firestore from "../firebase/firestore";
-import { platform } from "os";
 
 export default {
   signUserUp({ commit }, payload) {
