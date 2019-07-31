@@ -22,13 +22,14 @@ firestore.enablePersistence();
 
 export default {
   // User
-  postUser(email, authority) {
+  postUser(email, authority, token) {
     return new Promise((resolve, reject) => {
       firestore
         .collection(USERS)
         .add({
           email,
-          authority
+          authority,
+          token
         })
         .then(res => resolve(res))
         .catch(err => reject(err));
