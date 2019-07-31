@@ -120,6 +120,7 @@ export default {
       this.content = "";
     },
     createComment() {
+      console.log(this.isPortfolio, this.article.id, this.content, this.user);
       if (this.user) {
         firestore
           .postComment(
@@ -157,11 +158,13 @@ export default {
     },
     deleteComment() {
       if (this.user && this.user.id === this.deleteAim.userID) {
-        const getAction = this.isPortfolio ? "getPortfolios" : "getPosts";
         firestore
           .deleteComment(this.isPortfolio, this.article.id, this.deleteAim.id)
           .then(() => {
-            this.$store.dispatch(getAction);
+            this.$store.dispatch(
+              "getArticles",
+              this.isPortfolio ? "portfolios" : "posts"
+            );
             this.editClear();
             this.snackbar_del = false;
           });

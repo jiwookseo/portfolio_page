@@ -190,9 +190,6 @@ export default {
       const article = firestore
         .collection(isPortfolio ? PORTFOLIOS : POSTS)
         .doc(articleID);
-      article.update({
-        updated_at: Firebase.firestore.FieldValue.serverTimestamp()
-      });
       article
         .collection(COMMENTS)
         .add({

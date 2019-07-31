@@ -6,7 +6,7 @@
       <img class="Img" :src="article.img" />
       <p class="Content">{{article.content}}</p>
     </div>
-    <Comment :article="article" />
+    <Comment :article="article" :isPortfolio="isPortfolio" />
   </div>
 </template>
 
@@ -21,11 +21,14 @@ export default {
     return {};
   },
   computed: {
+    isPortfolio() {
+      return this.$route.fullPath[3] === "r";
+    },
     buttonName() {
-      return this.$route.fullPath[3] === "r" ? "Portfolio" : "Post";
+      return this.isPortfolio ? "Portfolio" : "Post";
     },
     type() {
-      return this.$route.fullPath[3] === "r" ? "portfolio" : "post";
+      return this.isPortfolio ? "portfolio" : "post";
     },
     link() {
       return `/${this.type}`;
