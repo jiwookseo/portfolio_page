@@ -8,6 +8,8 @@ export default {
   portfolios: state => state.portfolios,
   posts: state => state.posts,
   spinner: state => state.spinner,
+  askSnackbar: state => state.askSnackbar,
+  alertSnackbar: state => state.alertSnackbar,
   getArticle: state => (type, id) => {
     if (type === "portfolio")
       return (

@@ -1,0 +1,40 @@
+<template>
+  <div>
+    <v-snackbar v-model="askSnackbar.ask" top :timeout="0" color="#FF5E61" class="snackbar-del">
+      <div class="snackbar-content">
+        {{askSnackbar.message}}
+        <button @click="confirm" class="del-btn">{{askSnackbar.button}}</button>
+        <button @click="cancel">Cancel</button>
+      </div>
+    </v-snackbar>
+  </div>
+</template>
+
+
+<script>
+import { mapGetters } from "vuex";
+
+export default {
+  name: "AskSnackbar",
+  computed: mapGetters(["askSnackbar"]),
+  methods: {
+    confirm() {
+      console.log(this.askSnackbar);
+      this.$store.dispatch("setAlertSnackbar", {
+        alert: true,
+        message: this.askSnackbar.confirmMessage
+      });
+      this.$store.dispatch("setAskSnackbar", { ask: false, confirm: true });
+    },
+    cancel() {
+      this.$store.dispatch("setAskSnackbar", { ask: false });
+    }
+  }
+};
+</script>
+
+<style lang="scss">
+@import "../css/mixin.scss";
+@import "../css/style.scss";
+</style>
+

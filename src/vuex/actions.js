@@ -2,6 +2,7 @@ import Vue from "vue";
 import firebase from "firebase";
 import { firebaseAuth } from "@/firebase/firebaseAuth";
 import firestore from "../firebase/firestore";
+import { platform } from "os";
 
 export default {
   signUserUp({ commit }, payload) {
@@ -155,5 +156,16 @@ export default {
   setSpinner({ commit }, payload) {
     payload.message = payload.message || "";
     commit("setSpinner", payload);
+  },
+  setAskSnackbar({ commit }, payload) {
+    payload.message = payload.message || "";
+    payload.confirmMessage = payload.confirmMessage || "";
+    payload.button = payload.button || "";
+    payload.confirm = payload.confirm || false;
+    commit("setAskSnackbar", payload);
+  },
+  setAlertSnackbar({ commit }, payload) {
+    payload.message = payload.message || "";
+    commit("setAlertSnackbar", payload);
   }
 };

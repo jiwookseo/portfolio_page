@@ -7,6 +7,8 @@
       <TranslateBtn />
       <ChatBtn />
       <LoadingSpinner v-show="spinner.loading" :message="spinner.message" />
+      <AskSnackbar />
+      <AlertSnackbar />
       <router-link to="/admin" v-if="isAdmin">
         <div id="toAdmin" title="Admin Page">
           <i class="material-icons">how_to_reg</i>
@@ -20,6 +22,8 @@
 import ChatBtn from "./components/ChatBtn";
 import TranslateBtn from "./components/TranslateBtn";
 import LoadingSpinner from "./components/LoadingSpinner";
+import AskSnackbar from "./components/AskSnackbar";
+import AlertSnackbar from "./components/AlertSnackbar";
 import { mapGetters } from "vuex";
 
 export default {
@@ -27,15 +31,17 @@ export default {
   components: {
     ChatBtn,
     TranslateBtn,
-    LoadingSpinner
+    LoadingSpinner,
+    AskSnackbar,
+    AlertSnackbar
   },
   data() {
     return {};
   },
   computed: {
+    ...mapGetters(["spinner"]),
     ...mapGetters({
-      isAdmin: "checkIfAdmin",
-      spinner: "spinner"
+      isAdmin: "checkIfAdmin"
     })
   },
   mounted() {

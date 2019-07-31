@@ -33,6 +33,17 @@ const state = {
   spinner: {
     loading: false,
     message: ""
+  },
+  askSnackbar: {
+    ask: false,
+    confirm: false,
+    message: "",
+    confirmMessage: "",
+    button: ""
+  },
+  alertSnackbar: {
+    alert: false,
+    message: ""
   }
 };
 export default new Vuex.Store({
@@ -72,6 +83,12 @@ export default new Vuex.Store({
     },
     setSpinner(state, payload) {
       state.spinner = payload;
+    },
+    setAskSnackbar(state, payload) {
+      state.askSnackbar = payload;
+    },
+    setAlertSnackbar(state, payload) {
+      state.alertSnackbar = payload;
     }
   }
 });
