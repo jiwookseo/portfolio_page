@@ -49,4 +49,10 @@ https://naturaily.com/blog/pwa-vue-cli-3
 https://developers.google.com/web/fundamentals/codelabs/push-notifications/?hl=ko
 
 
+# 웹 앱에 푸시 설명
 
+https://vuejsfeed.com/blog/push-notifications-demo
+
+# Axios 요청 하는 법
+
+https://luji.tistory.com/83

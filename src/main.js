@@ -74,9 +74,9 @@ export default {
         // Get Token
         messaging.getToken().then(token => {
           console.log("성공");
-          console.log("7.31.2");
-          console.log(token);
-          return token;
+          console.log("7.31.6");
+
+          return this.token;
         });
       })
       .catch(err => {
