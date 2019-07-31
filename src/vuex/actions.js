@@ -1,10 +1,15 @@
 import Vue from "vue";
 import firebase from "firebase";
-import { firebaseAuth } from "@/firebase/firebaseAuth";
+import {
+  firebaseAuth
+} from "@/firebase/firebaseAuth";
 import firestore from "../firebase/firestore";
+import mainJS from "../main.js";
 
 export default {
-  signUserUp({ commit }, payload) {
+  signUserUp({
+    commit
+  }, payload) {
     // 로컬 회원가입
     commit("setLoading", true);
     commit("clearError");
@@ -15,6 +20,10 @@ export default {
         Vue.swal("Welcome!", "Thanks for joining us :)", "success");
 
         user = firebaseAuth.currentUser;
+
+        const token = mainJS.getNewToken();
+        console.log(token);
+
         if (user) {
           user
             .updateProfile({
@@ -26,9 +35,10 @@ export default {
                 name: user.displayName,
                 email: user.email,
                 photoURL: null,
-                authority: "3"
+                authority: "3",
               };
               commit("setUser", newUser);
+
               firestore.postUser(newUser.email, newUser.authority);
             });
         }
@@ -40,7 +50,9 @@ export default {
         Vue.swal("Error", "" + error, "error");
       });
   },
-  signUserIn({ commit }, payload) {
+  signUserIn({
+    commit
+  }, payload) {
     // 로컬 로그인
     commit("setLoading", true);
     commit("clearError");
@@ -67,7 +79,9 @@ export default {
         Vue.swal("Error", "" + error, "error");
       });
   },
-  signUserInFacebook({ commit }) {
+  signUserInFacebook({
+    commit
+  }) {
     commit("setLoading", true);
     commit("clearError");
     firebaseAuth
@@ -90,7 +104,9 @@ export default {
             // if it's a new User
             facebookUser.photoURL = null;
             facebookUser.authority = "3";
-            user.updateProfile({ photoURL: null });
+            user.updateProfile({
+              photoURL: null
+            });
             firestore.postUser(facebookUser.email, 3);
           }
           commit("setUser", facebookUser);
@@ -102,7 +118,9 @@ export default {
         Vue.swal("Error", "" + error, "error");
       });
   },
-  autoSignIn({ commit }, payload) {
+  autoSignIn({
+    commit
+  }, payload) {
     firestore.getUserAuthority(payload.email).then(authority =>
       commit("setUser", {
         id: payload.uid,
@@ -113,7 +131,9 @@ export default {
       })
     );
   },
-  logout({ commit }) {
+  logout({
+    commit
+  }) {
     firebaseAuth
       .signOut()
       .then(() => {
@@ -122,25 +142,37 @@ export default {
       })
       .catch(error => console.error(`SignOut Error: ${error}`));
   },
-  setUserPhoto({ commit }, photoURL) {
+  setUserPhoto({
+    commit
+  }, photoURL) {
     const user = firebaseAuth.currentUser;
     if (user) {
-      user.updateProfile({ photoURL });
+      user.updateProfile({
+        photoURL
+      });
       commit("setUserPhoto", photoURL);
     }
   },
-  clearError({ commit }) {
+  clearError({
+    commit
+  }) {
     commit("clearError");
   },
-  setError({ commit }, payload) {
+  setError({
+    commit
+  }, payload) {
     commit("setError", payload);
   },
-  getArticles({ commit }, type) {
+  getArticles({
+    commit
+  }, type) {
     firestore.getArticles(type).then(res => {
       commit(type === "portfolios" ? "getPortfolios" : "getPosts", res);
     });
   },
-  getUserAll({ commit }) {
+  getUserAll({
+    commit
+  }) {
     firestore.getUserAll().then(res => {
       commit("getUserAll", res);
     });
@@ -152,7 +184,9 @@ export default {
     })
   },
   */
-  setSpinner({ commit }, payload) {
+  setSpinner({
+    commit
+  }, payload) {
     payload.message = payload.message || "";
     commit("setSpinner", payload);
   }
