@@ -158,7 +158,6 @@ export default {
   },
   setAskSnackbar({ commit }, payload) {
     payload.message = payload.message || "";
-    payload.confirmMessage = payload.confirmMessage || "";
     payload.button = payload.button || "";
     payload.confirm = payload.confirm || false;
     commit("setAskSnackbar", payload);

@@ -19,11 +19,6 @@ export default {
   computed: mapGetters(["askSnackbar"]),
   methods: {
     confirm() {
-      console.log(this.askSnackbar);
-      this.$store.dispatch("setAlertSnackbar", {
-        alert: true,
-        message: this.askSnackbar.confirmMessage
-      });
       this.$store.dispatch("setAskSnackbar", { ask: false, confirm: true });
     },
     cancel() {

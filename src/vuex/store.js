@@ -38,7 +38,6 @@ const state = {
     ask: false,
     confirm: false,
     message: "",
-    confirmMessage: "",
     button: ""
   },
   alertSnackbar: {
