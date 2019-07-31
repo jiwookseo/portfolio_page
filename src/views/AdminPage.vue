@@ -44,9 +44,9 @@
           </template>
           <template v-slot:item.authority="{ item }" v-else-if="isMobile">
           <v-flex xs12 sm6 d-flex>
-          <v-chip :color="getColor(item.authority)" v-if="item.authority == '1'" style="color:black;">관리자</v-chip>
-          <v-chip :color="getColor(item.authority)" v-else-if="item.authority == '2'" style="color:white;">팀원</v-chip>
-          <v-chip :color="getColor(item.authority)" v-else-if="item.authority == '3'" style="color:white;">방문자</v-chip>
+          <v-chip :color="getColor(item.authority)" v-if="item.authority == '1'" style="color:black; white-space:nowrap;">관리자</v-chip>
+          <v-chip :color="getColor(item.authority)" v-else-if="item.authority == '2'" style="color:white; white-space:nowrap;">팀원</v-chip>
+          <v-chip :color="getColor(item.authority)" v-else-if="item.authority == '3'" style="color:white; white-space:nowrap;">방문자</v-chip>
           </v-flex>
         </template>
         <template v-slot:item.modify="{ item }" v-if="!isMobile">
@@ -69,7 +69,7 @@
     <v-container>
       <h2 class="section-subtitle">Count Data</h2>
       <template>
-        <v-simple-table>
+        <v-simple-table dark>
           <thead>
             <tr>
               <th class="text-left">Category</th>
