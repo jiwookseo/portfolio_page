@@ -55,7 +55,6 @@ export default {
   },
   mounted() {
     this.addLog();
-    this.$store.dispatch("getArticles", "portfolios");
   },
   methods: {
     addLog() {

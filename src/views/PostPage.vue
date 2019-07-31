@@ -54,7 +54,6 @@ export default {
   },
   mounted() {
     this.addLog();
-    this.$store.dispatch("getArticles", "posts");
   },
   methods: {
     addLog() {

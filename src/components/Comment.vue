@@ -58,15 +58,6 @@
         </v-list-item>
       </v-list>
     </v-card>
-
-    <!-- Snackbars -->
-    <v-snackbar v-model="snackbar_del" top :timeout="0" color="#FF5E61" class="snackbar-del">
-      <div class="snackbar-content">
-        Delete this comment?
-        <button @click="deleteComment()" class="del-btn">Delete</button>
-        <button @click="snackbar_del=false">Cancel</button>
-      </div>
-    </v-snackbar>
   </div>
 </template>
 
@@ -87,19 +78,29 @@ export default {
       selected: -1,
       editContent: "",
       edit: false,
-      deleteAim: {},
-      snackbar_del: false
+      deleteAim: {}
     };
   },
   computed: {
-    ...mapGetters(["user"]),
+    ...mapGetters(["user", "askSnackbar"]),
     comments() {
       return this.article.comments || [];
     }
   },
+  watch: {
+    askSnackbar() {
+      if (this.askSnackbar.confirm) {
+        this.deleteComment();
+      }
+    }
+  },
   methods: {
     deleteConfirm(comment) {
-      this.snackbar_del = true;
+      this.$store.dispatch("setAskSnackbar", {
+        ask: true,
+        message: "Delete this comment?",
+        button: "Delete"
+      });
       this.deleteAim = comment;
     },
     commentEdit(comment, i) {
@@ -157,13 +158,18 @@ export default {
     },
     deleteComment() {
       if (this.user && this.user.id === this.deleteAim.userID) {
-        const getAction = this.isPortfolio ? "getPortfolios" : "getPosts";
         firestore
           .deleteComment(this.isPortfolio, this.article.id, this.deleteAim.id)
           .then(() => {
-            this.$store.dispatch(getAction);
+            this.$store.dispatch(
+              "getArticles",
+              this.isPortfolio ? "portfolios" : "posts"
+            );
             this.editClear();
-            this.snackbar_del = false;
+            this.$store.dispatch("setAlertSnackbar", {
+              alert: true,
+              message: "Comment deleted"
+            });
           });
       }
     }

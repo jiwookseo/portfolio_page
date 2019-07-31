@@ -1,4 +1,6 @@
-import { firebaseApp } from "./firebase";
+import {
+  firebaseApp
+} from "./firebase";
 import Firebase from "firebase/app";
 
 const firestore = Firebase.firestore();
@@ -24,7 +26,10 @@ export default {
     return new Promise((resolve, reject) => {
       firestore
         .collection(USERS)
-        .add({ email, authority })
+        .add({
+          email,
+          authority
+        })
         .then(res => resolve(res))
         .catch(err => reject(err));
     });
@@ -56,7 +61,9 @@ export default {
         .where("email", "==", email)
         .get()
         .then(snapshot => {
-          snapshot.docs[0].ref.update({ authority }).then(res => resolve(res));
+          snapshot.docs[0].ref.update({
+            authority
+          }).then(res => resolve(res));
         })
         .catch(err => reject(err));
     });
@@ -72,6 +79,22 @@ export default {
             resolve(null);
           } else {
             resolve(snapshot.docs[0].data().authority);
+          }
+        })
+        .catch(err => reject(err));
+    });
+  },
+  getUserToken(email) {
+    return new Promise((resolve, reject) => {
+      firestore
+        .collection(USERS)
+        .where("email", "==", email)
+        .get()
+        .then(snapshot => {
+          if (snapshot.empty) {
+            resolve(null);
+          } else {
+            resolve(snapshot.docs[0].data().token);
           }
         })
         .catch(err => reject(err));
@@ -190,9 +213,6 @@ export default {
       const article = firestore
         .collection(isPortfolio ? PORTFOLIOS : POSTS)
         .doc(articleID);
-      article.update({
-        updated_at: Firebase.firestore.FieldValue.serverTimestamp()
-      });
       article
         .collection(COMMENTS)
         .add({
@@ -254,7 +274,7 @@ export default {
       ref
         .once("value")
         .then(snapshot => {
-          snapshot.forEach(function(childSnapshot) {
+          snapshot.forEach(function (childSnapshot) {
             data.push(childSnapshot.val());
           });
           resolve(data);

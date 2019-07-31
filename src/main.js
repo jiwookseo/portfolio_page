@@ -18,40 +18,6 @@ import VueSweetalert2 from "vue-sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 import "./registerServiceWorker";
 
-var config = {
-  apiKey: "AIzaSyCPsjIgD6dIjp1o9Xd56bsBW64VMwdX6x8",
-  authDomain: "ssafy-teamsix.firebaseapp.com",
-  databaseURL: "https://ssafy-teamsix.firebaseio.com",
-  projectId: "ssafy-teamsix",
-  storageBucket: "ssafy-teamsix.appspot.com",
-  messagingSenderId: "207653910315",
-  appId: "1:207653910315:web:33636c136bf2abae"
-}; // 4. Get Firebase Configuration
-
-if (!firebase.apps.length) {
-  firebase.initializeApp(config);
-}
-
-const messaging = firebase.messaging();
-messaging.usePublicVapidKey(
-  "BBBpw-_z752QFHrMQElXJSrxpEB8_vKtiKUgD6sQvuuIbLSS5odGEeh--BzMYSqxYw3ikgePoUgQKPFJK1ed9D0"
-); // 1. Generate a new key pair
-
-// Request Permission of Notifications
-messaging
-  .requestPermission()
-  .then(() => {
-    console.log("Notification permission granted.");
-
-    // Get Token
-    messaging.getToken().then(token => {
-      console.log(token);
-    });
-  })
-  .catch(err => {
-    console.log("Unable to get permission to notify.", err);
-  });
-
 Vue.config.productionTip = false;
 
 Vue.use(VueSimplemde);
@@ -75,3 +41,48 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount("#app");
+
+export default {
+
+  getNewToken() {
+    console.log("토큰시작");
+
+    var config = {
+      apiKey: "AIzaSyCPsjIgD6dIjp1o9Xd56bsBW64VMwdX6x8",
+      authDomain: "ssafy-teamsix.firebaseapp.com",
+      databaseURL: "https://ssafy-teamsix.firebaseio.com",
+      projectId: "ssafy-teamsix",
+      storageBucket: "ssafy-teamsix.appspot.com",
+      messagingSenderId: "207653910315",
+      appId: "1:207653910315:web:33636c136bf2abae"
+    }; // 4. Get Firebase Configuration
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(config);
+    }
+
+    const messaging = firebase.messaging();
+    messaging.usePublicVapidKey(
+      "BBBpw-_z752QFHrMQElXJSrxpEB8_vKtiKUgD6sQvuuIbLSS5odGEeh--BzMYSqxYw3ikgePoUgQKPFJK1ed9D0"
+    ); // 1. Generate a new key pair
+
+    // Request Permission of Notifications
+    console.log("토큰중간과정");
+    messaging
+      .requestPermission()
+      .then(() => {
+        // Get Token
+        messaging.getToken().then(token => {
+          console.log("성공");
+          console.log("7.31.2");
+          console.log(token);
+          return token;
+        });
+      })
+      .catch(err => {
+        console.log("실패");
+        return null;
+      });
+  }
+
+}
