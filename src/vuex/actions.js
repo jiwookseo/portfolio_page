@@ -1,15 +1,11 @@
 import Vue from "vue";
 import firebase from "firebase";
-import {
-  firebaseAuth
-} from "@/firebase/firebaseAuth";
+import { firebaseAuth } from "@/firebase/firebaseAuth";
 import firestore from "../firebase/firestore";
-import mainJS from "../main.js";
+import firebaseMessage from "../firebase/firebaseMessage";
 
 export default {
-  signUserUp({
-    commit
-  }, payload) {
+  signUserUp({ commit }, payload) {
     // 로컬 회원가입
     commit("setLoading", true);
     commit("clearError");
@@ -18,28 +14,27 @@ export default {
       .then(user => {
         commit("setLoading", false);
         Vue.swal("Welcome!", "Thanks for joining us :)", "success");
-
         user = firebaseAuth.currentUser;
-
-        mainJS.getNewToken();
-
         if (user) {
           user
             .updateProfile({
               displayName: payload.name
             })
-            .then(() => {
+            .then(async () => {
               const newUser = {
                 id: user.uid,
                 name: user.displayName,
                 email: user.email,
                 photoURL: null,
                 authority: "3",
-                token: mainJS.tokens
+                token: await firebaseMessage.getNewToken()
               };
+              firestore.postUser(
+                newUser.email,
+                newUser.authority,
+                newUser.token
+              );
               commit("setUser", newUser);
-
-              firestore.postUser(newUser.email, newUser.authority, newUser.token);
             });
         }
       })
@@ -50,9 +45,7 @@ export default {
         Vue.swal("Error", "" + error, "error");
       });
   },
-  signUserIn({
-    commit
-  }, payload) {
+  signUserIn({ commit }, payload) {
     // 로컬 로그인
     commit("setLoading", true);
     commit("clearError");
@@ -69,7 +62,7 @@ export default {
           name: user.displayName,
           email: user.email,
           photoURL: user.photoURL,
-          authority,
+          authority
           // token: user.token
         });
       })
@@ -80,9 +73,7 @@ export default {
         Vue.swal("Error", "" + error, "error");
       });
   },
-  signUserInFacebook({
-    commit
-  }) {
+  signUserInFacebook({ commit }) {
     commit("setLoading", true);
     commit("clearError");
     firebaseAuth
@@ -119,9 +110,7 @@ export default {
         Vue.swal("Error", "" + error, "error");
       });
   },
-  autoSignIn({
-    commit
-  }, payload) {
+  autoSignIn({ commit }, payload) {
     firestore.getUserAuthority(payload.email).then(authority =>
       commit("setUser", {
         id: payload.uid,
@@ -132,9 +121,7 @@ export default {
       })
     );
   },
-  logout({
-    commit
-  }) {
+  logout({ commit }) {
     firebaseAuth
       .signOut()
       .then(() => {
@@ -143,9 +130,7 @@ export default {
       })
       .catch(error => console.error(`SignOut Error: ${error}`));
   },
-  setUserPhoto({
-    commit
-  }, photoURL) {
+  setUserPhoto({ commit }, photoURL) {
     const user = firebaseAuth.currentUser;
     if (user) {
       user.updateProfile({
@@ -154,26 +139,18 @@ export default {
       commit("setUserPhoto", photoURL);
     }
   },
-  clearError({
-    commit
-  }) {
+  clearError({ commit }) {
     commit("clearError");
   },
-  setError({
-    commit
-  }, payload) {
+  setError({ commit }, payload) {
     commit("setError", payload);
   },
-  getArticles({
-    commit
-  }, type) {
+  getArticles({ commit }, type) {
     firestore.getArticles(type).then(res => {
       commit(type === "portfolios" ? "getPortfolios" : "getPosts", res);
     });
   },
-  getUserAll({
-    commit
-  }) {
+  getUserAll({ commit }) {
     firestore.getUserAll().then(res => {
       commit("getUserAll", res);
     });
@@ -185,23 +162,17 @@ export default {
     })
   },
   */
-  setSpinner({
-    commit
-  }, payload) {
+  setSpinner({ commit }, payload) {
     payload.message = payload.message || "";
     commit("setSpinner", payload);
   },
-  setAskSnackbar({
-    commit
-  }, payload) {
+  setAskSnackbar({ commit }, payload) {
     payload.message = payload.message || "";
     payload.button = payload.button || "";
     payload.confirm = payload.confirm || false;
     commit("setAskSnackbar", payload);
   },
-  setAlertSnackbar({
-    commit
-  }, payload) {
+  setAlertSnackbar({ commit }, payload) {
     payload.message = payload.message || "";
     commit("setAlertSnackbar", payload);
   }
