@@ -430,8 +430,9 @@ a:hover {
     border-bottom-right-radius: 10px;
     cursor: pointer;
     &.active {
-      color: $blue-accent;
+      color: white;
       border-color: $blue-accent;
+      background: $blue-accent;
     }
   }
 }

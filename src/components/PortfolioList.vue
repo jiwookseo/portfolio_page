@@ -11,7 +11,6 @@
         lg3
       >
         <div class="portfolio-content" data-aos="fade-up">
-          <!-- <div class="img" :style="{'background-image': 'url(' + portfolios[i-1].img + ')'}"></div> -->
           <img
             class="img"
             :src="portfolios[i-1].img"
@@ -22,7 +21,7 @@
             <router-link :to="{name: 'PortfolioDetailPage', params: {id: portfolios[i-1].id}}">
               <div class="more text">Read More</div>
             </router-link>
-            <div class="btn-box" v-if="isAdmin">
+            <div class="btn-box" v-if="user.authority==='1' || (user && user.id === portfolios[i-1].userID)">
               <div class="update" @click="openPortfolioWriter(i)">
                 <i class="material-icons">edit</i>
               </div>
@@ -81,7 +80,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["askSnackbar", "portfolios"]),
+    ...mapGetters(["askSnackbar", "user", "portfolios"]),
     ...mapGetters({ isAdmin: "checkIfAdmin" })
   },
   data() {
