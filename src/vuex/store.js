@@ -26,7 +26,8 @@ const state = {
   },
   userExample: {
     email: "",
-    authority: ""
+    authority: null,
+    token: null
   },
   userAll: [],
   userInfo: null,
