@@ -143,6 +143,7 @@
 
 <script>
 import firestore from "../firebase/firestore";
+import dummy from "../firebase/dummy";
 import Vue from "vue";
 import HighchartsVue from "highcharts-vue";
 import Highcharts from "highcharts";
@@ -184,9 +185,12 @@ export default {
     },
     postsAll() {
       return this.$store.getters.posts;
-    }
+    },
   },
   methods: {
+    postDummy() {
+      dummy.postDummy();
+    },
     onResize() {
       if (window.innerWidth < 769) this.isMobile = true;
       else this.isMobile = false;
