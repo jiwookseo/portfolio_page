@@ -1,6 +1,8 @@
-import { firebaseApp } from "./firebase";
+import {
+  firebaseApp
+} from "./firebase";
 import Firebase from "firebase/app";
-
+import firebaseMessage from "../firebase/firebaseMessage";
 const firestore = Firebase.firestore();
 const POSTS = "posts";
 const PORTFOLIOS = "portfolios";
@@ -168,6 +170,9 @@ export default {
     });
   },
   postArticle(type, user, payload) {
+
+    firebaseMessage.pushMessage();
+
     return new Promise((resolve, reject) => {
       firestore
         .collection(type)
@@ -272,7 +277,7 @@ export default {
       ref
         .once("value")
         .then(snapshot => {
-          snapshot.forEach(function(childSnapshot) {
+          snapshot.forEach(function (childSnapshot) {
             data.push(childSnapshot.val());
           });
           resolve(data);
