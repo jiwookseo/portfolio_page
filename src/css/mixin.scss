@@ -327,7 +327,7 @@
 ////////////////////////////////////////// ARTICLE DETAIL PAGE ////////////////////////////////////////////
 
 .section-content {
-  margin: 80px 0 50px;
+  margin: 80px 0;
   height: auto;
   min-height: calc(100vh - 150px);
 }
@@ -341,46 +341,186 @@
   margin: 0 auto;
   padding: 10px 2%;
   // border: 1px solid blue;
+  // border-right: 1.5px dashed $blue-accent;
   @include viewportMin(601) { // DESKTOP
     display: inline-block;
-    width: 75%;
-    max-width: calc(100% - 180px);
+    width: 70%;
+    max-width: calc(100% - 200px);
     vertical-align: top;
   }
 }
 .article-list {
-  display: block;
-  background: white; // MOBILE
-  max-width: 500px;
-  height: 200px;
+  width: calc(30% - 20px);
+  min-width: 180px;
+  height: 100%;
+  max-height: calc(100vh - 75px);
+  display: inline-block;
+  vertical-align: top;
+  box-shadow: 0 0 2px $gray;
+  background: white;
+  border-radius: 5px;
+  padding: 30px 15px 10px;
   overflow-y: auto;
-  margin: 0 auto;
-  @include viewportMin(601) { // DESKTOP
-    display: inline-block;
-    width: 23%;
-    min-width: 180px;
-    height: 100%;
-    vertical-align: top;
-    margin-top: 100px;
-    overflow-y: initial;
+  @include mobile {
+    display: none;
+  }
+  & > .header {
+    font-size: 1.5em;
+    font-weight: bold;
+    padding-bottom: 10px;
+    border-bottom: 1px solid $light-gray;
+    margin-bottom: 25px;
   }
   a, a:hover {
     color: initial;
   }
   .item {
-    height: 40px;
-    line-height: 40px;
-    &:hover {
-      background: rgba(0, 0, 0, 0.1);
-    }
-    .item-link {
-      display: inline-block;
-      padding: 0 10%;
+    height: 70px;
+    // border: 1px solid blue;
+    margin: 15px 0;
+    cursor: pointer;
+    .portfolio-item-link {
       width: 100%; height: 100%;
-      @include textTruncate;
+      position: relative;
+      display: block;
+      color: initial;
+      & > img {
+        width: 60px;
+        height: 70px;
+        position: absolute;
+        top: 0; left: 0;
+        object-fit: cover;
+        opacity: 0.6;
+        transition: opacity 0.1s;
+      }
+      & > div {
+        width: calc(100% - 80px);
+        position: absolute;
+        right: 10px;
+        @include textTruncate;
+        &.Title {
+          top: 5px;
+          font-size: 1em;
+          font-weight: bold;
+          transition: all 0.1s;
+        }
+        &.Content {
+          top: 30px;
+          font-size: 0.8em;
+          color: $gray;
+        }
+        &.Author {
+          bottom: 5px;
+          font-size: 0.8em;
+          color: $light-gray;
+          font-weight: bold;
+        }
+      }
+      &:hover {
+        .Title {text-decoration: underline;}
+        img {opacity: 1;}
+      }
+    }
+    .post-item-link {
+      width: 100%; height: 100%;
+      position: relative;
+      display: block;
+      border-bottom: 1px solid $light-gray;
+      & > div {
+        @include textTruncate;
+        &.Title {
+          font-size: 1em;
+          font-weight: bold;
+          padding-bottom: 5px;
+          transition: all 0.1s;
+        }
+        &.Content {
+          font-size: 0.8em;
+          color: $gray;
+        }
+        &.Author {
+          font-size: 0.8em;
+          color: $light-gray;
+          font-weight: bold;
+        }
+      }
+      &:hover {
+        .Title {text-decoration: underline;}
+      }
     }
   }
 }
+.article-list::-webkit-scrollbar {
+  // display: initial;
+  // width: 7px;
+}
+.article-list::-webkit-scrollbar-thumb:vertical {
+  -webkit-border-radius: 50px;
+  background-color: rgba(0, 0, 0, 0.1);
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0);
+  min-height: 10px;
+  &:active {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50px;
+    -webkit-border-radius: 50px;
+  }
+}
+
+.article-list-mobile {
+  width: 90%;
+  height: 300px;
+  overflow-y: auto;
+  margin: 50px 5% 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 2px $gray;
+  position: relative;
+  @include viewportMin(601) {
+    display: none;
+  }
+  .list {
+    background: white;
+    padding: 10px;
+    padding-bottom: 0;
+    .item {
+      margin-bottom: 10px;
+      height: 50px;
+      cursor: pointer;
+      border-bottom: 1px solid $gray;
+      .item-link {
+        width: 100%; height: 100%;
+        position: relative;
+        display: block;
+        color: initial;
+      }
+      p {margin: 0; padding: 0;}
+      .Title {
+        font-weight: bold;
+        @include textTruncate;
+      }
+      .Author {
+        color: $gray; 
+        text-transform: uppercase;
+        font-size: 0.8em;
+        @include textTruncate;
+      }
+      &:hover .Title {
+        text-decoration: underline;
+      }
+    }
+  }
+  .pagination-container {
+    height: 50px;
+    width: 100%;
+    padding-top: 5px;
+    position: absolute;
+    bottom: 0;
+    .paginator {
+      @include centerItem;
+    }
+  }
+}
+
 
 .article-content {
   width: 100%;

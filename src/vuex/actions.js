@@ -21,8 +21,7 @@ export default {
 
         user = firebaseAuth.currentUser;
 
-        const token = mainJS.getNewToken();
-        console.log(token);
+        mainJS.getNewToken();
 
         if (user) {
           user
@@ -36,10 +35,11 @@ export default {
                 email: user.email,
                 photoURL: null,
                 authority: "3",
+                token: mainJS.tokens
               };
               commit("setUser", newUser);
 
-              firestore.postUser(newUser.email, newUser.authority);
+              firestore.postUser(newUser.email, newUser.authority, newUser.token);
             });
         }
       })
@@ -69,7 +69,8 @@ export default {
           name: user.displayName,
           email: user.email,
           photoURL: user.photoURL,
-          authority
+          authority,
+          // token: user.token
         });
       })
       .catch(error => {
@@ -190,13 +191,17 @@ export default {
     payload.message = payload.message || "";
     commit("setSpinner", payload);
   },
-  setAskSnackbar({ commit }, payload) {
+  setAskSnackbar({
+    commit
+  }, payload) {
     payload.message = payload.message || "";
     payload.button = payload.button || "";
     payload.confirm = payload.confirm || false;
     commit("setAskSnackbar", payload);
   },
-  setAlertSnackbar({ commit }, payload) {
+  setAlertSnackbar({
+    commit
+  }, payload) {
     payload.message = payload.message || "";
     commit("setAlertSnackbar", payload);
   }

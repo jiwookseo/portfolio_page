@@ -2,6 +2,7 @@
   <div>
     <div class="article-content">
       <h3 class="Title">{{article.title || ""}}</h3>
+      <p class="Author">{{article.userName}}</p>
       <p class="Date">{{date}}</p>
       <img class="Img" :src="article.img" />
       <p class="Content">{{article.content}}</p>
@@ -49,9 +50,6 @@ export default {
         }
       }
     }
-  },
-  mounted() {
-    this.$store.dispatch("getArticles", this.type + "s");
   }
 };
 </script>
@@ -68,6 +66,11 @@ export default {
     font-size: 1.7em;
   }
 }
+.Author {
+  margin: 0;
+  color: $gray;
+  text-transform: uppercase;
+}
 .Date {
   color: $gray;
   margin-bottom: 10px;
@@ -77,6 +80,7 @@ export default {
   line-height: 1.7em;
   white-space: pre-wrap;
   word-break: break-word;
+  text-align: justify;
 }
 .Img {
   width: 100%;

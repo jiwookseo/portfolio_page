@@ -10,17 +10,45 @@
           </vue-page-transition>
         </div>
         <div class="article-list">
+          <p class="header">All Posts</p>
           <div
             v-for="post in posts"
             :key="post.id"
             class="item"
+            :title="post.title"
           >
             <router-link 
               :to="{name: 'PostDetailPage', params: {id: post.id}}"
-              class="item-link text"
+              class="post-item-link"
             >
-              {{ post.title }}
+              <div class="Title text">{{ post.title }}</div>
+              <div class="Content text">{{post.content}}</div>
+              <div class="Author">{{post.userName}}</div>
             </router-link>
+          </div>
+        </div>
+        <div class="article-list-mobile">
+          <div class="list">
+            <div class="item" v-for="p in paginatedData" :key="p.id">
+              <router-link 
+                :to="{name: 'PostDetailPage', params: {id: p.id}}"
+                class="item-link"
+              >
+                <p class="Title">{{p.title}}</p>
+                <p class="Author">{{p.userName}}</p>
+              </router-link>
+            </div>
+          </div>
+          <div class="pagination-container">
+            <v-pagination
+              v-model="page"
+              :length="pageCount"
+              :page="page"
+              total-visible="5"
+              color="#00A2FF"
+              class="paginator"
+            >
+            </v-pagination>
           </div>
         </div>
       </div>
@@ -43,14 +71,26 @@ export default {
     Footer
   },
   data() {
-    return {};
+    return {
+      page: 1,
+      paginationSize: 4
+    };
   },
   computed: {
-    ...mapGetters(["user", "posts"])
+    ...mapGetters(["user", "posts"]),
+    pageCount() {
+      let l = this.posts.length,
+          s = this.paginationSize;
+      return Math.floor(l/s)+1;
+    },
+    paginatedData() {
+      const start = (this.page - 1) * this.paginationSize,
+            end = start + this.paginationSize;
+      return this.posts.slice(start, end);
+    }
   },
   mounted() {
     this.addLog();
-    this.$store.dispatch("getArticles", "posts");
   },
   methods: {
     addLog() {
