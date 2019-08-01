@@ -2,26 +2,48 @@
   <div>
     <div class="article-content">
       <h3 class="Title">{{article.title || ""}}</h3>
-      <p class="Author">{{article.userName}}</p>
-      <p class="Date">{{date}}</p>
+      <div class="article-meta">
+        <p class="Author">{{article.userName}}</p>
+        <p class="Date">{{date}}</p>
+        <div class="btn-box" v-if="user && (user.authority==='1')">
+          <div class="update" @click="openArticleWriter()">
+            <i class="material-icons">edit</i>
+          </div>
+          <div class="delete" @click="deleteConfirm()">
+            <i class="material-icons">delete</i>
+          </div>
+        </div>
+      </div>
       <img class="Img" :src="article.img" />
       <p class="Content">{{article.content}}</p>
     </div>
     <Comment :article="article" :isPortfolio="isPortfolio" />
+    <!-- Write Dialog -->
+    <v-dialog v-model="dialogWrite" width="500" persistent>
+      <WriteDialog @child="parents" :id="selectedID" :dialogWrite="dialogWrite" :isPortfolio="isPortfolio"/>
+    </v-dialog>
   </div>
 </template>
 
 <script>
+import WriteDialog from "@/components/WriteDialog";
 import Comment from "../components/Comment";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
+    WriteDialog,
     Comment
   },
   data() {
-    return {};
+    return {
+      selectedID: "",
+      dialogWrite: false,
+      deleteID: "",
+    };
   },
   computed: {
+    ...mapGetters(["askSnackbar", "user"]),
     isPortfolio() {
       return this.$route.fullPath[3] === "r";
     },
@@ -50,6 +72,34 @@ export default {
         }
       }
     }
+  },
+  methods: {
+    openArticleWriter() {
+      this.selectedID = this.article.id;
+      this.dialogWrite = true;
+    },
+    deleteConfirm(index) {
+      this.$store.dispatch("setAskSnackbar", {
+        ask: true,
+        message: this.isPortfolio ? "Delete this portfolio?" : "Delete this post?",
+        confirmMessage: this.isPortfolio ? "Portfolio deleted" : "Post deleted",
+        button: "Delete"
+      });
+      this.deleteID = this.article.id;
+    },
+    deleteArticle() {
+      firestore.deleteArticle("posts", this.deleteID).then(() => {
+        this.$store.dispatch("getArticles", "posts");
+        this.deleteID = "";
+        this.$store.dispatch("setAlertSnackbar", {
+          alert: true,
+          message: this.isPortfolio ? "Portfolio deleted" : "Post deleted"
+        });
+      });
+    },
+    parents() {
+      this.dialogWrite = false;
+    },
   }
 };
 </script>
@@ -58,6 +108,32 @@ export default {
 <style lang="scss" scoped>
 @import "../css/mixin.scss";
 @import "../css/style.scss";
+
+.article-meta {
+  position: relative;
+  .btn-box {
+    width: 45px;
+    height: 100%;
+    position: absolute;
+    top: 0; right: 0;
+    padding-top: 20px;
+    .delete, .update {
+      display: inline-block;
+      margin-left: 5px;
+      cursor: pointer;
+      color: $gray;
+      transform-origin: bottom;
+      i {font-size: 1.1em;}
+      &:hover {animation: jiggle 0.15s linear 0.2s 4 forwards;}
+    }
+  }
+}
+@keyframes jiggle {
+  0% {transform: rotate(0);}
+  25% {transform: rotate(5deg);}
+  75% {transform: rotate(-5deg);}
+  100% {transform: rotate(0);}
+}
 
 .Title {
   font-size: 2em;
