@@ -174,8 +174,9 @@ export default {
     let list = this.getUserAll().then(function (result) {
       for (let i = 0; i < result.length; i++) {
         let UserToken = result[i].token;
-
-        firebaseMessage.pushMessage(UserToken);
+        let body = "새글이 등록 되었습니다."
+        let title = "POST"
+        firebaseMessage.pushMessage(UserToken, title, body);
       }
     });
 
