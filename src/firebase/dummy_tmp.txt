@@ -1,3 +1,8 @@
+
+****************************************************************************************
+DATA FORMAT
+
+// POSTS
 {
   "type": "posts",
   "article": {
@@ -6,8 +11,9 @@
     "userID": "M07b5oKsI2RvlHXiSJmQIQ8axSf2",
     "userName": "Admin"
   }
-},
+}
 
+// PORTFOLIOS
 {
   "type": "portfolios",
   "article": {
@@ -17,11 +23,11 @@
     "userID": "M07b5oKsI2RvlHXiSJmQIQ8axSf2",
     "userName": "Admin"
   }
-},
+}
 
 
-
-
+****************************************************************************************
+ARTICLES ALREADY UPLOADED
 
 {
   "type": "posts",

@@ -19,10 +19,10 @@
               <div class="read-more">Read More</div>
             </router-link>
           </div>
-          <div class="update" @click="openPostWriter(i)" v-if="isAdmin">
+          <div class="update" @click="openPostWriter(i)" v-if="user.authority==='1' || (user && user.id === posts[i-1].userID)">
             <i class="material-icons">edit</i>
           </div>
-          <div class="delete" @click="deleteConfirm(i)" v-if="isAdmin">
+          <div class="delete" @click="deleteConfirm(i)" v-if="user.authority==='1' || (user && user.id === posts[i-1].userID)">
             <i class="material-icons">delete</i>
           </div>
         </div>
@@ -60,7 +60,7 @@ export default {
     allowCreate: { type: Boolean, default: false }
   },
   computed: {
-    ...mapGetters(["askSnackbar", "posts"]),
+    ...mapGetters(["askSnackbar", "user", "posts"]),
     ...mapGetters({ isAdmin: "checkIfAdmin" })
   },
   watch: {
