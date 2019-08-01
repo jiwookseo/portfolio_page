@@ -22,11 +22,12 @@ export default {
         });
     });
   },
-  pushMessage() {
+  pushMessage(userToken) {
+    console.log(userToken);
     axios
       .post(
         "https://fcm.googleapis.com/fcm/send", {
-          to: "fyjfGNIHCNw:APA91bF57ChQiNNAu-RPGG5nKdaVuGJJwRGbrDLzKhuSPTYuV3v1DJL2Nq3_iS86RbZtXczmK9HIMRNt_BnJ253Bz4Z2fdhtxNhJ0f-k542e095jxLiB27N1WiYfORR3M8uXKHTPeQM4",
+          to: userToken,
           notification: {
             title: "test",
             body: "test"
@@ -40,5 +41,5 @@ export default {
       )
       .then(res => console.log(res))
       .catch(err => console.log(err));
-  }
+  },
 };
