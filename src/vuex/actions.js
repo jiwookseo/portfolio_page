@@ -155,13 +155,6 @@ export default {
       commit("getUserAll", res);
     });
   },
-  /*
-  getUserInfo({commit}) {
-    firestore.getUser().then(res => {
-      commit('getUserInfo', res)
-    })
-  },
-  */
   setSpinner({ commit }, payload) {
     payload.message = payload.message || "";
     commit("setSpinner", payload);
