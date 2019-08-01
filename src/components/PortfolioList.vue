@@ -46,7 +46,7 @@
       <v-dialog v-model="dialogWrite" width="500" persistent>
         <WriteDialog
           @child="parents"
-          :article="selectedPortfolio"
+          :id="selectedID"
           :dialogWrite="dialogWrite"
           :isPortfolio="true"
         />
@@ -86,10 +86,7 @@ export default {
   },
   data() {
     return {
-      selectedPortfolio: {
-        created_at: { seconds: 0 },
-        img: "http://anzancity.ir/uploads/posts/village-warning.jpg"
-      },
+      selectedID: -1,
       created_at: 0,
       dialogWrite: false,
       deleteID: "",
@@ -98,13 +95,7 @@ export default {
   },
   methods: {
     openPortfolioWriter(index = -1) {
-      this.selectedPortfolio =
-        index === -1
-          ? {
-              created_at: { seconds: 0 },
-              img: "http://anzancity.ir/uploads/posts/village-warning.jpg"
-            }
-          : this.portfolios[index - 1];
+      this.selectedID = index === -1 ? "" : this.portfolios[index - 1].id;
       this.dialogWrite = true;
     },
     deleteConfirm(index) {
@@ -125,10 +116,6 @@ export default {
           message: "Post deleted"
         });
       });
-    },
-    viewDetail(index) {
-      this.selectedPortfolio = this.portfolios[index - 1];
-      this.dialogDetail = true;
     },
     parents() {
       this.dialogWrite = false;
