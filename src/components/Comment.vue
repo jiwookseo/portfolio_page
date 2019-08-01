@@ -3,12 +3,23 @@
     <div class="title font-weight-bold mb-4 ml-1">{{comments.length}} Comments</div>
     <!-- {{article.comments}} -->
     <v-text-field
+      v-if="user"
       v-model="content"
       label="content"
       placeholder="댓글 좀 남겨주세요 관심 줍줍"
       solo
       @keyup.enter="createComment"
     ></v-text-field>
+    <v-text-field
+      v-else
+      value="댓글 좀 남겨주세요 관심 줍줍, 그 전에 로그인 부터..."
+      label="content"
+      solo
+      @click="dialog=true"
+    ></v-text-field>
+    <v-dialog v-model="dialog" class="login-dialog" width="300" persistent>
+      <LoginDialog @child="parents" :dialog="dialog" />
+    </v-dialog>
     <v-card>
       <v-list v-if="!comments.length">
         <v-list-item>
@@ -64,10 +75,11 @@
 <script>
 import firestore from "../firebase/firestore";
 import { mapGetters } from "vuex";
+import LoginDialog from "./LoginDialog";
 
 export default {
   name: "Comment",
-  components: {},
+  components: { LoginDialog },
   props: {
     isPortfolio: { type: Boolean, default: false },
     article: { type: Object }
@@ -78,7 +90,8 @@ export default {
       selected: -1,
       editContent: "",
       edit: false,
-      deleteAim: {}
+      deleteAim: {},
+      dialog: false
     };
   },
   computed: {
@@ -172,6 +185,9 @@ export default {
             });
           });
       }
+    },
+    parents(dialog) {
+      this.dialog = dialog;
     }
   }
 };
