@@ -11,7 +11,6 @@
         lg3
       >
         <div class="portfolio-content" data-aos="fade-up">
-          <!-- <div class="img" :style="{'background-image': 'url(' + portfolios[i-1].img + ')'}"></div> -->
           <img
             class="img"
             :src="portfolios[i-1].img"

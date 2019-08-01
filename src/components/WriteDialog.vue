@@ -58,21 +58,21 @@ export default {
   },
   mounted() {
     this.setData();
+    this.resetValidation();
+    if (!this.article.id) {
+      this.reset();
+    }
   },
   computed: {
     article() {
-      if (this.id === -1) {
-        return this.isPortfolio
-          ? {
-              created_at: { seconds: 0 },
-              img: "http://anzancity.ir/uploads/posts/village-warning.jpg"
-            }
-          : { created_at: { seconds: 0 } };
-      } else {
+      if (this.id) {
         return this.$store.getters.getArticle(
           this.isPortfolio ? "portfolio" : "post",
           this.id
         );
+      } else {
+        // New Article
+        return { created_at: { seconds: 0 } };
       }
     },
     ...mapGetters(["user"])
@@ -81,7 +81,9 @@ export default {
     dialogWrite: function() {
       if (this.dialogWrite) {
         this.setData();
-        if (!this.article.id) this.$refs.form.resetValidation();
+        if (!this.article.id) {
+          this.reset();
+        }
       }
     }
   },
@@ -90,16 +92,12 @@ export default {
       valid: true,
       titleRules: [v => !!v || "Title is required"],
       contentRules: [v => !!v || "Content is required"],
-      data: {
-        title: "",
-        content: "",
-        img: ""
-      }
+      data: {}
     };
   },
   methods: {
     setData() {
-      this.data = { ...this.article };
+      this.data = Object.assign(this.data, this.article);
     },
     reset() {
       this.$refs.form.reset();
