@@ -8,136 +8,142 @@
       </router-link>
     </div>
     <h2 class="section-title">Admin Page</h2>
-    <v-container>
-      <h2 class="section-subtitle">User Information</h2>
-      <v-card v-resize="onResize">
-        <v-card-title>
-          <h1>User</h1>
-          <v-spacer></v-spacer>
-          <v-text-field
-            v-model="search"
-            append-icon="search"
-            label="Search"
-            single-line
-            hide-details
-          ></v-text-field>
-        </v-card-title>
-        <v-data-table
-          class="elevation-1"
-          :headers="headers"
-          :items="userAll"
-          :search="search"
-          :sort-by="['authority', 'email']"
-          :sort-desc="[false, false]"
-          :loading="loading"
-          :class="{mobile: isMobile}"
-        >
-          <!-- desktop -->
-          <template v-slot:item.email="{ item }" v-if="!isMobile">
-            <v-chip :color="getColor(item.authority)" dark>{{ item.email }}</v-chip>
+    <div class="admin-content">
+      <ul class="ul-tabs">
+        <li @click="mode = 'summary'" :class="{'active': mode==='summary'}">Summary</li>
+        <li @click="mode = 'users'" :class="{'active': mode==='users'}">Users</li>
+        <li @click="mode = 'articles'" :class="{'active': mode==='articles'}">Articles</li>
+        <li @click="mode = 'log'" :class="{'active': mode==='log'}">Web Log</li>
+      </ul>
+      <div class="tab-content">
+        <v-container v-show="mode==='summary'">
+          <h2 class="section-subtitle">Count Data</h2>
+          <template>
+            <v-simple-table dark>
+              <thead>
+                <tr>
+                  <th class="text-left">Category</th>
+                  <th class="text-left">Total Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Users</td>
+                  <td>{{ userAll.length }}명</td>
+                </tr>
+                <tr>
+                  <td>Portfolios</td>
+                  <td>{{ portfoliosAll.length }}개</td>
+                </tr>
+                <tr>
+                  <td>Posts</td>
+                  <td>{{ postsAll.length }}개</td>
+                </tr>
+              </tbody>
+            </v-simple-table>
           </template>
-          <template v-slot:item.authority="{ item }" v-if="!isMobile">
-            <td v-if="item.authority == '1'" class="text-xs-right">관리자</td>
-            <td v-else-if="item.authority == '2'" class="text-xs-right">팀원</td>
-            <td v-else-if="item.authority == '3'" class="text-xs-right">방문자</td>
-          </template>
-          <template v-slot:item.authority="{ item }" v-else-if="isMobile">
-            <v-flex xs12 sm6 d-flex>
-              <v-chip
-                :color="getColor(item.authority)"
-                v-if="item.authority == '1'"
-                style="color:black; white-space:nowrap;"
-              >관리자</v-chip>
-              <v-chip
-                :color="getColor(item.authority)"
-                v-else-if="item.authority == '2'"
-                style="color:white; white-space:nowrap;"
-              >팀원</v-chip>
-              <v-chip
-                :color="getColor(item.authority)"
-                v-else-if="item.authority == '3'"
-                style="color:white; white-space:nowrap;"
-              >방문자</v-chip>
-            </v-flex>
-          </template>
-          <template v-slot:item.modify="{ item }" v-if="!isMobile">
-            <form
-              @submit.prevent="changeAuth(item.id, item.selected)"
-              v-if="item.authority != '1'"
-              class="text-xs-right"
-            >
-              <td>
-                <v-select
-                  :items="auth"
-                  label="권한 선택"
-                  v-model="item.selected"
-                  style="width:110px;"
-                  solo
-                ></v-select>
-              </td>
-              <td>
-                <v-btn color="primary" type="submit">수정</v-btn>
-              </td>
-            </form>
-          </template>
-          <template v-slot:item.modify="{ item }" v-else-if="isMobile">
-            <v-flex xs12 sm6 d-flex>
-              <form
-                @submit.prevent="changeAuth(item.id, item.selected)"
-                v-if="item.authority != '1'"
-                class="text-xs-right"
-              >
-                <td>
-                  <v-select
-                    :items="auth"
-                    label="권한 선택"
-                    v-model="item.selected"
-                    style="width:110px;height:10px;"
-                    solo
-                  ></v-select>
-                </td>
-                <td>
-                  <v-btn color="primary" type="submit">수정</v-btn>
-                </td>
-              </form>
-            </v-flex>
-          </template>
-        </v-data-table>
-      </v-card>
-    </v-container>
-    <v-container>
-      <h2 class="section-subtitle">Count Data</h2>
-      <template>
-        <v-simple-table dark>
-          <thead>
-            <tr>
-              <th class="text-left">Category</th>
-              <th class="text-left">Total Count</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Users</td>
-              <td>{{ userAll.length }}명</td>
-            </tr>
-            <tr>
-              <td>portfolios</td>
-              <td>{{ portfoliosAll.length }}개</td>
-            </tr>
-            <tr>
-              <td>Posts</td>
-              <td>{{ postsAll.length }}개</td>
-            </tr>
-          </tbody>
-        </v-simple-table>
-      </template>
-    </v-container>
-    <v-container>
-      <h2 class="section-subtitle">Log Data</h2>
-      <div class="content-container">
-        <div id="visits-chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        </v-container>
+        
+        <v-container v-show="mode==='users'">
+          <h2 class="section-subtitle">User Information</h2>
+          <v-card v-resize="onResize">
+            <v-card-title>
+              <h1>User</h1>
+              <v-spacer></v-spacer>
+              <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details>
+              </v-text-field>
+            </v-card-title>
+            <v-data-table class="elevation-1" :headers="headers" :items="userAll" :search="search"
+              :sort-by="['authority', 'email']" :sort-desc="[false, false]" :loading="loading"
+              :class="{mobile: isMobile}">
+              <!-- desktop -->
+              <template v-slot:item.email="{ item }" v-if="!isMobile">
+                <v-chip :color="getColor(item.authority)" dark>{{ item.email }}</v-chip>
+              </template>
+              <template v-slot:item.authority="{ item }" v-if="!isMobile">
+                <td v-if="item.authority == '1'" class="text-xs-right">관리자</td>
+                <td v-else-if="item.authority == '2'" class="text-xs-right">팀원</td>
+                <td v-else-if="item.authority == '3'" class="text-xs-right">방문자</td>
+              </template>
+              <template v-slot:item.authority="{ item }" v-else-if="isMobile">
+                <v-flex xs12 sm6 d-flex>
+                  <v-chip :color="getColor(item.authority)" v-if="item.authority == '1'"
+                    style="color:black; white-space:nowrap;">관리자</v-chip>
+                  <v-chip :color="getColor(item.authority)" v-else-if="item.authority == '2'"
+                    style="color:white; white-space:nowrap;">팀원</v-chip>
+                  <v-chip :color="getColor(item.authority)" v-else-if="item.authority == '3'"
+                    style="color:white; white-space:nowrap;">방문자</v-chip>
+                </v-flex>
+              </template>
+              <template v-slot:item.modify="{ item }" v-if="!isMobile">
+                <form @submit.prevent="changeAuth(item.id, item.selected)" v-if="item.authority != '1'"
+                  class="text-xs-right">
+                  <td>
+                    <v-select :items="auth" label="권한 선택" v-model="item.selected" style="width:110px;" solo></v-select>
+                  </td>
+                  <td>
+                    <v-btn color="primary" type="submit">수정</v-btn>
+                  </td>
+                </form>
+              </template>
+              <template v-slot:item.modify="{ item }" v-else-if="isMobile">
+                <v-flex xs12 sm6 d-flex>
+                  <form @submit.prevent="changeAuth(item.id, item.selected)" v-if="item.authority != '1'"
+                    class="text-xs-right">
+                    <td>
+                      <v-select :items="auth" label="권한 선택" v-model="item.selected" style="width:110px;height:10px;"
+                        solo></v-select>
+                    </td>
+                    <td>
+                      <v-btn color="primary" type="submit">수정</v-btn>
+                    </td>
+                  </form>
+                </v-flex>
+              </template>
+            </v-data-table>
+          </v-card>
+        </v-container>
+
+        <v-container v-show="mode==='articles'">
+          <h2 class="section-subtitle">Articles</h2>
+          <div class="dummy-box">
+            <h5>*Dummy Generator</h5>
+            <p>Add dummy data content into <pre class="code">src/firebase/dummy.json</pre> and click Generate.</p>
+            <p>Data must have the following format:</p>
+            <p>
+              <pre>{
+  "type": "posts",
+  "article": {
+    "title": "",
+    "content": "",
+    "userID": "",
+    "userName": ""
+  }
+}
+{
+  "type": "portfolios",
+  "article": {
+    "title": "",
+    "content": "",
+    "img": "",
+    "userID": "",
+    "userName": ""
+  }
+}
+</pre>
+            </p>
+            <div class="generate-btn" @click="postDummy">Generate</div>
+          </div>
+        </v-container>
+
+        <v-container v-show="mode==='log'">
+          <h2 class="section-subtitle">Log Data</h2>
+          <div class="content-container">
+            <div id="visits-chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+          </div>
+        </v-container>
       </div>
-    </v-container>
+    </div>
   </div>
 </template>
 
@@ -162,7 +168,8 @@ export default {
         { text: "권한", value: "authority" },
         { text: "권한 변경", value: "modify", sortable: false }
       ],
-      loading: false
+      loading: false,
+      mode: "summary" //users, articles, log
     };
   },
   mounted() {
@@ -398,6 +405,48 @@ a:hover {
   }
 }
 
+
+.admin-content {
+  height: auto;
+  padding: 0 20px;
+  margin-bottom: 80px;
+}
+.ul-tabs {
+  padding: 0; margin: 0;
+  width: 40px;
+  display: inline-block;
+  vertical-align: top;
+  li {
+    writing-mode: tb-rl;
+    direction: rtl;
+    transform: rotate(-180deg);
+    text-transform: uppercase;
+    font-size: 0.9em;
+    letter-spacing: 1px;
+    padding: 15px 8px;
+    color: $gray;
+    border: 2px solid $gray;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+    &.active {
+      color: $blue-accent;
+      border-color: $blue-accent;
+    }
+  }
+}
+.tab-content {
+  display: inline-block;
+  vertical-align: top;
+  width: calc(99% - 40px);
+  height: auto;
+  min-height: 400px;
+  box-shadow: 0 0 3px $gray;
+}
+
+
+
+
 .content-container {
   padding: 0 50px 50px;
 }
@@ -459,5 +508,24 @@ a:hover {
   width: 50%;
   height: 40px;
   font-weight: bold;
+}
+
+.dummy-box {
+  height: auto;
+  h5 {
+    font-size: 1em;
+  }
+  p {padding: 0; margin: 0;}
+  .code {
+    color: $gray;
+    background: lightgoldenrodyellow;
+    display: inline-block;
+  }
+  .generate-btn {
+    @include nudge-btn;
+    @include nudge-btn-primary;
+    cursor: pointer;
+    margin: 10px 0;
+  }
 }
 </style>
