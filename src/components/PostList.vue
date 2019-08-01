@@ -38,7 +38,7 @@
 
       <!-- Write Dialog -->
       <v-dialog v-model="dialogWrite" width="500" persistent>
-        <WriteDialog @child="parents" :article="selectedPost" :dialogWrite="dialogWrite" />
+        <WriteDialog @child="parents" :id="selectedId" :dialogWrite="dialogWrite" />
       </v-dialog>
     </v-layout>
   </v-container>
@@ -75,7 +75,7 @@ export default {
   },
   data() {
     return {
-      selectedPost: { created_at: { seconds: 0 } },
+      selectedId: -1,
       dialogWrite: false,
       deleteID: "",
       postLimit: 6
@@ -83,8 +83,7 @@ export default {
   },
   methods: {
     openPostWriter(index = -1) {
-      this.selectedPost =
-        index === -1 ? { created_at: { seconds: 0 } } : this.posts[index - 1];
+      this.selectedId = index === -1 ? "" : this.posts[index - 1].id;
       this.dialogWrite = true;
     },
     deleteConfirm(index) {
@@ -108,11 +107,6 @@ export default {
     },
     parents() {
       this.dialogWrite = false;
-    },
-    viewDetail(index) {
-      this.selectedPost =
-        index === -1 ? { created_at: { seconds: 0 } } : this.posts[index - 1];
-      this.dialogDetail = true;
     },
     date_created(created_at) {
       const date = new Date(created_at * 1000);

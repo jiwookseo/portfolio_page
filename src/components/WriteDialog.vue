@@ -52,7 +52,7 @@ import { mapGetters } from "vuex";
 export default {
   name: "WriteDialog",
   props: {
-    article: { type: Object },
+    id: { type: String },
     dialogWrite: { type: Boolean, default: false },
     isPortfolio: { type: Boolean, default: false }
   },
@@ -60,16 +60,29 @@ export default {
     this.setData();
   },
   computed: {
+    article() {
+      if (this.id === -1) {
+        return this.isPortfolio
+          ? {
+              created_at: { seconds: 0 },
+              img: "http://anzancity.ir/uploads/posts/village-warning.jpg"
+            }
+          : { created_at: { seconds: 0 } };
+      } else {
+        return this.$store.getters.getArticle(
+          this.isPortfolio ? "portfolio" : "post",
+          this.id
+        );
+      }
+    },
     ...mapGetters(["user"])
   },
   watch: {
-    article: function() {
-      if (!this.article.id) {
-        this.$refs.form.resetValidation();
-      }
-    },
     dialogWrite: function() {
-      this.setData();
+      if (this.dialogWrite) {
+        this.setData();
+        if (!this.article.id) this.$refs.form.resetValidation();
+      }
     }
   },
   data() {
