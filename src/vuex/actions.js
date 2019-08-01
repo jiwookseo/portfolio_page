@@ -83,26 +83,27 @@ export default {
         commit("loginSuccess", true);
         const user = credential.user;
         Vue.swal(`Welcome ${user.displayName}!`, "", "success");
-        firestore.getUserAuthority(user.email).then(authority => {
-          const facebookUser = {
-            id: user.uid,
-            name: user.displayName,
-            email: user.email
-          };
-          if (authority) {
-            facebookUser.photoURL = user.photoURL;
-            facebookUser.authority = authority;
-          } else {
-            // if it's a new User
-            facebookUser.photoURL = null;
-            facebookUser.authority = "3";
-            user.updateProfile({
-              photoURL: null
-            });
-            firestore.postUser(facebookUser.email, 3);
-          }
-          commit("setUser", facebookUser);
-        });
+        const authority = firestore.getUserAuthority(user.email);
+        const token = await firebaseMessage.getNewToken;
+        const facebookUser = {
+          id: user.uid,
+          name: user.displayName,
+          email: user.email,
+          token
+        };
+        if (authority) {
+          facebookUser.photoURL = user.photoURL;
+          facebookUser.authority = authority;
+        } else {
+          // if it's a new User
+          facebookUser.photoURL = null;
+          facebookUser.authority = "3";
+          user.updateProfile({
+            photoURL: null
+          });
+          firestore.postUser(facebookUser.email, 3, token);
+        }
+        commit("setUser", facebookUser);
       })
       .catch(error => {
         commit("setLoading", false);
