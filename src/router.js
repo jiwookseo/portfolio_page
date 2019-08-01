@@ -32,12 +32,18 @@ export default new Router({
     {
       path: "/portfolio",
       component: PortfolioPage,
-      children: [{
-        path: ":id",
-        name: "PortfolioDetailPage",
-        component: DetailPage,
-        props: true
-      }]
+      children: [
+        {
+          path: "",
+          redirect: "/portfolios"
+        },
+        {
+          path: ":id",
+          name: "PortfolioDetailPage",
+          component: DetailPage,
+          props: true
+        }
+      ]
     },
     {
       path: "/posts",
@@ -47,12 +53,18 @@ export default new Router({
     {
       path: "/post",
       component: PostPage,
-      children: [{
-        path: ":id",
-        name: "PostDetailPage",
-        component: DetailPage,
-        props: true
-      }]
+      children: [
+        {
+          path: "",
+          redirect: "/posts"
+        },
+        {
+          path: ":id",
+          name: "PostDetailPage",
+          component: DetailPage,
+          props: true
+        }
+      ]
     },
     {
       path: "/admin",
