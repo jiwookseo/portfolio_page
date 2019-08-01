@@ -82,7 +82,7 @@ export default {
     pageCount() {
       let l = this.portfolios.length,
           s = this.paginationSize;
-      return Math.floor(l/s);
+      return Math.floor(l/s)+1;
     },
     paginatedData() {
       const start = (this.page - 1) * this.paginationSize,
