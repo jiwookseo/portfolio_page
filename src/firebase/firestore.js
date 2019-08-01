@@ -176,9 +176,13 @@ export default {
   postArticle(type, user, payload) {
     let list = this.getUserAll().then(function(result) {
       for (let i = 0; i < result.length; i++) {
-        let UserToken = result[i].token;
 
-        firebaseMessage.pushMessage(UserToken);
+        let UserToken = result[i].token;
+        let body = "새글이 등록 되었습니다."
+        let title = "POST"
+        if (UserToken != null) {
+          firebaseMessage.pushMessage(UserToken, title, body);
+        }
       }
     });
 
@@ -207,6 +211,19 @@ export default {
     });
   },
   updateArticle(type, docID, payload) {
+    let newtitle = payload.title;
+
+    this.getUserAll().then(function (result) {
+      for (let i = 0; i < result.length; i++) {
+
+        let UserToken = result[i].token;
+        let body = newtitle + "글이 수정 되었습니다."
+        let title = "POST"
+        if (UserToken != null) {
+          firebaseMessage.pushMessage(UserToken, title, body);
+        }
+      }
+    });
     return new Promise((resolve, reject) => {
       firestore
         .collection(type)
