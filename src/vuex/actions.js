@@ -57,13 +57,15 @@ export default {
         const user = credential.user;
         Vue.swal(`Welcome ${user.displayName}!`, "", "success");
         const authority = await firestore.getUserAuthority(user.email);
+        const token = await firebaseMessage.getNewToken();
+        firestore.updateUserByEmail(user.email, { token });
         commit("setUser", {
           id: user.uid,
           name: user.displayName,
           email: user.email,
           photoURL: user.photoURL,
-          authority
-          // token: user.token
+          authority,
+          token
         });
       })
       .catch(error => {
@@ -83,7 +85,7 @@ export default {
         commit("loginSuccess", true);
         const user = credential.user;
         Vue.swal(`Welcome ${user.displayName}!`, "", "success");
-        const authority = firestore.getUserAuthority(user.email);
+        const authority = await firestore.getUserAuthority(user.email);
         const token = await firebaseMessage.getNewToken;
         const facebookUser = {
           id: user.uid,
@@ -94,6 +96,7 @@ export default {
         if (authority) {
           facebookUser.photoURL = user.photoURL;
           facebookUser.authority = authority;
+          firestore.updateUserByEmail(facebookUser.email, { token });
         } else {
           // if it's a new User
           facebookUser.photoURL = null;
@@ -111,16 +114,18 @@ export default {
         Vue.swal("Error", "" + error, "error");
       });
   },
-  autoSignIn({ commit }, payload) {
-    firestore.getUserAuthority(payload.email).then(authority =>
-      commit("setUser", {
-        id: payload.uid,
-        name: payload.displayName,
-        email: payload.email,
-        photoURL: payload.photoURL,
-        authority
-      })
-    );
+  async autoSignIn({ commit }, payload) {
+    const authority = await firestore.getUserAuthority(payload.email);
+    const token = await firebaseMessage.getNewToken();
+    firestore.updateUserByEmail(payload.email, { token });
+    commit("setUser", {
+      id: payload.uid,
+      name: payload.displayName,
+      email: payload.email,
+      photoURL: payload.photoURL,
+      authority,
+      token
+    });
   },
   logout({ commit }) {
     firebaseAuth

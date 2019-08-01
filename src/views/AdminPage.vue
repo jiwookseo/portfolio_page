@@ -32,8 +32,7 @@
           :loading="loading"
           :class="{mobile: isMobile}"
         >
-
-        <!-- desktop -->
+          <!-- desktop -->
           <template v-slot:item.email="{ item }" v-if="!isMobile">
             <v-chip :color="getColor(item.authority)" dark>{{ item.email }}</v-chip>
           </template>
@@ -43,25 +42,65 @@
             <td v-else-if="item.authority == '3'" class="text-xs-right">방문자</td>
           </template>
           <template v-slot:item.authority="{ item }" v-else-if="isMobile">
-          <v-flex xs12 sm6 d-flex>
-          <v-chip :color="getColor(item.authority)" v-if="item.authority == '1'" style="color:black; white-space:nowrap;">관리자</v-chip>
-          <v-chip :color="getColor(item.authority)" v-else-if="item.authority == '2'" style="color:white; white-space:nowrap;">팀원</v-chip>
-          <v-chip :color="getColor(item.authority)" v-else-if="item.authority == '3'" style="color:white; white-space:nowrap;">방문자</v-chip>
-          </v-flex>
-        </template>
-        <template v-slot:item.modify="{ item }" v-if="!isMobile">
-            <form @submit.prevent="changeAuth(item.id, item.selected)" v-if="item.authority != '1'" class="text-xs-right">
-              <td><v-select :items="auth" label="권한 선택" v-model="item.selected" style="width:110px;" solo></v-select></td>
-              <td><v-btn color="primary" type="submit">수정</v-btn></td>
+            <v-flex xs12 sm6 d-flex>
+              <v-chip
+                :color="getColor(item.authority)"
+                v-if="item.authority == '1'"
+                style="color:black; white-space:nowrap;"
+              >관리자</v-chip>
+              <v-chip
+                :color="getColor(item.authority)"
+                v-else-if="item.authority == '2'"
+                style="color:white; white-space:nowrap;"
+              >팀원</v-chip>
+              <v-chip
+                :color="getColor(item.authority)"
+                v-else-if="item.authority == '3'"
+                style="color:white; white-space:nowrap;"
+              >방문자</v-chip>
+            </v-flex>
+          </template>
+          <template v-slot:item.modify="{ item }" v-if="!isMobile">
+            <form
+              @submit.prevent="changeAuth(item.id, item.selected)"
+              v-if="item.authority != '1'"
+              class="text-xs-right"
+            >
+              <td>
+                <v-select
+                  :items="auth"
+                  label="권한 선택"
+                  v-model="item.selected"
+                  style="width:110px;"
+                  solo
+                ></v-select>
+              </td>
+              <td>
+                <v-btn color="primary" type="submit">수정</v-btn>
+              </td>
             </form>
-        </template>
-        <template v-slot:item.modify="{ item }" v-else-if="isMobile">
-          <v-flex xs12 sm6 d-flex>
-              <form @submit.prevent="changeAuth(item.id, item.selected)" v-if="item.authority != '1'" class="text-xs-right">
-                <td><v-select :items="auth" label="권한 선택" v-model="item.selected" style="width:110px;height:10px;" solo></v-select></td>
-                <td><v-btn color="primary" type="submit">수정</v-btn></td>
+          </template>
+          <template v-slot:item.modify="{ item }" v-else-if="isMobile">
+            <v-flex xs12 sm6 d-flex>
+              <form
+                @submit.prevent="changeAuth(item.id, item.selected)"
+                v-if="item.authority != '1'"
+                class="text-xs-right"
+              >
+                <td>
+                  <v-select
+                    :items="auth"
+                    label="권한 선택"
+                    v-model="item.selected"
+                    style="width:110px;height:10px;"
+                    solo
+                  ></v-select>
+                </td>
+                <td>
+                  <v-btn color="primary" type="submit">수정</v-btn>
+                </td>
               </form>
-          </v-flex>
+            </v-flex>
           </template>
         </v-data-table>
       </v-card>
@@ -149,10 +188,8 @@ export default {
   },
   methods: {
     onResize() {
-          if (window.innerWidth < 769)
-            this.isMobile = true;
-          else
-            this.isMobile = false;
+      if (window.innerWidth < 769) this.isMobile = true;
+      else this.isMobile = false;
     },
     getColor(authority) {
       if (authority == "1") return "dark";
@@ -165,7 +202,7 @@ export default {
       if (selected === "방문자") num = "3";
       else if (selected === "팀원") num = "2";
       if (num === "3" || num === "2") {
-        firestore.updateUserById(id, num).then(() => {
+        firestore.updateUserById(id, { authority: num }).then(() => {
           // console.log("update Success")
           this.loading = false;
           this.$store.dispatch("getUserAll");
@@ -361,7 +398,6 @@ a:hover {
   padding: 0 50px 50px;
 }
 
-
 .mobile {
   color: #333;
 }
@@ -391,14 +427,12 @@ a:hover {
 
   .mobile table.v-table tr td ul li:before {
     content: attr(data-label);
-    padding-right: .5em;
+    padding-right: 0.5em;
     text-align: left;
     display: block;
     color: #999;
-
   }
-  .v-datatable__actions__select
-  {
+  .v-datatable__actions__select {
     width: 50%;
     margin: 0px;
     justify-content: flex-start;
@@ -406,7 +440,6 @@ a:hover {
   .mobile .theme--light.v-table tbody tr:hover:not(.v-datatable__expand-row) {
     background: transparent;
   }
-
 }
 .flex-content {
   padding: 0;
@@ -423,5 +456,4 @@ a:hover {
   height: 40px;
   font-weight: bold;
 }
-
 </style>

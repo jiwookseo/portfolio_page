@@ -1,6 +1,4 @@
-import {
-  firebaseApp
-} from "./firebase";
+import { firebaseApp } from "./firebase";
 import Firebase from "firebase/app";
 
 const firestore = Firebase.firestore();
@@ -55,16 +53,17 @@ export default {
         .catch(err => reject(err));
     });
   },
-  updateUserAuthorityByEmail(email, authority) {
+  updateUserByEmail(email, payload) {
     return new Promise((resolve, reject) => {
       firestore
         .collection(USERS)
         .where("email", "==", email)
         .get()
         .then(snapshot => {
-          snapshot.docs[0].ref.update({
-            authority
-          }).then(res => resolve(res));
+          snapshot.docs[0].ref
+            .update(payload)
+            .then(res => resolve(res))
+            .catch(err => reject(err));
         })
         .catch(err => reject(err));
     });
@@ -120,14 +119,12 @@ export default {
         .catch(err => reject(err));
     });
   },
-  updateUserById(docID, authority) {
+  updateUserById(docID, payload) {
     return new Promise((resolve, reject) => {
       firestore
         .collection(USERS)
         .doc(docID)
-        .update({
-          authority: authority
-        })
+        .update(payload)
         .then(res => resolve(res))
         .catch(err => reject(err));
     });
@@ -275,7 +272,7 @@ export default {
       ref
         .once("value")
         .then(snapshot => {
-          snapshot.forEach(function (childSnapshot) {
+          snapshot.forEach(function(childSnapshot) {
             data.push(childSnapshot.val());
           });
           resolve(data);
