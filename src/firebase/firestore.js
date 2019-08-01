@@ -171,7 +171,13 @@ export default {
   },
   postArticle(type, user, payload) {
 
-    firebaseMessage.pushMessage();
+    let list = this.getUserAll().then(function (result) {
+      for (let i = 0; i < result.length; i++) {
+        let UserToken = result[i].token;
+
+        firebaseMessage.pushMessage(UserToken);
+      }
+    });
 
     return new Promise((resolve, reject) => {
       firestore
