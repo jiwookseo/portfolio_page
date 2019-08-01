@@ -46,7 +46,7 @@
                   :dark="edit && selected === i"
                 />
               </v-flex>
-              <v-flex xs1 v-if="user && user.id === comment.userID">
+              <v-flex xs1 v-if="user && (user.authority === '1' || user.id === comment.userID)">
                 <div class="btn-box" v-if="!edit || selected !== i">
                   <div class="update" @click="commentEdit(comment, i)">
                     <i class="material-icons">edit</i>
