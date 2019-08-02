@@ -76,7 +76,7 @@ export default {
       this.postLimit = this.limit;
     },
     askSnackbar() {
-      if (this.askSnackbar.confirm) {
+      if (this.askSnackbar.confirm === "post") {
         this.deletePost();
       }
     }
@@ -98,7 +98,8 @@ export default {
       this.$store.dispatch("setAskSnackbar", {
         ask: true,
         message: "Delete this post?",
-        button: "Delete"
+        button: "Delete",
+        type: "post"
       });
       this.deleteID = this.posts[index - 1].id;
     },
