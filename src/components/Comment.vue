@@ -102,7 +102,7 @@ export default {
   },
   watch: {
     askSnackbar() {
-      if (this.askSnackbar.confirm) {
+      if (this.askSnackbar.confirm === "comment") {
         this.deleteComment();
       }
     }
@@ -112,7 +112,8 @@ export default {
       this.$store.dispatch("setAskSnackbar", {
         ask: true,
         message: "Delete this comment?",
-        button: "Delete"
+        button: "Delete",
+        type: "comment"
       });
       this.deleteAim = comment;
     },
