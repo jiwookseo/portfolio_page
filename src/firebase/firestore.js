@@ -173,7 +173,7 @@ export default {
     });
   },
   postArticle(type, user, payload) {
-    let list = this.getUserAll().then(function (result) {
+    this.getUserAll().then(function (result) {
       for (let i = 0; i < result.length; i++) {
 
         let UserToken = result[i].token;
