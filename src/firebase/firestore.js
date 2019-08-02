@@ -193,7 +193,8 @@ export default {
           userID: user.id,
           userName: user.name,
           edited: false,
-          created_at: Firebase.firestore.FieldValue.serverTimestamp()
+          created_at: Firebase.firestore.FieldValue.serverTimestamp(),
+          userEmail: user.email
         })
         .then(res => resolve(res))
         .catch(err => reject(err));

@@ -78,14 +78,16 @@ export default {
     ...mapGetters(["user"])
   },
   watch: {
-    dialogWrite: function() {
-      if (this.dialogWrite) {
+    article() {
+      if (!this.article.id) {
+        this.reset();
+      } else {
         this.setData();
-        if (!this.article.id) {
-          this.reset();
-        }
       }
     }
+  },
+  created() {
+    this.setData();
   },
   data() {
     return {
