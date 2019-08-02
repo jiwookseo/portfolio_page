@@ -20,7 +20,7 @@ export default {
             .catch(() => resolve(null));
         })
         .catch(() => {
-          console.log("Unable to get permission to notify.");
+          // console.log("Unable to get permission to notify.");
           resolve(null);
         });
     });
