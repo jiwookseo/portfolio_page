@@ -1,4 +1,6 @@
-import { firebaseApp } from "./firebase";
+import {
+  firebaseApp
+} from "./firebase";
 import Firebase from "firebase/app";
 import firebaseMessage from "../firebase/firebaseMessage";
 const firestore = Firebase.firestore();
@@ -148,18 +150,15 @@ export default {
               .get()
               .then(comments => {
                 article.push(
-                  Object.assign(
-                    {
-                      id: doc.id,
-                      ...doc.data()
-                    },
-                    {
-                      comments: comments.docs.map(res => ({
-                        id: res.id,
-                        ...res.data()
-                      }))
-                    }
-                  )
+                  Object.assign({
+                    id: doc.id,
+                    ...doc.data()
+                  }, {
+                    comments: comments.docs.map(res => ({
+                      id: res.id,
+                      ...res.data()
+                    }))
+                  })
                 );
               })
               .then(() => {
@@ -174,7 +173,7 @@ export default {
     });
   },
   postArticle(type, user, payload) {
-    let list = this.getUserAll().then(function(result) {
+    let list = this.getUserAll().then(function (result) {
       for (let i = 0; i < result.length; i++) {
 
         let UserToken = result[i].token;
@@ -194,7 +193,8 @@ export default {
           userID: user.id,
           userName: user.name,
           edited: false,
-          created_at: Firebase.firestore.FieldValue.serverTimestamp()
+          created_at: Firebase.firestore.FieldValue.serverTimestamp(),
+          userEmail: user.email
         })
         .then(res => resolve(res))
         .catch(err => reject(err));
@@ -303,7 +303,7 @@ export default {
       ref
         .once("value")
         .then(snapshot => {
-          snapshot.forEach(function(childSnapshot) {
+          snapshot.forEach(function (childSnapshot) {
             data.push(childSnapshot.val());
           });
           resolve(data);

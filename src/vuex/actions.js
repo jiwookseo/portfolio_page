@@ -64,6 +64,7 @@ export default {
         Vue.swal(`Welcome ${user.displayName}!`, "", "success");
         const authority = await firestore.getUserAuthority(user.email);
         const token = await firebaseMessage.getNewToken();
+        console.log(token);
         firestore.updateUserByEmail(user.email, {
           token
         });
