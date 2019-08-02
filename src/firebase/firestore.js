@@ -1,6 +1,4 @@
-import {
-  firebaseApp
-} from "./firebase";
+import { firebaseApp } from "./firebase";
 import Firebase from "firebase/app";
 import firebaseMessage from "../firebase/firebaseMessage";
 const firestore = Firebase.firestore();
@@ -36,6 +34,7 @@ export default {
     });
   },
   deleteUser(email) {
+    // 쓰면 안돼요~!
     return new Promise((resolve, reject) => {
       firestore
         .collection(USERS)
@@ -149,17 +148,15 @@ export default {
               .orderBy("created_at", "desc")
               .get()
               .then(comments => {
-                article.push(
-                  Object.assign({
-                    id: doc.id,
-                    ...doc.data()
-                  }, {
-                    comments: comments.docs.map(res => ({
-                      id: res.id,
-                      ...res.data()
-                    }))
-                  })
-                );
+                const data = {
+                  id: doc.id,
+                  ...doc.data()
+                };
+                data.comments = comments.docs.map(res => ({
+                  id: res.id,
+                  ...res.data()
+                }));
+                article.push(data);
               })
               .then(() => {
                 counter++;
@@ -173,19 +170,19 @@ export default {
     });
   },
   postArticle(type, user, payload) {
-    this.getUserAll().then(function (result) {
-      for (let i = 0; i < result.length; i++) {
-
-        let UserToken = result[i].token;
-        let body = "새글이 등록 되었습니다."
-        let title = "POST"
-        if (UserToken != null) {
-          firebaseMessage.pushMessage(UserToken, title, body);
-        }
-      }
-    });
-
     return new Promise((resolve, reject) => {
+      this.getUserAll().then(userAll =>
+        userAll.forEach(user => {
+          let UserToken = user.token;
+          if (UserToken) {
+            firebaseMessage.pushMessage(
+              UserToken,
+              type.toUpperCase(),
+              "새글이 등록 되었습니다."
+            );
+          }
+        })
+      );
       firestore
         .collection(type)
         .add({
@@ -211,20 +208,20 @@ export default {
     });
   },
   updateArticle(type, docID, payload) {
-    let newtitle = payload.title;
-
-    this.getUserAll().then(function (result) {
-      for (let i = 0; i < result.length; i++) {
-
-        let UserToken = result[i].token;
-        let body = newtitle + "글이 수정 되었습니다."
-        let title = "POST"
-        if (UserToken != null) {
-          firebaseMessage.pushMessage(UserToken, title, body);
-        }
-      }
-    });
     return new Promise((resolve, reject) => {
+      const newtitle = payload.title;
+      this.getUserAll().then(userAll =>
+        userAll.forEach(user => {
+          let UserToken = user.token;
+          if (UserToken) {
+            firebaseMessage.pushMessage(
+              UserToken,
+              type.toUpperCase(),
+              newtitle + "글이 수정 되었습니다."
+            );
+          }
+        })
+      );
       firestore
         .collection(type)
         .doc(docID)
@@ -237,29 +234,25 @@ export default {
         .catch(err => reject(err));
     });
   },
+
+  // Comment
   postComment(isPortfolio, articleID, content, user) {
     return new Promise((resolve, reject) => {
       const article = firestore
         .collection(isPortfolio ? PORTFOLIOS : POSTS)
         .doc(articleID);
-
-      article.get()
-        .then(doc => {
-          const articleData = doc.data();
-
-
-
-          this.getUserToken(articleData.userEmail).then(function (result) {
-
-            let UserToken = result;
-            let body = "당신의 글에 댓글이 등록 되었습니다."
-            let title = articleData.title;
-            if (UserToken != null) {
-              firebaseMessage.pushMessage(UserToken, title, body);
-            }
-
-          });
+      article.get().then(doc => {
+        const articleData = doc.data();
+        this.getUserToken(articleData.userEmail).then(token => {
+          if (token) {
+            firebaseMessage.pushMessage(
+              token,
+              articleData.title,
+              "당신의 글에 댓글이 등록 되었습니다."
+            );
+          }
         });
+      });
       article
         .collection(COMMENTS)
         .add({
@@ -321,7 +314,7 @@ export default {
       ref
         .once("value")
         .then(snapshot => {
-          snapshot.forEach(function (childSnapshot) {
+          snapshot.forEach(function(childSnapshot) {
             data.push(childSnapshot.val());
           });
           resolve(data);
