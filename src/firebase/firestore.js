@@ -1,7 +1,10 @@
-import { firebaseApp } from "./firebase";
-import Firebase from "firebase/app";
+import "./firebase";
 import firebaseMessage from "../firebase/firebaseMessage";
-const firestore = Firebase.firestore();
+import firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/database";
+const firestore = firebase.firestore();
+const firedatabase = firebase.database();
 const POSTS = "posts";
 const PORTFOLIOS = "portfolios";
 const USERS = "users";
@@ -190,7 +193,7 @@ export default {
           userID: user.id,
           userName: user.name,
           edited: false,
-          created_at: Firebase.firestore.FieldValue.serverTimestamp(),
+          created_at: firebase.firestore.FieldValue.serverTimestamp(),
           userEmail: user.email
         })
         .then(res => resolve(res))
@@ -228,7 +231,7 @@ export default {
         .update({
           ...payload,
           edited: true,
-          updated_at: Firebase.firestore.FieldValue.serverTimestamp()
+          updated_at: firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(res => resolve(res))
         .catch(err => reject(err));
@@ -260,8 +263,7 @@ export default {
           userID: user.id,
           userName: user.name,
           edited: false,
-          created_at: Firebase.firestore.FieldValue.serverTimestamp(),
-          updated_at: Firebase.firestore.FieldValue.serverTimestamp()
+          created_at: firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(res => resolve(res))
         .catch(err => reject(err));
@@ -277,7 +279,7 @@ export default {
         .update({
           content,
           edited: true,
-          updated_at: Firebase.firestore.FieldValue.serverTimestamp()
+          updated_at: firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(res => resolve(res))
         .catch(err => reject(err));
@@ -298,8 +300,7 @@ export default {
 
   // Log
   addLog(path, username, time) {
-    let db = firebaseApp.database();
-    let log = db.ref("LOG");
+    const log = firedatabase.ref("LOG");
     log.push({
       path,
       username,
@@ -308,9 +309,8 @@ export default {
   },
   getLog() {
     return new Promise((resolve, reject) => {
-      let data = [];
-      let db = firebaseApp.database();
-      let ref = db.ref("LOG").orderByChild("time");
+      const data = [];
+      const ref = firedatabase.ref("LOG").orderByChild("time");
       ref
         .once("value")
         .then(snapshot => {

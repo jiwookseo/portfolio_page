@@ -1,6 +1,5 @@
 import Vue from "vue";
-import firebase from "firebase";
-import { firebaseAuth } from "@/firebase/firebaseAuth";
+import firebaseAuth from "../firebase/firebaseAuth";
 import firestore from "../firebase/firestore";
 import firebaseMessage from "../firebase/firebaseMessage";
 
@@ -82,7 +81,7 @@ export default {
     commit("setLoading", true);
     commit("clearError");
     firebaseAuth
-      .signInWithPopup(new firebase.auth.FacebookAuthProvider())
+      .signInWithPopup(new firebaseAuth.FacebookAuthProvider())
       .then(async credential => {
         commit("setLoading", false);
         commit("loginSuccess", true);

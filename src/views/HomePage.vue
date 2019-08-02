@@ -76,7 +76,6 @@
 
 <script>
 import "../js/navbar.js";
-import firestore from "../firebase/firestore";
 import HeaderHome from "../components/HeaderHome";
 import PortfolioList from "../components/PortfolioList";
 import PostList from "../components/PostList";
@@ -99,10 +98,13 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(["loginSuccess", "user", "currentUserAuthority", "portfolios", "posts"])
-  },
-  mounted() {
-    this.addLog();
+    ...mapGetters([
+      "loginSuccess",
+      "user",
+      "currentUserAuthority",
+      "portfolios",
+      "posts"
+    ])
   },
   methods: {
     scrollTo(target) {
@@ -110,16 +112,6 @@ export default {
       setTimeout(function() {
         $("html, body").animate({ scrollTop: targetscrolltop + 10 }, 700);
       }, 200);
-    },
-    addLog() {
-      let username = "";
-      if (!this.user) {
-        username = "Anonymous User";
-      } else {
-        username = this.user.email;
-      }
-      let time = new Date();
-      firestore.addLog("/", username, time.getDay());
     }
   }
 };

@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import firestore from "./firebase/firestore";
 import ChatBtn from "./components/ChatBtn";
 import TranslateBtn from "./components/TranslateBtn";
 import LoadingSpinner from "./components/LoadingSpinner";
@@ -49,16 +50,27 @@ export default {
           this.$store.dispatch("getArticles", "posts");
         else this.$store.dispatch("getArticles", "portfolios");
       }
+      this.addLog(this.$route.path);
     }
   },
   computed: {
-    ...mapGetters(["spinner"]),
+    ...mapGetters(["spinner", "user"]),
     ...mapGetters({ isAdmin: "checkIfAdmin" })
   },
   mounted() {
     this.$store.dispatch("getArticles", "posts");
     this.$store.dispatch("getArticles", "portfolios");
     this.$store.dispatch("getUserAll");
+  },
+  methods: {
+    addLog(path) {
+      const time = new Date();
+      firestore.addLog(
+        path,
+        this.user ? this.user.email : "Anonymous User",
+        time.getDay()
+      );
+    }
   }
 };
 </script>
