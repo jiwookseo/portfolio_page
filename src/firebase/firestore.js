@@ -173,7 +173,7 @@ export default {
     });
   },
   postArticle(type, user, payload) {
-    let list = this.getUserAll().then(function (result) {
+    this.getUserAll().then(function (result) {
       for (let i = 0; i < result.length; i++) {
 
         let UserToken = result[i].token;
@@ -251,7 +251,6 @@ export default {
 
           this.getUserToken(articleData.userEmail).then(function (result) {
 
-            console.log(result);
             let UserToken = result;
             let body = "당신의 글에 댓글이 등록 되었습니다."
             let title = articleData.title;
