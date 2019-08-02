@@ -19,7 +19,10 @@ export default {
   computed: mapGetters(["askSnackbar"]),
   methods: {
     confirm() {
-      this.$store.dispatch("setAskSnackbar", { ask: false, confirm: true });
+      this.$store.dispatch("setAskSnackbar", {
+        ask: false,
+        confirm: this.askSnackbar.type
+      });
     },
     cancel() {
       this.$store.dispatch("setAskSnackbar", { ask: false });

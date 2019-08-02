@@ -39,7 +39,8 @@ const state = {
     ask: false,
     confirm: false,
     message: "",
-    button: ""
+    button: "",
+    type: ""
   },
   alertSnackbar: {
     alert: false,

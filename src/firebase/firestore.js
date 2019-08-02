@@ -251,7 +251,6 @@ export default {
 
           this.getUserToken(articleData.userEmail).then(function (result) {
 
-            console.log(result);
             let UserToken = result;
             let body = "당신의 글에 댓글이 등록 되었습니다."
             let title = articleData.title;
