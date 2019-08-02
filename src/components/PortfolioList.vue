@@ -21,7 +21,10 @@
             <router-link :to="{name: 'PortfolioDetailPage', params: {id: portfolios[i-1].id}}">
               <div class="more text">Read More</div>
             </router-link>
-            <div class="btn-box" v-if="user && (user.authority==='1' || user.id === portfolios[i-1].userID)">
+            <div
+              class="btn-box"
+              v-if="user && (user.authority==='1' || user.id === portfolios[i-1].userID)"
+            >
               <div class="update" @click="openPortfolioWriter(i)">
                 <i class="material-icons">edit</i>
               </div>
@@ -101,7 +104,6 @@ export default {
       this.$store.dispatch("setAskSnackbar", {
         ask: true,
         message: "Delete this portfolio?",
-        confirmMessage: "Portfolio deleted",
         button: "Delete"
       });
       this.deleteID = this.portfolios[index - 1].id;
@@ -112,7 +114,7 @@ export default {
         this.deleteID = "";
         this.$store.dispatch("setAlertSnackbar", {
           alert: true,
-          message: "Post deleted"
+          message: "Portfolio deleted"
         });
       });
     },

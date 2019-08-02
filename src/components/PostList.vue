@@ -98,7 +98,6 @@ export default {
       this.$store.dispatch("setAskSnackbar", {
         ask: true,
         message: "Delete this post?",
-        confirmMessage: "Post deleted",
         button: "Delete"
       });
       this.deleteID = this.posts[index - 1].id;
