@@ -77,7 +77,7 @@ export default {
       this.portfolioLimit = this.limit;
     },
     askSnackbar() {
-      if (this.askSnackbar.confirm) {
+      if (this.askSnackbar.confirm === "portfolio") {
         this.deletePortfolio();
       }
     }
@@ -104,7 +104,8 @@ export default {
       this.$store.dispatch("setAskSnackbar", {
         ask: true,
         message: "Delete this portfolio?",
-        button: "Delete"
+        button: "Delete",
+        type: "portfolio"
       });
       this.deleteID = this.portfolios[index - 1].id;
     },
