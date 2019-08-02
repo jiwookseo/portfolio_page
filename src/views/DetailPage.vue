@@ -20,7 +20,12 @@
     <Comment :article="article" :isPortfolio="isPortfolio" />
     <!-- Write Dialog -->
     <v-dialog v-model="dialogWrite" width="500" persistent>
-      <WriteDialog @child="parents" :id="selectedID" :dialogWrite="dialogWrite" :isPortfolio="isPortfolio"/>
+      <WriteDialog
+        @child="parents"
+        :id="selectedID"
+        :dialogWrite="dialogWrite"
+        :isPortfolio="isPortfolio"
+      />
     </v-dialog>
   </div>
 </template>
@@ -40,7 +45,7 @@ export default {
     return {
       selectedID: "",
       dialogWrite: false,
-      deleteID: "",
+      deleteID: ""
     };
   },
   computed: {
@@ -76,7 +81,7 @@ export default {
   },
   watch: {
     askSnackbar() {
-      if (this.askSnackbar.confirm) {
+      if (this.askSnackbar.confirm === "article") {
         this.deleteArticle();
       }
     }
@@ -89,16 +94,16 @@ export default {
     deleteConfirm() {
       this.$store.dispatch("setAskSnackbar", {
         ask: true,
-        message: this.isPortfolio ? "Delete this portfolio?" : "Delete this post?",
-        button: "Delete"
+        message: this.isPortfolio
+          ? "Delete this portfolio?"
+          : "Delete this post?",
+        button: "Delete",
+        type: "article"
       });
     },
     deleteArticle() {
       firestore.deleteArticle(this.type + "s", this.article.id).then(() => {
-        this.$store.dispatch(
-              "getArticles",
-              this.type + "s"
-            );
+        this.$store.dispatch("getArticles", this.type + "s");
         this.$store.dispatch("setAlertSnackbar", {
           alert: true,
           message: this.isPortfolio ? "Portfolio deleted" : "Post deleted"
@@ -107,7 +112,7 @@ export default {
     },
     parents() {
       this.dialogWrite = false;
-    },
+    }
   }
 };
 </script>
@@ -123,24 +128,38 @@ export default {
     width: 45px;
     height: 100%;
     position: absolute;
-    top: 0; right: 0;
+    top: 0;
+    right: 0;
     padding-top: 20px;
-    .delete, .update {
+    .delete,
+    .update {
       display: inline-block;
       margin-left: 5px;
       cursor: pointer;
       color: $gray;
       transform-origin: bottom;
-      i {font-size: 1.1em;}
-      &:hover {animation: jiggle 0.15s linear 0.2s 4 forwards;}
+      i {
+        font-size: 1.1em;
+      }
+      &:hover {
+        animation: jiggle 0.15s linear 0.2s 4 forwards;
+      }
     }
   }
 }
 @keyframes jiggle {
-  0% {transform: rotate(0);}
-  25% {transform: rotate(5deg);}
-  75% {transform: rotate(-5deg);}
-  100% {transform: rotate(0);}
+  0% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
 }
 
 .Title {
