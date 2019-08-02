@@ -16,13 +16,8 @@
               <i class="material-icons">chevron_right</i>
             </router-link>
           </p>
-          <div
-            v-for="post in posts"
-            :key="post.id"
-            class="item"
-            :title="post.title"
-          >
-            <router-link 
+          <div v-for="post in posts" :key="post.id" class="item" :title="post.title">
+            <router-link
               :to="{name: 'PostDetailPage', params: {id: post.id}}"
               class="post-item-link"
             >
@@ -35,10 +30,7 @@
         <div class="article-list-mobile">
           <div class="list">
             <div class="item" v-for="p in paginatedData" :key="p.id">
-              <router-link 
-                :to="{name: 'PostDetailPage', params: {id: p.id}}"
-                class="item-link"
-              >
+              <router-link :to="{name: 'PostDetailPage', params: {id: p.id}}" class="item-link">
                 <p class="Title">{{p.title}}</p>
                 <p class="Author">{{p.userName}}</p>
               </router-link>
@@ -52,8 +44,7 @@
               total-visible="5"
               color="#00A2FF"
               class="paginator"
-            >
-            </v-pagination>
+            ></v-pagination>
           </div>
         </div>
       </div>
@@ -64,7 +55,6 @@
 
 
 <script>
-import firestore from "../firebase/firestore";
 import HeaderSub from "../components/HeaderSub";
 import Footer from "../components/Footer";
 import { mapGetters } from "vuex";
@@ -85,28 +75,13 @@ export default {
     ...mapGetters(["user", "posts"]),
     pageCount() {
       let l = this.posts.length,
-          s = this.paginationSize;
-      return Math.floor(l/s)+1;
+        s = this.paginationSize;
+      return Math.floor(l / s) + 1;
     },
     paginatedData() {
       const start = (this.page - 1) * this.paginationSize,
-            end = start + this.paginationSize;
+        end = start + this.paginationSize;
       return this.posts.slice(start, end);
-    }
-  },
-  mounted() {
-    this.addLog();
-  },
-  methods: {
-    addLog() {
-      let username = "";
-      if (!this.user) {
-        username = "Anonymous User";
-      } else {
-        username = this.user.email;
-      }
-      let time = new Date();
-      firestore.addLog("/post", username, time.getDay());
     }
   }
 };

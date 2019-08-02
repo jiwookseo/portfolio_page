@@ -22,7 +22,7 @@
             class="item"
             :title="portfolio.title"
           >
-            <router-link 
+            <router-link
               :to="{name: 'PortfolioDetailPage', params: {id: portfolio.id}}"
               class="portfolio-item-link"
             >
@@ -36,7 +36,7 @@
         <div class="article-list-mobile">
           <div class="list">
             <div class="item" v-for="p in paginatedData" :key="p.id">
-              <router-link 
+              <router-link
                 :to="{name: 'PortfolioDetailPage', params: {id: p.id}}"
                 class="item-link"
               >
@@ -53,8 +53,7 @@
               total-visible="5"
               color="#00A2FF"
               class="paginator"
-            >
-            </v-pagination>
+            ></v-pagination>
           </div>
         </div>
       </div>
@@ -65,7 +64,6 @@
 
 
 <script>
-import firestore from "../firebase/firestore";
 import HeaderSub from "../components/HeaderSub";
 import Footer from "../components/Footer";
 import { mapGetters } from "vuex";
@@ -86,28 +84,13 @@ export default {
     ...mapGetters(["user", "portfolios"]),
     pageCount() {
       let l = this.portfolios.length,
-          s = this.paginationSize;
-      return Math.floor(l/s)+1;
+        s = this.paginationSize;
+      return Math.floor(l / s) + 1;
     },
     paginatedData() {
       const start = (this.page - 1) * this.paginationSize,
-            end = start + this.paginationSize;
+        end = start + this.paginationSize;
       return this.portfolios.slice(start, end);
-    }
-  },
-  mounted() {
-    this.addLog();
-  },
-  methods: {
-    addLog() {
-      let username = "";
-      if (!this.user) {
-        username = "Anonymous User";
-      } else {
-        username = this.user.email;
-      }
-      let time = new Date();
-      firestore.addLog("/portfolio", username, time.getDay());
     }
   }
 };
