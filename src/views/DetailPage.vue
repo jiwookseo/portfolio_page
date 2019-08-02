@@ -5,7 +5,7 @@
       <div class="article-meta">
         <p class="Author">{{article.userName}}</p>
         <p class="Date">{{date}}</p>
-        <div class="btn-box" v-if="user && (user.authority==='1')">
+        <div class="btn-box" v-if="user && (user.authority==='1' || user.id === article.userID)">
           <div class="update" @click="openArticleWriter()">
             <i class="material-icons">edit</i>
           </div>
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import firestore from "../firebase/firestore";
 import WriteDialog from "@/components/WriteDialog";
 import Comment from "../components/Comment";
 import { mapGetters } from "vuex";
@@ -73,24 +74,31 @@ export default {
       }
     }
   },
+  watch: {
+    askSnackbar() {
+      if (this.askSnackbar.confirm) {
+        this.deleteArticle();
+      }
+    }
+  },
   methods: {
     openArticleWriter() {
       this.selectedID = this.article.id;
       this.dialogWrite = true;
     },
-    deleteConfirm(index) {
+    deleteConfirm() {
       this.$store.dispatch("setAskSnackbar", {
         ask: true,
         message: this.isPortfolio ? "Delete this portfolio?" : "Delete this post?",
-        confirmMessage: this.isPortfolio ? "Portfolio deleted" : "Post deleted",
         button: "Delete"
       });
-      this.deleteID = this.article.id;
     },
     deleteArticle() {
-      firestore.deleteArticle("posts", this.deleteID).then(() => {
-        this.$store.dispatch("getArticles", "posts");
-        this.deleteID = "";
+      firestore.deleteArticle(this.type + "s", this.article.id).then(() => {
+        this.$store.dispatch(
+              "getArticles",
+              this.type + "s"
+            );
         this.$store.dispatch("setAlertSnackbar", {
           alert: true,
           message: this.isPortfolio ? "Portfolio deleted" : "Post deleted"
