@@ -19,10 +19,18 @@
               <div class="read-more">Read More</div>
             </router-link>
           </div>
-          <div class="update" @click="openPostWriter(i)" v-if="user && (user.authority==='1' || user.id === portfolios[i-1].userID)">
+          <div
+            class="update"
+            @click="openPostWriter(i)"
+            v-if="user && (user.authority==='1' || user.id === posts[i-1].userID)"
+          >
             <i class="material-icons">edit</i>
           </div>
-          <div class="delete" @click="deleteConfirm(i)" v-if="user && (user.authority==='1' || user.id === portfolios[i-1].userID)">
+          <div
+            class="delete"
+            @click="deleteConfirm(i)"
+            v-if="user && (user.authority==='1' || user.id === posts[i-1].userID)"
+          >
             <i class="material-icons">delete</i>
           </div>
         </div>
