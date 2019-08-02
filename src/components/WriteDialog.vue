@@ -103,7 +103,8 @@ export default {
     },
     reset() {
       this.$refs.form.reset();
-      this.data.img = "http://anzancity.ir/uploads/posts/village-warning.jpg";
+      if (this.isPortfolio)
+        this.data.img = "http://anzancity.ir/uploads/posts/village-warning.jpg";
     },
     resetValidation() {
       this.$refs.form.resetValidation();

@@ -14,7 +14,7 @@
           </div>
         </div>
       </div>
-      <img class="Img" :src="article.img" />
+      <img v-if="isPortfolio" class="Img" :src="article.img" />
       <p class="Content">{{article.content}}</p>
     </div>
     <Comment :article="article" :isPortfolio="isPortfolio" />
