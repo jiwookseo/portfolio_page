@@ -29,7 +29,8 @@ export default {
           to: userToken,
           notification: {
             title: title,
-            body: body
+            body: body,
+            icon: "./img/icons/logo.png"
           }
         }, {
           headers: {
