@@ -10,7 +10,12 @@
           </vue-page-transition>
         </div>
         <div class="article-list">
-          <p class="header">All Portfolios</p>
+          <p class="header">
+            <router-link to="/portfolios" class="back">
+              All Portfolios
+              <i class="material-icons">chevron_right</i>
+            </router-link>
+          </p>
           <div
             v-for="portfolio in portfolios"
             :key="portfolio.id"

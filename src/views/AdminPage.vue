@@ -104,37 +104,7 @@
           </v-card>
         </v-container>
 
-        <v-container v-show="mode==='articles'">
-          <h2 class="section-subtitle">Articles</h2>
-          <div class="dummy-box">
-            <h5>*Dummy Generator</h5>
-            <p>Add dummy data content into <pre class="code">src/firebase/dummy.json</pre> and click Generate.</p>
-            <p>Data must have the following format:</p>
-            <p>
-              <pre>{
-  "type": "posts",
-  "article": {
-    "title": "",
-    "content": "",
-    "userID": "",
-    "userName": ""
-  }
-}
-{
-  "type": "portfolios",
-  "article": {
-    "title": "",
-    "content": "",
-    "img": "",
-    "userID": "",
-    "userName": ""
-  }
-}
-</pre>
-            </p>
-            <div class="generate-btn" @click="postDummy">Generate</div>
-          </div>
-        </v-container>
+        <AdminArticles v-show="mode==='articles'" />
 
         <v-container v-show="mode==='log'">
           <h2 class="section-subtitle">Log Data</h2>
@@ -149,13 +119,17 @@
 
 <script>
 import firestore from "../firebase/firestore";
-import dummy from "../firebase/dummy";
 import Vue from "vue";
 import HighchartsVue from "highcharts-vue";
 import Highcharts from "highcharts";
 
+import AdminArticles from "@/components/AdminPage/Articles";
+
 export default {
   name: "AdminPage",
+  components: {
+    AdminArticles
+  },
   data() {
     return {
       search: "",
@@ -195,9 +169,6 @@ export default {
     },
   },
   methods: {
-    postDummy() {
-      dummy.postDummy();
-    },
     onResize() {
       if (window.innerWidth < 769) this.isMobile = true;
       else this.isMobile = false;
@@ -222,11 +193,6 @@ export default {
         // console.log("선택해주세요")
         this.loading = false;
       }
-    },
-    getUserAll() {
-      firestore.getUserAll().then(res => {
-        this.userAll = res;
-      });
     },
     async getLogs() {
       this.logs = await firestore.getLog();
@@ -511,22 +477,5 @@ a:hover {
   font-weight: bold;
 }
 
-.dummy-box {
-  height: auto;
-  h5 {
-    font-size: 1em;
-  }
-  p {padding: 0; margin: 0;}
-  .code {
-    color: $gray;
-    background: lightgoldenrodyellow;
-    display: inline-block;
-  }
-  .generate-btn {
-    @include nudge-btn;
-    @include nudge-btn-primary;
-    cursor: pointer;
-    margin: 10px 0;
-  }
-}
+
 </style>

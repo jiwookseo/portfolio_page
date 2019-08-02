@@ -10,7 +10,12 @@
           </vue-page-transition>
         </div>
         <div class="article-list">
-          <p class="header">All Posts</p>
+          <p class="header">
+            <router-link to="/posts" class="back">
+              All Posts
+              <i class="material-icons">chevron_right</i>
+            </router-link>
+          </p>
           <div
             v-for="post in posts"
             :key="post.id"
