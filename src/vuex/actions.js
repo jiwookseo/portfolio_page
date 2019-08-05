@@ -4,7 +4,9 @@ import firestore from "../firebase/firestore";
 import firebaseMessage from "../firebase/firebaseMessage";
 
 export default {
-  signUserUp({ commit }, payload) {
+  signUserUp({
+    commit
+  }, payload) {
     // 로컬 회원가입
     commit("setLoading", true);
     commit("clearError");
@@ -43,8 +45,22 @@ export default {
         // console.log(error);
         Vue.swal("Error", "" + error, "error");
       });
+    firestore.getUserAll().then(userAll =>
+      userAll.forEach(user => {
+
+        if (user.authority == "1") {
+          firebaseMessage.pushMessage(
+            user.token,
+            "운영자님",
+            "새로운 회원이 추가되었습니다."
+          );
+        }
+      })
+    );
   },
-  signUserIn({ commit }, payload) {
+  signUserIn({
+    commit
+  }, payload) {
     // 로컬 로그인
     commit("setLoading", true);
     commit("clearError");
@@ -77,7 +93,9 @@ export default {
         Vue.swal("Error", "" + error, "error");
       });
   },
-  signUserInFacebook({ commit }) {
+  signUserInFacebook({
+    commit
+  }) {
     commit("setLoading", true);
     commit("clearError");
     firebaseAuth
@@ -118,7 +136,9 @@ export default {
         Vue.swal("Error", "" + error, "error");
       });
   },
-  async autoSignIn({ commit }, payload) {
+  async autoSignIn({
+    commit
+  }, payload) {
     const authority = await firestore.getUserAuthority(payload.email);
     const token = await firebaseMessage.getNewToken();
     firestore.updateUserByEmail(payload.email, {
@@ -133,7 +153,9 @@ export default {
       token
     });
   },
-  logout({ commit }) {
+  logout({
+    commit
+  }) {
     firebaseAuth
       .signOut()
       .then(() => {
@@ -142,7 +164,9 @@ export default {
       })
       .catch(error => console.error(`SignOut Error: ${error}`));
   },
-  setUserPhoto({ commit }, photoURL) {
+  setUserPhoto({
+    commit
+  }, photoURL) {
     const user = firebaseAuth.currentUser;
     if (user) {
       user.updateProfile({
@@ -151,34 +175,48 @@ export default {
       commit("setUserPhoto", photoURL);
     }
   },
-  clearError({ commit }) {
+  clearError({
+    commit
+  }) {
     commit("clearError");
   },
-  setError({ commit }, payload) {
+  setError({
+    commit
+  }, payload) {
     commit("setError", payload);
   },
-  getArticles({ commit }, type) {
+  getArticles({
+    commit
+  }, type) {
     firestore.getArticles(type).then(res => {
       commit(type === "portfolios" ? "getPortfolios" : "getPosts", res);
     });
   },
-  getUserAll({ commit }) {
+  getUserAll({
+    commit
+  }) {
     firestore.getUserAll().then(res => {
       commit("getUserAll", res);
     });
   },
-  setSpinner({ commit }, payload) {
+  setSpinner({
+    commit
+  }, payload) {
     payload.message = payload.message || "";
     commit("setSpinner", payload);
   },
-  setAskSnackbar({ commit }, payload) {
+  setAskSnackbar({
+    commit
+  }, payload) {
     payload.message = payload.message || "";
     payload.button = payload.button || "";
     payload.type = payload.type || "";
     payload.confirm = payload.confirm || "";
     commit("setAskSnackbar", payload);
   },
-  setAlertSnackbar({ commit }, payload) {
+  setAlertSnackbar({
+    commit
+  }, payload) {
     payload.message = payload.message || "";
     commit("setAlertSnackbar", payload);
   }
