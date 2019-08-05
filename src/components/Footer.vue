@@ -56,7 +56,7 @@ export default {
     return {
       query: "Seoul",
       error: false,
-      city: "",
+      city: "Seoul",
       weatherDescription: "",
       temp: null,
       tempMin: null,
