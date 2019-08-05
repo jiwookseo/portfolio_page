@@ -5,6 +5,7 @@ import PortfolioPage from "./views/PortfolioPage.vue";
 import Articles from "./views/Articles.vue";
 import PostPage from "./views/PostPage.vue";
 import DetailPage from "./views/DetailPage";
+import ArticleWriter from "./views/ArticleWriter";
 import AdminPage from "./views/AdminPage.vue";
 
 Vue.use(Router);
@@ -38,9 +39,20 @@ export default new Router({
           redirect: "/portfolios"
         },
         {
+          path: "new",
+          name: "NewPortfolio",
+          component: ArticleWriter,
+        },
+        {
           path: ":id",
           name: "PortfolioDetailPage",
           component: DetailPage,
+          props: true
+        },
+        {
+          path: ":id/edit",
+          name: "PortfolioUpdate",
+          component: ArticleWriter,
           props: true
         }
       ]
@@ -59,9 +71,20 @@ export default new Router({
           redirect: "/posts"
         },
         {
+          path: "new",
+          name: "NewPost",
+          component: ArticleWriter,
+        },
+        {
           path: ":id",
           name: "PostDetailPage",
           component: DetailPage,
+          props: true
+        },
+        {
+          path: ":id/edit",
+          name: "PostUpdate",
+          component: ArticleWriter,
           props: true
         }
       ]
