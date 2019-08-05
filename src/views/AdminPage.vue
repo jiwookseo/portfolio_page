@@ -100,6 +100,11 @@
                   </form>
                 </v-flex>
               </template>
+              <template v-slot:item.delete="{item}">
+                <td>
+                    <v-btn color="error" v-if="item.authority != '1'">삭제</v-btn>
+                </td>
+              </template>
             </v-data-table>
           </v-card>
         </v-container>
@@ -140,7 +145,8 @@ export default {
       headers: [
         { text: "이메일", value: "email", sortable: false },
         { text: "권한", value: "authority" },
-        { text: "권한 변경", value: "modify", sortable: false }
+        { text: "권한 변경", value: "modify", sortable: false },
+        { text: "삭제", value: "delete", sortable: false }
       ],
       loading: false,
       mode: "summary" //users, articles, log
