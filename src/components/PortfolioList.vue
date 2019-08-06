@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="vContainer">
     <v-layout row wrap>
       <v-flex
         class="portfolio"

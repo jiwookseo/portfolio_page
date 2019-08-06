@@ -4,7 +4,7 @@
     <div class="homeContent">
       <section id="aboutme">
         <h2 class="section-title text" data-aos="fade-right">About me</h2>
-        <v-container>
+        <v-container class="vContainer">
           <v-layout row wrap>
             <v-flex xs8 offset-xs2 sm4 offset-sm0 class="content-container" data-aos="fade-right">
               <div class="inner">

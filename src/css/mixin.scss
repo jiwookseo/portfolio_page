@@ -41,7 +41,13 @@
   overflow: hidden;
 }
 
-
+.vContainer {
+  margin: 0 auto;
+  max-width: 1264px;
+  @include viewportMax(1264) {
+    max-width: 960px;
+  }
+}
 
 
 
