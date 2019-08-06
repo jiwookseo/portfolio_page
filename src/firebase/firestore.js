@@ -23,14 +23,15 @@ firestore.enablePersistence();
 
 export default {
   // User
-  postUser(email, authority, token) {
+  postUser(email, authority, token, deleted) {
     return new Promise((resolve, reject) => {
       firestore
         .collection(USERS)
         .add({
           email,
           authority,
-          token
+          token,
+          deleted
         })
         .then(res => resolve(res))
         .catch(err => reject(err));
@@ -83,6 +84,22 @@ export default {
             resolve(null);
           } else {
             resolve(snapshot.docs[0].data().authority);
+          }
+        })
+        .catch(err => reject(err));
+    });
+  },
+  getUserDeleted(email) {
+    return new Promise((resolve, reject) => {
+      firestore
+        .collection(USERS)
+        .where("email", "==", email)
+        .get()
+        .then(snapshot => {
+          if (snapshot.empty) {
+            resolve(null);
+          } else {
+            resolve(snapshot.docs[0].data().deleted);
           }
         })
         .catch(err => reject(err));

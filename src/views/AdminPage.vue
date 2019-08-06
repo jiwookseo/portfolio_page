@@ -102,7 +102,8 @@
               </template>
               <template v-slot:item.delete="{item}">
                 <td>
-                    <v-btn color="error" v-if="item.authority != '1'">삭제</v-btn>
+                    <v-btn color="error" v-if="(item.authority != '1' && item.deleted == '1')" @click="changeDelete(item.id, item.deleted)">활동정지</v-btn>
+                    <v-btn color="success" v-if="(item.authority != '1' && item.deleted == '0')" @click="changeDelete(item.id, item.deleted)">활동 중</v-btn>
                 </td>
               </template>
             </v-data-table>
@@ -146,7 +147,7 @@ export default {
         { text: "이메일", value: "email", sortable: false },
         { text: "권한", value: "authority" },
         { text: "권한 변경", value: "modify", sortable: false },
-        { text: "삭제", value: "delete", sortable: false }
+        { text: "정지", value: "delete", sortable: false }
       ],
       loading: false,
       mode: "summary" //users, articles, log
@@ -199,6 +200,18 @@ export default {
         // console.log("선택해주세요")
         this.loading = false;
       }
+    },
+    changeDelete(id, del) {
+      this.loading = true;
+      let num = "";
+      if (del === "1") num = "0";
+      else if (del === "0") num = "1";
+      
+      firestore.updateUserById(id, { deleted: num }).then(() => {
+        // console.log("update Success")
+        this.loading = false;
+        this.$store.dispatch("getUserAll");
+      });
     },
     async getLogs() {
       this.logs = await firestore.getLog();
