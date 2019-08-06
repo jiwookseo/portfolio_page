@@ -206,7 +206,7 @@ footer {
     transform: translateY(0);
   }
   100% {
-    transform: translateY(-4px);
+    transform: translateY(-5px);
   }
 }
 $top-btn-size: 35px;
