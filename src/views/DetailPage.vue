@@ -6,7 +6,7 @@
         <p class="Author">{{article.userName}}</p>
         <p class="Date">{{date}}</p>
         <div class="btn-box" v-if="user && (user.authority==='1' || user.id === article.userID)">
-          <div class="update" @click="openArticleWriter()">
+          <div class="update" @click="updateArticle">
             <i class="material-icons">edit</i>
           </div>
           <div class="delete" @click="deleteConfirm()">
@@ -87,6 +87,14 @@ export default {
     }
   },
   methods: {
+    updateArticle(id) {
+      if (this.isPortfolio) {
+        this.$router.replace({name: 'PortfolioUpdate', params: {id: this.$route.params.id}});
+      }
+      else {
+        this.$router.replace({name: 'PostUpdate', params: {id: this.$route.params.id}});
+      }
+    },
     openArticleWriter() {
       this.selectedID = this.article.id;
       this.dialogWrite = true;

@@ -25,7 +25,7 @@
               class="btn-box"
               v-if="user && (user.authority==='1' || user.id === portfolios[i-1].userID)"
             >
-              <div class="update" @click="openPortfolioWriter(i)">
+              <div class="update" @click="updateArticle(portfolios[i-1].id)">
                 <i class="material-icons">edit</i>
               </div>
               <div class="delete" @click="deleteConfirm(i)">
@@ -36,7 +36,7 @@
         </div>
       </v-flex>
       <v-flex v-if="allowCreate && isAdmin" class="portfolio" xs12 sm6 md4 lg3>
-        <div class="portfolio-content new" @click="openPortfolioWriter()" data-aos="fade-up">
+        <div class="portfolio-content new" @click="writeNewArticle" data-aos="fade-up">
           <span>+ New Portfolio</span>
         </div>
       </v-flex>
@@ -96,6 +96,12 @@ export default {
     };
   },
   methods: {
+    writeNewArticle() {
+      this.$router.replace({name: 'NewPortfolio'})
+    },
+    updateArticle(id) {
+      this.$router.replace({name: 'PortfolioUpdate', params: {id: id}})
+    },
     openPortfolioWriter(index = -1) {
       this.selectedID = index === -1 ? "" : this.portfolios[index - 1].id;
       this.dialogWrite = true;

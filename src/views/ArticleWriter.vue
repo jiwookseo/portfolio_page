@@ -2,9 +2,9 @@
   <div class="article-writer">
     <v-form ref="form" v-model="valid" lazy-validation>
       <div class="scrollable-content">
-        <v-text-field v-model="data.title" label="Title" required :rules="titleRules"></v-text-field>
+        <v-text-field v-model="title" label="Title" required :rules="titleRules"></v-text-field>
         <v-textarea
-          v-model="data.content"
+          v-model="content"
           label="Content"
           required
           :rules="contentRules"
@@ -13,13 +13,13 @@
         ></v-textarea>
         <div v-if="isPortfolio" class="img-select-box">
           <div class="img-preview">
-            <img :src="data.img" @change="onFilePicked" alt="Current Portfolio Image" />
+            <img :src="img" @change="onFilePicked" alt="Current Portfolio Image" />
             <div class="choose-img-prompt" @click="pickFile" title="Change Image">
               <i class="material-icons">image_search</i>
             </div>
           </div>
           <div class="img-picker">
-            <v-text-field label="Select Image" @click="pickFile" v-model="data.img"></v-text-field>
+            <v-text-field label="Select Image" @click="pickFile" v-model="img"></v-text-field>
             <input type="file" ref="image" accept="image/*" @change="onFilePicked" />
           </div>
         </div>
@@ -48,6 +48,7 @@
 <script>
 import axios from "axios";
 import { mapGetters } from "vuex";
+import firestore from "@/firebase/firestore";
 
 export default {
   name: "ArticleWriter",
@@ -56,7 +57,9 @@ export default {
       valid: true,
       titleRules: [v => !!v || "Title is required"],
       contentRules: [v => !!v || "Content is required"],
-      data: {}
+      title: '',
+      content: '',
+      img: ''
     }
   },
   computed: {
@@ -67,31 +70,42 @@ export default {
     isNewArticle() { // as opposed to "Edit Article"
       return this.$route.fullPath.slice(-4,) === "/new"
     },
-    buttonName() {
-      return this.isPortfolio ? "Portfolio" : "Post";
-    },
     type() {
       return this.isPortfolio ? "portfolio" : "post";
     },
     article() {
-      return this.$store.getters.getArticle(this.type, this.$route.params.id);
-    },
+      if (this.isNewArticle) {
+        return { 
+          title: "",
+          content: "",
+          img: "http://anzancity.ir/uploads/posts/village-warning.jpg",
+          created_at: { seconds: 0 } };
+      }
+      else {
+        return this.$store.getters.getArticle(
+          this.isPortfolio ? "portfolio" : "post",
+          this.$route.params.id
+        );
+      }
+    }
+  },
+  watch: {
+    article() {
+      if (!this.isNewArticle) {
+        this.setData();
+      }
+    }
   },
   methods: {
     setData() {
-      if (this.isNewArticle) {
-        this.data.title = "";
-        this.data.content = "";
-        this.data.img = "http://anzancity.ir/uploads/posts/village-warning.jpg";
-      }
-      else {
-        this.data = Object.assign(this.data, this.article);
-      }
+      this.title = this.article.title;
+      this.content = this.article.content;
+      this.img = this.article.img;
     },
     reset() {
       this.$refs.form.reset();
       if (this.isPortfolio)
-        this.data.img = "http://anzancity.ir/uploads/posts/village-warning.jpg";
+        this.img = "http://anzancity.ir/uploads/posts/village-warning.jpg";
     },
     resetValidation() {
       this.$refs.form.resetValidation();
@@ -99,10 +113,20 @@ export default {
     create() {
       if (this.$refs.form.validate()) {
         const type = this.isPortfolio ? "portfolios" : "posts";
-        firestore.postArticle(type, this.user, this.data).then(() => {
+        let d = {
+          title: this.title,
+          content: this.content,
+          img: this.img
+        }
+        firestore.postArticle(type, this.user, d).then((res) => {
           this.$store.dispatch("getArticles", type);
+          if (this.isPortfolio) {
+            this.$router.replace({name: 'PortfolioDetailPage', params: {id: res.id}});
+          }
+          else {
+            this.$router.replace({name: 'PostDetailPage', params: {id: res.id}});
+          }
         });
-        this.reset();
         this.$store.dispatch("setAlertSnackbar", {
           alert: true,
           message: this.isPortfolio ? "Portfolio created" : "Post created"
@@ -111,10 +135,20 @@ export default {
     },
     update() {
       const type = this.isPortfolio ? "portfolios" : "posts";
-      firestore.updateArticle(type, this.article.id, this.data).then(() => {
+      let d = {
+        title: this.title,
+        content: this.content,
+        img: this.img
+      }
+      firestore.updateArticle(type, this.$route.params.id, d).then(() => {
         this.$store.dispatch("getArticles", type);
+        if (this.isPortfolio) {
+          this.$router.replace({name: 'PortfolioDetailPage', params: {id: this.$route.params.id}});
+        }
+        else {
+          this.$router.replace({name: 'PostDetailPage', params: {id: this.$route.params.id}});
+        }
       });
-      this.reset();
       this.$store.dispatch("setAlertSnackbar", {
         alert: true,
         message: this.isPortfolio ? "Portfolio updated" : "Post updated"
@@ -138,17 +172,13 @@ export default {
           }
         })
         .then(res => {
-          this.data.img = res.data.data.link;
+          this.img = res.data.data.link;
           this.$store.dispatch("setSpinner", { loading: false });
         });
     }
   },
   created() {
     this.setData();
-  },
-  mounted() {
-    this.setData();
-    console.log(this.$route.params.id);
   },
 }
 </script>

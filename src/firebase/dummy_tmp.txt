@@ -31,5 +31,182 @@ DATA FORMAT
 ****************************************************************************************
 ARTICLES ALREADY UPLOADED
 
-
+  {
+    "type": "posts",
+    "article": {
+      "title": "10 Principles Of Readability And Web Typography",
+      "content": "Readability is one of the more important aspects of Web design usability. Readable text affects how users process the information in the content. Poor readability scares readers away from the content. On the other hand, done correctly, readability allows users to efficiently read and take in the information in the text. You want users to be able to read your content and absorb it easily. \n\nIn this post, we’ll explain some Web typography terms and how they play into readability; we’ll present numerous tips to help improve the readability of your content; and we’ll showcase very readable websites, layouts and articles. \n\nThere are many factors that play into the readability of text. There are also a number of terms, all very important. Here are a few of the more common Web typography terms and an explanation of how each term affects readability.",
+      "userID": "M07b5oKsI2RvlHXiSJmQIQ8axSf2",
+      "userName": "Admin",
+      "userEmail": "admin@admin.com"
+    }
+  },
+  {
+    "type": "posts",
+    "article": {
+      "title": "A Beginners Guide To The Agile Method & Scrums",
+      "content": "The Agile Method is a particular approach to project management that is utilized in software development. This method assists teams in responding to the unpredictability of constructing software. It uses incremental, iterative work sequences that are commonly known as sprints.\n\nEach of our web design teams (Raleigh Web Design Team and our Wake Forest Web Design Team) utilize portions of the Agile and Scrum methodology within our projects. Below you will find an overview of the agile process (and what has been called “agile project management for dummies”) as well as a simple definition of the agile methodology for any beginners starting out in software design and development, or those who may want to integrate the methodology into their seo agency or web design company.",
+      "userID": "M07b5oKsI2RvlHXiSJmQIQ8axSf2",
+      "userName": "Admin",
+      "userEmail": "admin@admin.com"
+    }
+  },
+  {
+    "type": "posts",
+    "article": {
+      "title": "Scrum and best practices",
+      "content": "Much of sprint planning involves a negotiation between the product owner and the team to determine the focus and work to tackle in the upcoming sprint. It's useful to time-box the planning meeting, restricting it to 4 hours or less.\n\nIn the first part of the meeting, your product owner meets with your team to discuss the user stories that might be included in the sprint. Your product owner will share information and answer any questions that your team has about those stories. This conversation might reveal details such as data sources, user interface layout, response time expectations, and considerations for security and usability. Your team should capture these details within the backlog items form. During this part of the meeting, your team learns what it must build.\n\nAs you plan your sprints, you may discover additional requirements that you should capture and add to your backlog. Before your sprint planning meeting, you'll want to refine your backlog to make sure that it is well defined and in priority order.\n\nAlso, setting a sprint goal as part of your planning efforts can help the team stay focused on what's most important for each sprint.\n\nAfter you've planned your sprint, you may want to share the plan with key stakeholders.",
+      "userID": "J91Xzx52PiSEZJUGoTrBc9epjFm1",
+      "userName": "Jiwook Seo",
+      "userEmail": "jiwook@jiwook.com"
+    }
+  },
+  {
+    "type": "posts",
+    "article": {
+      "title": "3 ways to ease external collaboration tension with Jira",
+      "content": "Information is power. When everyone’s priorities are clear, we can make better decisions for our project and the organization as a whole. Once upon a time at an old job, I needed a considerable amount of the IT group’s time to help me get a new CRM server up and running for my project. I often got the answer: “Wait.” but I never knew why. Deadlines were looming, and it was becoming hard to explain to my stakeholders why things were delayed. I didn’t know what priorities were trumping me, or if I could work with those parties in a more symbiotic fashion. What I did know was that there had to be a better answer than “wait.”\n\nAt least once in everyone’s career, we’ll struggle to work well with other teams. We lovingly refer to this as external collaboration tension. When your team relies on help from an external team, challenges arise, because each team has unique motivations and a myriad of tasks to accomplish. One of the main difficulties in working with an external team is a lack of visibility into what they have on their plate. When we don’t have context, we tend to assume that our requests are the most important in the other team’s workload. As a result, you not only place undue pressure on the other team but also makes things harder for you. Since we’ve all been there before, in this article we’ll take a look at some ways to make working with external teams easier and more efficient.",
+      "userID": "LRwAP0MJyGdsCdUhFLBBuv1smh93",
+      "userName": "Juliet",
+      "userEmail": "juliet@juliet.com"
+    }
+  },
+  {
+    "type": "posts",
+    "article": {
+      "title": "Building a Beautiful Animated News App with Vue.js and Vuetify",
+      "content": "This is not a clickbait title. It’s not another ugly project. Instead, this is a complete guide to build a stunning news application that is going to rock your world. \n\nToday, I am going to show you step by step how to build a beautiful animated news application with minimum effort -- using Vue.js, one of the most popular JavaScript Frameworks for building interactive user interfaces along with Vuetify, a Vue-powered UI library, which will speed up the UI construction for us.\n\nIt’s not a complex application to build as it might sound, because in this tutorial, you’ll be impressed by the amount of code snippets we’ll be using. Beside, I’m going to explain everything in detail.\n\nYou can find the full source code at the following GitHub repo. And here’s a live link of what you’ll be building.",
+      "userID": "M5ty8Q3eRZawuAddhtzF43aljDU2",
+      "userName": "Jiwon",
+      "userEmail": "jiwon@jiwon.com"
+    }
+  },
+  {
+    "type": "posts",
+    "article": {
+      "title": "Understanding DevOps",
+      "content": "DevOps is an approach to culture, automation, and platform design intended to deliver increased business value and responsiveness through rapid, high-quality service delivery. This is all made possible through fast-paced, iterative IT service delivery. DevOps means linking legacy apps with newer cloud-native apps and infrastructure.",
+      "userID": "QJ8fBqYCvNPFTmmS09Hveabzl5h2",
+      "userName": "Jiwon Juliet Yoon",
+      "userEmail": "jiwonjulietyoon@gmail.com"
+    }
+  },
+  {
+    "type": "posts",
+    "article": {
+      "title": "What are material icons?",
+      "content": "Material design system icons are simple, modern, friendly, and sometimes quirky. Each icon is created using our design guidelines to depict in simple and minimal forms the universal concepts used commonly throughout a UI. Ensuring readability and clarity at both large and small sizes, these icons have been optimized for beautiful display on all common platforms and display resolutions.",
+      "userID": "SIlNIdmhR7UKPXDR4eKKryUaJyf1",
+      "userName": "Gyuseok Kim",
+      "userEmail": "gyuseok@gyuseok.com"
+    }
+  },
+  {
+    "type": "posts",
+    "article": {
+      "title": "What Makes a Good Website?",
+      "content": "As a marketer one of the most important things you are responsible for is your company’s website. This is no small responsibility; a company website is the first time new visitors get introduced to the company and your brand. It’s used to educate potential clients, to capture new visitors, and it’s used in sales. The ultimate goal of any website is to convert visitors to marketing-qualified leads and ultimately into clients or customers.\n\nWhat makes a good website? How can your website engage users and drive conversions? And how do you know if you have a good website already?\n\nThis is what we’ll be sharing on this post, web design principles that make for a far more effective website. We’ll be reviewing what your website needs to have to engage users and drive conversions.\n\nA website is only a useful company resource when it’s hitting marketing KPIs and generating sales. Are you keeping track of how many leads, marketing-qualified leads, and sales your website is converting? Do you know what you could do to increase those KPIs?\n\nContinue reading to learn what web design principles you need to be implementing.",
+      "userID": "vpf6lqK1AbY6tHxiBm5Aqkn9zSR2",
+      "userName": "Gibeom Kim",
+      "userEmail": "gibeom@gibeom.com"
+    }
+  },
+  {
+    "type": "posts",
+    "article": {
+      "title": "Ten sentences with all the Scrum Master advice you’ll ever need",
+      "content": "1. Never Commit the Team to Anything Without Consulting Them First\n\n2. Remember You’re There to Help The Team Look Good\n\n3. Don't Beat the Team over the Head with an Agile Rule Book\n\n4. Nothing Is Permanent So Experiment with Your Process\n\n5. Ensure Team Members and Stakeholders View Each Other as Peers\n\n6. Protect the Team, Including in More Ways than You May Think\n\n7. Banish Failure from Your Vocabulary\n\n8. Praise Often But Always Sincerely\n\n9. Encourage the Team to Take Over Your Job\n\n10. Shut Up and Listen",
+      "userID": "xmY7keQ2dvVbYZ1vAUEyEhY7ZyS2",
+      "userName": "Geuntae Kim",
+      "userEmail": "geuntae@geuntae.com"
+    }
+  },
+  {
+    "type": "portfolios",
+    "article": {
+      "title": "MOBILE VS. DESKTOP USAGE IN 2019",
+      "content": "The most common stat that people talk about is the percentage of their visits that comes from mobile devices. Here is a look at the percentage of visits sites get from mobile vs. desktop for 2016, 2017, and 2018.\n\nThe data continues to show that for most sites, the majority of their traffic comes from mobile devices. This is a critical fact of life for all business and media websites.\n\nIt’s also interesting to consider total time on site. Here is what we see across the three years.\n\nBear in mind, that’s the percentage of total aggregated time across all visits for mobile, compared with that of desktop. The total time users spend on sites when using desktop devices is still larger than the total time for mobile. This suggests that the time per visit must be longer, as we see here.\n\nWith the new data sources from SimilarWeb, the mobile bounce rate is back up a bit, but still lower than it was in 2016. As found in last year’s study, we believe that mobile site experiences are improving, and users are getting more comfortable with it. However, desktop still has the lead over mobile as it relates to bounce rate, and that’s not likely to change. For one thing, the use cases for people on mobile devices often involve the need to look something up quickly while they are on the go.",
+      "img": "https://i.imgur.com/JiyEOjW.png",
+      "userID": "M07b5oKsI2RvlHXiSJmQIQ8axSf2",
+      "userName": "Admin",
+      "userEmail": "admin@admin.com"
+    }
+  },
+  {
+    "type": "portfolios",
+    "article": {
+      "title": "Red Hat and IBM join forces.",
+      "content": "IBM (NYSE:IBM) and Red Hat announced today that they have closed the transaction under which IBM acquired all of the issued and outstanding common shares of Red Hat for $190.00 per share in cash, representing a total equity value of approximately $34 billion.\n\nThe acquisition redefines the cloud market for business. Red Hat’s open hybrid cloud technologies are now paired with the unmatched scale and depth of IBM’s innovation and industry expertise, and sales leadership in more than 175 countries. Together, IBM and Red Hat will accelerate innovation by offering a next-generation hybrid multicloud platform. Based on open source technologies, such as Linux and Kubernetes, the platform will allow businesses to securely deploy, run and manage data and applications on-premises and on private and multiple public clouds.\n\n\"Businesses are starting the next chapter of their digital reinventions, modernizing infrastructure and moving mission-critical workloads across private clouds and multiple clouds from multiple vendors,\" said Ginni Rometty, IBM chairman, president and CEO. \"They need open, flexible technology to manage these hybrid multicloud environments. And they need partners they can trust to manage and secure these systems. IBM and Red Hat are uniquely suited to meet these needs. As the leading hybrid cloud provider, we will help clients forge the technology foundations of their business for decades to come.\"",
+      "img": "https://i.imgur.com/3tBs3IX.png",
+      "userID": "M07b5oKsI2RvlHXiSJmQIQ8axSf2",
+      "userName": "Admin",
+      "userEmail": "admin@admin.com"
+    }
+  },
+  {
+    "type": "portfolios",
+    "article": {
+      "title": "Machine Learning: Programs That Alter Themselves",
+      "content": "In 1959, Arthur Samuel, one of the pioneers of machine learning, defined machine learning as a “field of study that gives computers the ability to learn without being explicitly programmed.” That is, machine-learning programs have not been explicitly entered into a computer, like the if-then statements above. Machine-learning programs, in a sense, adjust themselves in response to the data they’re exposed to (like a child that is born knowing nothing adjusts its understanding of the world in response to experience).\n\nSamuel taught a computer program to play checkers. His goal was to teach it to play checkers better than himself, which is obviously not something he could program explicitly. He succeeded, and in 1962 his program beat the checkers champion of the state of Connecticut.",
+      "img": "https://i.imgur.com/jfHbIeG.jpg",
+      "userID": "xmY7keQ2dvVbYZ1vAUEyEhY7ZyS2",
+      "userName": "Geuntae Kim",
+      "userEmail": "geuntae@geuntae.com"
+    }
+  },
+  {
+    "type": "portfolios",
+    "article": {
+      "title": "Vue.js: the good, the meh, and the ugly",
+      "content": "Picking up new frameworks and libraries is exciting but also stressful. Even after some evaluation you never really know what skeletons you’re going to find out down the road.\n\nMy honeymoon period is long over. After about 2 years of using Vue almost daily I can finally write about it with some perspective.\n\nData binding is a big deal in the front end world. Instead of micromanaging the DOM like we did with jQuery we now focus on data. Vue handles this neatly with a two-way reactive data-binding system.\n\nTo achieve this reactivity Vue adds a number of getters and setters to every variable in your state so that it can track changes and update the DOM automatically (cough this.setState() cough). This approach is not perfect, as we’ll see later.",
+      "img": "https://i.imgur.com/giaRWQv.jpg",
+      "userID": "vpf6lqK1AbY6tHxiBm5Aqkn9zSR2",
+      "userName": "Gibeom Kim",
+      "userEmail": "gibeom@gibeom.com"
+    }
+  },
+  {
+    "type": "portfolios",
+    "article": {
+      "title": "What is Sass?",
+      "content": "Everything you need to know about this CSS preprocessor: What Sass is, and why you should use it.\n\nIf you're new to web design, you may have heard the term 'Sass' floating around. If you're not sure what Sass does and whether or not you should be using it, we're here to help with our guide to Sass.\n\nIn short, Sass is a CSS preprocessor, which adds special features such as variables, nested rules and mixins (sometimes referred to as syntactic sugar) into regular CSS. The aim is to make the coding process simpler and more efficient. Let's explore in more detail.",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/9/96/Sass_Logo_Color.svg",
+      "userID": "SIlNIdmhR7UKPXDR4eKKryUaJyf1",
+      "userName": "Gyuseok Kim",
+      "userEmail": "gyuseok@gyuseok.com"
+    }
+  },
+  {
+    "type": "portfolios",
+    "article": {
+      "title": "Yes, You Should Learn Vanilla JavaScript Before Fancy JS Frameworks",
+      "content": "Our small dev team is about to ship one of its most impressive client projects to date. I'm at my stand-up desk, skimming through morning emails. My partner bursts through the office door:\n\n\"Something's wrong with our Angular app, man. I've got a digest is already in progress error popping everywhere—can't figure out what's happening,\" he says, visibly nervous.\n\nBut I'm not nervous, nor stressed. I know exactly where to start looking, because I know my JavaScript.\n\nAnd I know all of this thanks to a robot.\n\nRewind to 2011.\n\nI was still a dreamy-eyed software engineer student back then, unaffected by the business imperatives of real-world coding. I was passionate about back-end development and had no desire whatsoever to learn vanilla JavaScript, or anything related.\n\nBut my friends and I had to build a soft real-time, task-oriented robot for one of our classes.\n\nWe stumbled upon this new cool thing called Node.js (its docs back then). No fancy dependencies, easy child processes spawning, async and event-driven... and many online were saying it was the sh*t. We had absolutely no clue of what JavaScript or V8 were, but it still seemed like a good call for our project.\n\nPeers told me to find a decent library for my use cases, and pull off some copy/pasting art to get the socket communication job done. I could've done just that.\n\nBut I didn't. Although I didn't know it at the time, that was one of the best early career decisions I made.\n\nI started reading avidly instead. About asynchronous programming, the history of JavaScript, its pros and cons, everything. Because I wanted to master the underlying principles of the language powering my project. And it took quite a lot of time, coffee, beer, and dummy code to do so.\n\nIn between managing my teammates' impatience and creating a not-so-clean, functional robot codebase, I learned a whole dmn lot*.\n\nSo what's the point here? I took enough time to understand the core principles of JavaScript before using shortcuts provided by JS frameworks and libraries. Why is that important? Well, this is what this post is about: not just pretending.",
+      "img": "https://i.imgur.com/k6wdPD3.jpg",
+      "userID": "QJ8fBqYCvNPFTmmS09Hveabzl5h2",
+      "userName": "Jiwon Juliet Yoon",
+      "userEmail": "jiwonjulietyoon@gmail.com"
+    }
+  },
+  {
+    "type": "portfolios",
+    "article": {
+      "title": "Google's Cloud Firestore is now generally available",
+      "content": "Google on Thursday announced that Cloud Firestore, its cloud-native NoSQL database, is now out of beta and in General Availability. Google is also lowering prices for regional instances of Cloud Firestore and adding new locations to host Cloud Firestore data.\n\nBringing the fully-managed database into GA should help organizations that want to embrace serverless application development. Amazon Web Services introduced serverless computing with AWS Lambda and offers database services like Amazon Aurora Serverless and Amazon DynamoDB, where serverless is core to the design. Meanwhile, MongoDB has its Stitch serverless offering for its Atlas cloud service.\n\nCloud Firestore is integrated with both the Google Cloud Platform (GCP) and Firebase, Google's mobile development platform. It makes it simple to store, sync, and query data for web, mobile, and IoT applications. While in beta, companies including The New York Times and the  scooter-sharing business Skip Scooters were using Cloud Firestore to build app experiences.\n\nNow that it's in GA, Cloud Firestore is included in GCP's official Service Level Agreements, guaranteeing 99.999% uptime for multi-region instances and 99.99% for regional instances. Moving out of beta also means that GCP's deprecation policy officially applies to Cloud Firestore and that Cloud Firestore is included among Google services that support HIPAA compliance.\n\nMost regional instances -- which are hosted in a single region and thus not as reliable as multi-region -- will be lower priced starting on March 3. In some locations, the price will be as low as 50 percent of multi-region instance prices.\n\nGoogle is also adding 10 new locations for hosting Cloud Firestore data, including a new multi-region location in Europe.\n\nGoogle is also adding a \"Usage\" tab in the Firebase console to help customers handle costs. It will show customers exactly how many reads, writes, and deletes their database has received over time.",
+      "img": "https://i.imgur.com/1ZQuwrG.jpg",
+      "userID": "J91Xzx52PiSEZJUGoTrBc9epjFm1",
+      "userName": "Jiwook Seo",
+      "userEmail": "jiwook@jiwook.com"
+    }
+  },
+  {
+    "type": "portfolios",
+    "article": {
+      "title": "Creating stunning charts with Vue.js and Chart.js",
+      "content": "Dive into the options of chart.js to create stunning charts.\n\nInteractive charts can provide a cool way to visualize your data.\n\nHowever most out of the box solutions are not as beautiful as they could be, with default options.\n\nI will show you how to customize your chart.js options to make some cool charts!\n\nWe use vue-cli to create a basic structure. So I hope you got it installed already. And we use vue-chart.js as a wrapper for chart.js.\n\nvue init webpack awesome-charts\n\nThen we go into our project folder and install our dependencies.\n\ncd awesome-charts && yarn install\n\nAnd we add vue-chartjs :\n\nyarn add vue-chartjs chart.js\n\nOur first chart\n\nSo, let’s create our first line chart.\n\ntouch src/components/LineChart.js && subl .\n\nNow we need to import the Line BaseChart from vue-chartjs and create our component.\n\nIn the mount() function we need to call the renderChart() method with our data and options.",
+      "img": "https://i.imgur.com/ny4GSgd.png",
+      "userID": "M07b5oKsI2RvlHXiSJmQIQ8axSf2",
+      "userName": "Admin",
+      "userEmail": "admin@admin.com"
+    }
+  }
 
