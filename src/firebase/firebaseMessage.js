@@ -1,8 +1,8 @@
-import axios from "axios";
-
-import "./firebase";
+import "./firebase"; // default App import
 import firebase from "firebase/app";
 import "firebase/messaging";
+import axios from "axios";
+
 const messaging = firebase.messaging();
 messaging.usePublicVapidKey(
   "BBBpw-_z752QFHrMQElXJSrxpEB8_vKtiKUgD6sQvuuIbLSS5odGEeh--BzMYSqxYw3ikgePoUgQKPFJK1ed9D0"
@@ -12,7 +12,7 @@ export default {
   getNewToken() {
     return new Promise(resolve => {
       messaging
-        .requestPermission()
+        .requestPermission() // notification 허용 요청을 보냄
         .then(() => {
           messaging
             .getToken()
