@@ -5,13 +5,13 @@
       <div class="portfolios">
         <h4>Portfolios ({{portfolios.length}})</h4>
         <ul>
-          <li v-for="p in portfolios" :key="p.id">{{p.title}}</li>
+          <li v-for="p in portfolios" :key="p.id"><router-link :to="{name: 'PortfolioDetailPage', params: {id: p.id}}">{{p.title}}</router-link></li>
         </ul>
       </div>
       <div class="posts">
         <h4>Posts ({{posts.length}})</h4>
         <ul>
-          <li v-for="p in posts" :key="p.id">{{p.title}}</li>
+          <li v-for="p in posts" :key="p.id"><router-link :to="{name: 'PostDetailPage', params: {id: p.id}}">{{p.title}}</router-link></li>
         </ul>
       </div>
     </section>
