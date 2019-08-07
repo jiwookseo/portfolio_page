@@ -12,7 +12,22 @@
           auto-grow
         ></v-textarea>
         <div v-if="isPortfolio" class="img-select-box">
-          <div class="img-preview">
+          <div class="options">
+            <div 
+              class="option"
+              :class="{'sel': uploadImgByFile}"
+              @click="uploadImgByFile = true"
+            >FILE</div>
+            <div 
+              class="option"
+              :class="{'sel': !uploadImgByFile}"
+              @click="uploadImgByFile = false"
+            >URL</div>
+          </div>
+          <div class="img-url" v-if="!uploadImgByFile">
+            <v-text-field v-model="img" label="Image URL"></v-text-field>
+          </div>
+          <div class="img-preview" v-if="uploadImgByFile">
             <img :src="img" @change="onFilePicked" alt="Current Portfolio Image" />
             <div class="choose-img-prompt" @click="pickFile" title="Change Image">
               <i class="material-icons">image_search</i>
@@ -59,7 +74,8 @@ export default {
       contentRules: [v => !!v || "Content is required"],
       title: '',
       content: '',
-      img: ''
+      img: '',
+      uploadImgByFile: true
     }
   },
   computed: {
@@ -189,6 +205,22 @@ export default {
 @import "@/css/style.scss";
 
 .img-select-box {
+  .options {
+    width: 180px;
+    height: 30px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    .option {
+      display: inline-block;
+      line-height: 1em;
+      cursor: pointer;
+      &.sel {
+        text-decoration: underline;
+        color: $blue-accent;
+      }
+    }
+  }
   .img-preview {
     height: 120px;
     width: 180px;
