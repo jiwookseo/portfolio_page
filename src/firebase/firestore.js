@@ -1,10 +1,12 @@
-import "./firebase";
+import "./firebase"; // default App import
 import firebaseMessage from "../firebase/firebaseMessage";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/database";
-const firestore = firebase.firestore();
-const firedatabase = firebase.database();
+
+const firestore = firebase.firestore(); // default App 의 firestore 객체
+const firedatabase = firebase.database(); // default App 의 database 객체
+
 const POSTS = "posts";
 const PORTFOLIOS = "portfolios";
 const USERS = "users";
@@ -37,7 +39,7 @@ export default {
     });
   },
   deleteUser(email) {
-    // 쓰면 안돼요~!
+    // 쓰면 안돼요~! 동일 이메일로 여러 유저가 가입되는 에러가 났을 때 사용했던 함수
     return new Promise((resolve, reject) => {
       firestore
         .collection(USERS)
@@ -58,6 +60,7 @@ export default {
     });
   },
   updateUserByEmail(email, payload) {
+    // payload : { token, authority}
     return new Promise((resolve, reject) => {
       firestore
         .collection(USERS)
