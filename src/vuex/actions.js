@@ -127,47 +127,61 @@ export default {
         commit("setLoading", false);
         commit("loginSuccess", true);
         const user = credential.user;
-        const authority = await firestore.getUserAuthority(user.email); // firestore User doc 에서 데이터를 받아옴
-        const token = await firebaseMessage.getNewToken(); // firebaseMessage 에서 토큰을 받아옴
-        const deleted = await firestore.getUserDeleted(user.email);
-        if (deleted === "1") {
-          Vue.swal(
-            "Error",
-            "" + "현재 활동정지된 회원입니다. 관리자에게 문의하세요",
-            "error"
-          );
-          firebaseAuth
+        const authority = await firestore.getUserAuthority(user.email);
+        const token = await firebaseMessage.getNewToken;
+        console.log(authority);
+        
+        if(authority != null) {
+          const deleted = await firestore.getUserDeleted(user.email);
+         
+          if(deleted === '1') {
+            Vue.swal("Error", "" + "현재 활동정지된 회원입니다. 관리자에게 문의하세요", "error");
+            firebaseAuth
             .signOut()
             .then(() => {
               commit("setUser", null); // null 값으로 user의 정보를 만들 때 생기는 오류 체크하기
               commit("loginSuccess", false);
             })
             .catch(error => console.error(`SignOut Error: ${error}`));
-        } else {
+          }
+          else{
+            Vue.swal(`Welcome ${user.displayName}!`, "", "success");
+            const facebookUser = {
+              id: user.uid,
+              name: user.displayName,
+              email: user.email,
+              photoURL: user.photoURL,
+              token,
+              deleted
+            };
+            facebookUser.authority = authority;
+            firestore.updateUserByEmail(facebookUser.email, {
+              token
+            });
+            firestore.updateUserByEmail(facebookUser.email, {
+              deleted
+            });
+            commit("setUser", facebookUser);
+          }
+        }
+        else {
+          console.log("요기로");
           Vue.swal(`Welcome ${user.displayName}!`, "", "success");
           const facebookUser = {
             id: user.uid,
             name: user.displayName,
             email: user.email,
-            token,
-            deleted
+            photoURL: user.photoURL,
+            deleted : "0"
           };
-          if (authority) {
-            facebookUser.photoURL = user.photoURL;
-            facebookUser.authority = authority;
-            firestore.updateUserByEmail(facebookUser.email, { token });
-            firestore.updateUserByEmail(facebookUser.email, { deleted });
-          } else {
-            // if it's a new User
-            facebookUser.photoURL = null; // 페이스북 프로필 사진 초기화
-            user.updateProfile({
-              photoURL: null
-            });
-            facebookUser.authority = "3"; // 방문자 등급 부여
-            facebookUser.deleted = "0";
-            firestore.postUser(facebookUser.email, 3, token, deleted); // firestore User doc 추가 / firebaseAuth User 과 별개
-          }
+          facebookUser.token = null;
+          facebookUser.authority = "3";
+          user.updateProfile({
+            photoURL: facebookUser.photoURL
+          });
+          console.log(facebookUser.token);
           commit("setUser", facebookUser);
+          firestore.postUser(facebookUser.email, facebookUser.authority, facebookUser.token, facebookUser.deleted);
         }
       })
       .catch(error => {
