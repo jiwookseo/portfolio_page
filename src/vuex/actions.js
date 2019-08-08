@@ -132,28 +132,31 @@ export default {
         const user = credential.user;
         const authority = await firestore.getUserAuthority(user.email);
         const token = await firebaseMessage.getNewToken;
-        const deleted = await firestore.getUserDeleted(user.email);
-        if(deleted === '1') {
-          Vue.swal("Error", "" + "현재 활동정지된 회원입니다. 관리자에게 문의하세요", "error");
-          firebaseAuth
-          .signOut()
-          .then(() => {
-            commit("setUser", null); // null 값으로 user의 정보를 만들 때 생기는 오류 체크하기
-            commit("loginSuccess", false);
-          })
-          .catch(error => console.error(`SignOut Error: ${error}`));
-        }
-        else{
-          Vue.swal(`Welcome ${user.displayName}!`, "", "success");
-          const facebookUser = {
-            id: user.uid,
-            name: user.displayName,
-            email: user.email,
-            token,
-            deleted
-          };
-          if (authority) {
-            facebookUser.photoURL = user.photoURL;
+        console.log(authority);
+        
+        if(authority != null) {
+          const deleted = await firestore.getUserDeleted(user.email);
+         
+          if(deleted === '1') {
+            Vue.swal("Error", "" + "현재 활동정지된 회원입니다. 관리자에게 문의하세요", "error");
+            firebaseAuth
+            .signOut()
+            .then(() => {
+              commit("setUser", null); // null 값으로 user의 정보를 만들 때 생기는 오류 체크하기
+              commit("loginSuccess", false);
+            })
+            .catch(error => console.error(`SignOut Error: ${error}`));
+          }
+          else{
+            Vue.swal(`Welcome ${user.displayName}!`, "", "success");
+            const facebookUser = {
+              id: user.uid,
+              name: user.displayName,
+              email: user.email,
+              photoURL: user.photoURL,
+              token,
+              deleted
+            };
             facebookUser.authority = authority;
             firestore.updateUserByEmail(facebookUser.email, {
               token
@@ -161,17 +164,27 @@ export default {
             firestore.updateUserByEmail(facebookUser.email, {
               deleted
             });
-          } else {
-            // if it's a new User
-            facebookUser.photoURL = null;
-            facebookUser.authority = "3";
-            facebookUser.deleted = "0";
-            user.updateProfile({
-              photoURL: null
-            });
-            firestore.postUser(facebookUser.email, 3, token, deleted);
+            commit("setUser", facebookUser);
           }
+        }
+        else {
+          console.log("요기로");
+          Vue.swal(`Welcome ${user.displayName}!`, "", "success");
+          const facebookUser = {
+            id: user.uid,
+            name: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+            deleted : "0"
+          };
+          facebookUser.token = null;
+          facebookUser.authority = "3";
+          user.updateProfile({
+            photoURL: facebookUser.photoURL
+          });
+          console.log(facebookUser.token);
           commit("setUser", facebookUser);
+          firestore.postUser(facebookUser.email, facebookUser.authority, facebookUser.token, facebookUser.deleted);
         }
       })
       .catch(error => {
