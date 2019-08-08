@@ -1,19 +1,18 @@
 import Vue from "vue";
+import router from '@/router';
 import firebase from "firebase/app";
 import firebaseAuth from "../firebase/firebaseAuth";
 import firestore from "../firebase/firestore";
 import firebaseMessage from "../firebase/firebaseMessage";
 
-var provider = new firebase.auth.FacebookAuthProvider()
-provider.addScope('public_profile')
+var provider = new firebase.auth.FacebookAuthProvider();
+provider.addScope("public_profile");
 provider.setCustomParameters({
-  'display': 'popup'
-})
+  display: "popup"
+});
 
 export default {
-  signUserUp({
-    commit
-  }, payload) {
+  signUserUp({ commit }, payload) {
     // 로컬 회원가입
     commit("setLoading", true);
     commit("clearError");
@@ -56,7 +55,6 @@ export default {
       });
     firestore.getUserAll().then(userAll =>
       userAll.forEach(user => {
-
         if (user.authority == "1") {
           firebaseMessage.pushMessage(
             user.token,
@@ -67,9 +65,7 @@ export default {
       })
     );
   },
-  signUserIn({
-    commit
-  }, payload) {
+  signUserIn({ commit }, payload) {
     // 로컬 로그인
     commit("setLoading", true);
     commit("clearError");
@@ -79,20 +75,23 @@ export default {
         commit("setLoading", false);
         commit("loginSuccess", true);
         const user = credential.user;
-        const authority = await firestore.getUserAuthority(user.email);
-        const token = await firebaseMessage.getNewToken();
+        const authority = await firestore.getUserAuthority(user.email); // firestore User doc 에서 데이터를 받아옴
+        const token = await firebaseMessage.getNewToken(); // firebaseMessage 에서 토큰을 받아옴
         const deleted = await firestore.getUserDeleted(user.email);
-        if(deleted === '1') {
-          Vue.swal("Error", "" + "현재 활동정지된 회원입니다. 관리자에게 문의하세요", "error");
+        if (deleted === "1") {
+          Vue.swal(
+            "Error",
+            "" + "현재 활동정지된 회원입니다. 관리자에게 문의하세요",
+            "error"
+          );
           firebaseAuth
-          .signOut()
-          .then(() => {
-            commit("setUser", null); // null 값으로 user의 정보를 만들 때 생기는 오류 체크하기
-            commit("loginSuccess", false);
-          })
-          .catch(error => console.error(`SignOut Error: ${error}`));
-        }
-        else{
+            .signOut()
+            .then(() => {
+              commit("setUser", null); // null 값으로 user의 정보를 만들 때 생기는 오류 체크하기
+              commit("loginSuccess", false);
+            })
+            .catch(error => console.error(`SignOut Error: ${error}`));
+        } else {
           Vue.swal(`Welcome ${user.displayName}!`, "", "success");
           console.log(token);
           firestore.updateUserByEmail(user.email, {
@@ -119,9 +118,7 @@ export default {
         Vue.swal("Error", "" + error, "error");
       });
   },
-  signUserInFacebook({
-    commit
-  }) {
+  signUserInFacebook({ commit }) {
     commit("setLoading", true);
     commit("clearError");
     firebaseAuth
@@ -193,11 +190,9 @@ export default {
         Vue.swal("Error", "" + error, "error");
       });
   },
-  async autoSignIn({
-    commit
-  }, payload) {
-    const authority = await firestore.getUserAuthority(payload.email);
-    const token = await firebaseMessage.getNewToken();
+  async autoSignIn({ commit }, payload) {
+    const authority = await firestore.getUserAuthority(payload.email); // firestore User doc 에서 데이터를 받아옴
+    const token = await firebaseMessage.getNewToken(); // firebaseMessage 에서 토큰을 받아옴
     const deleted = await firestore.getUserDeleted(payload.email);
     firestore.updateUserByEmail(payload.email, {
       token
@@ -215,20 +210,17 @@ export default {
       deleted
     });
   },
-  logout({
-    commit
-  }) {
+  logout({ commit }) {
     firebaseAuth
       .signOut()
       .then(() => {
         commit("setUser", null); // null 값으로 user의 정보를 만들 때 생기는 오류 체크하기
         commit("loginSuccess", false);
+        router.replace('/');
       })
       .catch(error => console.error(`SignOut Error: ${error}`));
   },
-  setUserPhoto({
-    commit
-  }, photoURL) {
+  setUserPhoto({ commit }, photoURL) {
     const user = firebaseAuth.currentUser;
     if (user) {
       user.updateProfile({
@@ -237,48 +229,34 @@ export default {
       commit("setUserPhoto", photoURL);
     }
   },
-  clearError({
-    commit
-  }) {
+  clearError({ commit }) {
     commit("clearError");
   },
-  setError({
-    commit
-  }, payload) {
+  setError({ commit }, payload) {
     commit("setError", payload);
   },
-  getArticles({
-    commit
-  }, type) {
+  getArticles({ commit }, type) {
     firestore.getArticles(type).then(res => {
       commit(type === "portfolios" ? "getPortfolios" : "getPosts", res);
     });
   },
-  getUserAll({
-    commit
-  }) {
+  getUserAll({ commit }) {
     firestore.getUserAll().then(res => {
       commit("getUserAll", res);
     });
   },
-  setSpinner({
-    commit
-  }, payload) {
+  setSpinner({ commit }, payload) {
     payload.message = payload.message || "";
     commit("setSpinner", payload);
   },
-  setAskSnackbar({
-    commit
-  }, payload) {
+  setAskSnackbar({ commit }, payload) {
     payload.message = payload.message || "";
     payload.button = payload.button || "";
     payload.type = payload.type || "";
     payload.confirm = payload.confirm || "";
     commit("setAskSnackbar", payload);
   },
-  setAlertSnackbar({
-    commit
-  }, payload) {
+  setAlertSnackbar({ commit }, payload) {
     payload.message = payload.message || "";
     commit("setAlertSnackbar", payload);
   }
