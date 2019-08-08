@@ -87,7 +87,7 @@ export default {
     }
   },
   methods: {
-    updateArticle(id) {
+    updateArticle() {
       if (this.isPortfolio) {
         this.$router.replace({name: 'PortfolioUpdate', params: {id: this.$route.params.id}});
       }

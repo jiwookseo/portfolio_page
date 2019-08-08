@@ -154,12 +154,8 @@ export default {
           if (authority) {
             facebookUser.photoURL = user.photoURL;
             facebookUser.authority = authority;
-            firestore.updateUserByEmail(facebookUser.email, {
-              token
-            });
-            firestore.updateUserByEmail(facebookUser.email, {
-              deleted
-            });
+            firestore.updateUserByEmail(facebookUser.email, { token });
+            firestore.updateUserByEmail(facebookUser.email, { deleted });
           } else {
             // if it's a new User
             facebookUser.photoURL = null; // 페이스북 프로필 사진 초기화
@@ -167,6 +163,7 @@ export default {
               photoURL: null
             });
             facebookUser.authority = "3"; // 방문자 등급 부여
+            facebookUser.deleted = "0";
             firestore.postUser(facebookUser.email, 3, token, deleted); // firestore User doc 추가 / firebaseAuth User 과 별개
           }
           commit("setUser", facebookUser);
