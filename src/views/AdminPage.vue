@@ -100,6 +100,12 @@
                   </form>
                 </v-flex>
               </template>
+              <template v-slot:item.delete="{item}">
+                <td>
+                    <v-btn color="error" v-if="(item.authority != '1' && item.deleted == '1')" @click="startConfirm(item.id, item.deleted)">활동정지</v-btn>
+                    <v-btn color="success" v-if="(item.authority != '1' && item.deleted == '0')" @click="stopConfirm(item.id, item.deleted)">활동 중</v-btn>
+                </td>
+              </template>
             </v-data-table>
           </v-card>
         </v-container>
@@ -122,7 +128,7 @@ import firestore from "../firebase/firestore";
 import Vue from "vue";
 import HighchartsVue from "highcharts-vue";
 import Highcharts from "highcharts";
-
+import { mapGetters } from "vuex";
 import AdminArticles from "@/components/AdminPage/Articles";
 
 export default {
@@ -140,10 +146,13 @@ export default {
       headers: [
         { text: "이메일", value: "email", sortable: false },
         { text: "권한", value: "authority" },
-        { text: "권한 변경", value: "modify", sortable: false }
+        { text: "권한 변경", value: "modify", sortable: false },
+        { text: "정지", value: "delete", sortable: false }
       ],
       loading: false,
-      mode: "summary" //users, articles, log
+      mode: "summary", //users, articles, log
+      selectedId: "",
+      selectedDeleted: ""
     };
   },
   mounted() {
@@ -152,9 +161,15 @@ export default {
   watch: {
     logs: function() {
       this.computedLogs();
+    },
+    askSnackbar() {
+      if (this.askSnackbar.confirm === "deleted") {
+        this.changeDelete(this.selectedId, this.selectedDeleted);
+      }
     }
   },
   computed: {
+    ...mapGetters(["askSnackbar", "user"]),
     userAll() {
       return this.$store.getters.userAll.map(user => ({
         selected: "default",
@@ -169,6 +184,27 @@ export default {
     },
   },
   methods: {
+    stopConfirm(selectedId, selectedDeleted) {
+      this.selectedId = selectedId;
+      this.selectedDeleted = selectedDeleted;
+      this.$store.dispatch("setAskSnackbar", {
+        ask: true,
+        message: "해당 사용자 계정을 정지하겠습니까?",
+        button: "Suspend",
+        type: "deleted"
+      });
+    },
+    startConfirm(selectedId, selectedDeleted) {
+      this.selectedId = selectedId;
+      this.selectedDeleted = selectedDeleted;
+      console.log("id : " + this.selectedId)
+      this.$store.dispatch("setAskSnackbar", {
+        ask: true,
+        message: "해당 사용자 계정을 활성화 하겠습니까?",
+        button: "Activate",
+        type: "deleted"
+      });
+    },
     onResize() {
       if (window.innerWidth < 769) this.isMobile = true;
       else this.isMobile = false;
@@ -193,6 +229,22 @@ export default {
         // console.log("선택해주세요")
         this.loading = false;
       }
+    },
+    changeDelete(id, del) {
+      this.loading = true;
+      let num = "";
+      if (del === "1") num = "0";
+      else if (del === "0") num = "1";
+      
+      firestore.updateUserById(id, { deleted: num }).then(() => {
+        // console.log("update Success")
+        this.$store.dispatch("setAlertSnackbar", {
+        alert: true,
+        message: "Complete"
+        });
+        this.loading = false;
+        this.$store.dispatch("getUserAll");
+      });
     },
     async getLogs() {
       this.logs = await firestore.getLog();

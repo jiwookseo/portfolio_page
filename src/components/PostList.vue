@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="vContainer">
     <v-layout row wrap>
       <v-flex
         class="post"
@@ -21,7 +21,7 @@
           </div>
           <div
             class="update"
-            @click="openPostWriter(i)"
+            @click="updateArticle(posts[i-1].id)"
             v-if="user && (user.authority==='1' || user.id === posts[i-1].userID)"
           >
             <i class="material-icons">edit</i>
@@ -36,7 +36,7 @@
         </div>
       </v-flex>
       <v-flex v-if="allowCreate && isAdmin" class="post new" xs12 sm6 data-aos="fade-up">
-        <span class="text" @click="openPostWriter()">+ New Post</span>
+        <span class="text" @click="writeNewArticle">+ New Post</span>
         <hr />
       </v-flex>
 
@@ -90,6 +90,12 @@ export default {
     };
   },
   methods: {
+    writeNewArticle() {
+      this.$router.replace({name: 'NewPost'})
+    },
+    updateArticle(id) {
+      this.$router.replace({name: 'PostUpdate', params: {id: id}})
+    },
     openPostWriter(index = -1) {
       this.selectedId = index === -1 ? "" : this.posts[index - 1].id;
       this.dialogWrite = true;
