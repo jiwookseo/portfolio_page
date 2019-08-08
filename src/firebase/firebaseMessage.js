@@ -33,7 +33,8 @@ export default {
           notification: {
             title: title,
             body: body,
-            icon: "./img/icons/logo.png"
+            icon: "./img/icons/logo.png",
+            sound: "./sound/jingle-bells-sms.caf"
           }
         }, {
           headers: {
