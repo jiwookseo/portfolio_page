@@ -55,8 +55,8 @@ export default {
         commit("loginSuccess", true);
         const user = credential.user;
         Vue.swal(`Welcome ${user.displayName}!`, "", "success");
-        const authority = await firestore.getUserAuthority(user.email);
-        const token = await firebaseMessage.getNewToken();
+        const authority = await firestore.getUserAuthority(user.email); // firestore User doc 에서 데이터를 받아옴
+        const token = await firebaseMessage.getNewToken(); // firebaseMessage 에서 토큰을 받아옴
         console.log(token);
         firestore.updateUserByEmail(user.email, {
           token
@@ -87,8 +87,8 @@ export default {
         commit("loginSuccess", true);
         const user = credential.user;
         Vue.swal(`Welcome ${user.displayName}!`, "", "success");
-        const authority = await firestore.getUserAuthority(user.email);
-        const token = await firebaseMessage.getNewToken;
+        const authority = await firestore.getUserAuthority(user.email); // firestore User doc 에서 데이터를 받아옴
+        const token = await firebaseMessage.getNewToken(); // firebaseMessage 에서 토큰을 받아옴
         const facebookUser = {
           id: user.uid,
           name: user.displayName,
@@ -103,12 +103,12 @@ export default {
           });
         } else {
           // if it's a new User
-          facebookUser.photoURL = null;
-          facebookUser.authority = "3";
+          facebookUser.photoURL = null; // 페이스북 프로필 사진 초기화
           user.updateProfile({
             photoURL: null
           });
-          firestore.postUser(facebookUser.email, 3, token);
+          facebookUser.authority = "3"; // 방문자 등급 부여
+          firestore.postUser(facebookUser.email, 3, token); // firestore User doc 추가 / firebaseAuth User 과 별개
         }
         commit("setUser", facebookUser);
       })
@@ -119,8 +119,8 @@ export default {
       });
   },
   async autoSignIn({ commit }, payload) {
-    const authority = await firestore.getUserAuthority(payload.email);
-    const token = await firebaseMessage.getNewToken();
+    const authority = await firestore.getUserAuthority(payload.email); // firestore User doc 에서 데이터를 받아옴
+    const token = await firebaseMessage.getNewToken(); // firebaseMessage 에서 토큰을 받아옴
     firestore.updateUserByEmail(payload.email, {
       token
     });
