@@ -1,4 +1,5 @@
 import Vue from "vue";
+import router from '@/router';
 import firebase from "firebase/app";
 import firebaseAuth from "../firebase/firebaseAuth";
 import firestore from "../firebase/firestore";
@@ -210,6 +211,7 @@ export default {
       .then(() => {
         commit("setUser", null); // null 값으로 user의 정보를 만들 때 생기는 오류 체크하기
         commit("loginSuccess", false);
+        router.replace('/');
       })
       .catch(error => console.error(`SignOut Error: ${error}`));
   },
