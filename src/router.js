@@ -9,7 +9,6 @@ import ArticleWriter from "./views/ArticleWriter";
 import AdminPage from "./views/AdminPage.vue";
 
 Vue.use(Router);
-import { mapGetters } from "vuex";
 
 export default new Router({
   mode: "history",
@@ -24,7 +23,7 @@ export default new Router({
       path: "/",
       name: "home",
       component: HomePage,
-      meta: { transition: 'fade' },
+      meta: { transition: "fade" }
     },
     {
       path: "/portfolios",
@@ -42,7 +41,7 @@ export default new Router({
         {
           path: "new",
           name: "NewPortfolio",
-          component: ArticleWriter,
+          component: ArticleWriter
         },
         {
           path: ":id",
@@ -74,7 +73,7 @@ export default new Router({
         {
           path: "new",
           name: "NewPost",
-          component: ArticleWriter,
+          component: ArticleWriter
         },
         {
           path: ":id",
