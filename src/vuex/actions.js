@@ -82,7 +82,7 @@ export default {
         if (deleted === "1") {
           Vue.swal(
             "Error",
-            "" + "현재 활동정지된 회원입니다. 관리자에게 문의하세요",
+            "현재 활동정지된 회원입니다. 관리자에게 문의하세요",
             "error"
           );
           firebaseAuth
@@ -94,7 +94,7 @@ export default {
             .catch(error => console.error(`SignOut Error: ${error}`));
         } else {
           Vue.swal(`Welcome ${user.displayName}!`, "", "success");
-          console.log(token);
+          //console.log(token);
           firestore.updateUserByEmail(user.email, {
             token
           });
@@ -138,7 +138,7 @@ export default {
           if (deleted === "1") {
             Vue.swal(
               "Error",
-              "" + "현재 활동정지된 회원입니다. 관리자에게 문의하세요",
+              "현재 활동정지된 회원입니다. 관리자에게 문의하세요",
               "error"
             );
             firebaseAuth
@@ -168,7 +168,6 @@ export default {
             commit("setUser", facebookUser);
           }
         } else {
-          console.log("요기로");
           Vue.swal(`Welcome ${user.displayName}!`, "", "success");
           const facebookUser = {
             id: user.uid,
@@ -182,7 +181,6 @@ export default {
           user.updateProfile({
             photoURL: facebookUser.photoURL
           });
-          console.log(facebookUser.token);
           commit("setUser", facebookUser);
           firestore.postUser(
             facebookUser.email,
@@ -195,7 +193,7 @@ export default {
       .catch(error => {
         commit("setLoading", false);
         commit("setError", error);
-        Vue.swal("Error", "" + error, "error");
+        Vue.swal("Error", error, "error");
       });
   },
   async autoSignIn({ commit }, payload) {
