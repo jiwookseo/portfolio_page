@@ -76,7 +76,7 @@ export default {
         .catch(err => reject(err));
     });
   },
-  getUserAuthority(email) {
+  getUserData(email) {
     return new Promise((resolve, reject) => {
       firestore
         .collection(USERS)
@@ -86,23 +86,7 @@ export default {
           if (snapshot.empty) {
             resolve(null);
           } else {
-            resolve(snapshot.docs[0].data().authority);
-          }
-        })
-        .catch(err => reject(err));
-    });
-  },
-  getUserDeleted(email) {
-    return new Promise((resolve, reject) => {
-      firestore
-        .collection(USERS)
-        .where("email", "==", email)
-        .get()
-        .then(snapshot => {
-          if (snapshot.empty) {
-            resolve(null);
-          } else {
-            resolve(snapshot.docs[0].data().deleted);
+            resolve(snapshot.docs[0].data());
           }
         })
         .catch(err => reject(err));
