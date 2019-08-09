@@ -168,7 +168,6 @@ export default {
           }
         }
         else {
-          console.log("요기로");
           Vue.swal(`Welcome ${user.displayName}!`, "", "success");
           const facebookUser = {
             id: user.uid,
@@ -182,7 +181,6 @@ export default {
           user.updateProfile({
             photoURL: facebookUser.photoURL
           });
-          console.log(facebookUser.token);
           commit("setUser", facebookUser);
           firestore.postUser(facebookUser.email, facebookUser.authority, facebookUser.token, facebookUser.deleted);
         }
