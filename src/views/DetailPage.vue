@@ -18,27 +18,17 @@
       <p class="Content">{{article.content}}</p>
     </div>
     <Comment :article="article" :isPortfolio="isPortfolio" />
-    <!-- Write Dialog -->
-    <v-dialog v-model="dialogWrite" width="500" persistent>
-      <WriteDialog
-        @child="parents"
-        :id="selectedID"
-        :dialogWrite="dialogWrite"
-        :isPortfolio="isPortfolio"
-      />
-    </v-dialog>
+
   </div>
 </template>
 
 <script>
 import firestore from "../firebase/firestore";
-import WriteDialog from "@/components/WriteDialog";
 import Comment from "../components/Comment";
 import { mapGetters } from "vuex";
 
 export default {
   components: {
-    WriteDialog,
     Comment
   },
   data() {
