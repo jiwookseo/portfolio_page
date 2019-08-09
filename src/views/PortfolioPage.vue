@@ -102,6 +102,6 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "../css/style.scss";
-@import "../css/mixin.scss";
+@import "@/css/style.scss";
+@import "@/css/article.scss";
 </style>

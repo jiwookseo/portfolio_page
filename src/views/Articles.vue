@@ -33,8 +33,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../css/style.scss";
-@import "../css/mixin.scss";
+@import "@/css/style.scss";
+
 .content {
   margin: 80px 0 50px;
   height: auto;

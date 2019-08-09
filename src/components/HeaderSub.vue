@@ -117,9 +117,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../css/mixin.scss";
-@import "../css/navbar.scss";
-@import "../css/style.scss";
+@import "@/css/style.scss";
+@import "@/css/navbar.scss";
+
 header {
   position: relative;
 }

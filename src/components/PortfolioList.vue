@@ -124,8 +124,8 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "../css/mixin.scss";
-@import "../css/style.scss";
+@import "@/css/style.scss";
+
 a,
 a:hover {
   color: initial;
@@ -152,8 +152,6 @@ a:hover {
     position: absolute;
     top: 0;
     left: 0;
-    // background-size: cover;
-    // background-position: center;
     object-fit: cover;
     transition: all 0.3s;
   }
@@ -287,5 +285,4 @@ a:hover {
   }
 }
 
-// Snackbar: mixin.scss
 </style>

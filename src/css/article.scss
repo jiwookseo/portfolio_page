@@ -1,184 +1,4 @@
-@import 'style.scss';
-
-
-/////////////// Responsive Layout
-
-@mixin mobile {
-  @media (max-width: 600px) {
-    @content;
-  }
-}
-@mixin viewportMax($screen) {
-  @media (max-width: $screen + 'px') {
-    @content;
-  }
-}
-@mixin viewportMin($screen) {
-  @media (min-width: $screen + 'px') {
-    @content;
-  }
-}
-
-
-////////// Common Stylistic Features
-
-@mixin centerItem {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-@mixin textTruncate {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-@mixin line-clamp-4 {
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.vContainer {
-  margin: 0 auto;
-  max-width: 1264px;
-  @include viewportMax(1264) {
-    max-width: 960px;
-  }
-}
-
-
-////////// HomePage.vue Section Containers and Buttons
-
-.section-title {
-	text-transform: uppercase;
-	text-align: center;
-	font-size: 3em;
-	font-family: $font-title;
-	letter-spacing: 4px;
-	margin: 10px 0 20px;
-}
-.section-subtitle {
-	text-transform: uppercase;
-	text-align: left;
-	font-size: 2em;
-	font-family: $font-title;
-	letter-spacing: 4px;
-	margin: 10px 0 20px;
-}
-.section-btn-box {
-	width: 100%;
-	height: 60px;
-	position: relative;
-	margin-top: 50px;
-}
-.load-more-btn {
-	display: inline-block;
-	padding: 5px 10px;
-	cursor: pointer;
-	white-space: nowrap;
-	position: absolute;
-	top: 0;
-	left: 50%;
-	transform: translate(-50%);
-	color: white;
-	background: #00C0FF;
-	border-radius: 3px;
-	box-shadow: 0 5px $blue-accent;
-	&:hover {
-		box-shadow: 0 3px $blue-accent;
-		top: 2px;
-	}
-	&:active {
-		box-shadow: none;
-		top: 5px;
-	}
-}
-
-
-
-
-
-
-
-////////// Snackbar (Alert/Confirm Messages)
-
-.snackbar-content {
-	button {
-	  color: white;
-	  padding: 8px 15px;
-	  background: #cc4b4d;
-	  border-radius: 3px;
-	  text-transform: uppercase;
-	  font-size: 0.9em;
-	  &:focus {outline: none;}
-	  &:hover {background: #b24143;}
-	}
-	.del-btn {
-	  margin: 0 10px 0 30px;
-	  @include mobile {margin-left: 10px;}
-	}
-	.ok-btn {
-	  margin-left: 30px;
-	}
-}
-
-
-
-
-
-///////////// Nudge Buttons
-
-@mixin nudge-btn { // general attributes
-  display: inline-block;
-  padding: 10px 20px;
-  border-radius: 3px;
-  text-transform: uppercase;
-  font-size: 0.9em;
-  position: relative;
-  color: white;
-  white-space: nowrap;
-  &:focus {
-    outline: none;
-  }
-}
-@mixin nudge-btn-gray { // gray; nudge left
-  background: $light-gray;
-  box-shadow: -5px 0 #8D9CB2;
-  &:hover {
-    box-shadow: -3px 0 #8D9CB2;
-    right: 2px;
-  }
-  &:active {
-    box-shadow: none;
-    right: 5px;
-  }
-}
-@mixin nudge-btn-primary { // blue; nudge right
-  background: $blue-accent-light;
-  box-shadow: 5px 0 $blue-accent;
-  &:disabled {
-    background: #d6dee3;
-    box-shadow: 5px 0 #ccd6dd;
-    &:hover:disabled {
-      box-shadow: 5px 0 #ccd6dd;
-      left: 0px;
-    }
-  }
-  &:hover {
-    box-shadow: 3px 0 $blue-accent;
-    left: 2px;
-  }
-  &:active {
-    box-shadow: none;
-    left: 5px;
-  }
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////// ARTICLE DETAIL PAGE ////////////////////////////////////////////
+@import './style.scss';
 
 .section-content {
   margin: 80px 0;
@@ -189,12 +9,13 @@
   position: relative;
 }
 .article-detail {
-  display: block;  // MOBILE
+  display: block; // MOBILE
   max-width: 600px;
   height: auto;
   margin: 0 auto;
   padding: 10px 2%;
-  @include viewportMin(601) { // DESKTOP
+  @include viewportMin(601) {
+    // DESKTOP
     display: inline-block;
     width: 70%;
     max-width: calc(100% - 200px);
@@ -216,7 +37,7 @@
   @include mobile {
     display: none;
   }
-  & > .header {
+  &>.header {
     font-size: 1.3em;
     font-weight: bold;
     padding-bottom: 10px;
@@ -224,7 +45,8 @@
     margin-bottom: 25px;
     .back {
       display: inline-block;
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
       position: relative;
       i {
         font-size: 1.3em;
@@ -245,7 +67,8 @@
     margin: 15px 0;
     cursor: pointer;
     .portfolio-item-link {
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
       position: relative;
       display: block;
       color: initial;
@@ -253,7 +76,8 @@
         width: 60px;
         height: 70px;
         position: absolute;
-        top: 0; left: 0;
+        top: 0;
+        left: 0;
         object-fit: cover;
         opacity: 0.6;
         transition: opacity 0.1s;
@@ -282,12 +106,17 @@
         }
       }
       &:hover {
-        .Title {text-decoration: underline;}
-        img {opacity: 1;}
+        .Title {
+          text-decoration: underline;
+        }
+        img {
+          opacity: 1;
+        }
       }
     }
     .post-item-link {
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
       position: relative;
       display: block;
       border-bottom: 1px solid $light-gray;
@@ -310,11 +139,14 @@
         }
       }
       &:hover {
-        .Title {text-decoration: underline;}
+        .Title {
+          text-decoration: underline;
+        }
       }
     }
   }
 }
+
 .article-list::-webkit-scrollbar {
   // display: initial;
   // width: 7px;
@@ -353,18 +185,22 @@
       cursor: pointer;
       border-bottom: 1px solid $gray;
       .item-link {
-        width: 100%; height: 100%;
+        width: 100%;
+        height: 100%;
         position: relative;
         display: block;
         color: initial;
       }
-      p {margin: 0; padding: 0;}
+      p {
+        margin: 0;
+        padding: 0;
+      }
       .Title {
         font-weight: bold;
         @include textTruncate;
       }
       .Author {
-        color: $gray; 
+        color: $gray;
         text-transform: uppercase;
         font-size: 0.8em;
         @include textTruncate;

@@ -195,8 +195,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../css/mixin.scss";
-@import "../css/style.scss";
+@import "@/css/style.scss";
+
 .comment-box {
   width: 100%;
   padding: 10px 3%;

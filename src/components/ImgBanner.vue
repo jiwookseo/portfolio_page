@@ -109,8 +109,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../css/style.scss";
-@import "../css/mixin.scss";
+@import "@/css/style.scss";
+
 .imgBannerOuter {
   width: 100%;
   height: 100vh;
