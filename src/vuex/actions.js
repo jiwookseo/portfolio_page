@@ -93,7 +93,7 @@ export default {
             .catch(error => console.error(`SignOut Error: ${error}`));
         } else {
           Vue.swal(`Welcome ${user.displayName}!`, "", "success");
-          console.log(token);
+          //console.log(token);
           firestore.updateUserByEmail(user.email, {
             token
           });
@@ -129,7 +129,7 @@ export default {
         const user = credential.user;
         const authority = await firestore.getUserAuthority(user.email);
         const token = await firebaseMessage.getNewToken;
-        console.log(authority);
+        //console.log(authority);
         
         if(authority != null) {
           const deleted = await firestore.getUserDeleted(user.email);
@@ -165,7 +165,6 @@ export default {
           }
         }
         else {
-          console.log("요기로");
           Vue.swal(`Welcome ${user.displayName}!`, "", "success");
           const facebookUser = {
             id: user.uid,
@@ -179,7 +178,6 @@ export default {
           user.updateProfile({
             photoURL: facebookUser.photoURL
           });
-          console.log(facebookUser.token);
           commit("setUser", facebookUser);
           firestore.postUser(facebookUser.email, facebookUser.authority, facebookUser.token, facebookUser.deleted);
         }
