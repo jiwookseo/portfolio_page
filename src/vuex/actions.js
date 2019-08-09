@@ -93,7 +93,7 @@ export default {
             .catch(error => console.error(`SignOut Error: ${error}`));
         } else {
           Vue.swal(`Welcome ${user.displayName}!`, "", "success");
-          console.log(token);
+          //console.log(token);
           firestore.updateUserByEmail(user.email, {
             token
           });
@@ -129,7 +129,7 @@ export default {
         const user = credential.user;
         const authority = await firestore.getUserAuthority(user.email);
         const token = await firebaseMessage.getNewToken;
-        console.log(authority);
+        //console.log(authority);
         
         if(authority != null) {
           const deleted = await firestore.getUserDeleted(user.email);
