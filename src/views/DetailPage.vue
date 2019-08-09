@@ -117,8 +117,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "../css/mixin.scss";
-@import "../css/style.scss";
+@import "@/css/style.scss";
 
 .article-meta {
   position: relative;

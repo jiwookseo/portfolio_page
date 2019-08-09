@@ -118,8 +118,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../css/mixin.scss";
-@import "../css/style.scss";
+@import "@/css/style.scss";
 
 a,
 a:hover {

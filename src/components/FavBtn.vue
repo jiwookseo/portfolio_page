@@ -46,7 +46,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../css/mixin.scss';
+@import '@/css/style.scss';
+
 div {
   width: 50px;
   height: 50px;

@@ -123,8 +123,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../css/style.scss";
-@import "../css/mixin.scss";
+@import "@/css/style.scss";
 @import url(https://fonts.googleapis.com/css?family=Francois+One);
 @import url(https://fonts.googleapis.com/css?family=PT+Sans);
 @font-face {

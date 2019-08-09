@@ -202,7 +202,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/css/style.scss";
-@import "@/css/mixin.scss";
 
 .article-writer {
   margin-top: 12px;

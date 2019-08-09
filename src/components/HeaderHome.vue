@@ -137,9 +137,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../css/mixin.scss";
-@import "../css/navbar.scss";
-@import "../css/style.scss";
+@import "@/css/style.scss";
+@import "@/css/navbar.scss";
+
 .homeHeader {
   width: 100%;
   height: calc(100vh + 50px);

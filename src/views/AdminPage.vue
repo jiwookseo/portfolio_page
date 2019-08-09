@@ -432,8 +432,8 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "../css/mixin.scss";
-@import "../css/style.scss";
+@import "@/css/style.scss";
+
 .wrap {
   height: 100vh;
   overflow-y: auto;

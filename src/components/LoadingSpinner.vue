@@ -17,7 +17,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../css/style.scss";
+@import "@/css/style.scss";
 
 .loader-container {
   position: fixed;
