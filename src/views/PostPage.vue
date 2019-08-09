@@ -58,6 +58,7 @@
 import HeaderSub from "../components/HeaderSub";
 import Footer from "../components/Footer";
 import { mapGetters } from "vuex";
+import article from "@/js/article.js";
 
 export default {
   name: "PostPage",
@@ -83,6 +84,9 @@ export default {
         end = start + this.paginationSize;
       return this.posts.slice(start, end);
     }
+  },
+  mounted() {
+    article.setArticleListSize();
   }
 };
 </script>

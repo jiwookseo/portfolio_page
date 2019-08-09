@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 $(document).ready(function(){
   $(window).scroll(function(){
     if ($('.homeContent').length) {
@@ -26,33 +28,6 @@ $(document).ready(function(){
       $('#toAdmin').css({
         display: 'none'
       })
-    }
-
-    if ($('.article-detail').length && $(window).width() > 600) {
-      if ($(window).scrollTop() >= $('.article-detail').offset().top) {
-        $('.article-list').css({
-          position: 'fixed',
-          top: 60,
-          right: '20px'
-        });
-      }
-      else {
-        $('.article-list').css({
-          position: 'initial'
-        });
-      }
-
-      var articleListHeight = $('footer').offset().top - $('.article-list').offset().top - 10;
-      if ($(window).scrollTop() + $(window).height() >= $('footer').offset().top) {
-        $('.article-list').css({
-          height: articleListHeight
-        });
-      }
-      else {
-        $('.article-list').css({
-          height: '100%'
-        });
-      }
     }
     
   });
