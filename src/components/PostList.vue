@@ -43,26 +43,18 @@
       <div class="section-btn-box" v-if="allowCreate && postLimit < posts.length">
         <div class="load-more-btn" @click="loadMore">Load More</div>
       </div>
-
-      <!-- Write Dialog -->
-      <v-dialog v-model="dialogWrite" width="500" persistent>
-        <WriteDialog @child="parents" :id="selectedId" :dialogWrite="dialogWrite" />
-      </v-dialog>
+      
     </v-layout>
   </v-container>
 </template>
 
 
 <script>
-import WriteDialog from "./WriteDialog";
 import firestore from "../firebase/firestore";
 import { mapGetters } from "vuex";
 
 export default {
   name: "PostList",
-  components: {
-    WriteDialog
-  },
   props: {
     limit: { type: Number, default: 6 },
     allowCreate: { type: Boolean, default: false }

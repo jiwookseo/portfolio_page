@@ -259,4 +259,19 @@ export default {
     @include nudge-btn-primary;
   }
 }
+
+.cancel-btn {  // Dialog Close Button (gray X)
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  i {
+    color: gray;
+    @include centerItem;
+    font-size: 2.5em;
+  }
+}
+
 </style>

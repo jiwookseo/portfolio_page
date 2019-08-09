@@ -201,8 +201,28 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "@/css/mixin.scss";
 @import "@/css/style.scss";
+@import "@/css/mixin.scss";
+
+.article-writer {
+  margin-top: 12px;
+  .btn-box-bottom {
+    .btn {
+      margin-top: 10px;
+      @include nudge-btn;
+    }
+    .reset-btn {
+      @include nudge-btn-gray;
+      float: left;
+      margin-left: 20px;
+    }
+    .create-btn {
+      @include nudge-btn-primary;
+      float: right;
+      margin-right: 20px;
+    }
+  }
+}
 
 .img-select-box {
   .options {
@@ -264,6 +284,5 @@ export default {
     display: none;
   }
 }
-
 
 </style>
