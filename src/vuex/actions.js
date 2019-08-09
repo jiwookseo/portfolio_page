@@ -1,5 +1,5 @@
 import Vue from "vue";
-import router from '@/router';
+import router from "@/router";
 import firebase from "firebase/app";
 import firebaseAuth from "../firebase/firebaseAuth";
 import firestore from "../firebase/firestore";
@@ -75,13 +75,14 @@ export default {
         commit("setLoading", false);
         commit("loginSuccess", true);
         const user = credential.user;
-        const authority = await firestore.getUserAuthority(user.email); // firestore User doc 에서 데이터를 받아옴
         const token = await firebaseMessage.getNewToken(); // firebaseMessage 에서 토큰을 받아옴
-        const deleted = await firestore.getUserDeleted(user.email);
+        const data = await firestore.getUserData(user.email); // firestore User doc 에서 데이터를 받아옴
+        const authority = data.authority; // 유저 권한
+        const deleted = data.deleted; // 활동정지된 유저
         if (deleted === "1") {
           Vue.swal(
             "Error",
-            "" + "현재 활동정지된 회원입니다. 관리자에게 문의하세요",
+            "현재 활동정지된 회원입니다. 관리자에게 문의하세요",
             "error"
           );
           firebaseAuth
@@ -127,24 +128,27 @@ export default {
         commit("setLoading", false);
         commit("loginSuccess", true);
         const user = credential.user;
-        const authority = await firestore.getUserAuthority(user.email);
-        const token = await firebaseMessage.getNewToken;
-        //console.log(authority);
-        
-        if(authority != null) {
-          const deleted = await firestore.getUserDeleted(user.email);
-         
-          if(deleted === '1') {
-            Vue.swal("Error", "" + "현재 활동정지된 회원입니다. 관리자에게 문의하세요", "error");
+        const token = await firebaseMessage.getNewToken(); // firebaseMessage 에서 토큰을 받아옴
+        const data = await firestore.getUserData(user.email); // firestore User doc 에서 데이터를 받아옴
+        const authority = data.authority; // 유저 권한
+
+        if (authority != null) {
+          const deleted = data.deleted; // 활동정지된 유저
+
+          if (deleted === "1") {
+            Vue.swal(
+              "Error",
+              "현재 활동정지된 회원입니다. 관리자에게 문의하세요",
+              "error"
+            );
             firebaseAuth
-            .signOut()
-            .then(() => {
-              commit("setUser", null); // null 값으로 user의 정보를 만들 때 생기는 오류 체크하기
-              commit("loginSuccess", false);
-            })
-            .catch(error => console.error(`SignOut Error: ${error}`));
-          }
-          else{
+              .signOut()
+              .then(() => {
+                commit("setUser", null); // null 값으로 user의 정보를 만들 때 생기는 오류 체크하기
+                commit("loginSuccess", false);
+              })
+              .catch(error => console.error(`SignOut Error: ${error}`));
+          } else {
             Vue.swal(`Welcome ${user.displayName}!`, "", "success");
             const facebookUser = {
               id: user.uid,
@@ -163,15 +167,14 @@ export default {
             });
             commit("setUser", facebookUser);
           }
-        }
-        else {
+        } else {
           Vue.swal(`Welcome ${user.displayName}!`, "", "success");
           const facebookUser = {
             id: user.uid,
             name: user.displayName,
             email: user.email,
             photoURL: user.photoURL,
-            deleted : "0"
+            deleted: "0"
           };
           facebookUser.token = null;
           facebookUser.authority = "3";
@@ -179,19 +182,25 @@ export default {
             photoURL: facebookUser.photoURL
           });
           commit("setUser", facebookUser);
-          firestore.postUser(facebookUser.email, facebookUser.authority, facebookUser.token, facebookUser.deleted);
+          firestore.postUser(
+            facebookUser.email,
+            facebookUser.authority,
+            facebookUser.token,
+            facebookUser.deleted
+          );
         }
       })
       .catch(error => {
         commit("setLoading", false);
         commit("setError", error);
-        Vue.swal("Error", "" + error, "error");
+        Vue.swal("Error", error, "error");
       });
   },
   async autoSignIn({ commit }, payload) {
-    const authority = await firestore.getUserAuthority(payload.email); // firestore User doc 에서 데이터를 받아옴
     const token = await firebaseMessage.getNewToken(); // firebaseMessage 에서 토큰을 받아옴
-    const deleted = await firestore.getUserDeleted(payload.email);
+    const data = await firestore.getUserData(payload.email); // firestore User doc 에서 데이터를 받아옴
+    const authority = data.authority; // 유저 권한
+    const deleted = data.deleted; // 활동정지된 유저
     firestore.updateUserByEmail(payload.email, {
       token
     });
@@ -214,7 +223,7 @@ export default {
       .then(() => {
         commit("setUser", null); // null 값으로 user의 정보를 만들 때 생기는 오류 체크하기
         commit("loginSuccess", false);
-        router.replace('/');
+        router.replace("/");
       })
       .catch(error => console.error(`SignOut Error: ${error}`));
   },
