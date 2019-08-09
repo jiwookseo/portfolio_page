@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import firestore from "../firebase/firestore";
-import Comment from "../components/Comment";
+import firestore from "@/firebase/firestore";
+import Comment from "@/components/Article/Comment";
 import { mapGetters } from "vuex";
 
 export default {

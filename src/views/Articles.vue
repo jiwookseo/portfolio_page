@@ -11,10 +11,10 @@
 </template>
 
 <script>
-import HeaderSub from "../components/HeaderSub";
-import PortfolioList from "../components/PortfolioList";
-import PostList from "../components/PostList";
-import Footer from "../components/Footer";
+import HeaderSub from "@/components/Header/HeaderSub";
+import PortfolioList from "@/components/Article/PortfolioList";
+import PostList from "@/components/Article/PostList";
+import Footer from "@/components/Footer";
 
 export default {
   name: "Articles",

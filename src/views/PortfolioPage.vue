@@ -64,8 +64,8 @@
 
 
 <script>
-import HeaderSub from "../components/HeaderSub";
-import Footer from "../components/Footer";
+import HeaderSub from "@/components/Header/HeaderSub";
+import Footer from "@/components/Footer";
 import { mapGetters } from "vuex";
 import article from "@/js/article.js";
 

@@ -50,7 +50,7 @@
 
 
 <script>
-import firestore from "../firebase/firestore";
+import firestore from "@/firebase/firestore";
 import { mapGetters } from "vuex";
 
 export default {

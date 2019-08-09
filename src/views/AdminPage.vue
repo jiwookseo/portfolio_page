@@ -170,13 +170,13 @@
 </template>
 
 <script>
-import firestore from "../firebase/firestore";
+import firestore from "@/firebase/firestore";
 import Vue from "vue";
 import HighchartsVue from "highcharts-vue";
 import Highcharts from "highcharts";
 import { mapGetters } from "vuex";
 import AdminArticles from "@/components/AdminPage/Articles";
-import firebaseMessage from "../firebase/firebaseMessage";
+import firebaseMessage from "@/firebase/firebaseMessage";
 
 export default {
   name: "AdminPage",

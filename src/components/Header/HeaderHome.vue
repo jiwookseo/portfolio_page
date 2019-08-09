@@ -56,9 +56,9 @@
 </template>
 
 <script>
-import ImgBanner from "./ImgBanner";
-import FavBtn from "./FavBtn";
-import LoginDialog from "./LoginDialog";
+import ImgBanner from "@/components/Header/ImgBanner";
+import FavBtn from "@/components/Header/FavBtn";
+import LoginDialog from "@/components/Header/LoginDialog";
 import { mapActions, mapState } from "vuex";
 
 export default {

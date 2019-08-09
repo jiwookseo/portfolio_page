@@ -73,9 +73,9 @@
 </template>
 
 <script>
-import firestore from "../firebase/firestore";
+import firestore from "@/firebase/firestore";
 import { mapGetters } from "vuex";
-import LoginDialog from "./LoginDialog";
+import LoginDialog from "@/components/Header/LoginDialog";
 
 export default {
   name: "Comment",
