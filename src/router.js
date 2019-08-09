@@ -9,6 +9,7 @@ import ArticleWriter from "./views/ArticleWriter";
 import AdminPage from "./views/AdminPage.vue";
 
 Vue.use(Router);
+import { mapGetters } from "vuex";
 
 export default new Router({
   mode: "history",
