@@ -264,6 +264,7 @@ export default {
     changeAuth(id, selected, email) {
       firestore.getUserToken(email).then(token => {
         if (token) {
+          console.log(token);
           firebaseMessage.pushMessage(
             token,
             "권한 변경",
