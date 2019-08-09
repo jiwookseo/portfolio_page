@@ -1,5 +1,5 @@
 import "./firebase"; // default App import
-import firebaseMessage from "../firebase/firebaseMessage";
+import firebaseMessage from "@/firebase/firebaseMessage";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/database";

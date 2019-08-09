@@ -57,8 +57,8 @@
 </template>
 
 <script>
-import FavBtn from "./FavBtn";
-import LoginDialog from "./LoginDialog";
+import FavBtn from "@/components/Header/FavBtn";
+import LoginDialog from "@/components/Header/LoginDialog";
 import { mapActions, mapGetters } from "vuex";
 
 export default {

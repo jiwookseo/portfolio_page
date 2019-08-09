@@ -75,13 +75,13 @@
 </template>
 
 <script>
-import "../js/navbar.js";
-import HeaderHome from "../components/HeaderHome";
-import PortfolioList from "../components/PortfolioList";
-import PostList from "../components/PostList";
-import LineChart from "../components/LineChart";
-import Footer from "../components/Footer";
-import Radarchart from "../components/RadarChart";
+import "@/js/navbar.js";
+import HeaderHome from "@/components/Header/HeaderHome";
+import PortfolioList from "@/components/Article/PortfolioList";
+import PostList from "@/components/Article/PostList";
+import LineChart from "@/components/LineChart";
+import Footer from "@/components/Footer";
+import Radarchart from "@/components/RadarChart";
 import { mapGetters } from "vuex";
 
 export default {

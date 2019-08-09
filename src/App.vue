@@ -19,12 +19,12 @@
 </template>
 
 <script>
-import firestore from "./firebase/firestore";
-import ChatBtn from "./components/ChatBtn";
-import TranslateBtn from "./components/TranslateBtn";
-import LoadingSpinner from "./components/LoadingSpinner";
-import AskSnackbar from "./components/AskSnackbar";
-import AlertSnackbar from "./components/AlertSnackbar";
+import firestore from "@/firebase/firestore";
+import ChatBtn from "@/components/ChatBtn";
+import TranslateBtn from "@/components/TranslateBtn";
+import LoadingSpinner from "@/components/Global/LoadingSpinner";
+import AskSnackbar from "@/components/Global/AskSnackbar";
+import AlertSnackbar from "@/components/Global/AlertSnackbar";
 import { mapGetters } from "vuex";
 
 export default {

@@ -1,9 +1,9 @@
 import Vue from "vue";
 import router from "@/router";
 import firebase from "firebase/app";
-import firebaseAuth from "../firebase/firebaseAuth";
-import firestore from "../firebase/firestore";
-import firebaseMessage from "../firebase/firebaseMessage";
+import firebaseAuth from "@/firebase/firebaseAuth";
+import firestore from "@/firebase/firestore";
+import firebaseMessage from "@/firebase/firebaseMessage";
 
 var provider = new firebase.auth.FacebookAuthProvider();
 provider.addScope("public_profile");
