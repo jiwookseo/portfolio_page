@@ -144,6 +144,22 @@
         }
       }
     }
+    &.currentPortfolio {
+      .Title {
+        text-decoration: underline;
+        color: $blue-accent;
+      }
+      img {
+        opacity: 1;
+      }
+    }
+    &.currentPost {
+      .Title {
+        text-decoration: underline;
+        color: $blue-accent;
+      }
+      
+    }
   }
 }
 
@@ -207,6 +223,10 @@
       }
       &:hover .Title {
         text-decoration: underline;
+      }
+      &.current .Title {
+        text-decoration: underline;
+        color: $blue-accent;
       }
     }
   }
