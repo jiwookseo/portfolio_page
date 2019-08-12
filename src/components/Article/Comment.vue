@@ -199,7 +199,7 @@ export default {
 
 .comment-box {
   width: 100%;
-  padding: 10px 3%;
+  padding: 50px 3%;
 }
 .btn-box {
   position: absolute;
