@@ -44,117 +44,7 @@
           </template>
         </v-container>
 
-        <v-container v-show="mode==='users'">
-          <h2 class="section-subtitle">User Information</h2>
-          <v-card v-resize="onResize">
-            <v-card-title>
-              <h1>User</h1>
-              <v-spacer></v-spacer>
-              <v-text-field
-                v-model="search"
-                append-icon="search"
-                label="Search"
-                single-line
-                hide-details
-              ></v-text-field>
-            </v-card-title>
-            <v-data-table
-              class="elevation-1"
-              :headers="headers"
-              :items="userAll"
-              :search="search"
-              :sort-by="['authority', 'email']"
-              :sort-desc="[false, false]"
-              :loading="loading"
-              :class="{mobile: isMobile}"
-            >
-              <!-- desktop -->
-              <template v-slot:item.email="{ item }" v-if="!isMobile">
-                <v-chip :color="getColor(item.authority)" dark>{{ item.email }}</v-chip>
-              </template>
-              <template v-slot:item.authority="{ item }" v-if="!isMobile">
-                <td v-if="item.authority == '1'" class="text-xs-right">관리자</td>
-                <td v-else-if="item.authority == '2'" class="text-xs-right">팀원</td>
-                <td v-else-if="item.authority == '3'" class="text-xs-right">방문자</td>
-              </template>
-              <template v-slot:item.authority="{ item }" v-else-if="isMobile">
-                <v-flex xs12 sm6 d-flex>
-                  <v-chip
-                    :color="getColor(item.authority)"
-                    v-if="item.authority == '1'"
-                    style="color:black; white-space:nowrap;"
-                  >관리자</v-chip>
-                  <v-chip
-                    :color="getColor(item.authority)"
-                    v-else-if="item.authority == '2'"
-                    style="color:white; white-space:nowrap;"
-                  >팀원</v-chip>
-                  <v-chip
-                    :color="getColor(item.authority)"
-                    v-else-if="item.authority == '3'"
-                    style="color:white; white-space:nowrap;"
-                  >방문자</v-chip>
-                </v-flex>
-              </template>
-              <template v-slot:item.modify="{ item }" v-if="!isMobile">
-                <form
-                  @submit.prevent="changeAuth(item.id, item.selected, item.email)"
-                  v-if="item.authority != '1'"
-                  class="text-xs-right"
-                >
-                  <td>
-                    <v-select
-                      :items="auth"
-                      label="권한 선택"
-                      v-model="item.selected"
-                      style="width:110px;"
-                      solo
-                    ></v-select>
-                  </td>
-                  <td>
-                    <v-btn color="primary" type="submit">수정</v-btn>
-                  </td>
-                </form>
-              </template>
-              <template v-slot:item.modify="{ item }" v-else-if="isMobile">
-                <v-flex xs12 sm6 d-flex>
-                  <form
-                    @submit.prevent="changeAuth(item.id, item.selected, item.email)"
-                    v-if="item.authority != '1'"
-                    class="text-xs-right"
-                  >
-                    <td>
-                      <v-select
-                        :items="auth"
-                        label="권한 선택"
-                        v-model="item.selected"
-                        style="width:110px;height:10px;"
-                        solo
-                      ></v-select>
-                    </td>
-                    <td>
-                      <v-btn color="primary" type="submit">수정</v-btn>
-                    </td>
-                  </form>
-                </v-flex>
-              </template>
-              <template v-slot:item.delete="{item}">
-                <td>
-                  <v-btn
-                    color="error"
-                    v-if="(item.authority != '1' && item.deleted == '1')"
-                    @click="startConfirm(item.id, item.deleted)"
-                  >활동정지</v-btn>
-                  <v-btn
-                    color="success"
-                    v-if="(item.authority != '1' && item.deleted == '0')"
-                    @click="stopConfirm(item.id, item.deleted)"
-                  >활동 중</v-btn>
-                </td>
-              </template>
-            </v-data-table>
-          </v-card>
-        </v-container>
+        <UserInfo v-show="mode==='users'" />
 
         <AdminArticles v-show="mode==='articles'" />
 
@@ -170,292 +60,214 @@
 </template>
 
 <script>
-import firestore from "../firebase/firestore";
-import { mapGetters } from "vuex";
-import AdminArticles from "@/components/AdminPage/Articles";
-import firebaseMessage from "../firebase/firebaseMessage";
-import LogChart from "../components/AdminPage/LogChart";
+  import firestore from "@/firebase/firestore";
+  import {
+    mapGetters
+  } from "vuex";
+  import AdminArticles from "@/components/AdminPage/Articles";
+  import firebaseMessage from "@/firebase/firebaseMessage";
+  import LogChart from "@/components/AdminPage/LogChart";
+  import UserInfo from "@/components/AdminPage/UserInfo";
 
-export default {
-  name: "AdminPage",
-  components: {
-    AdminArticles,
-    LogChart
-  },
-  data() {
-    return {
-      search: "",
-      auth: ["팀원", "방문자"],
-      logs: [],
-      times: [],
-      isMobile: false,
-      headers: [
-        { text: "이메일", value: "email", sortable: false },
-        { text: "권한", value: "authority" },
-        { text: "권한 변경", value: "modify", sortable: false },
-        { text: "정지", value: "delete", sortable: false }
-      ],
-      loading: false,
-      mode: "summary", //users, articles, log
-      selectedId: "",
-      selectedDeleted: ""
-    };
-  },
-  watch: {
-    askSnackbar() {
-      if (this.askSnackbar.confirm === "deleted") {
-        this.changeDelete(this.selectedId, this.selectedDeleted);
+  export default {
+    name: "AdminPage",
+    components: {
+      AdminArticles,
+      LogChart,
+      UserInfo
+    },
+    data() {
+      return {
+        logs: [],
+        times: [],
+        mode: "summary", //users, articles, log
+      };
+    },
+    computed: {
+      ...mapGetters(["user"]),
+      userAll() {
+        return this.$store.getters.userAll.map(user => ({
+          selected: "default",
+          ...user
+        }));
+      },
+      portfoliosAll() {
+        return this.$store.getters.portfolios;
+      },
+      postsAll() {
+        return this.$store.getters.posts;
       }
     }
-  },
-  computed: {
-    ...mapGetters(["askSnackbar", "user"]),
-    userAll() {
-      return this.$store.getters.userAll.map(user => ({
-        selected: "default",
-        ...user
-      }));
-    },
-    portfoliosAll() {
-      return this.$store.getters.portfolios;
-    },
-    postsAll() {
-      return this.$store.getters.posts;
-    }
-  },
-  methods: {
-    stopConfirm(selectedId, selectedDeleted) {
-      this.selectedId = selectedId;
-      this.selectedDeleted = selectedDeleted;
-      this.$store.dispatch("setAskSnackbar", {
-        ask: true,
-        message: "해당 사용자 계정을 정지하겠습니까?",
-        button: "Suspend",
-        type: "deleted"
-      });
-    },
-    startConfirm(selectedId, selectedDeleted) {
-      this.selectedId = selectedId;
-      this.selectedDeleted = selectedDeleted;
-      console.log("id : " + this.selectedId);
-      this.$store.dispatch("setAskSnackbar", {
-        ask: true,
-        message: "해당 사용자 계정을 활성화 하겠습니까?",
-        button: "Activate",
-        type: "deleted"
-      });
-    },
-    onResize() {
-      if (window.innerWidth < 769) this.isMobile = true;
-      else this.isMobile = false;
-    },
-    getColor(authority) {
-      if (authority == "1") return "dark";
-      else if (authority == "2") return "blue";
-      else return "green";
-    },
-    changeAuth(id, selected, email) {
-      firestore.getUserToken(email).then(token => {
-        if (token) {
-          console.log(token);
-          firebaseMessage.pushMessage(
-            token,
-            "권한 변경",
-            "당신의 권한이 변경 되었습니다."
-          );
-        }
-      });
-
-      this.loading = true;
-      let num = "";
-      if (selected === "방문자") num = "3";
-      else if (selected === "팀원") num = "2";
-      if (num === "3" || num === "2") {
-        firestore.updateUserById(id, { authority: num }).then(() => {
-          // console.log("update Success")
-          this.loading = false;
-          this.$store.dispatch("getUserAll");
-        });
-      } else {
-        // console.log("선택해주세요")
-        this.loading = false;
-      }
-    },
-    changeDelete(id, del) {
-      this.loading = true;
-      let num = "";
-      if (del === "1") num = "0";
-      else if (del === "0") num = "1";
-
-      firestore.updateUserById(id, { deleted: num }).then(() => {
-        // console.log("update Success")
-        this.$store.dispatch("setAlertSnackbar", {
-          alert: true,
-          message: "Complete"
-        });
-        this.loading = false;
-        this.$store.dispatch("getUserAll");
-      });
-    },
-    async getLogs() {
-      this.logs = await firestore.getLog();
-    }
-  }
-};
+  };
 </script>
 
 
 <style lang="scss" scoped>
-@import "../css/style.scss";
-.wrap {
-  height: 100vh;
-  overflow-y: auto;
-}
-.wrap::-webkit-scrollbar {
-  display: initial;
-  width: 7px;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  -webkit-border-radius: 50px;
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+  @import "../css/style.scss";
+
+  .wrap {
+    height: 100vh;
+    overflow-y: auto;
   }
-}
-.wrap::-webkit-scrollbar-thumb:vertical {
-  -webkit-border-radius: 50px;
-  background-color: rgba(0, 0, 0, 0.4);
-  background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, 0);
-  min-height: 10px;
-  &:active {
-    background-color: rgba(0, 0, 0, 0.6);
-    border-radius: 50px;
+
+  .wrap::-webkit-scrollbar {
+    display: initial;
+    width: 7px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
     -webkit-border-radius: 50px;
-  }
-}
 
-a,
-a:hover {
-  color: initial;
-  text-decoration: none;
-}
-
-.btn-box {
-  height: 50px;
-  button {
-    height: 100%;
-    width: 50px;
-    position: relative;
-    background: rgba(0, 0, 0, 0.05);
-    &:focus {
-      outline: none;
-    }
-    i {
-      @include centerItem;
-      font-size: 2em;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
     }
   }
-}
 
-.admin-content {
-  height: auto;
-  padding: 0 20px;
-  margin-bottom: 80px;
-}
-.ul-tabs {
-  padding: 0;
-  margin: 0;
-  width: 40px;
-  display: inline-block;
-  vertical-align: top;
-  li {
-    writing-mode: tb-rl;
-    direction: rtl;
-    transform: rotate(-180deg);
-    text-transform: uppercase;
-    font-size: 0.9em;
-    letter-spacing: 1px;
-    padding: 15px 8px;
-    color: $gray;
-    border: 2px solid $gray;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    cursor: pointer;
-    &.active {
-      color: white;
-      border-color: $blue-accent;
-      background: $blue-accent;
+  .wrap::-webkit-scrollbar-thumb:vertical {
+    -webkit-border-radius: 50px;
+    background-color: rgba(0, 0, 0, 0.4);
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0);
+    min-height: 10px;
+
+    &:active {
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 50px;
+      -webkit-border-radius: 50px;
     }
   }
-}
-.tab-content {
-  display: inline-block;
-  vertical-align: top;
-  width: calc(99% - 40px);
-  height: auto;
-  min-height: 400px;
-  box-shadow: 0 0 3px $gray;
-}
 
-.content-container {
-  padding: 0 50px 50px;
-}
-
-.mobile {
-  color: #333;
-}
-
-@media screen and (max-width: 768px) {
-  .mobile table.v-table tr {
-    max-width: 100%;
-    position: relative;
-    display: block;
+  a,
+  a:hover {
+    color: initial;
+    text-decoration: none;
   }
 
-  .mobile table.v-table tr:nth-child(odd) {
-    border-left: 6px solid deeppink;
+  .btn-box {
+    height: 50px;
+
+    button {
+      height: 100%;
+      width: 50px;
+      position: relative;
+      background: rgba(0, 0, 0, 0.05);
+
+      &:focus {
+        outline: none;
+      }
+
+      i {
+        @include centerItem;
+        font-size: 2em;
+      }
+    }
   }
 
-  .mobile table.v-table tr:nth-child(even) {
-    border-left: 6px solid cyan;
-  }
-
-  .mobile table.v-table tr td {
-    display: flex;
-    width: 100%;
-    border-bottom: 1px solid #f5f5f5;
+  .admin-content {
     height: auto;
-    padding: 10px;
+    padding: 0 20px;
+    margin-bottom: 80px;
   }
 
-  .mobile table.v-table tr td ul li:before {
-    content: attr(data-label);
-    padding-right: 0.5em;
-    text-align: left;
-    display: block;
-    color: #999;
+  .ul-tabs {
+    padding: 0;
+    margin: 0;
+    width: 40px;
+    display: inline-block;
+    vertical-align: top;
+
+    li {
+      writing-mode: tb-rl;
+      direction: rtl;
+      transform: rotate(-180deg);
+      text-transform: uppercase;
+      font-size: 0.9em;
+      letter-spacing: 1px;
+      padding: 15px 8px;
+      color: $gray;
+      border: 2px solid $gray;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      cursor: pointer;
+
+      &.active {
+        color: white;
+        border-color: $blue-accent;
+        background: $blue-accent;
+      }
+    }
   }
-  .v-datatable__actions__select {
+
+  .tab-content {
+    display: inline-block;
+    vertical-align: top;
+    width: calc(99% - 40px);
+    height: auto;
+    min-height: 400px;
+    box-shadow: 0 0 3px $gray;
+  }
+
+  .content-container {
+    padding: 0 50px 50px;
+  }
+
+  .mobile {
+    color: #333;
+  }
+
+  @media screen and (max-width: 768px) {
+    .mobile table.v-table tr {
+      max-width: 100%;
+      position: relative;
+      display: block;
+    }
+
+    .mobile table.v-table tr:nth-child(odd) {
+      border-left: 6px solid deeppink;
+    }
+
+    .mobile table.v-table tr:nth-child(even) {
+      border-left: 6px solid cyan;
+    }
+
+    .mobile table.v-table tr td {
+      display: flex;
+      width: 100%;
+      border-bottom: 1px solid #f5f5f5;
+      height: auto;
+      padding: 10px;
+    }
+
+    .mobile table.v-table tr td ul li:before {
+      content: attr(data-label);
+      padding-right: 0.5em;
+      text-align: left;
+      display: block;
+      color: #999;
+    }
+
+    .v-datatable__actions__select {
+      width: 50%;
+      margin: 0px;
+      justify-content: flex-start;
+    }
+
+    .mobile .theme--light.v-table tbody tr:hover:not(.v-datatable__expand-row) {
+      background: transparent;
+    }
+  }
+
+  .flex-content {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .flex-item {
+    padding: 5px;
     width: 50%;
-    margin: 0px;
-    justify-content: flex-start;
+    height: 40px;
+    font-weight: bold;
   }
-  .mobile .theme--light.v-table tbody tr:hover:not(.v-datatable__expand-row) {
-    background: transparent;
-  }
-}
-.flex-content {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-}
-
-.flex-item {
-  padding: 5px;
-  width: 50%;
-  height: 40px;
-  font-weight: bold;
-}
 </style>
