@@ -1,17 +1,20 @@
 <template>
   <div>
-    <div class="dialog-outer" v-if="showLogin">
+    <div class="dialog-outer" v-show="showLogin">
       <div class="d-title text">Login</div>
       <div class="d-sub text">
         or
         <span @click="showLogin = false">create an account</span>
       </div>
-      <v-form ref="form" v-model="valid" lazy-validation>
+      <v-form ref="formLogin" v-model="valid" lazy-validation>
         <v-text-field
           v-model="email"
           :rules="emailRules"
           :disabled="loading"
           :loading="loading"
+          :autofocus="showLogin"
+          v-if="showLogin"
+          ref="focusLogin"
           label="Email"
           required
           class="mb-3"
@@ -55,16 +58,20 @@
       </div>
     </div>
 
-    <div class="dialog-outer" v-if="!showLogin">
+    <div class="dialog-outer" v-show="!showLogin">
       <div class="d-title text">Sign Up</div>
       <div class="d-sub text">
         or
         <span @click="showLogin = true" class="text">login to your account</span>
       </div>
-      <v-form ref="form" v-model="valid" lazy-validation>
+      <v-form ref="formSignup" v-model="valid" lazy-validation>
         <v-text-field
           v-model="email"
           :rules="emailRules"
+          :disabled="loading"
+          :loading="loading"
+          :autofocus="!showLogin"
+          v-if="!showLogin"
           label="Email"
           required
           class="mb-2"
@@ -73,6 +80,8 @@
         <v-text-field
           v-model="name"
           :rules="nameRules"
+          :disabled="loading"
+          :loading="loading"
           label="Name"
           required
           class="mb-2"
@@ -81,6 +90,8 @@
         <v-text-field
           v-model="password"
           :rules="passwordRules"
+          :disabled="loading"
+          :loading="loading"
           label="Password"
           :type="'password'"
           class="mb-2"
@@ -90,6 +101,8 @@
         <v-text-field
           v-model="passwordConfirm"
           :rules="passwordConfirmRules"
+          :disabled="loading"
+          :loading="loading"
           label="Password Confirm"
           :type="'password'"
           required
@@ -144,6 +157,12 @@ export default {
   watch: {
     dialog: function() {
       this.reset();
+      if (this.dialog) {
+        this.$refs.focusLogin.focus();
+      }
+    },
+    showLogin: function() {
+      this.reset();
     }
   },
   computed: {
@@ -163,7 +182,8 @@ export default {
   },
   methods: {
     reset() {
-      this.$refs.form.reset();
+      this.$refs.formLogin.reset();
+      this.$refs.formSignup.reset();
     },
     signUp() {
       if (
