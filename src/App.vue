@@ -41,6 +41,7 @@ export default {
   },
   watch: {
     $route() {
+      // route 가 변경될 때에 post / portfolio / home page 를 구분하여 data reload
       const path = this.$route.matched[0].path;
       if (path === "") {
         this.$store.dispatch("getArticles", "posts");
@@ -50,6 +51,7 @@ export default {
           this.$store.dispatch("getArticles", "posts");
         else this.$store.dispatch("getArticles", "portfolios");
       }
+      // route 가 변경될 때에 log 를 생성
       this.addLog(this.$route.path);
     }
   },
@@ -58,6 +60,7 @@ export default {
     ...mapGetters({ isAdmin: "checkIfAdmin" })
   },
   mounted() {
+    // mount cycle 에 최초 데이터 로드
     this.$store.dispatch("getArticles", "posts");
     this.$store.dispatch("getArticles", "portfolios");
     this.$store.dispatch("getUserAll");
