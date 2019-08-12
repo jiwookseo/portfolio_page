@@ -1,8 +1,8 @@
-import "./firebase"; // default App import
-import firebase from "firebase/app";
-import "firebase/messaging";
 import axios from "axios";
 
+import "./firebase";
+import firebase from "firebase/app";
+import "firebase/messaging";
 const messaging = firebase.messaging();
 messaging.usePublicVapidKey(
   "BBBpw-_z752QFHrMQElXJSrxpEB8_vKtiKUgD6sQvuuIbLSS5odGEeh--BzMYSqxYw3ikgePoUgQKPFJK1ed9D0"
@@ -12,7 +12,7 @@ export default {
   getNewToken() {
     return new Promise(resolve => {
       messaging
-        .requestPermission() // notification 허용 요청을 보냄
+        .requestPermission()
         .then(() => {
           messaging
             .getToken()
@@ -33,8 +33,7 @@ export default {
           notification: {
             title: title,
             body: body,
-            icon: "./img/icons/logo.png",
-            sound: "./sound/jingle-bells-sms.caf"
+            icon: "./img/icons/logo.png"
           }
         }, {
           headers: {

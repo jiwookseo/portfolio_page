@@ -20,6 +20,7 @@
             v-for="portfolio in portfolios"
             :key="portfolio.id"
             class="item"
+            :class="{currentPortfolio: portfolio.id === $route.params.id}"
             :title="portfolio.title"
           >
             <router-link
@@ -35,7 +36,12 @@
         </div>
         <div class="article-list-mobile">
           <div class="list">
-            <div class="item" v-for="p in paginatedData" :key="p.id">
+            <div class="item"
+              v-for="p in paginatedData"
+              :class="{current: p.id === $route.params.id}"
+              :title="p.title"
+              :key="p.id"
+            >
               <router-link
                 :to="{name: 'PortfolioDetailPage', params: {id: p.id}}"
                 class="item-link"
