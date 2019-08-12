@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Buttons</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/themes/prism.min.css"
+  />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    #wrap {
+      padding: 0 20px;
+    }
+    h1 {
+      margin: 20px 0 30px;
+    }
+    h2 {
+      margin: 10px 0;
+    }
+    section {
+      margin-bottom: 50px;
+    }
+    ul, ol {
+      padding-left: 30px;
+    }
+
+    .btn-box {
+      height: auto;
+      min-height: 80px;
+      padding: 10px 0;
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    .nudge-btn {
+      border: none;
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      padding: 10px 20px;
+      border-radius: 3px;
+      color: white;
+      text-transform: uppercase;
+      white-space: nowrap;
+      margin-right: 20px;
+      margin-bottom: 10px;
+    }
+    .nudge-btn:focus {
+      outline: none;
+    }
+    .nudge-primary {
+      background: #00C0FF;
+      box-shadow: 5px 0 #00A2FF;
+    }
+    .nudge-primary:hover {
+      box-shadow: 3px 0 #00A2FF;
+      left: 2px;
+    }
+    .nudge-primary:active {
+      box-shadow: none;
+      left: 5px;
+    }
+    .nudge-secondary {
+      background: #9AAEBB;
+      box-shadow: -5px 0 #8D9CB2;
+    }
+    .nudge-secondary:hover {
+      box-shadow: -3px 0 #8D9CB2;
+      right: 2px;
+    }
+    .nudge-secondary:active {
+      box-shadow: none;
+      right: 5px;
+    }
+    .nudge-disabled {
+      background: #d6dee3;
+      box-shadow: 5px 0 #ccd6dd;
+      cursor: initial;
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    .slant-btn {
+      cursor: pointer;
+      overflow: hidden;
+      display: inline-block;
+      position: relative;
+      padding: 10px 15px 17px 25px;
+      background: #00A2FF;
+      color: white;
+      text-transform: uppercase;
+      font-weight: bold;
+      white-space: nowrap;
+      transition: all 0.3s;
+    }
+    .slant-btn i {
+      transform: translateY(6px);
+      margin-left: 50px;
+    }
+    .slant-btn::before {
+      content: "";
+      width: 70px;
+      height: 100px;
+      position: absolute;
+      right: -20px;
+      top: -45%;
+      background: #00C0FF;
+      transform: rotate(-20deg);
+      transition: all 0.3s;
+    }
+    .slant-btn:hover::before {
+      width: 90px;
+    }
+    .slant-btn:active {
+      transform: translateY(2px);
+    }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    .slide-btn {
+      cursor: pointer;
+      display: inline-block;
+      padding: 5px 15px;
+      border: 2px solid #00A2FF;
+      background-image: linear-gradient(to right, #00A2FF 50%, transparent 50%);
+      background-size: 200% 100%;
+      background-position: right;
+      color: #00A2FF;
+      white-space: nowrap;
+      transition: all 0.3s;
+    }
+    .slide-btn:hover {
+      background-position: left;
+      color: white;
+    }
+
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+    .glow-btn {
+      cursor: pointer;
+      display: inline-block;
+      padding: 5px 15px;
+      border: 3px solid #00A2FF;
+      border-radius: 3px;
+      box-shadow: 0 0 2px #00A2FF;
+      color: #00A2FF;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .glow-btn:hover {
+      color: #00c0ff;
+      border-color: #00c0ff;
+      box-shadow: none;
+    }
+    .glow-btn:active {
+      color: #0071b2;
+      border-color: #0071b2;
+    }
+
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    .dbl-border-btn {
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      padding: 10px 20px;
+      background: rgba(0, 0, 0, 0.1);
+      border: 1.5px solid #00A2FF;
+      color: #00A2FF;
+      white-space: nowrap;
+      transition: all 0.3s;
+    }
+    .dbl-border-btn::before, .dbl-border-btn::after {
+      content: "";
+      box-sizing: border-box;
+      width: 95%;
+      height: 135%;
+      border: 0px solid #00A2FF;
+      transition: all 0.3s;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+    }
+    .dbl-border-btn::before {
+      border-top-width: 1.5px;
+      border-bottom-width: 1.5px;
+      transform: translate(-50%, -50%) scaleX(0);
+      transform-origin: left;
+    }
+    .dbl-border-btn::after {
+      border-left-width: 1.5px;
+      border-right-width: 1.5px;
+      transform: translate(-50%, -50%) scaleY(0);
+      transform-origin: top;
+    }
+    .dbl-border-btn:hover {
+      background-color: rgba(0, 0, 0, 0);
+    }
+    .dbl-border-btn:hover::before {
+      transform: translate(-50%, -50%) scaleX(1);
+    }
+    .dbl-border-btn:hover::after {
+      transform: translate(-50%, -50%) scaleY(1);
+    }
+
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    .border-fill-btn {
+      width: 300px;
+      height: 150px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      border-radius: 5px;
+      box-shadow: inset 0 0 0 4px #9AAEBB;
+      color: #9AAEBB;
+      transition: color 0.25s 0.09s;
+    }
+    .border-fill-btn span {
+      white-space: nowrap;
+      font-size: 1.5em;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .border-fill-btn::before,
+    .border-fill-btn::after {
+      content: "";
+      box-sizing: border-box;
+      pointer-events: none;
+      position: absolute;
+      width: 0;
+      height: 0;
+      bottom: 0;
+      right: 0;
+      border: 0 solid transparent;
+      border-radius: 5px;
+    }
+    .border-fill-btn::before {
+      border-bottom-width: 4px;
+      border-left-width: 4px;
+    }
+    .border-fill-btn::after {
+      border-top-width: 4px;
+      border-right-width: 4px;
+    }
+    .border-fill-btn:hover {
+      color: #00A2FF;
+    }
+    .border-fill-btn:hover::before,
+    .border-fill-btn:hover::after {
+      width: 100%;
+      height: 100%;
+      border-color: #00A2FF;
+      transition: border-color 0s, width 0.25s, height 0.25s;
+    }
+    .border-fill-btn:hover::before {
+      transition-delay: 0s, 0s, 0.25s;
+    }
+    .border-fill-btn:hover::after {
+      transition-delay: 0s, 0.25s, 0s;
+    }
+
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    .bobbing-btn {
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      border-radius: 50%;
+      background: #00A2FF;
+      position: relative;
+    }
+    .bobbing-btn:hover {
+      animation: bobbing 0.7s ease-in-out infinite alternate;
+    }
+    .bobbing-btn i {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+    }
+    @keyframes bobbing {
+      0% {transform: translateY(0);}
+      100% {transform: translateY(-5px);}
+    }
+
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    .glint-btn {
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      border-radius: 5px;
+      background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 0%, #00D8E6 0%, #00C0FF 0%, #00A2FF 0%);
+      position: relative;
+    }
+    .glint-btn:hover {
+      animation: glint 1s ease infinite;
+    }
+    .glint-btn i {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+    }
+    @keyframes glint {
+      0% {background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 0%, #00D8E6 0%, #00C0FF 0%, #00A2FF 0%);}
+      2% {background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 0%, #00D8E6 0%, #00C0FF 0%, #00A2FF 20%);}
+      4% {background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 0%, #00D8E6 0%, #00C0FF 20%, #00A2FF 40%);}
+      6% {background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 0%, #00D8E6 20%, #00C0FF 40%, #00A2FF 60%);}
+      8% {background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 20%, #00D8E6 40%, #00C0FF 60%, #00A2FF 80%);}
+      10% {background: linear-gradient(to top right, #00A2FF 20%, #00C0FF 40%, #00D8E6 60%, #00C0FF 80%, #00A2FF 100%);}
+      12% {background: linear-gradient(to top right, #00A2FF 40%, #00C0FF 60%, #00D8E6 80%, #00C0FF 100%, #00A2FF 100%);}
+      14% {background: linear-gradient(to top right, #00A2FF 60%, #00C0FF 80%, #00D8E6 100%, #00C0FF 100%, #00A2FF 105%);}
+      16% {background: linear-gradient(to top right, #00A2FF 80%, #00C0FF 100%, #00D8E6 100%, #00C0FF 100%, #00A2FF 100%);}
+      18% {background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 0%, #00D8E6 0%, #00C0FF 0%, #00A2FF 0%);}
+      100% {background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 0%, #00D8E6 0%, #00C0FF 0%, #00A2FF 0%);}
+    }
+
+
+
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    .jiggle-btn {
+      width: 50px;
+      height: 50px;
+      position: relative;
+    }
+    .jiggle-btn i {
+      cursor: pointer;
+      color: #00A2FF;
+      transform-origin: bottom;
+    }
+    .jiggle-btn i:hover {
+      animation: jiggle 0.15s linear 0.2s 4 forwards;
+    }
+    @keyframes jiggle {
+      0% {transform: rotate(0);}
+      25% {transform: rotate(5deg);}
+      75% {transform: rotate(-5deg);}
+      100% {transform: rotate(0);}
+    }
+    
+
+
+    
+  </style>
+</head>
+
+<body>
+  <div id="wrap">
+    <h1>Responsive Button Designs</h1>
+
+    <!-- ************************************************************************* -->
+    <section>
+      <h2>General Tips on Creating Custom Buttons with Pure CSS</h2>
+      <ol>
+        <li>Create a <b>button container</b>, i.e. an extra &lt;div&gt; tag encompassing the actual button component,
+          especially if there are multiple buttons.
+          <br>An outer container makes it easier to control button position or any transformation effects. </li>
+        <li>Use <b>paddings</b> or <b>width/height</b> properties to control button size:
+          <ul>
+            <li>Specific <b>width &amp; height</b>: Button size will remain consistent regardless of content (button
+              label). Need to take note of content length, since long content may overflow</li>
+            <li><b>Padding</b>: Button size will stretch to fit its content. Adding the "white-space: nowrap;" property
+              will prevent the button from breaking up into multiple lines when viewport width decreases.</li>
+          </ul>
+        </li>
+        <li><b>&lt;div&gt;</b> tags v.s. <b>&lt;button&gt;</b> tags for button component:
+          <ul>
+            <li><b>Button</b>: Semantic tag => easier to distinguish among a number of div tags. Setting the button type
+              (button|submit|reset) is also possible for when it is used in forms.</li>
+            <li>Add "cursor: pointer;" to indicate that the button element is clickable</li>
+            <li>For &lt;button&gt;, add "border: none;" and "button:focus {outline: none;}" to get rid of the border and outline, respectively.</li>
+          </ul>
+        </li>
+        <li>Create 3-4 modes: <b>default</b> (no user interactions), <b>hover</b> (cursor hovers over the button),
+          <b>active</b> (the moment when the button is clicked), and <b>disabled</b> (inactive button)</li>
+      </ol>
+    </section>
+
+
+    <!-- ************************************************************************* -->
+
+
+    <section>
+      <h2>Nudge Buttons</h2>
+      <div class="btn-box">
+        <button class="nudge-btn nudge-primary">Primary</button>
+        <button class="nudge-btn nudge-secondary">Secondary</button>
+        <button class="nudge-btn nudge-disabled" disabled>Disabled</button>
+      </div>
+      <div>
+        <h3>HTML</h3>
+        <pre><code class="language-html">&lt;button class="nudge-btn nudge-primary"&gt;Primary&lt;/button&gt;
+&lt;button class="nudge-btn nudge-secondary"&gt;Secondary&lt;/button&gt;
+&lt;button class="nudge-btn nudge-disabled" disabled&gt;Disabled&lt;/button&gt;</code></pre>
+        <h3>Common Properties</h3>
+        <pre><code class="language-css">.nudge-btn {
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 3px;
+  color: white;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.nudge-btn:focus {
+  outline: none;
+}</code></pre>
+        <h3>Primary</h3>
+        <pre><code class="language-css">.nudge-primary {
+  background: #00C0FF;
+  box-shadow: 5px 0 #00A2FF;
+}
+.nudge-primary:hover {
+  box-shadow: 3px 0 #00A2FF;
+  left: 2px;
+}
+.nudge-primary:active {
+  box-shadow: none;
+  left: 5px;
+}</code></pre>
+        <h3>Secondary</h3>
+        <pre><code class="language-css">.nudge-secondary {
+  background: #9AAEBB;
+  box-shadow: -5px 0 #8D9CB2;
+}
+.nudge-secondary:hover {
+  box-shadow: -3px 0 #8D9CB2;
+  right: 2px;
+}
+.nudge-secondary:active {
+  box-shadow: none;
+  right: 5px;
+}</code></pre>
+        <h3>Disabled</h3>
+        <pre><code class="language-css">.nudge-disabled {
+  background: #d6dee3;
+  box-shadow: 5px 0 #ccd6dd;
+  cursor: initial;
+}</code></pre>
+      </div>
+    </section>
+
+
+    <!-- ************************************************************************* -->
+
+
+    <section>
+      <h2>Slant Button</h2>
+      <div class="btn-box">
+        <div class="slant-btn">Slant Button<i class="material-icons">arrow_forward</i></div>
+      </div>
+      <div>
+        <h3>HTML</h3>
+        <pre><code class="language-html">&lt;div class="slant-btn"&gt;
+  slant Button
+  &lt;i class="material-icons"&gt;arrow_forward&lt;/i&gt;
+&lt;/div&gt;</code></pre>
+        <h3>CSS</h3>
+        <pre><code class="language-css">.slant-btn {
+  cursor: pointer;
+  overflow: hidden;
+  display: inline-block;
+  position: relative;
+  padding: 10px 15px 17px 25px;
+  background: #00A2FF;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  white-space: nowrap;
+  transition: all 0.3s;
+}
+.slant-btn i {
+  transform: translateY(6px);
+  margin-left: 50px;
+}
+.slant-btn::before {
+  content: "";
+  width: 70px;
+  height: 100px;
+  position: absolute;
+  right: -20px;
+  top: -45%;
+  background: #00C0FF;
+  transform: rotate(-20deg);
+  transition: all 0.3s;
+}
+.slant-btn:hover::before {
+  width: 90px;
+}
+.slant-btn:active {
+  transform: translateY(2px);
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ************************************************************************* -->
+    <section>
+      <h2>Slide Button</h2>
+      <div class="btn-box">
+        <div class="slide-btn">Slide Button</div>
+      </div>
+      <div>
+        <h3>HTML</h3>
+        <pre><code class="language-html">&lt;div class="slide-btn"&gt;Slide Button&lt;/div&gt;</code></pre>
+        <h3>CSS</h3>
+        <pre><code class="language-css">.slide-btn {
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 15px;
+  border: 2px solid #00A2FF;
+  background-image: linear-gradient(to right, #00A2FF 50%, transparent 50%);
+  background-size: 200% 100%;
+  background-position: right;
+  color: #00A2FF;
+  white-space: nowrap;
+  transition: all 0.3s;
+}
+.slide-btn:hover {
+  background-position: left;
+  color: white;
+}</code></pre>
+      </div>
+    </section>
+
+
+    <!-- ************************************************************************* -->
+
+    <section>
+      <h2>Glow Button</h2>
+      <div class="btn-box">
+        <div class="glow-btn">Glow Button</div>
+      </div>
+      <div>
+        <h3>HTML</h3>
+        <pre><code class="language-html">&lt;div class="glow-btn"&gt;Glow Button&lt;/div&gt;</code></pre>
+        <h3>CSS</h3>
+        <pre><code class="language-css">.glow-btn {
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 15px;
+  border: 3px solid #00A2FF;
+  border-radius: 3px;
+  box-shadow: 0 0 2px #00A2FF;
+  color: #00A2FF;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.glow-btn:hover {
+  color: #00c0ff;
+  border-color: #00c0ff;
+  box-shadow: none;
+}
+.glow-btn:active {
+  color: #0071b2;
+  border-color: #0071b2;
+}</code></pre>
+      </div>
+    </section>
+
+
+    <!-- ************************************************************************* -->
+
+    <section>
+      <h2>Double Border Button</h2>
+      <div class="btn-box">
+        <div class="dbl-border-btn">Double Border</div>
+      </div>
+      <div>
+        <h3>HTML</h3>
+        <pre><code class="language-html">&lt;div class="dbl-border-btn"&gt;Double Border&lt;/div&gt;</code></pre>
+        <h3>CSS</h3>
+        <pre><code class="language-css">.dbl-border-btn {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1.5px solid #00A2FF;
+  color: #00A2FF;
+  white-space: nowrap;
+  transition: all 0.3s;
+}
+.dbl-border-btn::before, .dbl-border-btn::after {
+  content: "";
+  box-sizing: border-box;
+  width: 95%;
+  height: 135%;
+  border: 0px solid #00A2FF;
+  transition: all 0.3s;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.dbl-border-btn::before {
+  border-top-width: 1.5px;
+  border-bottom-width: 1.5px;
+  transform: translate(-50%, -50%) scaleX(0);
+  transform-origin: left;
+}
+.dbl-border-btn::after {
+  border-left-width: 1.5px;
+  border-right-width: 1.5px;
+  transform: translate(-50%, -50%) scaleY(0);
+  transform-origin: top;
+}
+.dbl-border-btn:hover {
+  background-color: rgba(0, 0, 0, 0);
+}
+.dbl-border-btn:hover::before {
+  transform: translate(-50%, -50%) scaleX(1);
+}
+.dbl-border-btn:hover::after {
+  transform: translate(-50%, -50%) scaleY(1);
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ************************************************************************* -->
+
+    <section>
+      <h2>Border Fill Button</h2>
+      <div class="btn-box">
+        <div class="border-fill-btn">
+          <span>Border Fill</span>
+        </div>
+      </div>
+      <div>
+        <h3>HTML</h3>
+        <pre><code class="language-html">&lt;div class="border-fill-btn"&gt;
+  &lt;span&gt;Border Fill&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+        <h3>CSS</h3>
+        <pre><code class="language-css">.border-fill-btn {
+  width: 300px;
+  height: 150px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border-radius: 5px;
+  box-shadow: inset 0 0 0 4px #9AAEBB;
+  color: #9AAEBB;
+  transition: color 0.25s 0.09s;
+}
+.border-fill-btn span {
+  white-space: nowrap;
+  font-size: 1.5em;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+.border-fill-btn::before,
+.border-fill-btn::after {
+  content: "";
+  box-sizing: border-box;
+  pointer-events: none;
+  position: absolute;
+  width: 0;
+  height: 0;
+  bottom: 0;
+  right: 0;
+  border: 0 solid transparent;
+  border-radius: 5px;
+}
+.border-fill-btn::before {
+  border-bottom-width: 4px;
+  border-left-width: 4px;
+}
+.border-fill-btn::after {
+  border-top-width: 4px;
+  border-right-width: 4px;
+}
+.border-fill-btn:hover {
+  color: #00A2FF;
+}
+.border-fill-btn:hover::before,
+.border-fill-btn:hover::after {
+  width: 100%;
+  height: 100%;
+  border-color: #00A2FF;
+  transition: border-color 0s, width 0.25s, height 0.25s;
+}
+.border-fill-btn:hover::before {
+  transition-delay: 0s, 0s, 0.25s;
+}
+.border-fill-btn:hover::after {
+  transition-delay: 0s, 0.25s, 0s;
+}</code></pre>
+      </div>
+    </section>
+
+        <!-- ************************************************************************* -->
+
+    <section>
+        <h2>Bobbing Button</h2>
+        <div class="btn-box">
+          <div class="bobbing-btn">
+            <i class="material-icons">keyboard_arrow_up</i>
+          </div>
+        </div>
+        <div>
+          <h3>HTML</h3>
+          <pre><code class="language-html">&lt;div class="bobbing-btn"&gt;
+  &lt;i class="material-icons"&gt;keyboard_arrow_up&lt;/i&gt;
+&lt;/div&gt;</code></pre>
+          <h3>CSS</h3>
+          <pre><code class="language-css">.bobbing-btn {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  border-radius: 50%;
+  background: #00A2FF;
+  position: relative;
+}
+.bobbing-btn:hover {
+  animation: bobbing 0.7s ease-in-out infinite alternate;
+}
+.bobbing-btn i {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+@keyframes bobbing {
+  0% {transform: translateY(0);}
+  100% {transform: translateY(-5px);}
+}</code></pre>
+        </div>
+    </section>
+
+    <!-- ************************************************************************* -->
+
+    <section>
+      <h2>Glint Button</h2>
+      <div class="btn-box">
+        <div class="glint-btn">
+          <i class="material-icons">flash_on</i>
+        </div>
+      </div>
+      <div>
+        <h3>HTML</h3>
+        <pre><code class="language-html">&lt;div class="glint-btn"&gt;
+  &lt;i class="material-icons"&gt;flash_on&lt;/i&gt;
+&lt;/div&gt;</code></pre>
+        <h3>CSS</h3>
+        <pre><code class="language-css">.glint-btn {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  border-radius: 5px;
+  background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 0%, #00D8E6 0%, #00C0FF 0%, #00A2FF 0%);
+  position: relative;
+}
+.glint-btn:hover {
+  animation: glint 1s ease infinite;
+}
+.glint-btn i {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+@keyframes glint {
+  0% {background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 0%, #00D8E6 0%, #00C0FF 0%, #00A2FF 0%);}
+  2% {background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 0%, #00D8E6 0%, #00C0FF 0%, #00A2FF 20%);}
+  4% {background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 0%, #00D8E6 0%, #00C0FF 20%, #00A2FF 40%);}
+  6% {background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 0%, #00D8E6 20%, #00C0FF 40%, #00A2FF 60%);}
+  8% {background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 20%, #00D8E6 40%, #00C0FF 60%, #00A2FF 80%);}
+  10% {background: linear-gradient(to top right, #00A2FF 20%, #00C0FF 40%, #00D8E6 60%, #00C0FF 80%, #00A2FF 100%);}
+  12% {background: linear-gradient(to top right, #00A2FF 40%, #00C0FF 60%, #00D8E6 80%, #00C0FF 100%, #00A2FF 100%);}
+  14% {background: linear-gradient(to top right, #00A2FF 60%, #00C0FF 80%, #00D8E6 100%, #00C0FF 100%, #00A2FF 105%);}
+  16% {background: linear-gradient(to top right, #00A2FF 80%, #00C0FF 100%, #00D8E6 100%, #00C0FF 100%, #00A2FF 100%);}
+  18% {background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 0%, #00D8E6 0%, #00C0FF 0%, #00A2FF 0%);}
+  100% {background: linear-gradient(to top right, #00A2FF 0%, #00C0FF 0%, #00D8E6 0%, #00C0FF 0%, #00A2FF 0%);}
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ************************************************************************* -->
+
+    <section>
+      <h2>Jiggle Button</h2>
+      <div class="btn-box">
+        <div class="jiggle-btn">
+          <i class="material-icons">delete</i>
+        </div>
+      </div>
+      <div>
+        <h3>HTML</h3>
+        <pre><code class="language-html">&lt;div class="jiggle-btn"&gt;
+  &lt;i class="material-icons"&gt;delete&lt;/i&gt;
+&lt;/div&gt;</code></pre>
+        <h3>CSS</h3>
+        <pre><code class="language-css">.jiggle-btn {
+  width: 50px;
+  height: 50px;
+  position: relative;
+}
+.jiggle-btn i {
+  cursor: pointer;
+  color: #00A2FF;
+  transform-origin: bottom;
+}
+.jiggle-btn i:hover {
+  animation: jiggle 0.15s linear 0.2s 4 forwards;
+}
+@keyframes jiggle {
+  0% {transform: rotate(0);}
+  25% {transform: rotate(5deg);}
+  75% {transform: rotate(-5deg);}
+  100% {transform: rotate(0);}
+}</code></pre>
+      </div>
+    </section>
+
+
+
+
+
+
+    <div>
+      Reference:
+      <ul class="reference">
+        <li>https://tympanus.net/Development/CreativeButtons/</li>
+      </ul>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
+</body>
+
+</html>
