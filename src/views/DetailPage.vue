@@ -14,11 +14,30 @@
           </div>
         </div>
       </div>
-      <img v-if="isPortfolio" class="Img" :src="article.img" />
+      <img 
+        v-if="isPortfolio" 
+        class="Img" 
+        title="Click image to view full size"
+        :src="article.img" 
+        @click="openImgDialog(article.img)" 
+      />
       <p class="Content">{{article.content}}</p>
     </div>
     <Comment :article="article" :isPortfolio="isPortfolio" />
-
+    <v-dialog
+      v-model="dialogImg"
+      max-width="800"
+    >
+      <div class="dialog-outer">
+        <img 
+          :src="dialogImgURL" 
+          alt="Portfolio Image" 
+        >
+        <div class="cancel-btn" @click="closeDialog">
+          <i class="material-icons">close</i>
+        </div>
+      </div>
+    </v-dialog>
   </div>
 </template>
 
@@ -35,7 +54,9 @@ export default {
     return {
       selectedID: "",
       dialogWrite: false,
-      deleteID: ""
+      deleteID: "",
+      dialogImg: false,
+      dialogImgURL: ""
     };
   },
   computed: {
@@ -77,6 +98,13 @@ export default {
     }
   },
   methods: {
+    openImgDialog(url) {
+      this.dialogImgURL = url;
+      this.dialogImg = true;
+    },
+    closeDialog() {
+      this.dialogImg = false;
+    },
     updateArticle() {
       if (this.isPortfolio) {
         this.$router.replace({name: 'PortfolioUpdate', params: {id: this.$route.params.id}});
@@ -84,10 +112,6 @@ export default {
       else {
         this.$router.replace({name: 'PostUpdate', params: {id: this.$route.params.id}});
       }
-    },
-    openArticleWriter() {
-      this.selectedID = this.article.id;
-      this.dialogWrite = true;
     },
     deleteConfirm() {
       this.$store.dispatch("setAskSnackbar", {
@@ -108,9 +132,6 @@ export default {
         });
       });
     },
-    parents() {
-      this.dialogWrite = false;
-    }
   }
 };
 </script>
@@ -118,6 +139,11 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/css/style.scss";
+
+.article-content {
+  width: 100%;
+  padding: 10px 3%;
+}
 
 .article-meta {
   position: relative;
@@ -184,7 +210,34 @@ export default {
 }
 .Img {
   width: 100%;
+  max-height: 350px;
   border-radius: 3px;
   object-fit: cover;
 }
+
+.dialog-outer {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  position: relative;
+  img {
+    width: 100%;
+    background: white;
+    border-radius: 5px;
+  }
+  .cancel-btn {  // Dialog Close Button (gray X)
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    i {
+      color: gray;
+      @include centerItem;
+      font-size: 2.5em;
+    }
+  }
+}
+
+
 </style>
