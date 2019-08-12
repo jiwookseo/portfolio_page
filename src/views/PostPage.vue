@@ -16,7 +16,11 @@
               <i class="material-icons">chevron_right</i>
             </router-link>
           </p>
-          <div v-for="post in posts" :key="post.id" class="item" :title="post.title">
+          <div v-for="post in posts" 
+            :key="post.id" 
+            class="item"
+            :class="{currentPost: post.id === $route.params.id}"
+            :title="post.title">
             <router-link
               :to="{name: 'PostDetailPage', params: {id: post.id}}"
               class="post-item-link"
@@ -29,7 +33,12 @@
         </div>
         <div class="article-list-mobile">
           <div class="list">
-            <div class="item" v-for="p in paginatedData" :key="p.id">
+            <div class="item" 
+              v-for="p in paginatedData" 
+              :key="p.id"
+              :class="{current: p.id === $route.params.id}"
+              :title="p.title"
+            >
               <router-link :to="{name: 'PostDetailPage', params: {id: p.id}}" class="item-link">
                 <p class="Title">{{p.title}}</p>
                 <p class="Author">{{p.userName}}</p>
