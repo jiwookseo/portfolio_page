@@ -30,6 +30,18 @@
 
 ```
 
+- AdminPage/Articles.vue : AdminPage에서 포트폴리오와 포스트, 더미박스 정보를 담은 컴포넌트
+
+- AlertSnackbar.vue : 완료 알림창 구현
+
+- AskSnackbar.vue : 확인여부 묻는 알림창 구현 
+
+- ChatBtn.vue : 채팅 서비스 구현
+
+- Comment.vue : 포트폴리오와 포스트의 댓글 영역 구현
+
+- Cookies.vue : vue-cookies로 토큰 세팅
+
 - DetailDialog.vue : 포트폴리오와 포스트의 세부정보를 보여주는 Dialog 창 구현
 
 - FavBtn.vue : 즐겨찾기(북마크) 기능 및 버튼 구현
@@ -50,15 +62,13 @@
 
 - PortfolioList.vue : 파이어베이스에 저장된 포트폴리오를 불러와 출력 구현
 
-- Post.vue : 포스트 기본 형식 틀 구현
+- PostList.vue : 파이어베이스에 저장된 포스트를 불러와 출력 구현
 
 - RadarChart.vue : 팀원들의 당일 커밋 수 그래프 차트 구현
 
 - TranslateBtn.vue : 해당 페이지 번역 기능 및 버튼 구현
 
 - WriteDialog.vue : 포스트 및 포트폴리오 작성 Dialog 창 및 파이어베이스 저장 기능 구현
-
-- ChatBtn.vue : 채팅 서비스 구현(예정)
 
 ```
 
@@ -78,6 +88,12 @@
 
 - firestore.js : firebase의 posts와 portfolios, realtime DB의 Log 값 CRUD 담당
 
+- firebaseMessage.js : Token을 통한 알림 메시지 구현
+
+// dummy : 타입(포트폴리오, 포스트)에 맞는 dummy 파일을 저장하기 위한 기능 구현
+- dummy_tmp.txt
+- dummy.js
+- dummy.json
 ```
 
 <br>
@@ -87,6 +103,12 @@
 ```
 
 - AdminPage.vue : Admin 계정이 요일별 경로이동 Log를 그래프 차트로 확인할 수 있는 페이지
+
+- Articles.vue : 타입에 따라 포트폴리오와 포스트에 대한 리스트를 보여주도록 구현
+
+- ArticleWriter.vue : 타입에 따라 포트폴리오와 포스트를 작성할 수 있도록 구현
+
+- DetailPage.vue : 포트폴리오나 포스트의 세부정보를 보여주고, 자신의 글에 대한 수정/삭제 버튼 구현
 
 - HomePage.vue : 메인 홈페이지 (header - imgbanner - portfolio - post - project - footer)
 
@@ -111,7 +133,7 @@
 
 <br>
 
-*) 메인 이미지 배너 변경, 포스트/포트폴리오 생성 수정 삭제, 어드민 페이지에서의 웹 로그 조회 등 관리자 권한은 "admin@admin.com / admin123" 계정만 부여됩니다.
+메인 이미지 배너 변경, 포스트/포트폴리오 생성 수정 삭제, 어드민 페이지에서의 웹 로그 조회 등 관리자 권한은 "admin@admin.com / admin123" 계정과 각자 팀원들 개인 계정에만 부여됩니다.
 
 <br>
 
