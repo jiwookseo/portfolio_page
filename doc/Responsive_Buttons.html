@@ -20,7 +20,7 @@
       font-family: Arial, Helvetica, sans-serif;
     }
     #wrap {
-      padding: 0 20px;
+      padding: 0 20px 50px;
     }
     h1 {
       margin: 20px 0 30px;
@@ -40,6 +40,25 @@
       min-height: 80px;
       padding: 10px 0;
     }
+    .collapse {
+      display: inline-block;
+      height: 24px;
+      margin-bottom: 20px;
+    }
+    .collapse i {
+      cursor: pointer;
+    }
+
+    .code {
+      display: none;
+    }
+    .collapse:hover i, .active {
+      color: #00A2FF;
+    }
+
+
+
+
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     .nudge-btn {
@@ -408,7 +427,10 @@
         <button class="nudge-btn nudge-secondary">Secondary</button>
         <button class="nudge-btn nudge-disabled" disabled>Disabled</button>
       </div>
-      <div>
+      <div class="collapse">
+        <i class="material-icons">code</i>
+      </div>
+      <div class="code">
         <h3>HTML</h3>
         <pre><code class="language-html">&lt;button class="nudge-btn nudge-primary"&gt;Primary&lt;/button&gt;
 &lt;button class="nudge-btn nudge-secondary"&gt;Secondary&lt;/button&gt;
@@ -472,7 +494,10 @@
       <div class="btn-box">
         <div class="slant-btn">Slant Button<i class="material-icons">arrow_forward</i></div>
       </div>
-      <div>
+      <div class="collapse">
+        <i class="material-icons">code</i>
+      </div>
+      <div class="code">
         <h3>HTML</h3>
         <pre><code class="language-html">&lt;div class="slant-btn"&gt;
   slant Button
@@ -522,7 +547,10 @@
       <div class="btn-box">
         <div class="slide-btn">Slide Button</div>
       </div>
-      <div>
+      <div class="collapse">
+        <i class="material-icons">code</i>
+      </div>
+      <div class="code">
         <h3>HTML</h3>
         <pre><code class="language-html">&lt;div class="slide-btn"&gt;Slide Button&lt;/div&gt;</code></pre>
         <h3>CSS</h3>
@@ -553,7 +581,10 @@
       <div class="btn-box">
         <div class="glow-btn">Glow Button</div>
       </div>
-      <div>
+      <div class="collapse">
+        <i class="material-icons">code</i>
+      </div>
+      <div class="code">
         <h3>HTML</h3>
         <pre><code class="language-html">&lt;div class="glow-btn"&gt;Glow Button&lt;/div&gt;</code></pre>
         <h3>CSS</h3>
@@ -588,7 +619,10 @@
       <div class="btn-box">
         <div class="dbl-border-btn">Double Border</div>
       </div>
-      <div>
+      <div class="collapse">
+        <i class="material-icons">code</i>
+      </div>
+      <div class="code">
         <h3>HTML</h3>
         <pre><code class="language-html">&lt;div class="dbl-border-btn"&gt;Double Border&lt;/div&gt;</code></pre>
         <h3>CSS</h3>
@@ -647,7 +681,10 @@
           <span>Border Fill</span>
         </div>
       </div>
-      <div>
+      <div class="collapse">
+        <i class="material-icons">code</i>
+      </div>
+      <div class="code">
         <h3>HTML</h3>
         <pre><code class="language-html">&lt;div class="border-fill-btn"&gt;
   &lt;span&gt;Border Fill&lt;/span&gt;
@@ -720,7 +757,10 @@
             <i class="material-icons">keyboard_arrow_up</i>
           </div>
         </div>
-        <div>
+        <div class="collapse">
+          <i class="material-icons">code</i>
+        </div>
+        <div class="code">
           <h3>HTML</h3>
           <pre><code class="language-html">&lt;div class="bobbing-btn"&gt;
   &lt;i class="material-icons"&gt;keyboard_arrow_up&lt;/i&gt;
@@ -759,7 +799,10 @@
           <i class="material-icons">flash_on</i>
         </div>
       </div>
-      <div>
+      <div class="collapse">
+        <i class="material-icons">code</i>
+      </div>
+      <div class="code">
         <h3>HTML</h3>
         <pre><code class="language-html">&lt;div class="glint-btn"&gt;
   &lt;i class="material-icons"&gt;flash_on&lt;/i&gt;
@@ -807,7 +850,10 @@
           <i class="material-icons">delete</i>
         </div>
       </div>
-      <div>
+      <div class="collapse">
+        <i class="material-icons">code</i>
+      </div>
+      <div class="code">
         <h3>HTML</h3>
         <pre><code class="language-html">&lt;div class="jiggle-btn"&gt;
   &lt;i class="material-icons"&gt;delete&lt;/i&gt;
@@ -836,10 +882,6 @@
     </section>
 
 
-
-
-
-
     <div>
       Reference:
       <ul class="reference">
@@ -848,6 +890,24 @@
     </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
+
+  <script>
+    const coll = document.getElementsByClassName('collapse');
+
+    for (let i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        let code = this.nextElementSibling;
+        if (code.style.display === "block") {
+          code.style.display = "none";
+        } else {
+          code.style.display = "block";
+        }
+      })
+    }
+
+  </script>
+
 </body>
 
 </html>
