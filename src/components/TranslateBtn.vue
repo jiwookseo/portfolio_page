@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import { setTimeout } from "timers";
 import translateText from "../js/translate";
 
 export default {
@@ -44,6 +43,7 @@ export default {
       translated: false,
       selectedLanguage: "",
       langauge: [
+        // langauge select items
         {
           text: "Korean",
           value: "ko"
@@ -61,6 +61,7 @@ export default {
   },
   watch: {
     $route() {
+      // route 변경 시에 자동 번역
       if (this.translated) {
         this.$store.dispatch("setSpinner", {
           loading: true,
@@ -80,7 +81,7 @@ export default {
       if (
         !this.translatedText[target] ||
         this.translatedText[target].length !== this.textDOMs.length ||
-        force
+        force // route 변경 시에 자동 번역 boolean
       ) {
         this.textDOMs = document.querySelectorAll(".text");
         if (this.textDOMs.length) {
@@ -91,7 +92,7 @@ export default {
           this.originalText = [];
           this.translatedText[target] = Array(this.textDOMs.length);
           this.textDOMs.forEach(dom => this.originalText.push(dom.innerText));
-          let counter = 0;
+          let counter = 0; // forEach loop 의 async function 의 완료를 카운트하는 변수
           this.textDOMs.forEach((dom, i) => {
             this.originalText.push(dom.innerText);
             translateText(source, target, dom.innerText)
@@ -100,11 +101,13 @@ export default {
                 this.translatedText[target][i] = res.translatedText;
                 counter++;
                 if (counter === this.textDOMs.length)
+                  // forEach 모두 완료
                   this.$store.dispatch("setSpinner", { loading: false });
               })
               .catch(() => {
                 counter++;
                 if (counter === this.textDOMs.length)
+                  // forEach 모두 완료
                   this.$store.dispatch("setSpinner", { loading: false });
               });
           });
@@ -116,6 +119,7 @@ export default {
       }
     },
     showOrigin: function() {
+      // 원본 보기
       if (!this.translated) return;
       else this.translated = false;
       this.textDOMs.forEach((dom, i) => (dom.innerText = this.originalText[i]));
