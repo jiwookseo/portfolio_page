@@ -49,8 +49,8 @@
       </section>
       <section id="project">
         <h2 class="section-title text" data-aos="fade-left">Project</h2>
-        <LineChart class="linechart hideMobile" data-aos="fade-up" />
-        <Radarchart class="radarchart hideMobile" data-aos="fade-up" />
+        <LineChart class="linechart hideMobile vContainer" data-aos="fade-up" />
+        <Radarchart class="radarchart hideMobile vContainer" data-aos="fade-up" />
         <div class="section-btn-box hideMobile" data-aos="fade-up">
           <a target="_blank" href="https://lab.ssafy.com/jiwonjulietyoon/webmobile-final">
             <div class="section-more-btn text">
