@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="article-content">
-      <h3 class="Title">{{article.title || ""}}</h3>
+      <h3 class="Title text">{{article.title || ""}}</h3>
       <div class="article-meta">
         <p class="Author">{{article.userName}}</p>
         <p class="Date">{{date}}</p>
@@ -21,7 +21,7 @@
         :src="article.img" 
         @click="openImgDialog(article.img)" 
       />
-      <p class="Content">{{article.content}}</p>
+      <p class="Content text">{{article.content}}</p>
     </div>
     <Comment :article="article" :isPortfolio="isPortfolio" />
     <v-dialog
