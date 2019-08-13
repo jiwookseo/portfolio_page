@@ -20,6 +20,8 @@
 
 <br>
 
+메인 이미지 배너 변경, 포스트/포트폴리오 생성 수정 삭제, 어드민 페이지에서의 웹 로그 조회 등 관리자 권한은 "admin@admin.com / admin123" 계정과 각자 팀원들 개인 계정에만 부여됩니다.
+
 <br>
 
 ### 프로젝트 주요 구성도
@@ -29,47 +31,35 @@
 - #### components
 
 ```
+AdminPage (관리자 또는 팀원만 접속 가능)
+- Articles.vue : AdminPage에서 포트폴리오와 포스트, 더미박스 정보를 담은 컴포넌트
+- LogChart.vue : 사이트 접속 로그를 차트로 보여줌
+- UserInfo.vue : 회원가입된 모든 유저 목록과 등급 수정 및 활동 정지/해제 가능
 
-- AdminPage/Articles.vue : AdminPage에서 포트폴리오와 포스트, 더미박스 정보를 담은 컴포넌트
-
-- AlertSnackbar.vue : 완료 알림창 구현
-
-- AskSnackbar.vue : 확인여부 묻는 알림창 구현 
-
-- ChatBtn.vue : 채팅 서비스 구현
-
+Article (Post, Portfolio 관련)
 - Comment.vue : 포트폴리오와 포스트의 댓글 영역 구현
-
-- Cookies.vue : vue-cookies로 토큰 세팅
-
-- DetailDialog.vue : 포트폴리오와 포스트의 세부정보를 보여주는 Dialog 창 구현
-
-- FavBtn.vue : 즐겨찾기(북마크) 기능 및 버튼 구현
-
-- Footer.vue : 홈페이지 Footer 구현
-
-- HeaderHome.vue : 홈페이지 Header Bar 구현
-
-- HeaderSub.vue : 모바일 사이즈로 화면 변경시 Header를 Sidebar로 구현
-
-- ImgBanner.vue : 메인 화면 이미지 배너 (랜덤 이미지 및 사용자 사진 선택 기능)
-
-- LineChart.vue : 일자별 GitLab commit 그래프 차트 구현
-
-- LoadingSpinner.vue : 번역 진행 시 로딩 화면 구현
-
-- LoginDialog.vue : 로그인 버튼 클릭 시 회원가입/로그인 Dialog 창 및 기능 구현
-
 - PortfolioList.vue : 파이어베이스에 저장된 포트폴리오를 불러와 출력 구현
-
 - PostList.vue : 파이어베이스에 저장된 포스트를 불러와 출력 구현
 
+Global (전역적으로 불리는 컴포넌트들; App.vue에 임포트)
+- AlertSnackbar.vue : 완료 알림창 구현
+- AskSnackbar.vue : 확인여부 묻는 알림창 구현 
+- Cookies.vue : vue-cookies로 토큰 세팅
+- LoadingSpinner.vue : 번역 등 시간이 걸리는 작업 진행 시 로딩 화면 구현
+
+Header (네이게이션 바 영역)
+- FavBtn.vue : 즐겨찾기(북마크) 기능 및 버튼 구현
+- HeaderHome.vue : 홈페이지 Header Bar 구현
+- HeaderSub.vue : 포스트/포트폴리오 페이지에서의 Header Bar 구현
+- ImgBanner.vue : 메인 화면 이미지 배너 (랜덤 이미지 및 사용자 사진 선택 기능)
+- LoginDialog.vue : 로그인 버튼 클릭 시 회원가입/로그인 Dialog 창 및 기능 구현
+
+기타
+- ChatBtn.vue : 채팅 서비스 구현
+- Footer.vue : 홈페이지 Footer 구현
+- LineChart.vue : 일자별 GitLab commit 그래프 차트 구현
 - RadarChart.vue : 팀원들의 당일 커밋 수 그래프 차트 구현
-
 - TranslateBtn.vue : 해당 페이지 번역 기능 및 버튼 구현
-
-- WriteDialog.vue : 포스트 및 포트폴리오 작성 Dialog 창 및 파이어베이스 저장 기능 구현
-
 ```
 
 <br>
@@ -98,11 +88,10 @@
 
 <br>
 
-- #### views
+- #### views (라우터 뷰)
 
 ```
-
-- AdminPage.vue : Admin 계정이 요일별 경로이동 Log를 그래프 차트로 확인할 수 있는 페이지
+- AdminPage.vue : 유저 정보, 게시글 목록, 웹로그 등을 확인할 수 있는 관리자 페이지
 
 - Articles.vue : 타입에 따라 포트폴리오와 포스트에 대한 리스트를 보여주도록 구현
 
@@ -146,19 +135,9 @@
   - 코드량이 많거나 특수한 기능을 모듈화
     - 예) `translate.js`
 
-
-
-
-
-메인 이미지 배너 변경, 포스트/포트폴리오 생성 수정 삭제, 어드민 페이지에서의 웹 로그 조회 등 관리자 권한은 "admin@admin.com / admin123" 계정과 각자 팀원들 개인 계정에만 부여됩니다.
-
 <br>
 
 <br>
-
-
-
-
 
 
 
@@ -217,6 +196,12 @@ Git 작업은 프로젝트 기능 단위로 진행한다.
 
 
 
+
+
+
+
+
+---
 
 
 
