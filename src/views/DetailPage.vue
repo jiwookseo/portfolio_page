@@ -130,6 +130,7 @@ export default {
           alert: true,
           message: this.isPortfolio ? "Portfolio deleted" : "Post deleted"
         });
+        this.$router.replace(this.isPortfolio ? "/portfolios" : "/posts");
       });
     },
   }
