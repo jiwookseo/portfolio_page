@@ -81,6 +81,9 @@
         mode: "summary", //users, articles, log
       };
     },
+    mounted() {
+      this.$store.dispatch("getUserAll")
+    },
     computed: {
       ...mapGetters(["user"]),
       userAll() {
