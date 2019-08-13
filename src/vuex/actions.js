@@ -44,6 +44,7 @@ export default {
                 newUser.deleted
               );
               commit("setUser", newUser);
+              
             });
         }
       })
