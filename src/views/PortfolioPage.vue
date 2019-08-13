@@ -11,7 +11,7 @@
         </div>
         <div class="article-list">
           <p class="header">
-            <router-link to="/portfolios" class="back">
+            <router-link to="/portfolios" class="back text">
               All Portfolios
               <i class="material-icons">chevron_right</i>
             </router-link>
@@ -46,8 +46,8 @@
                 :to="{name: 'PortfolioDetailPage', params: {id: p.id}}"
                 class="item-link"
               >
-                <p class="Title">{{p.title}}</p>
-                <p class="Author">{{p.userName}}</p>
+                <p class="Title text">{{p.title}}</p>
+                <p class="Author text">{{p.userName}}</p>
               </router-link>
             </div>
           </div>

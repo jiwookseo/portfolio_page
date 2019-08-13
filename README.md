@@ -133,11 +133,92 @@
 
 <br>
 
+- #### css 및 js
+
+  기본적으로 css와 js 코드는 해당 컴포넌트 파일 내의 `style` 태그 또는 `script` 태그에 포함하지만, 다음과 같은 경우에는 `src/css/` 또는 `src/js/` 디렉토리에 외부 파일로 관리한다:
+
+  - 프로젝트 전체에 공통적으로 적용
+    - 예) `reset.css`, `style.scss`
+    - 주요 sass 변수/믹스인 등을 포함한 `style.scss`의 경우 모든 개별 컴포넌트의 `style` 태그에서 임포트하여 사용
+  - 전역적으로 적용되지는 않으나 복수 개의 컴포넌트에 한정적으로 적용
+    - 예) `article.scss`, `navbar.scss` 
+    - 해당 컴포넌트에서만 임포트하여 사용
+  - 코드량이 많거나 특수한 기능을 모듈화
+    - 예) `translate.js`
+
+
+
+
+
 메인 이미지 배너 변경, 포스트/포트폴리오 생성 수정 삭제, 어드민 페이지에서의 웹 로그 조회 등 관리자 권한은 "admin@admin.com / admin123" 계정과 각자 팀원들 개인 계정에만 부여됩니다.
 
 <br>
 
 <br>
+
+
+
+
+
+
+
+### Git 관리
+
+---
+
+Git 작업은 프로젝트 기능 단위로 진행한다.
+
+- #### git branch
+
+  - 브랜치는 기능 단위로 생성
+  - 브랜치 이름에는 1) Jira 이슈 번호 2) 팀원 이름 3)작업할 기능 요약을 명시
+  - 예시)
+    - `14-jiwon-Post_Portfolio_Detail_Page`
+    - `8-gyuseok-backOfficePageByAdmin`
+
+- #### git commit message
+
+  - 메시지 작성 요령:
+
+    - 제목과 본문을 빈 행으로 분리한다
+    2. 제목 접두어는 `[ADD]` | `[MOD]` | `[FIX]` | `[DEL]` 중에서 선택한다
+    2. 제목 첫 글자는 대문자로 쓴다
+    3. 제목 행 끝에 마침표를 넣지 않는다
+    4. 제목은 명령문으로 작성한다 (첫 단어는 동사 기본형)
+    4. 제목은 첫 단어와 고유명사 (컴포넌트 이름 등)만 대문자로 작성한다
+    4. 본문의 마지막 행에는 연관된 Jira 이슈를 명시한다
+
+  - 예시)
+
+    - ```
+      [ADD] Enable autofocus on login/signup email input field
+      
+      - when LoginDialog is opened or when switching between login/signup mode
+      
+      Jira: S1P1213006-12
+      ```
+
+    - ```
+      [MOD] Replace WriteDialog with ArticleWriter (nested router component)
+      
+      Jira: S1P1213006-16
+      ```
+
+    - ```
+      [DEL] Remove disqus comment component in detail page
+      ```
+
+    - ```
+      [FIX] Fix ImgBanner error
+      ```
+
+
+
+
+
+
+
+
 
 ## Project setup
 

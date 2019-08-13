@@ -16,7 +16,7 @@
         <li @click="mode = 'log'" :class="{'active': mode==='log'}">Web Log</li>
       </ul>
       <div class="tab-content">
-        <v-container v-show="mode==='summary'">
+        <v-container v-show="mode==='summary'" class="vContainer">
           <h2 class="section-subtitle">Count Data</h2>
           <template>
             <v-simple-table dark>
@@ -48,7 +48,7 @@
 
         <AdminArticles v-show="mode==='articles'" />
 
-        <v-container v-show="mode==='log'">
+        <v-container v-show="mode==='log'" class="vContainer">
           <h2 class="section-subtitle">Log Data</h2>
           <div class="content-container">
             <LogChart />
@@ -60,12 +60,10 @@
 </template>
 
 <script>
-  import firestore from "@/firebase/firestore";
   import {
     mapGetters
   } from "vuex";
   import AdminArticles from "@/components/AdminPage/Articles";
-  import firebaseMessage from "@/firebase/firebaseMessage";
   import LogChart from "@/components/AdminPage/LogChart";
   import UserInfo from "@/components/AdminPage/UserInfo";
 

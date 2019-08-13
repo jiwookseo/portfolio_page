@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="vContainer">
     <h2 class="section-subtitle">Articles</h2>
     <section class="articles">
       <div class="portfolios">

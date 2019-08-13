@@ -2,7 +2,13 @@
   <div class="article-writer">
     <v-form ref="form" v-model="valid" lazy-validation>
       <div class="scrollable-content">
-        <v-text-field v-model="title" label="Title" required :rules="titleRules"></v-text-field>
+        <v-text-field 
+          v-model="title" 
+          label="Title" 
+          required 
+          :rules="titleRules"
+          :autofocus="isNewArticle"
+        ></v-text-field>
         <v-textarea
           v-model="content"
           label="Content"

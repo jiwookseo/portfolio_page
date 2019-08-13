@@ -1,6 +1,6 @@
 <template>
 
-    <v-container>
+    <v-container class="vContainer">
           <h2 class="section-subtitle">User Information</h2>
           <v-card v-resize="onResize">
             <v-card-title>
