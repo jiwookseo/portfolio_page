@@ -60,12 +60,10 @@
 </template>
 
 <script>
-  import firestore from "@/firebase/firestore";
   import {
     mapGetters
   } from "vuex";
   import AdminArticles from "@/components/AdminPage/Articles";
-  import firebaseMessage from "@/firebase/firebaseMessage";
   import LogChart from "@/components/AdminPage/LogChart";
   import UserInfo from "@/components/AdminPage/UserInfo";
 
